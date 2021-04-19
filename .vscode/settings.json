@@ -1,0 +1,7 @@
+{
+    "editor.wordWrap": "on",
+    "[Log]": {
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 160
+    }
+}
