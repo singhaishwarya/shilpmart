@@ -1,15 +1,13 @@
 import React from "react";
-import "./Header.css";
-import "../../public/bootstrap.min.css";
-import "../../public/jbility.css";
-import "../../public/swiper-bundle.min.css";
-
+import { Link, } from "react-router-dom";
 export default class Header extends React.Component {
-    state = {
-
-    };
 
     render() {
+
+        const imageClick = () => {
+            console.log('Click');
+        }
+
         return (
             <>
                 <div className="header-top py-1">
@@ -49,10 +47,11 @@ export default class Header extends React.Component {
 
                 <div className="header-middle d-flex justify-content-between align-items-center px-3">
                     <a className="navbar-brand" href="#">
-                        <img className="image-middle" src={require('../../public/logo-eshilp.svg')} alt="logoeship" />
+                        <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => imageClick()} alt="logoeship" />
                     </a>
                     <ul className="navbar-nav flex-row">
-                        <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">Login/Register</a></li>
+                        <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">
+                            <Link to={'/login'}>Login/Register</Link></a></li>
                         <li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-heart-o" aria-hidden="true"></i><span>0</span></a></li>
                         <li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-random" aria-hidden="true"></i><span>0</span></a></li>
                         <li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-shopping-basket" aria-hidden="true"></i><span>0</span></a></li>
