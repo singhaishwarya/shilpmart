@@ -8,6 +8,7 @@ import "../../public/swiper-bundle.min.css";
 import Login from "../Login/Login";
 import Header from "../Header/Header";
 import Navbar from "../Navbar/Navbar";
+import Swiper from "../Swiper/Swiper";
 import Footer from "../Footer/Footer";
 import { Link, Route, Switch, Redirect } from "react-router-dom";
 export default class Dashboard extends React.Component {
@@ -17,6 +18,7 @@ export default class Dashboard extends React.Component {
             <>
                 <Header />
                 <Navbar />
+                <Swiper />
                 <Footer />
 
                 <Switch>
