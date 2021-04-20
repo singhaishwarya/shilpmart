@@ -9,8 +9,13 @@ import Login from "../Login/Login";
 import Header from "../Header/Header";
 import Navbar from "../Navbar/Navbar";
 import Swiper from "../Swiper/Swiper";
+import LiveStats from "../LiveStats/LiveStats";
+import PressArticles from "../PressArticles/PressArticles";
+import CustomerFeedback from "../CustomerFeedback/CustomerFeedback";
+import ShopByCategory from "../ShopByCategory/ShopByCategory";
+import ShopByProduct from "../ShopByProduct/ShopByProduct";
 import Footer from "../Footer/Footer";
-import { Link, Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 export default class Dashboard extends React.Component {
 
     render() {
@@ -19,6 +24,11 @@ export default class Dashboard extends React.Component {
                 <Header />
                 <Navbar />
                 <Swiper />
+                <ShopByCategory />
+                <ShopByProduct />
+                <LiveStats />
+                <CustomerFeedback />
+                <PressArticles />
                 <Footer />
 
                 <Switch>

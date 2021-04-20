@@ -186,6 +186,9 @@ a {
 	font-size: 18px !important;
 	font-weight: bold !important
 }
+.section-background{
+    background-color:#F1EAE3
+}
 .section-title {
 	margin: 15px auto;
 	text-align: center
