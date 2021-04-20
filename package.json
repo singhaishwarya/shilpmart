@@ -12,6 +12,7 @@
         "big.js": "^5.2.2",
         "github-fork-ribbon-css": "^0.2.1",
         "react": "^16.8.6",
+        "react-alice-carousel": "^2.5.1",
         "react-dom": "^16.8.6",
         "react-router-dom": "^5.2.0"
     },
