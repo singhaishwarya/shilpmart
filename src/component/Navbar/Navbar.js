@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link, } from "react-router-dom";
+import React from "react";
 export default class Navbar extends React.Component {
     constructor(props) {
         super(props);
@@ -40,51 +39,51 @@ export default class Navbar extends React.Component {
                                                 <div className="container">
                                                     <div className="row">
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">shirtings</a></h6>
+                                                            <h6>shirtings</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">trousers</a></h6>
+                                                            <h6>trousers</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">jackets & coats</a></h6>
+                                                            <h6>jackets & coats</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">kurtas</a></h6>
+                                                            <h6>kurtas</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">shawl</a></h6>
+                                                            <h6>shawl</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">dhoti</a></h6>
+                                                            <h6>dhoti</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">muffler & scarves</a></h6>
+                                                            <h6>muffler & scarves</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">gloves</a></h6>
+                                                            <h6>gloves</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">gamcha</a></h6>
+                                                            <h6>gamcha</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">lungi</a></h6>
+                                                            <h6>lungi</h6>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">accessories</a></h6>
+                                                            <h6>accessories</h6>
                                                             <ul className="sub-items">
-                                                                <li><a href="#">belts</a></li>
-                                                                <li><a href="#">wallets</a></li>
-                                                                <li><a href="#">cuff links</a></li>
-                                                                <li><a href="#">hand kerchiefs</a></li>
-                                                                <li><a href="#">view all</a></li>
+                                                                <li>belts</li>
+                                                                <li>wallets</li>
+                                                                <li>cuff links</li>
+                                                                <li>hand kerchiefs</li>
+                                                                <li>view all</li>
                                                             </ul>
                                                         </div>
                                                         <div className="col-sm-3 mb-3">
-                                                            <h6><a href="#">footwear</a></h6>
+                                                            <h6>footwear</h6>
                                                             <ul className="sub-items">
-                                                                <li><a href="#">shoes</a></li>
-                                                                <li><a href="#">ethnic footwear</a></li>
-                                                                <li><a href="#">sandles and floaters</a></li>
+                                                                <li>shoes</li>
+                                                                <li>ethnic footwear</li>
+                                                                <li>sandles and floaters</li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -138,11 +137,11 @@ export default class Navbar extends React.Component {
                                 )}
                             </div>
                             <ul className="navbar-nav mr-auto">
-                                <li className="nav-item active"> <a className="nav-link" href="#"> <i className="fa fa-home"
-                                    aria-hidden="true"></i> Home <span className="sr-only">(current)</span></a> </li>
-                                <li className="nav-item"> <a className="nav-link" href="#">ABOUT US</a> </li>
-                                <li className="nav-item"> <a className="nav-link" href="#">SHOP</a> </li>
-                                <li className="nav-item"> <a className="nav-link" href="#">CUSTOMER SERVICE</a> </li>
+                                <li className="nav-item nav-link active">  <i className="fa fa-home"
+                                    aria-hidden="true"></i> Home <span className="sr-only">(current)</span> </li>
+                                <li className="nav-item nav-link"> ABOUT US </li>
+                                <li className="nav-item nav-link"> SHOP </li>
+                                <li className="nav-item nav-link"> CUSTOMER SERVICE </li>
                             </ul>
                         </div>
                     </nav>

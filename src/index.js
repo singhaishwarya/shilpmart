@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Dashboard from "./component/Dashboard/Dashboard";
 import "./index.css";
-import "github-fork-ribbon-css/gh-fork-ribbon.css";
 import { BrowserRouter } from "react-router-dom";
-
+import 'react-alice-carousel/lib/alice-carousel.css';
 ReactDOM.render(
     <BrowserRouter>
         <Dashboard />

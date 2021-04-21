@@ -17,10 +17,10 @@ export default class Footer extends React.Component {
                                         <h5>Information</h5>
                                         <div className="footer-links">
                                             <ul>
-                                                <li><a href="#">Terms of use</a></li>
-                                                <li><a href="#">Right to Information</a></li>
-                                                <li><a href="#">Sitemap </a></li>
-                                                <li><a href="#">Subscribe Newsletter</a></li>
+                                                <li>Terms of use</li>
+                                                <li>Right to Information</li>
+                                                <li>Sitemap </li>
+                                                <li>Subscribe Newsletter</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -28,10 +28,10 @@ export default class Footer extends React.Component {
                                         <h5>Resources</h5>
                                         <div className="footer-links">
                                             <ul>
-                                                <li><a href="#">Terms &amp; Conditions</a></li>
-                                                <li><a href="#">Buyer Policy</a></li>
-                                                <li><a href="#">Seller Policy </a></li>
-                                                <li><a href="#">Exchange Policy</a></li>
+                                                <li>Terms &amp; Conditions</li>
+                                                <li>Buyer Policy</li>
+                                                <li>Seller Policy </li>
+                                                <li>Exchange Policy</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -39,9 +39,9 @@ export default class Footer extends React.Component {
                                         <h5>Partner with us</h5>
                                         <div className="footer-links">
                                             <ul>
-                                                <li><a href="#"> Weaver / Artisan Registration</a></li>
-                                                <li><a href="#">Weaver / Artisan Login </a></li>
-                                                <li><a href="#">Corporate Enquiries </a></li>
+                                                <li> Weaver / Artisan Registration</li>
+                                                <li>Weaver / Artisan Login </li>
+                                                <li>Corporate Enquiries </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -49,9 +49,9 @@ export default class Footer extends React.Component {
                                         <h5>Need Help?</h5>
                                         <div className="footer-links">
                                             <ul>
-                                                <li><a href="#">FAQs</a></li>
-                                                <li><a href="#">Raise a ticket</a></li>
-                                                <li><a href="#">Contact Us </a></li>
+                                                <li>FAQs</li>
+                                                <li>Raise a ticket</li>
+                                                <li>Contact Us </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -90,9 +90,9 @@ export default class Footer extends React.Component {
                             <div className="col-md-6 col-12"> <span>Ministry of Textile <i className="fa fa-copyright"></i> 2020. <br />
                                 Designed &amp; Developed by Digital India Corporation</span>
                             </div>
-                            <div className="col-md-6 col-12 text-right"> <a href="#"><img src={require("../../public/gp-300x89.png")}
-                                className="img-fluid" alt="google play store" /></a> &nbsp;&nbsp; <a href="#"><img
-                                    src={require("../../public/as-300x89.png")} className="img-fluid" alt="itue" /></a> </div>
+                            <div className="col-md-6 col-12 text-right"> <img src={require("../../public/gp-300x89.png")}
+                                className="img-fluid" alt="google play store" /> &nbsp;&nbsp; <img
+                                    src={require("../../public/as-300x89.png")} className="img-fluid" alt="itue" /> </div>
                         </div>
                     </div>
                 </div>

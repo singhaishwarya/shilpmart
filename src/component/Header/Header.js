@@ -14,18 +14,18 @@ export default class Header extends React.Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-6 col-6">
-                                <div className="s-icons"> <a href="#"><i className="fa fa-facebook" aria-hidden="true" /></a>
-                                    <a href="#"><i className="fa fa-twitter" aria-hidden="true" /></a>
-                                    <a href="#"><i className="fa fa-pinterest" aria-hidden="true" /></a>
-                                    <a href="#"><i className="fa fa-linkedin" aria-hidden="true" /></a>
-                                    <a href="#"><i className="fa fa-telegram" aria-hidden="true" /></a>
+                                <div className="s-icons"> <i className="fa fa-facebook" aria-hidden="true" />
+                                    <i className="fa fa-twitter" aria-hidden="true" />
+                                    <i className="fa fa-pinterest" aria-hidden="true" />
+                                    <i className="fa fa-linkedin" aria-hidden="true" />
+                                    <i className="fa fa-telegram" aria-hidden="true" />
                                 </div>
                             </div>
                             <div className="col-md-6 col-6">
                                 <div className="acess-container float-right">
                                     <div id="acess-icons" className="access_icons">
                                         <div className="acess-icon balloon" title="large font size">
-                                            <img src={require('../../public/increase-font-size.svg')} />
+                                            <img src={require('../../public/increase-font-size.svg')} alt="" />
                                         </div>
                                         <div className="acess-icon balloon" title="small font size">
                                             <img src={require('../../public/decrease-font-size.svg')} alt="decrease font" />

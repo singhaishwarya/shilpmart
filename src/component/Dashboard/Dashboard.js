@@ -4,6 +4,7 @@ import "../../index.css";
 import "../../public/bootstrap.min.css";
 import "../../public/jbility.css";
 import "../../public/swiper-bundle.min.css";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 import Login from "../Login/Login";
 import Header from "../Header/Header";

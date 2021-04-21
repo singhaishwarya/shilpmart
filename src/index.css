@@ -1,4 +1,4 @@
-@import "react-alice-carousel/lib/alice-carousel.css";
+
 
 a {
 	color: #0d3356
@@ -931,4 +931,10 @@ ul.sub-items li a:hover{
     font-family: fontawesome;
     color: #ccc;
     padding: 0 7px;
+}
+
+.sliderimg{
+  width: 100%;
+  height: 500px;
+  object-fit: cover
 }
