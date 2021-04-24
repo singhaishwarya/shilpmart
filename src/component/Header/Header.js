@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, } from "react-router-dom";
+import Navbar from '../Navbar/Navbar'
 export default class Header extends React.Component {
 
     render() {
@@ -10,7 +11,7 @@ export default class Header extends React.Component {
 
         return (
             <>
-                <div className="header-top py-1">
+                <div className="header-top py-1  ">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-6 col-6">
@@ -57,6 +58,7 @@ export default class Header extends React.Component {
                         <li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-shopping-basket" aria-hidden="true"></i><span>0</span></a></li>
                     </ul>
                 </div>
+                <Navbar />
             </>
         );
     }

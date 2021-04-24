@@ -9,11 +9,17 @@
         "react-scripts": "^3.0.1"
     },
     "dependencies": {
+        "@appbaseio/reactivesearch": "^3.17.0",
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-regular-svg-icons": "^5.15.3",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3",
+        "@fortawesome/react-fontawesome": "^0.1.14",
         "big.js": "^5.2.2",
         "github-fork-ribbon-css": "^0.2.1",
         "react": "^16.8.6",
         "react-alice-carousel": "^2.5.1",
         "react-dom": "^16.8.6",
+        "react-redux": "^7.2.3",
         "react-router-dom": "^5.2.0"
     },
     "scripts": {
