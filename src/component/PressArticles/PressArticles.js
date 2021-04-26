@@ -40,7 +40,7 @@ export default class PressArticles extends React.Component {
                         </div>
                     </div>
                 </div>,
-                <div key='0' className="col-lg-6 col-md-6 col-sm-12 col-12" style={{ width: 310 }}>
+                <div key='1' className="col-lg-6 col-md-6 col-sm-12 col-12" style={{ width: 310 }}>
                     <div className="pressBlock">
                         <div className="pressBlock-container">
                             <figure className="news-img">
