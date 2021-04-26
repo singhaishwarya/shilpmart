@@ -1428,6 +1428,14 @@ font-size:14px}
 	width: 80%
 }
 }
+.show-title{
+     display: inline-block;
+    margin-bottom: 0;
+    margin-right: 0;
+    color: #2d2a2a;
+    vertical-align: middle;
+    font-weight: 600;
+}
 
 /* @media (max-width: 768px) {  */
 /* .search-container{display:none} */

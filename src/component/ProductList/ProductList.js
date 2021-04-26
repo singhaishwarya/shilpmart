@@ -1,126 +1,354 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faRandom, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus, faRandom, faHeart, inr } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
-import { ReactiveBase, RangeInput } from "@appbaseio/reactivesearch";
-
+import ReactStars from 'react-stars'
+import { Range } from 'rc-slider';
+import { MultilevelMenu } from 'react-multilevel-menu';
+import MultiSelect from "react-multi-select-component";
+import ReactPaginate from 'react-paginate';
 export default class ProductList extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            product_category: this.props.category,
+            offset: 0,
+            data: [],
+            productsData: [],
+            perPage: 5,
+            currentPage: 0,
             productListData: [
                 {
                     img: require('../../public/bag2.jpeg'),
                     title: 'beag full streep size',
-                    cost: '999'
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11'
                 },
                 {
                     img: require('../../public/bag1.jpeg'),
                     title: 'beag full streep size',
-                    cost: '999'
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11'
                 }, {
                     img: require('../../public/bag3.jpeg'),
                     title: 'beag full streep size',
-                    cost: '999'
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11'
                 }, {
                     img: require('../../public/bag1.jpeg'),
                     title: 'beag full streep size',
-                    cost: '999'
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11'
                 }, {
                     img: require('../../public/bag2.jpeg'),
                     title: 'beag full streep size',
-                    cost: '999'
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11'
                 }, {
                     img: require('../../public/bag3.jpeg'),
                     title: 'beag full streep size',
-                    cost: '999'
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11'
                 }, {
                     img: require('../../public/bag1.jpeg'),
                     title: 'beag full streep size',
-                    cost: '999'
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11'
                 }, {
                     img: require('../../public/bag3.jpeg'),
                     title: 'beag full streep size',
-                    cost: '999'
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11'
                 }
 
             ],
             productListItems: [],
             hoverIcon: false,
             hoveredItem: '',
-            wishlistStatus: false
+            wishlistStatus: false,
+            offers: [
+                { label: "Buy More, Save More", value: "grapes" },
+                { label: "Exchange Offer", value: "mango" },
+                { label: "No Cost EMI", value: "strawberry", disabled: true },
+                { label: "Special Price", value: "pear" }
+            ],
+            selectedOffer: [],
+            config: {
+                paddingAtStart: true,
+                // classname: 'my-custom-class',
+                listBackgroundColor: ``,
+                fontColor: `rgb(8, 54, 71)`,
+                backgroundColor: ``,
+                selectedListFontColor: ``,
+                highlightOnSelect: true,
+                useDividers: false,
+            },
+            categories: [
+
+                {
+                    label: 'Travel Accessories',
+                    items: [
+                        {
+                            label: 'Bag',
+                            onSelected: function () {
+                                console.log('Item 1.2.2.1');
+                            }
+                        },
+                        {
+                            label: 'Luggage',
+                            onSelected: function () {
+                                console.log('Item 1.2.2.1');
+                            }
+                        }, {
+                            label: 'Cover',
+                            onSelected: function () {
+                                console.log('Item 1.2.2.1');
+                            }
+                        },
+                        {
+                            label: 'Mask',
+                            onSelected: function () {
+                                console.log('Item 1.2.2.1');
+                            }
+                        }
+                    ]
+                }
+            ],
+            layout: "col-lg-3 col-sm-6 col-6", //default 4X4
+            priceRange: [20, 50]
         };
     }
     componentDidMount() {
+        this.receivedData()
+    }
+    receivedData = () => {
+        const { productListData, offset, perPage } = this.state;
         this.setState({
-            layout1: "col-6 col-md-6",
-            layout2: "col-6 col-md-4",
-            layout3: "col-6 col-md-3"
+            pageCount: Math.ceil(productListData.length / this.state.perPage),
+            productsData: productListData.slice(offset, offset + perPage)
         });
     }
-
-    toggleHover(val, index) {
+    onLayoutChange = (value) => {
+        this.setState({
+            layout: (value === '2X2') ? "col-lg-6 col-sm-6 col-6" : (value === '3X3')
+                ? "col-lg-4 col-sm-6 col-6" : "col-lg-3 col-sm-6 col-6"
+        });
+        // this.receivedData();
+    }
+    toggleHover = (val, index) => {
         this.setState({ hoverIcon: val, hoveredItem: index });
     }
-    wishlistToggle(val, index) {
+    wishlistToggle = (val, index) => {
         this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
+    }
+    onSliderChange = (value) => {
+        console.log(value);
+        this.setState({ priceRange: value })
+    }
+    ratingChanged = (value) => {
+        console.log(value);
+    }
+    setSelected = (value) => {
+        // console.log(value);
+        this.setState({ selectedOffer: value });
+    }
+    selectedItem = (event) => {
+        console.log(event);
+    }
+    handlePageClick = (e) => {
+        const selectedPage = e.selected;
+        const offset = selectedPage * this.state.perPage;
+
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+        }, () => {
+            this.receivedData()
+        });
+
+    }
+    handlePostDetail = (index) => {
+        this.props.history.push({ pathname: "/product-detail", state: { _id: index } }
+        );
+    }
+    onItemPerPage = (value) => {
+        console.log("demo==", value);
     }
 
     render() {
-        const { hoveredItem, layout1, hoverIcon, productListData, wishlistStatus } = this.state;
+        const {
+            offers,
+            selectedOffer,
+            categories,
+            config,
+            productsData,
+            hoveredItem,
+            layout,
+            hoverIcon,
+            wishlistStatus, priceRange } = this.state;
 
         return (
-            <div >
-                <div >
-                    <ReactiveBase
-                        app="good-books-ds"
-                        url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-                        enableAppbase
-                    >
-                        <div className="row">
-                            <div className="col">
-                                <RangeInput
-                                    componentId="RangeInputComponent"
-                                    dataField="books_count"
-                                    title="BookSensor"
-                                    range={{
-                                        start: 3000,
-                                        end: 50000
-                                    }}
-                                />
+            <>
+                <div className="container-fluid">
+                    <div className="row py-5">
+                        <div className="col-lg-3">
+                            <div className="shop-sidebar">
+                                <article className="filter-group">
+                                    <header className="card-header"> <a href="#" data-toggle="collapse"
+                                        data-target="#collapse_aside2" data-abc="true" aria-expanded="true"
+                                        className="collapsed">
+                                        <h6 className="title">Filter by price </h6>
+                                    </a>
+                                    </header>
+                                    <div className="filter-content collapse show" id="collapse_aside2" >
+                                        <div className="price-range-wrapper">
+                                            <div id="slider-range" className="price-filter-range" name="rangeInput">
+                                                <Range
+                                                    defaultValue={priceRange}
+                                                    min={0}
+                                                    max={500}
+                                                    allowCross={false}
+                                                    onAfterChange={this.onSliderChange} />
+
+                                            </div>
+                                            <div className="price-range d-flex justify-content-between">
+
+                                                <span>
+                                                    Price:
+                                            <input type="number" min="0" max="9900" defaultValue={priceRange[0]}
+                                                        id="min_price" className="price-range-field" />
+                                                    <input type="number" min="0" max="10000"
+                                                        defaultValue={priceRange[1]} id="max_price"
+                                                        className="price-range-field" /></span>
+                                                <span><button className="price-range-search"
+                                                    id="price-range-submit">Filter</button></span>
+                                            </div>
+                                            <div id="searchResults" className="search-results-block"></div>
+                                        </div>
+                                    </div>
+                                </article>
+                                <article className="filter-group">
+                                    <header className="card-header"> <a href="#" data-toggle="collapse"
+                                        data-target="#collapse_aside4" data-abc="true" className="collapsed"
+                                        aria-expanded="false">
+                                        <h6 className="title">Rating </h6>
+                                    </a> </header>
+                                    <div className="filter-content collapse show" id="collapse_aside4" >
+                                        <div className="filter-rateings">
+                                            <div className="testimonial-ratings justify-content-start">
+                                                <ReactStars
+                                                    count={5}
+                                                    onChange={this.ratingChanged}
+                                                    size={24}
+                                                    color2={'#ffd700'} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                                <article className="filter-group">
+                                    <header className="card-header"> <a href="#" data-toggle="collapse"
+                                        data-target="#collapse_aside1" data-abc="true" aria-expanded="false"
+                                        className="collapsed">
+                                        <h6 className="title">Categories </h6>
+                                    </a> </header>
+                                    <div className="filter-content collapse show" id="collapse_aside1" >
+                                        <div className="categories-list">
+                                            <MultilevelMenu
+                                                list={categories}
+                                                configuration={config}
+                                                selectedListItem={this.selectedItem}
+                                                selectedLabel={this.selectedItem}
+                                            />
+                                        </div>
+                                    </div>
+                                </article>
                             </div>
                         </div>
-                    </ReactiveBase>
-                </div>
+                        <div className="col-lg-9">
+                            <section className="topsection d-flex justify-content-between">
+                                <nav aria-label="breadcrumb">
+                                    <ol className="breadcrumb bg-transparent">
+                                        <li className="breadcrumb-item"><a href="#">Home</a></li>
+                                        <li className="breadcrumb-item active" aria-current="page">Shop</li>
+                                    </ol>
+                                </nav>
+                                <div className="breadcrumb bg-transparent">
+                                    <span className="breadcrumb-item active">Show:</span>
+                                    <span className="breadcrumb-item active" onClick={() => this.onItemPerPage('12')}>12</span>
+                                    <span className="breadcrumb-item active" onClick={() => this.onItemPerPage('24')}>24</span>
+                                    <span className="breadcrumb-item active" onClick={() => this.onItemPerPage('36')}>36</span>
+                                </div>
+                                <div className="breadcrumb bg-transparent">
+                                    {/* <span className="breadcrumb-item active">Show:</span> */}
+                                    <button onClick={() => this.onLayoutChange('2X2')} >2X2</button>
+                                    <button onClick={() => this.onLayoutChange('3X3')} >3X3</button>
+                                    <button onClick={() => this.onLayoutChange('4X4')} >4X4</button>
+                                </div>
+                                <form method="get">
+                                    <select name="orderby" className="form-control" aria-label="Shop order">
+                                        <option value="menu_order" selected="selected">Default sorting</option>
+                                        <option value="popularity">Sort by popularity</option>
+                                        <option value="rating">Sort by average rating</option>
+                                        <option value="date">Sort by latest</option>
+                                        <option value="price">Sort by price: low to high</option>
+                                        <option value="price-desc">Sort by price: high to low</option>
+                                    </select>
+                                </form>
+                            </section>
 
-                <div className="row">
-                    {productListData.map((item, index) => {
-                        return (<div key={index} className={layout1} onMouseEnter={() => this.toggleHover(true, index)}>
-                            <div className="prodcut-img">
-                                <a href="#"><img
-                                    src={item.img} className="img-fluid"
-                                    alt="saree" />
-                                </a>
-                                <span className="more-products" >{item.title}</span>
-                                <span className="more-products">{item.cost}</span>
-                                {(hoverIcon && (index === hoveredItem)) &&
-                                    < div >
-                                        <FontAwesomeIcon icon={faCartPlus} />
-                                        <FontAwesomeIcon icon={faRandom} />
-                                        <FontAwesomeIcon icon={(wishlistStatus && hoveredItem === index) ? faHeart : farHeart}
-                                            onClick={() => this.wishlistToggle(wishlistStatus, index)} />
-                                        {/* <FontAwesomeIcon icon={farHeart} onClick={() => this.wishlistToggle(true, index)} /> */}
-                                    </div>}
+                            <div className="row">
+
+                                {productsData.map((item, index) => {
+                                    return (<div className={layout} key={index} >
+                                        <div className="product-wrapper">
+                                            <div className="prodcut-img"><img src={item.img} className="img-fluid" alt="saree" /></div>
+                                            <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
+                                            <div className="shop-wrapper">
+                                                <div className="shopBtn">
+                                                    <div className="shop-btn"><span>
+                                                        <FontAwesomeIcon icon={faCartPlus} /></span></div>
+                                                    <div className="shop-btn"><span>
+                                                        <FontAwesomeIcon icon={faRandom} />
+                                                    </span></div>
+                                                    <div className="shop-btn"><span>
+                                                        <FontAwesomeIcon icon={(wishlistStatus && hoveredItem === index) ? faHeart : farHeart}
+                                                            onClick={() => this.wishlistToggle(wishlistStatus, index)} />
+                                                    </span></div>
+                                                </div>
+                                            </div>
+                                            <h5 className="product-title">{item.title}</h5>
+                                            <span className="product-price"><i className="fa fa-inr" aria-hidden="true"></i> Rs. {item.cost}</span>
+                                        </div>
+                                    </div>
+                                    )
+                                })}
                             </div>
-                        </div>)
-                    })}
+                        </div>
 
-                    {/* <div className={this.state.layout1}>.col-6 .col-md-4</div>
-                    <div className={this.state.layout1}>.col-6 .col-md-4</div>
-                    <div className={this.state.layout1}>.col-6 .col-md-4</div> */}
-                </div>
-            </div >
+                    </div></div>
+                <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={this.state.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"} />
+
+            </>
         );
     }
 }
