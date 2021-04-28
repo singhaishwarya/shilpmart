@@ -1,14 +1,83 @@
 import React from "react";
 import { Link, } from "react-router-dom";
 import Navbar from '../Navbar/Navbar'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 export default class Header extends React.Component {
 
-    render() {
+    constructor(props) {
+        super(props)
+        this.state = {
+            suggestions: [],
+            text: '',
+            optionData: ['Art Silk banarasi saree', 'saree Art Silk heavy  saree',
+                'TANGAIL SAREE', 'saree TANGAIL SAREE HALF ACHAL', 'saree CHAMARAJ PURE SILK SAREES -WEDDING SILK SAREES', 'saree Raw Silk X Eri Spun Silk Saree Saree', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree KATA BUTI STAR CHOSMA TANT SAREE', 'saree Chamka Saree (Artsilk) saree']
+        }
+    }
 
-        const imageClick = () => {
-            console.log('Click');
+    onTextChange = (e) => {
+        const value = e.target.value.toLowerCase();
+        let suggestions = [];
+        if (value.length > 0) {
+            suggestions = this.state.optionData.sort().filter(v => v.toLowerCase().includes(value))
         }
 
+        this.setState(() => ({
+            suggestions,
+            text: value
+        }))
+    }
+
+    selectedText(value) {
+        this.setState(() => ({
+            text: value,
+            suggestions: [],
+        }))
+    }
+
+    renderSuggestions = () => {
+        let { suggestions } = this.state;
+        if (suggestions.length === 0) {
+            return null;
+        }
+        return (
+
+
+            suggestions.reduce(
+                function (accumulator, currentValue, currentIndex, array) {
+                    if (currentIndex % 2 === 0)
+                        accumulator.push(array.slice(currentIndex, currentIndex + 2));
+                    return accumulator;
+                }, []).map((item, index) => (
+                    <div className="row">
+                        <div className="col-6">
+                            <div className="title-meta">
+                                <img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' style={{ maxHeight: 50 }} />{item[0]}
+                                <button type="submit" className="cart-btn">Add to cart</button>
+                            </div>
+                        </div>
+                        { item[1] && <div className="col-6">
+                            <div className="title-meta">
+                                <img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' style={{ maxHeight: 50 }} />{item[1]}</div>
+                            <button type="submit" className="cart-btn">Add to cart</button>
+
+                        </div>}
+
+                    </div>
+                )
+                )
+
+
+        );
+
+    }
+
+    imageClick = () => {
+        console.log('Click');
+    }
+    render() {
+        const { text, suggestions } = this.state;
         return (
             <>
                 <div className="header-top py-1  ">
@@ -48,18 +117,29 @@ export default class Header extends React.Component {
 
                 <div className="header-middle d-flex justify-content-between align-items-center px-3">
                     <a className="navbar-brand" href="#">
-                        <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => imageClick()} alt="logoeship" />
+                        <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => this.imageClick()} alt="logoeship" />
                     </a>
-                    <div className="search-container mx-5 w-100 position-relative">
-                        <form className="form-inline my-2 my-lg-0">
-                            <div className="search-bar w-100 d-flex justify-content-center border">
-                                <input className="form-control mr-sm-2" type="text" placeholder="Search" />
-                                <div className="search-btn">
-                                    <button className="btn my-2 my-sm-0" type="submit"><i className="fa fa-search" aria-hidden="true" /></button>
-                                </div>
+                    {/* <div >
+                        <input id="query" type="text" onChange={this.onTextChange} value={text} />
+                        <div className="mbsc-form-group ">
+                            <div className="mbsc-grid">
+                                {this.renderSuggestions()}
 
                             </div>
-                        </form>
+                        </div>
+
+                    </div> */}
+                    <div className="search-container mx-5 w-100 position-relative">
+                        <div className="form-inline my-2 my-lg-0">
+                            <div className="search-bar w-100 d-flex justify-content-center border">
+                                <input onChange={this.onTextChange} value={text} placeholder="Search" />
+                                {/* <div className="search-btn"> */}
+                                {/* <button className="btn my-2 my-sm-0" >
+                                    <FontAwesomeIcon icon={faSearch} /></button> */}
+                                {/* </div> */}
+                            </div>
+                        </div>
+                        {this.renderSuggestions()}
                     </div>
                     <ul className="navbar-nav flex-row">
                         <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">
