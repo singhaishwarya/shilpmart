@@ -4,7 +4,6 @@ export default class ShopByType extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log("demo===", props)
         this.state = {
             shopByProductData: [], shopByProductItems: [],
             type: this.props.type
@@ -208,37 +207,26 @@ export default class ShopByType extends React.Component {
     render() {
         const { type, shopByCategoryItems, shopByProductItems } = this.state;
         return (
-            <div className="row py-5 section-background "  >
 
-                <div className="tab-content" id="myTabContent">
-                    <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        {/* <!-- Swiper --> */}
-                        <div className="swiper-container shop-product">
-                            <div className="swiper-wrapper">
-                                <AliceCarousel
-                                    animationType='slide'
-                                    autoPlayInterval={3000}
-                                    autoPlay={true}
-                                    autoPlayStrategy="all"
-                                    controlsStrategy="responsive"
-                                    disableDotsControls
-                                    disableAutoPlayOnAction={true}
-                                    items={type === 'product' ? shopByProductItems : shopByCategoryItems}
-                                    infinite
-                                    mouseTrackingEnabled={true}
-                                    // autoHeight={true}
-                                    autoWidth
-                                    disableButtonsControls //can be enabled if arrows are needed
-                                    touchTracking
-                                />
-                            </div>
-                            {/* <!-- Add Pagination --> */}
-                            <div className="swiper-pagination"></div>
-                        </div>
-                    </div>
-                    <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+            <div className="swiper-container">
+                <div className="swiper-wrapper">
+                    <AliceCarousel
+                        animationType='slide'
+                        autoPlayInterval={3000}
+                        autoPlay={true}
+                        autoPlayStrategy="all"
+                        controlsStrategy="responsive"
+                        disableDotsControls
+                        disableAutoPlayOnAction={true}
+                        items={type === 'product' ? shopByProductItems : shopByCategoryItems}
+                        infinite
+                        mouseTrackingEnabled={true}
+                        // autoHeight={true}
+                        autoWidth
+                        disableButtonsControls //can be enabled if arrows are needed
+                        touchTracking
+                    />
                 </div>
-
             </div>
         )
     };

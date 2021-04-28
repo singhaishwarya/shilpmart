@@ -50,6 +50,17 @@ export default class Header extends React.Component {
                     <a className="navbar-brand" href="#">
                         <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => imageClick()} alt="logoeship" />
                     </a>
+                    <div className="search-container mx-5 w-100 position-relative">
+                        <form className="form-inline my-2 my-lg-0">
+                            <div className="search-bar w-100 d-flex justify-content-center border">
+                                <input className="form-control mr-sm-2" type="text" placeholder="Search" />
+                                <div className="search-btn">
+                                    <button className="btn my-2 my-sm-0" type="submit"><i className="fa fa-search" aria-hidden="true" /></button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
                     <ul className="navbar-nav flex-row">
                         <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">
                             <Link to={'/login'}>Login/Register</Link></a></li>

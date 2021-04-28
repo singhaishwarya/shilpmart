@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faRandom, faHeart, inr } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus, faRandom, faHeart, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import ReactStars from 'react-stars'
 import { Range } from 'rc-slider';
@@ -326,7 +326,7 @@ export default class ProductList extends React.Component {
                                                 </div>
                                             </div>
                                             <h5 className="product-title">{item.title}</h5>
-                                            <span className="product-price"><i className="fa fa-inr" aria-hidden="true"></i> Rs. {item.cost}</span>
+                                            <span className="product-price"><i className="fa fa-inr" aria-hidden="true"></i> <FontAwesomeIcon icon={faRupeeSign} /> {item.cost}</span>
                                         </div>
                                     </div>
                                     )
