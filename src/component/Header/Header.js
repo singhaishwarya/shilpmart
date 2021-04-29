@@ -15,7 +15,8 @@ export default class Header extends React.Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-6 col-6">
-                                <div className="s-icons"> <i className="fa fa-facebook" aria-hidden="true" />
+                                <div className="s-icons"> 
+                                    <i className="fa fa-facebook" aria-hidden="true" />
                                     <i className="fa fa-twitter" aria-hidden="true" />
                                     <i className="fa fa-pinterest" aria-hidden="true" />
                                     <i className="fa fa-linkedin" aria-hidden="true" />
