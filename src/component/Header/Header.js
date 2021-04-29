@@ -51,8 +51,9 @@ export default class Header extends React.Component {
                         <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => imageClick()} alt="logoeship" />
                     </a>
                     <ul className="navbar-nav flex-row">
-                        <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">
-                            <Link to={'/login'}>Login/Register</Link></a></li>
+                        <li className="nav-item"><Link className="nav-link" to={'/login'}>Login/Register</Link></li>
+                        {/* <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">
+                            <Link to={'/login'}>Login/Register</Link></a></li> */}
                         <li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-heart-o" aria-hidden="true"></i><span>0</span></a></li>
                         <li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-random" aria-hidden="true"></i><span>0</span></a></li>
                         <li className="nav-item"><a href="#" className="nav-link"><i className="fa fa-shopping-basket" aria-hidden="true"></i><span>0</span></a></li>
