@@ -5,6 +5,7 @@ import "react-modal-overlay/dist/index.css";
 import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "../ShopByType/ShopByType";
+import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
 import { faRandom, faCheck, faPhone, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 export default class ProductDetail extends React.Component {
@@ -165,7 +166,11 @@ export default class ProductDetail extends React.Component {
 
                             <div className="social-share">
                                 <span>Share:</span>
-                                <a href="#"><i className="fa fa-facebook" aria-hidden="true"></i></a> <a href="#"><i className="fa fa-twitter" aria-hidden="true"></i></a> <a href="#"><i className="fa fa-pinterest" aria-hidden="true"></i></a> <a href="#"><i className="fa fa-linkedin" aria-hidden="true"></i></a> <a href="#"><i className="fa fa-telegram" aria-hidden="true"></i></a>
+                                <a href="#"> <FontAwesomeIcon icon={faFacebook} /></a>
+                                <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
+                                <a href="#"><FontAwesomeIcon icon={faPinterest} /></a>
+                                <a href="#"><FontAwesomeIcon icon={faLinkedin} /></a>
+                                <a href="#"><FontAwesomeIcon icon={faTelegram} /></a>
                             </div>
                         </div>
 

@@ -1342,7 +1342,7 @@ a:hover, a:focus {
 }
 .ui-widget-header {
 	background: #e87f13;
-	borderr-radius: 0
+	border-radius: 0
 }
 .ui-slider .ui-slider-handle {
 	width: 3px;
