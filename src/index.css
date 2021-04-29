@@ -125,7 +125,7 @@ a {
 	text-decoration: none
 }
 .navbar {
-	padding: 0 1rem
+	padding: 0 1rem !important
 }
 .navbar-nav .nav-item .nav-link {
 	color: #0d3356;
