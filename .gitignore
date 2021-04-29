@@ -15,6 +15,7 @@
 
 # dependencies
 /node_modules
+package-lock.json
 /docs/node_modules
 /.pnp
 .pnp.js
@@ -354,3 +355,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+package-lock.json
