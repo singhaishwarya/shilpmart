@@ -4,6 +4,7 @@ import { faCartPlus, faRandom, faHeart, faRupeeSign } from '@fortawesome/free-so
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import ReactStars from 'react-stars'
 import { Range } from 'rc-slider';
+import logo from '../../public/bag2.jpeg';
 import { MultilevelMenu } from 'react-multilevel-menu';
 import MultiSelect from "react-multi-select-component";
 import ReactPaginate from 'react-paginate';
@@ -20,62 +21,54 @@ export default class ProductList extends React.Component {
             currentPage: 0,
             productListData: [
                 {
-                    img: require('../../public/bag2.jpeg'),
+                    img: '../../public/bag2.jpeg',
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11',
-                    _id: 1
+                    discount: '11'
                 },
                 {
                     img: require('../../public/bag1.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11',
-                    _id: 2
+                    discount: '11'
                 }, {
                     img: require('../../public/bag3.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11',
-                    _id: 3
+                    discount: '11'
                 }, {
                     img: require('../../public/bag1.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11',
-                    _id: 4
+                    discount: '11'
                 }, {
                     img: require('../../public/bag2.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11',
-                    _id: 5
+                    discount: '11'
                 }, {
                     img: require('../../public/bag3.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11',
-                    _id: 6
+                    discount: '11'
                 }, {
                     img: require('../../public/bag1.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11',
-                    _id: 7
+                    discount: '11'
                 }, {
                     img: require('../../public/bag3.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11',
-                    _id: 8
+                    discount: '11'
                 }
 
             ],
@@ -196,6 +189,8 @@ export default class ProductList extends React.Component {
             hoverIcon,
             wishlistStatus, priceRange } = this.state;
 
+        console.log(productsData);
+
         return (
             <>
                 <div className="container-fluid">
@@ -203,21 +198,22 @@ export default class ProductList extends React.Component {
                         <div className="col-lg-3">
                             <div className="shop-sidebar">
                                 <article className="filter-group">
-                                    <header className="card-header"> <a href="#" data-toggle="collapse"
-                                        data-target="#collapse_aside2" data-abc="true" aria-expanded="true"
-                                        className="collapsed">
+                                    <header className="card-header">
                                         <h6 className="title">Filter by price </h6>
-                                    </a>
+
                                     </header>
-                                    <div className="filter-content collapse show" id="collapse_aside2" >
+                                    <div className="filter-content">
                                         <div className="price-range-wrapper">
                                             <div id="slider-range" className="price-filter-range" name="rangeInput">
+
                                                 <Range
                                                     defaultValue={priceRange}
                                                     min={0}
-                                                    max={500}
+                                                    max={100}
+                                                    className='filter-slider'
                                                     allowCross={false}
-                                                    onAfterChange={this.onSliderChange} />
+                                                    onAfterChange={this.onSliderChange}
+                                                />
 
                                             </div>
                                             <div className="price-range d-flex justify-content-between">
@@ -237,12 +233,10 @@ export default class ProductList extends React.Component {
                                     </div>
                                 </article>
                                 <article className="filter-group">
-                                    <header className="card-header"> <a href="#" data-toggle="collapse"
-                                        data-target="#collapse_aside4" data-abc="true" className="collapsed"
-                                        aria-expanded="false">
+                                    <header className="card-header">
                                         <h6 className="title">Rating </h6>
-                                    </a> </header>
-                                    <div className="filter-content collapse show" id="collapse_aside4" >
+                                    </header>
+                                    <div className="filter-content">
                                         <div className="filter-rateings">
                                             <div className="testimonial-ratings justify-content-start">
                                                 <ReactStars
@@ -255,12 +249,10 @@ export default class ProductList extends React.Component {
                                     </div>
                                 </article>
                                 <article className="filter-group">
-                                    <header className="card-header"> <a href="#" data-toggle="collapse"
-                                        data-target="#collapse_aside1" data-abc="true" aria-expanded="false"
-                                        className="collapsed">
+                                    <header className="card-header">
                                         <h6 className="title">Categories </h6>
-                                    </a> </header>
-                                    <div className="filter-content collapse show" id="collapse_aside1" >
+                                    </header>
+                                    <div className="filter-content">
                                         <div className="categories-list">
                                             <MultilevelMenu
                                                 list={categories}
@@ -281,36 +273,46 @@ export default class ProductList extends React.Component {
                                         <li className="breadcrumb-item active" aria-current="page">Shop</li>
                                     </ol>
                                 </nav>
-                                <div className="breadcrumb bg-transparent">
-                                    <span className="breadcrumb-item active">Show:</span>
-                                    <span className="breadcrumb-item active" onClick={() => this.onItemPerPage('12')}>12</span>
-                                    <span className="breadcrumb-item active" onClick={() => this.onItemPerPage('24')}>24</span>
-                                    <span className="breadcrumb-item active" onClick={() => this.onItemPerPage('36')}>36</span>
+                                <div className="shop-tools d-flex align-items-center">
+                                    <div className="per-pge-view">
+                                        <span>Show :</span>
+                                        <span className="active-view" onClick={() => this.onItemPerPage('12')}>12</span>
+                                        <span>/</span>
+                                        <span onClick={() => this.onItemPerPage('24')}>24</span>
+                                        <span>/</span>
+                                        <span onClick={() => this.onItemPerPage('36')}>36</span>
+                                    </div>
+
+                                    <div className="grid-view">
+                                        {/* <span className="breadcrumb-item active">Show:</span> */}
+                                        <button onClick={() => this.onLayoutChange('2X2')} ><i class="fas fa-th-large"></i></button>
+                                        <button onClick={() => this.onLayoutChange('3X3')} ><i class="fas fa-th"></i></button>
+                                        <button onClick={() => this.onLayoutChange('4X4')} >4X4</button>
+                                    </div>
+
+                                    <form method="get" className="shorting-wrapper">
+                                        <select name="orderby" className="form-control" aria-label="Shop order">
+                                            <option value="menu_order" selected="selected">Default sorting</option>
+                                            <option value="popularity">Sort by popularity</option>
+                                            <option value="rating">Sort by average rating</option>
+                                            <option value="date">Sort by latest</option>
+                                            <option value="price">Sort by price: low to high</option>
+                                            <option value="price-desc">Sort by price: high to low</option>
+                                        </select>
+                                    </form>
+
                                 </div>
-                                <div className="breadcrumb bg-transparent">
-                                    {/* <span className="breadcrumb-item active">Show:</span> */}
-                                    <button onClick={() => this.onLayoutChange('2X2')} >2X2</button>
-                                    <button onClick={() => this.onLayoutChange('3X3')} >3X3</button>
-                                    <button onClick={() => this.onLayoutChange('4X4')} >4X4</button>
-                                </div>
-                                <form method="get">
-                                    <select name="orderby" className="form-control" aria-label="Shop order">
-                                        <option value="menu_order" selected="selected">Default sorting</option>
-                                        <option value="popularity">Sort by popularity</option>
-                                        <option value="rating">Sort by average rating</option>
-                                        <option value="date">Sort by latest</option>
-                                        <option value="price">Sort by price: low to high</option>
-                                        <option value="price-desc">Sort by price: high to low</option>
-                                    </select>
-                                </form>
+
+
+
                             </section>
 
                             <div className="row">
 
-                                {productsData.map((item, index) => {
+                                {productsData ? productsData.map((item, index) => {
                                     return (<div className={layout} key={index} >
                                         <div className="product-wrapper">
-                                            <div className="prodcut-img"><img src={item.img} className="img-fluid" alt="saree" onClick={() => this.handlePostDetail(item._id)} /></div>
+                                            <div className="prodcut-img"><img src={logo} className="img-fluid" alt="saree" /></div>
                                             <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
                                             <div className="shop-wrapper">
                                                 <div className="shopBtn">
@@ -330,7 +332,7 @@ export default class ProductList extends React.Component {
                                         </div>
                                     </div>
                                     )
-                                })}
+                                }) : ''}
                             </div>
                         </div>
 
