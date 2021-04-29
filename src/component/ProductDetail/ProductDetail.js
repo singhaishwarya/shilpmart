@@ -7,11 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "../ShopByType/ShopByType";
 import { faRandom, faCheck, faPhone, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
-import {
-    TabComponent,
-    TabItemDirective,
-    TabItemsDirective
-} from "@syncfusion/ej2-react-navigations";
 export default class ProductDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -68,8 +63,6 @@ export default class ProductDetail extends React.Component {
     }
     render() {
         const { activeIndex, visible, productDetailData, clicks, wishlistStatus, isActiveTab } = this.state;
-
-        console.log("demo===", isActiveTab)
         return (
             <>
                 <div className="row">
@@ -80,9 +73,10 @@ export default class ProductDetail extends React.Component {
                                     img={productDetailData.src}
                                     zoomScale={1.5}
                                     height={750}
-                                    // width={600}
+                                    width="100%"
                                     // height={600}
                                     transitionTime={0.5}
+                                    cla
                                 />
                                 {/* <a href="">
                                     <img className="mainimage img-fluid" src={require("../../public/product.jpg")} />
@@ -127,8 +121,26 @@ export default class ProductDetail extends React.Component {
                             </div>
 
                             <div className="add-question my-3 py-2">
-                                <a href="#" onClick={this.toggleModal}><i className="fa fa-question-circle" aria-hidden="true"></i> Add a Question</a>
+                                <a href="#" onClick={this.toggleModal}><i className="fa fa-question-circle" aria-hidden="true"></i> Ask a Question</a>
                             </div>
+                            <Modal show={this.state.showModal} closeModal={this.toggleModal}>
+                                <form onSubmit={this.handleSubmit}>
+                                    <h4> Ask a Question </h4>
+                                    <div className="row">
+                                        <label>Name*</label>
+                                        <input type="text" name="name" />
+                                    </div>
+                                    <div className="row">
+                                        <label>Email*</label>
+                                        <input type="text" name="email" />
+                                    </div>
+                                    <div className="row">
+                                        <label>Your inquiry *</label>
+                                        <textarea type="text" name="inquiry" />
+                                    </div>
+                                    <input type="submit" value="Submit" />
+                                </form>
+                            </Modal>
                         </div>
 
                         <div className="product-meta py-2">
@@ -145,8 +157,6 @@ export default class ProductDetail extends React.Component {
                                         size={15}
                                         color2={'#ffd700'} />
                                 </div>
-
-
                             </div>
                             <div className="clearfix"></div>
                             <span className="sku">SKU: <span>{productDetailData.sku}</span></span>

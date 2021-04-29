@@ -6,6 +6,9 @@ import CustomerFeedback from "../CustomerFeedback/CustomerFeedback";
 import ShopByType from "../ShopByType/ShopByType";
 export default class Dashboard extends React.Component {
 
+    constructor(props) {
+        super(props)
+    }
     render() {
         return (
             <>
@@ -17,7 +20,7 @@ export default class Dashboard extends React.Component {
                     </div>
                     <div className="swiper-container shop-categories">
                         <div className="swiper-wrapper">
-                            <ShopByType type='category' />
+                            <ShopByType type='category' {...this.props} />
                         </div>
                     </div>
                 </div>
@@ -37,7 +40,7 @@ export default class Dashboard extends React.Component {
                         </li>
 
                     </ul>
-                    <ShopByType type='product' />
+                    <ShopByType type='product' {...this.props} />
                 </div>
                 <LiveStats />
                 <CustomerFeedback />

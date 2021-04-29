@@ -24,50 +24,58 @@ export default class ProductList extends React.Component {
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11'
+                    discount: '11',
+                    _id: 1
                 },
                 {
                     img: require('../../public/bag1.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11'
+                    discount: '11',
+                    _id: 2
                 }, {
                     img: require('../../public/bag3.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11'
+                    discount: '11',
+                    _id: 3
                 }, {
                     img: require('../../public/bag1.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11'
+                    discount: '11',
+                    _id: 4
                 }, {
                     img: require('../../public/bag2.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11'
+                    discount: '11',
+                    _id: 5
                 }, {
                     img: require('../../public/bag3.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11'
+                    discount: '11',
+                    _id: 6
                 }, {
                     img: require('../../public/bag1.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11'
+                    discount: '11',
+                    _id: 7
                 }, {
                     img: require('../../public/bag3.jpeg'),
                     title: 'beag full streep size',
                     cost: '999',
                     average_rating: 4,
-                    discount: '11'
+                    discount: '11',
+                    _id: 8
                 }
 
             ],
@@ -310,7 +318,7 @@ export default class ProductList extends React.Component {
                                 {productsData.map((item, index) => {
                                     return (<div className={layout} key={index} >
                                         <div className="product-wrapper">
-                                            <div className="prodcut-img"><img src={item.img} className="img-fluid" alt="saree" /></div>
+                                            <div className="prodcut-img"><img src={item.img} className="img-fluid" alt="saree" onClick={() => this.handlePostDetail(item._id)} /></div>
                                             <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
                                             <div className="shop-wrapper">
                                                 <div className="shopBtn">

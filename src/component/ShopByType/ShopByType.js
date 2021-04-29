@@ -3,7 +3,6 @@ import AliceCarousel from 'react-alice-carousel';
 export default class ShopByType extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             shopByProductData: [], shopByProductItems: [],
             type: this.props.type
@@ -111,7 +110,7 @@ export default class ShopByType extends React.Component {
                 </div>
             ],
             shopByCategoryItems: [
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('1')}>
+                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
 
                     <div className="shop-category-wrapper">
                         <div className="categorie-img"><a href="#" className="cate-img"><img
@@ -124,7 +123,7 @@ export default class ShopByType extends React.Component {
                     </div>
 
                 </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('1')}>
+                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
 
                     <div className="shop-category-wrapper">
                         <div className="categorie-img"><a href="#" className="cate-img"><img
@@ -137,7 +136,7 @@ export default class ShopByType extends React.Component {
                     </div>
 
                 </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('1')}>
+                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
 
                     <div className="shop-category-wrapper">
                         <div className="categorie-img"><a href="#" className="cate-img"><img
@@ -150,7 +149,7 @@ export default class ShopByType extends React.Component {
                     </div>
 
                 </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('1')}>
+                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
 
                     <div className="shop-category-wrapper">
                         <div className="categorie-img"><a href="#" className="cate-img"><img
@@ -163,7 +162,7 @@ export default class ShopByType extends React.Component {
                     </div>
 
                 </div >,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('1')}>
+                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
 
                     <div className="shop-category-wrapper">
                         <div className="categorie-img"><a href="#" className="cate-img"><img
@@ -176,7 +175,7 @@ export default class ShopByType extends React.Component {
                     </div>
 
                 </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('1')}>
+                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
 
                     <div className="shop-category-wrapper">
                         <div className="categorie-img"><a href="#" className="cate-img"><img
@@ -196,12 +195,10 @@ export default class ShopByType extends React.Component {
     }
 
     productDetail = (value) => {
-        // this.props.history.push({ pathname: "/product-detail", state: { _id: value } }
-        // );
+        this.props.history.push({ pathname: "/product-detail" });
     }
     productList = (value) => {
-        // this.props.history.push({ pathname: "/product-dlist", state: { category: value } }
-        // );
+        this.props.history.push({ pathname: "/product-list" });
     }
 
     render() {
