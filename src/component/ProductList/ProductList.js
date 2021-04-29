@@ -107,26 +107,18 @@ export default class ProductList extends React.Component {
                     items: [
                         {
                             label: 'Bag',
-                            onSelected: function () {
-                                console.log('Item 1.2.2.1');
-                            }
+                            onSelected: function () { }
                         },
                         {
                             label: 'Luggage',
-                            onSelected: function () {
-                                console.log('Item 1.2.2.1');
-                            }
+                            onSelected: function () { }
                         }, {
                             label: 'Cover',
-                            onSelected: function () {
-                                console.log('Item 1.2.2.1');
-                            }
+                            onSelected: function () { }
                         },
                         {
                             label: 'Mask',
-                            onSelected: function () {
-                                console.log('Item 1.2.2.1');
-                            }
+                            onSelected: function () { }
                         }
                     ]
                 }
@@ -334,7 +326,7 @@ export default class ProductList extends React.Component {
                                                 </div>
                                             </div>
                                             <h5 className="product-title">{item.title}</h5>
-                                            <span className="product-price"><i className="fa fa-inr" aria-hidden="true"></i> <FontAwesomeIcon icon={faRupeeSign} /> {item.cost}</span>
+                                            <span className="product-price"><FontAwesomeIcon icon={faRupeeSign} /> {item.cost}</span>
                                         </div>
                                     </div>
                                     )

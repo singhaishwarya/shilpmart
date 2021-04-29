@@ -17,7 +17,7 @@ export default class Login extends React.Component {
                                     <div className="numbers"><span className="numbers_tp">1</span></div>
                                     <div className="icon"></div>
                                     <div className="date-content">
-                                        <div className="timeline-img"><img src="images/register-1.svg" className="img-fluid" alt="registration" /></div>
+                                        <div className="timeline-img"><img src={require('../../public/register-1.svg')} className="img-fluid" alt="registration" /></div>
                                     </div>
                                     <div className="timeline-content">
                                         <h5 className="title">Quick Registration</h5>
@@ -28,7 +28,7 @@ export default class Login extends React.Component {
                                 <div className="timeline">
                                     <div className="icon"></div>
                                     <div className="date-content">
-                                        <div className="timeline-img"><img src="images/store.svg" className="img-fluid" alt="registration" /></div>
+                                        <div className="timeline-img"><img src={require('../../public/store.svg')} className="img-fluid" alt="registration" /></div>
                                     </div>
                                     <div className="timeline-content">
                                         <h5 className="title">Store Setup &amp; Product Cataloging</h5>
@@ -39,7 +39,7 @@ export default class Login extends React.Component {
                                 <div className="timeline">
                                     <div className="icon"></div>
                                     <div className="date-content">
-                                        <div className="timeline-img"><img src="images/shipping.svg" className="img-fluid" alt="registration" /></div>
+                                        <div className="timeline-img"><img src={require('../../public/shipping.svg')} className="img-fluid" alt="registration" /></div>
                                     </div>
                                     <div className="timeline-content">
                                         <h5 className="title">Hassle Free Shipping</h5>
@@ -50,7 +50,7 @@ export default class Login extends React.Component {
                                 <div className="timeline">
                                     <div className="icon"></div>
                                     <div className="date-content">
-                                        <div className="timeline-img"><img src="images/secured_payments.svg" className="img-fluid" alt="registration" /></div>
+                                        <div className="timeline-img"><img src={require('../../public/secured_payments.svg')} className="img-fluid" alt="registration" /></div>
                                     </div>
                                     <div className="timeline-content">
                                         <h5 className="title">Secure Payments</h5>

@@ -1,197 +1,156 @@
 import React from "react";
 import AliceCarousel from 'react-alice-carousel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 export default class ShopByType extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            shopByProductData: [], shopByProductItems: [],
-            type: this.props.type
+            type: this.props.type,
+            shopByCategoryData: [{
+                img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
+                type: 'Womens wear',
+                cost: '999',
+                average_rating: 4,
+                discount: '11',
+                _id: 1
+            }, {
+                img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
+                type: 'Womens wear',
+                cost: '999',
+                average_rating: 4,
+                discount: '11',
+                _id: 1
+            }, {
+                img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
+                type: 'Womens wear',
+                cost: '999',
+                average_rating: 4,
+                discount: '11',
+                _id: 1
+            }, {
+                img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
+                type: 'Womens wear',
+                cost: '999',
+                average_rating: 4,
+                discount: '11',
+                _id: 1
+            }, {
+                img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
+                type: 'Womens wear',
+                cost: '999',
+                average_rating: 4,
+                discount: '11',
+                _id: 1
+            }, {
+                img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
+                type: 'Womens wear',
+                cost: '999',
+                average_rating: 4,
+                discount: '11',
+                _id: 1
+            }],
+            shopByProductData: [
+                {
+                    img: require('../../public/bag2.jpeg'),
+                    title: 'beag full streep size',
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11',
+                    _id: 1
+                },
+                {
+                    img: require('../../public/bag1.jpeg'),
+                    title: 'beag full streep size',
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11',
+                    _id: 2
+                }, {
+                    img: require('../../public/bag3.jpeg'),
+                    title: 'beag full streep size',
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11',
+                    _id: 3
+                }, {
+                    img: require('../../public/bag1.jpeg'),
+                    title: 'beag full streep size',
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11',
+                    _id: 4
+                }, {
+                    img: require('../../public/bag2.jpeg'),
+                    title: 'beag full streep size',
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11',
+                    _id: 5
+                }, {
+                    img: require('../../public/bag3.jpeg'),
+                    title: 'beag full streep size',
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11',
+                    _id: 6
+                }, {
+                    img: require('../../public/bag1.jpeg'),
+                    title: 'beag full streep size',
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11',
+                    _id: 7
+                }, {
+                    img: require('../../public/bag3.jpeg'),
+                    title: 'beag full streep size',
+                    cost: '999',
+                    average_rating: 4,
+                    discount: '11',
+                    _id: 8
+                }
+            ],
+            shopByCategoryItems: [],
+            shopByProductItems: []
         };
+
     }
 
     componentDidMount() {
         this.setState({
-            // shopByProductData: [{ '05-09-2020', }]//api data to be binded here
-            shopByProductItems: [
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productDetail('1')}>
+            shopByProductItems: this.state.shopByProductData.map((item, index) => {
+                return (<div style={{ width: 310 }} key={index} onClick={() => this.productDetail('1')}>
                     <div className="product-wrapper">
                         <div className="prodcut-img">
                             <a href="#"><img
-                                src={require('../../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
+                                src={item.img} className="img-fluid"
                                 alt="saree" /></a>
                         </div>
-                        <div className="prdocut-dis-lable"><span>11%</span></div>
-                        <h5 className="product-title"><a href="#">100 % Pure Cotton handloom Kasavu
-                                                    Saree</a></h5>
+                        <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
+                        <h5 className="product-title"><a href="#">{item.title}</a></h5>
                         <span className="product-price">
-                            <i className="fa fa-inr" aria-hidden="true" />4800
-                                            </span>
+                            <FontAwesomeIcon icon={faRupeeSign} /> {item.cost}
+                        </span>
                     </div>
-                </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productDetail('1')}>
-
-                    <div className="product-wrapper">
-                        <div className="prodcut-img"><a href="#"><img
-                            src={require('../../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
-                            alt="saree" /></a>
-                        </div>
-                        <div className="prdocut-dis-lable"><span>11%</span></div>
-                        <h5 className="product-title"><a href="#">100 % Pure Cotton handloom Kasavu
-                                                    Saree</a></h5>
-                        <span className="product-price">
-                            <i className="fa fa-inr" aria-hidden="true" />4800
-                                            </span>
-                    </div>
-
-                </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productDetail('1')}>
-
-                    <div className="product-wrapper">
-                        <div className="prodcut-img"><a href="#"><img
-                            src={require('../../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
-                            alt="saree" /></a>
-                        </div>
-                        <div className="prdocut-dis-lable"><span>11%</span></div>
-                        <h5 className="product-title"><a href="#">100 % Pure Cotton handloom Kasavu
-                                                    Saree</a></h5>
-                        <span className="product-price">
-                            <i className="fa fa-inr" aria-hidden="true" />4800
-                                            </span>
-                    </div>
-
-                </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productDetail('1')}>
-
-                    <div className="product-wrapper">
-                        <div className="prodcut-img"><a href="#"><img
-                            src={require('../../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
-                            alt="saree" /></a>
-                        </div>
-                        <div className="prdocut-dis-lable"><span>11%</span></div>
-                        <h5 className="product-title"><a href="#">100 % Pure Cotton handloom Kasavu
-                                                    Saree</a></h5>
-                        <span className="product-price">
-                            <i className="fa fa-inr" aria-hidden="true" />4800
-                                            </span>
-                    </div>
-
-                </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productDetail('1')}>
-
-                    <div className="product-wrapper">
-                        <div className="prodcut-img"><a href="#"><img
-                            src={require('../../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
-                            alt="saree" /></a>
-                        </div>
-                        <div className="prdocut-dis-lable"><span>11%</span></div>
-                        <h5 className="product-title"><a href="#">100 % Pure Cotton handloom Kasavu
-                                                    Saree</a></h5>
-                        <span className="product-price">
-                            <i className="fa fa-inr" aria-hidden="true" />4800
-                                            </span>
-                    </div>
-
-                </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productDetail('1')}>
-
-                    <div className="product-wrapper">
-                        <div className="prodcut-img"><a href="#"><img
-                            src={require('../../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
-                            alt="saree" /></a>
-                        </div>
-                        <div className="prdocut-dis-lable"><span>11%</span></div>
-                        <h5 className="product-title"><a href="#">100 % Pure Cotton handloom Kasavu
-                                                    Saree</a></h5>
-                        <span className="product-price">
-                            <i className="fa fa-inr" aria-hidden="true" />4800
-                                            </span>
-                    </div>
-
-                </div>
-            ],
-            shopByCategoryItems: [
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
+                </div>)
+            }),
+            shopByCategoryItems: this.state.shopByCategoryData.map((item, index) => {
+                return (<div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
 
                     <div className="shop-category-wrapper">
                         <div className="categorie-img"><a href="#" className="cate-img"><img
-                            src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp"
+                            src={item.img}
                             className="img-fluid" alt="cate img" /></a></div>
                         <div className="categorie-img-title">
-                            <h3>Women's Wear</h3>
+                            <h3>{item.type}</h3>
                             <div className="more-products"><a href="#">More Products</a></div>
                         </div>
                     </div>
 
-                </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
-
-                    <div className="shop-category-wrapper">
-                        <div className="categorie-img"><a href="#" className="cate-img"><img
-                            src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp"
-                            className="img-fluid" alt="cate img" /></a></div>
-                        <div className="categorie-img-title">
-                            <h3>Women's Wear</h3>
-                            <div className="more-products"><a href="#">More Products</a></div>
-                        </div>
-                    </div>
-
-                </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
-
-                    <div className="shop-category-wrapper">
-                        <div className="categorie-img"><a href="#" className="cate-img"><img
-                            src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp"
-                            className="img-fluid" alt="cate img" /></a></div>
-                        <div className="categorie-img-title">
-                            <h3>Women's Wear</h3>
-                            <div className="more-products"><a href="#">More Products</a></div>
-                        </div>
-                    </div>
-
-                </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
-
-                    <div className="shop-category-wrapper">
-                        <div className="categorie-img"><a href="#" className="cate-img"><img
-                            src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp"
-                            className="img-fluid" alt="cate img" /></a></div>
-                        <div className="categorie-img-title">
-                            <h3>Women's Wear</h3>
-                            <div className="more-products"><a href="#">More Products</a></div>
-                        </div>
-                    </div>
-
-                </div >,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
-
-                    <div className="shop-category-wrapper">
-                        <div className="categorie-img"><a href="#" className="cate-img"><img
-                            src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp"
-                            className="img-fluid" alt="cate img" /></a></div>
-                        <div className="categorie-img-title">
-                            <h3>Women's Wear</h3>
-                            <div className="more-products"><a href="#">More Products</a></div>
-                        </div>
-                    </div>
-
-                </div>,
-                <div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
-
-                    <div className="shop-category-wrapper">
-                        <div className="categorie-img"><a href="#" className="cate-img"><img
-                            src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp"
-                            className="img-fluid" alt="cate img" /></a></div>
-                        <div className="categorie-img-title">
-                            <h3>Women's Wear</h3>
-                            <div className="more-products"><a href="#">More Products</a></div>
-                        </div>
-                    </div>
-
-                </div>
-            ]
-
-
+                </div>)
+            })
         });
+
     }
 
     productDetail = (value) => {
@@ -203,6 +162,7 @@ export default class ShopByType extends React.Component {
 
     render() {
         const { type, shopByCategoryItems, shopByProductItems } = this.state;
+
         return (
 
             <div className="swiper-container">

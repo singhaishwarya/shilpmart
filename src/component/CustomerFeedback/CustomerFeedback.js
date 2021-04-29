@@ -1,5 +1,6 @@
 import React from "react";
 import AliceCarousel from 'react-alice-carousel';
+import ReactStars from 'react-stars'
 export default class CustomerFeedback extends React.Component {
     constructor() {
         super();
@@ -16,11 +17,7 @@ export default class CustomerFeedback extends React.Component {
                         <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
                             alt="user Dp" /></div>
                         <div className="testimonial-ratings">
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
+                            <span>  <ReactStars count={5} size={10} /></span>
                         </div>
                         <div className="testimonial-text">
                             <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
@@ -37,11 +34,7 @@ export default class CustomerFeedback extends React.Component {
                         <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
                             alt="user Dp" /></div>
                         <div className="testimonial-ratings">
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
+                            <span>  <ReactStars count={5} size={10} /></span>
                         </div>
                         <div className="testimonial-text">
                             <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
@@ -58,11 +51,7 @@ export default class CustomerFeedback extends React.Component {
                         <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
                             alt="user Dp" /></div>
                         <div className="testimonial-ratings">
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
+                            <span>  <ReactStars count={5} size={10} /></span>
                         </div>
                         <div className="testimonial-text">
                             <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
@@ -79,11 +68,7 @@ export default class CustomerFeedback extends React.Component {
                         <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
                             alt="user Dp" /></div>
                         <div className="testimonial-ratings">
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
-                            <span><i className="fa fa-star" aria-hidden="true"></i></span>
+                            <span>  <ReactStars count={5} size={10} /></span>
                         </div>
                         <div className="testimonial-text">
                             <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of

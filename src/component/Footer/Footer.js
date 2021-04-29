@@ -87,7 +87,8 @@ export default class Footer extends React.Component {
                 <div className="copyright-footer">
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-md-6 col-12"> <small>Ministry of Textile <i className="fa fa-copyright"></i> 2020. <br />
+                            <div className="col-md-6 col-12"> <small>Ministry of Textile
+                                <i className="fa fa-copyright"></i> 2020. <br />
                                 Designed &amp; Developed by Digital India Corporation</small>
                             </div>
                             <div className="col-md-6 col-12 text-right"> <a href="#"><img src={require("../../public/gp-300x89.png")}

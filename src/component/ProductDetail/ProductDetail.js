@@ -1,4 +1,4 @@
-import React, { version } from "react";
+import React from "react";
 import Zoom from 'react-img-zoom'
 import { Modal } from "react-modal-overlay";
 import "react-modal-overlay/dist/index.css";
@@ -6,7 +6,7 @@ import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "../ShopByType/ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faPhone, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faPhone, faRupeeSign, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 export default class ProductDetail extends React.Component {
     constructor(props) {
@@ -24,7 +24,6 @@ export default class ProductDetail extends React.Component {
                 category: "Saree",
                 tags: "Handlooms"
             },
-            activeIndex: 0,
             visible: true,
             clicks: 0,
             show: true,
@@ -59,11 +58,17 @@ export default class ProductDetail extends React.Component {
         this.toggleModal();
         // this.setState({ showModal: !this.state.showModal });
     }
-    wishlistToggle = (val) => {
+    wishlistToggle = () => {
         this.setState({ wishlistStatus: !this.state.wishlistStatus });
     }
+
+    handleSellerProfile = () => {
+        this.props.history.push({ pathname: "/seller-profile" })
+
+    }
+
     render() {
-        const { activeIndex, visible, productDetailData, clicks, wishlistStatus, isActiveTab } = this.state;
+        const { productDetailData, clicks, wishlistStatus, isActiveTab } = this.state;
         return (
             <>
                 <div className="row">
@@ -122,7 +127,7 @@ export default class ProductDetail extends React.Component {
                             </div>
 
                             <div className="add-question my-3 py-2">
-                                <a href="#" onClick={this.toggleModal}><i className="fa fa-question-circle" aria-hidden="true"></i> Ask a Question</a>
+                                <a href="#" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</a>
                             </div>
                             <Modal show={this.state.showModal} closeModal={this.toggleModal}>
                                 <form onSubmit={this.handleSubmit}>
@@ -145,13 +150,13 @@ export default class ProductDetail extends React.Component {
                         </div>
 
                         <div className="product-meta py-2">
-                            <div className="seller-details-box my-3">
+                            <div className="seller-details-box my-3" onClick={() => this.handleSellerProfile()}>
                                 <div className="title-meta"><em>Know your weaver</em></div>
                                 <div className="seller-logo"><img src={require("../../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /></div>
                                 <div className="seller-contact">
                                     <p className="s-title">saenterpris36</p>
                                     <small> <FontAwesomeIcon icon={faPhone} /> &nbsp; 9304637113</small><br /><br />
-                                    <small><i className="fa fa-envelope-square" aria-hidden="true"></i> &nbsp; info@eshilpmart.com</small><br />
+                                    <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; info@eshilpmart.com</small><br />
                                     <ReactStars
                                         count={5}
                                         edit={false}

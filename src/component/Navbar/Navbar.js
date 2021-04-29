@@ -137,8 +137,9 @@ export default class Navbar extends React.Component {
                                 )}
                             </div>
                             <ul className="navbar-nav mr-auto">
-                                <li className="nav-item nav-link active">  <i className="fa fa-home"
-                                    aria-hidden="true"></i> Home <span className="sr-only">(current)</span> </li>
+                                <li className="nav-item nav-link active">
+                                    <i className="fa fa-home"
+                                        aria-hidden="true"></i> Home <span className="sr-only">(current)</span> </li>
                                 <li className="nav-item nav-link"> ABOUT US </li>
                                 <li className="nav-item nav-link"> SHOP </li>
                                 <li className="nav-item nav-link"> CUSTOMER SERVICE </li>
