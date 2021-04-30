@@ -12,23 +12,23 @@ import "./public/bootstrap.min.css";
 import "./public/jbility.css";
 import "./public/swiper-bundle.min.css";
 function App() {
-    return (
-        <BrowserRouter>
-            <div className="grid-container">
-                <Header />
-                <main>
+  return (
+    <BrowserRouter>
+      <div className="grid-container">
+        <Header />
+        <main>
 
-                    <Route path="/" component={Dashboard} exact />
-                    <Route path="/login" component={Login} exact />
-                    <Route path="/product-list" component={ProductList} exact />
-                    <Route path="/product-detail" component={ProductDetail} exact />
-                    <Route path="/seller-profile" component={SellerProfile} exact />
+          <Route path="/" component={Dashboard} exact />
+          <Route path="/login" component={Login} exact />
+          <Route path="/product-list" component={ProductList} exact />
+          <Route path="/product-detail" component={ProductDetail} exact />
+          <Route path="/seller-profile" component={SellerProfile} exact />
 
-                </main>
-                <Footer />
-            </div>
-        </BrowserRouter>
-    );
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  );
 }
 
 export default App;

@@ -3,5 +3,6 @@
     "[Log]": {
         "editor.wordWrap": "wordWrapColumn",
         "editor.wordWrapColumn": 160
-    }
+    },
+    "editor.tabSize": 2
 }

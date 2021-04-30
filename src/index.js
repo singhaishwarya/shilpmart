@@ -6,8 +6,8 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import 'rc-slider/assets/index.css';
 
 ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById('root')
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
 );
