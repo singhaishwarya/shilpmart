@@ -70,8 +70,8 @@ export default class Header extends React.Component {
 
     }
 
-    imageClick = () => {
-        console.log('Click');
+    onHomePage = () => {
+        // this.props.history.push({ pathname: "/" })
     }
     render() {
         const { text, seachResults } = this.state;
@@ -115,7 +115,7 @@ export default class Header extends React.Component {
 
                 <div className="header-middle d-flex justify-content-between align-items-center px-3">
                     <a className="navbar-brand" href="#">
-                        <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => this.imageClick()} alt="logoeship" />
+                        <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => this.onHomePage()} alt="logoeship" />
                     </a>
                     {/* <div >
                         <input id="query" type="text" onChange={this.onTextChange} value={text} />
