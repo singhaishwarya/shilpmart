@@ -50,23 +50,10 @@ export default class Header extends React.Component {
             </div>
           </a>
         </div>
-
-
-
-
-
       )
-      )
-
-          </div >
-        )
-        )
-
-
-    );
-
-<<<<<<< HEAD
+      ));
   }
+
 
   onHomePage = () => {
     // this.props.history.push({ pathname: "/" })
@@ -79,10 +66,12 @@ export default class Header extends React.Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-6 col-6">
-                <div className="s-icons"> <FontAwesomeIcon icon={faFacebook} />
-                  <FontAwesomeIcon icon={faTwitter} />
-                  <FontAwesomeIcon icon={faLinkedin} />
-                  <FontAwesomeIcon icon={faTelegram} />
+                <div className="s-icons">
+                  <a href="#"><FontAwesomeIcon icon={faFacebook} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faPinterestP} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faLinkedin} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faTelegram} /></a>
                 </div>
               </div>
               <div className="col-md-6 col-6">
@@ -95,66 +84,28 @@ export default class Header extends React.Component {
                       <img src={require('../../public/decrease-font-size.svg')} alt="decrease font" />
                     </div>
                     <div className="acess-icon balloon">
-                      <i id="contrast" className="fa fa-adjust" aria-hidden="true" title="contrast" />
+                      <FontAwesomeIcon icon={faAdjust} />
                     </div>
                     <div className="acess-icon balloon">
                       <i className="fa fa-undo" aria-hidden="true" title="reset" />
-=======
-    onHomePage = () => {
-                        // this.props.history.push({ pathname: "/" })
-                      }
-    render() {
-        const {text, seachResults} = this.state;
-        return (
-            <>
-                        <div className="header-top py-1  ">
-                          <div className="container-fluid">
-                            <div className="row">
-                              <div className="col-md-6 col-6">
-                                <div className="s-icons">
-                                  <a href="#"><FontAwesomeIcon icon={faFacebook} /></a>
-                                  <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
-                                  <a href="#"><FontAwesomeIcon icon={faPinterestP} /></a>
-                                  <a href="#"><FontAwesomeIcon icon={faLinkedin} /></a>
-                                  <a href="#"><FontAwesomeIcon icon={faTelegram} /></a>
-                                </div>
-                              </div>
-                              <div className="col-md-6 col-6">
-                                <div className="acess-container float-right">
-                                  <div id="acess-icons" className="access_icons">
-                                    <div className="acess-icon balloon" title="large font size">
-                                      <img src={require('../../public/increase-font-size.svg')} alt="" />
-                                    </div>
-                                    <div className="acess-icon balloon" title="small font size">
-                                      <img src={require('../../public/decrease-font-size.svg')} alt="decrease font" />
-                                    </div>
-                                    <div className="acess-icon balloon">
-                                      <FontAwesomeIcon icon={faAdjust} />
-                                    </div>
-                                    <div className="acess-icon balloon">
-                                      <i className="fa fa-undo" aria-hidden="true" title="reset" />
-                                    </div>
-                                  </div>
-                                  <a className="skipcontent" href="#maincontent">Skip to Content</a>
-                                </div>
-                              </div>
-                            </div>
->>>>>>> 72d273704f88fafeb6a2a232b27b91d5d1f40459
-                          </div>
-                        </div>
-                        <a className="skipcontent" href="#maincontent">Skip to Content</a>
-                      </div>
                     </div>
                   </div>
+                  <a className="skipcontent" href="#maincontent">Skip to Content</a>
                 </div>
               </div>
-              {/* //   <!--header - middle-- > */}
+            </div>
+          </div>
+        </div>
+        <a className="skipcontent" href="#maincontent">Skip to Content</a>
 
-              <div className="header-middle d-flex justify-content-between align-items-center px-3">
-                <a className="navbar-brand" href="#">
-                  <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => this.onHomePage()} alt="logoeship" />
-                </a>
-                {/* <div >
+
+        {/* //   <!--header - middle-- > */}
+
+        < div className="header-middle d-flex justify-content-between align-items-center px-3" >
+          <a className="navbar-brand" href="#">
+            <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => this.onHomePage()} alt="logoeship" />
+          </a>
+          {/* <div >
                         <input id="query" type="text" onChange={this.onTextChange} value={text} />
                         <div className="mbsc-form-group ">
                             <div className="mbsc-grid">
@@ -164,37 +115,20 @@ export default class Header extends React.Component {
                         </div>
 
                     </div> */}
-<<<<<<< HEAD
-              <div className="search-container mx-5 w-100 position-relative">
-                <div className="form-inline my-2 my-lg-0">
-                  <div className="search-bar w-100 d-flex justify-content-center border">
-                    <input onChange={this.onTextChange} value={text} placeholder="Search" />
-                    {/* <div className="search-btn"> */}
-                    {/* <button className="btn my-2 my-sm-0" >
-                                    <FontAwesomeIcon icon={faSearch} /></button> */}
-                    {/* </div> */}
-                  </div>
+          <div className="search-container mx-5 w-100 position-relative">
+            <div className="form-inline my-2 my-lg-0">
+              <div className="search-bar w-100 d-flex justify-content-start">
+                <input onChange={this.onTextChange} value={text} placeholder="Search" />
+                <div class="search-btn">
+                  <button class="btn my-2 my-sm-0" type="submit">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </button>
                 </div>
-                {this.renderSearchOptions()}
-              </div>
-              <ul className="navbar-nav flex-row">
-                <li className="nav-item"><Link className="nav-link" to={'/login'}>Login/Register</Link></li>
-                {/* <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">
-=======
-                    <div className="search-container mx-5 w-100 position-relative">
-                        <div className="form-inline my-2 my-lg-0">
-                            <div className="search-bar w-100 d-flex justify-content-start">
-                                <input onChange={this.onTextChange} value={text} placeholder="Search" />
-                                <div class="search-btn">
-		                        <button class="btn my-2 my-sm-0" type="submit">
-                                    <FontAwesomeIcon icon={faSearch}/>
-                                </button>
-	  </div>
-                                {/* <div className="search-btn"> */}
+                {/* <div className="search-btn"> */}
                 {/* <button className="btn my-2 my-sm-0" >
                                     <FontAwesomeIcon icon={faSearch} /></button> */}
                 {/* </div> */}
-                            </div>
+              </div>
             </div>
             <div className="search-result-wrapper">
               <div className="row">
@@ -205,7 +139,6 @@ export default class Header extends React.Component {
           <ul className="navbar-nav flex-row">
             <li className="nav-item"><Link className="nav-link" to={'/login'}>Login/Register</Link></li>
             {/* <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">
->>>>>>> 72d273704f88fafeb6a2a232b27b91d5d1f40459
                             <Link to={'/login'}>Login/Register</Link></a></li> */}
             <li className="nav-item"><a href="#" className="nav-link">
               <FontAwesomeIcon icon={faHeart} /><span>0</span></a></li>
@@ -214,7 +147,7 @@ export default class Header extends React.Component {
             <li className="nav-item"><a href="#" className="nav-link">
               <FontAwesomeIcon icon={faShoppingBasket} /><span>0</span></a></li>
           </ul>
-        </div>
+        </div >
         <Navbar />
       </>
     );

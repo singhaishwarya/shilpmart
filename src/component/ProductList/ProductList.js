@@ -302,7 +302,6 @@ export default class ProductList extends React.Component {
               </section>
 
               <div className="row">
-
                 {productsData ? productsData.map((item, index) => {
                   return (<div className={layout} key={index} onClick={() => this.handlePostDetail(index)}>
                     <div className="product-wrapper">
@@ -329,8 +328,8 @@ export default class ProductList extends React.Component {
                 }) : ''}
               </div>
             </div>
-
-          </div></div>
+          </div>
+        </div>
         <ReactPaginate
           previousLabel={"prev"}
           nextLabel={"next"}
