@@ -71,13 +71,13 @@ export default class ProductDetail extends React.Component {
         const { productDetailData, clicks, wishlistStatus, isActiveTab } = this.state;
         return (
             <>
-                <div className="row">
+                <div className="row py-5">
                     <div className="col-lg-6 col-md-6 col-12">
                         <div className="product-img-wrapper">
-                            <div className="easyzoom">
+                            
                                 <Zoom
                                     img={productDetailData.src}
-                                    zoomScale={1.5}
+                                    zoomScale={1.25}
                                     height={750}
                                     width="100%"
                                     // height={600}
@@ -87,14 +87,14 @@ export default class ProductDetail extends React.Component {
                                 {/* <a href="">
                                     <img className="mainimage img-fluid" src={require("../../public/product.jpg")} />
                                 </a> */}
-                            </div>
+                           
                         </div>
                     </div>
                     <div className="col-lg-6 col-md-6 col-12">
                         <div className="product-summary-wrapper">
                             <div className="breadcrumb-section d-flex justify-content-between">
                                 <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb bg-transparent">
+                                    <ol className="breadcrumb pt-0 pl-0 mb-0 bg-transparent">
                                         <li className="breadcrumb-item"><a href="#">Home</a></li>
                                         <li className="breadcrumb-item"><a href="#">Shop</a></li>
                                         <li className="breadcrumb-item"><a href="#">Product category</a></li>
@@ -104,7 +104,7 @@ export default class ProductDetail extends React.Component {
                             </div>
                             <h1>{productDetailData.title}</h1>
                             <p className="product-price">
-                                <FontAwesomeIcon icon={faRupeeSign} />
+                                {/* <FontAwesomeIcon icon={faRupeeSign} /> */}
                                 <span>{productDetailData.cost}</span></p>
                             <div className="short-decription"><p>Short Decription</p></div>
                             <form className="addtocart d-flex justify-content-start">

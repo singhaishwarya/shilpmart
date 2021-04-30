@@ -31,7 +31,7 @@ export default class LiveStats extends React.Component {
                             alt="artisan" /></div>
                         <div className="static-details">
                             <h3><span>5126</span></h3>
-                            <h4>Weavers</h4>
+                            <h4>artisan</h4>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@ export default class LiveStats extends React.Component {
                             alt="product" /></div>
                         <div className="static-details">
                             <h3><span>5126</span></h3>
-                            <h4>Weavers</h4>
+                            <h4>products</h4>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@ export default class LiveStats extends React.Component {
                             alt="buyer" /></div>
                         <div className="static-details">
                             <h3><span>5126</span></h3>
-                            <h4>Weavers</h4>
+                            <h4>buyers</h4>
                         </div>
                     </div>
                 </div>

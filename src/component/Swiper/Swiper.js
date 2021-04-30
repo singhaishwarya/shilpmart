@@ -24,10 +24,7 @@ export default class Swiper extends React.Component {
         return (
             <div className="row">
                 <div className="col">
-                    <div className="swiper-container slider">
-                        <div className="swiper-wrapper">
-                            <div className="swiper-slide slide">
-                                <AliceCarousel
+                <AliceCarousel
                                     animationType='fadeout'
                                     autoPlayInterval={3000}
                                     autoPlay={true}
@@ -45,16 +42,9 @@ export default class Swiper extends React.Component {
                                     disableButtonsControls //can be enabled if arrows are needed
                                     // responsive='responsive'
                                     touchTracking
-                                />
-                            </div>
-                            {/* <!-- Add Pagination --> */}
-                            {/* <!--<div className="swiper-pagination swiper-pagination-white"></div>--> */}
-                            {/* <!-- Add Arrows --> */}
-                            {/* <div className="swiper-button-next swiper-button-white"></div>
-                        <div className="swiper-button-prev swiper-button-white"></div> */}
-                        </div>
-                    </div>
-                </div > </div >
+                                /> 
+                </div > 
+            </div >
         );
     }
 }

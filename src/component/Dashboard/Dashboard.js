@@ -13,7 +13,8 @@ export default class Dashboard extends React.Component {
         return (
             <>
                 <Swiper />
-                <div className="col">
+               
+                <div className="w-100 py-5">
                     <div className="section-title">
                         <span><a href="#">Shop by Categories</a></span>
                         <p>Choose from authentic handmade product categories</p>
@@ -24,7 +25,10 @@ export default class Dashboard extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="col">
+               
+                
+                <div className="row py-5 section-bg">
+                    <div className="col shopby-product">
                     <div className="section-title">
                         <span><a href="#">Shop by Product</a></span>
                         <p>Choose from authentic handmade product categories</p>
@@ -41,6 +45,7 @@ export default class Dashboard extends React.Component {
 
                     </ul>
                     <ShopByType type='product' {...this.props} />
+                </div>
                 </div>
                 <LiveStats />
                 <CustomerFeedback />

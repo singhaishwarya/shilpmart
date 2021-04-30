@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faRandom, faHeart, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus, faRandom, faHeart, faRupeeSign, faYenSign, faThLarge } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import ReactStars from 'react-stars'
 import { Range } from 'rc-slider';
@@ -285,7 +285,7 @@ export default class ProductList extends React.Component {
 
                                     <div className="grid-view">
                                         {/* <span className="breadcrumb-item active">Show:</span> */}
-                                        <button onClick={() => this.onLayoutChange('2X2')} ><i class="fas fa-th-large"></i></button>
+                                        <button onClick={() => this.onLayoutChange('2X2')} ><FontAwesomeIcon icon ={faThLarge}/> </button>
                                         <button onClick={() => this.onLayoutChange('3X3')} ><i class="fas fa-th"></i></button>
                                         <button onClick={() => this.onLayoutChange('4X4')} >4X4</button>
                                     </div>
@@ -354,3 +354,5 @@ export default class ProductList extends React.Component {
         );
     }
 }
+
+

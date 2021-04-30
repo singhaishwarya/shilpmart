@@ -7,9 +7,9 @@ import Footer from "./component/Footer/Footer";
 import Dashboard from './component/Dashboard/Dashboard';
 import ProductDetail from './component/ProductDetail/ProductDetail';
 import SellerProfile from './component/SellerProfile/SellerProfile';
-import "./index.css";
 import "./public/bootstrap.min.css";
 import "./public/jbility.css";
+import "./index.css";
 import "./public/swiper-bundle.min.css";
 function App() {
     return (
@@ -17,13 +17,13 @@ function App() {
             <div className="grid-container">
                 <Header />
                 <main>
-
+                    <div className="container-fluid">
                     <Route path="/" component={Dashboard} exact />
                     <Route path="/login" component={Login} exact />
                     <Route path="/product-list" component={ProductList} exact />
                     <Route path="/product-detail" component={ProductDetail} exact />
                     <Route path="/seller-profile" component={SellerProfile} exact />
-
+                    </div>
                 </main>
                 <Footer />
             </div>

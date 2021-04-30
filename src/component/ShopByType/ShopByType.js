@@ -119,33 +119,34 @@ export default class ShopByType extends React.Component {
     componentDidMount() {
         this.setState({
             shopByProductItems: this.state.shopByProductData.map((item, index) => {
-                return (<div style={{ width: 310 }} key={index} onClick={() => this.productDetail('1')}>
-                    <div className="product-wrapper">
+                return (<div className="product-wrapper" key={index} onClick={() => this.productDetail('1')}>
+                    
                         <div className="prodcut-img">
                             <a href="#"><img
                                 src={item.img} className="img-fluid"
                                 alt="saree" /></a>
                         </div>
                         <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
+                        
                         <h5 className="product-title"><a href="#">{item.title}</a></h5>
                         <span className="product-price">
                             <FontAwesomeIcon icon={faRupeeSign} /> {item.cost}
                         </span>
-                    </div>
+                    
                 </div>)
             }),
             shopByCategoryItems: this.state.shopByCategoryData.map((item, index) => {
-                return (<div className="swiper-slide" style={{ width: 310 }} onClick={() => this.productList('category')}>
-
-                    <div className="shop-category-wrapper">
-                        <div className="categorie-img"><a href="#" className="cate-img"><img
-                            src={item.img}
-                            className="img-fluid" alt="cate img" /></a></div>
+                return (<div className="shop-category-wrapper" onClick={() => this.productList('category')}>
+                    
+                        <div className="categorie-img"><a href="#" className="cate-img">
+                            <img src={item.img} className="img-fluid" alt="cate img" />
+                            </a>
+                        </div>
                         <div className="categorie-img-title">
                             <h3>{item.type}</h3>
                             <div className="more-products"><a href="#">More Products</a></div>
                         </div>
-                    </div>
+                    
 
                 </div>)
             })
@@ -165,13 +166,13 @@ export default class ShopByType extends React.Component {
 
         return (
 
-            <div className="swiper-container">
-                <div className="swiper-wrapper">
+            
                     <AliceCarousel
                         animationType='slide'
                         autoPlayInterval={3000}
                         autoPlay={true}
                         autoPlayStrategy="all"
+                        spaceBetween="30"
                         controlsStrategy="responsive"
                         disableDotsControls
                         disableAutoPlayOnAction={true}
@@ -183,8 +184,7 @@ export default class ShopByType extends React.Component {
                         disableButtonsControls //can be enabled if arrows are needed
                         touchTracking
                     />
-                </div>
-            </div>
+              
         )
     };
 }

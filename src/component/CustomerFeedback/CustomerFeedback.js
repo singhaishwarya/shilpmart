@@ -12,8 +12,8 @@ export default class CustomerFeedback extends React.Component {
     componentDidMount() {
         this.setState({
             customerFeedbackItems: [
-                <div className="swiper-slide" style={{ width: 445 }}>
-                    <div className="testimonials-block">
+                <div className="testimonials-block" style={{ width: 445 }}>
+                    
                         <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
                             alt="user Dp" /></div>
                         <div className="testimonial-ratings">
@@ -26,11 +26,11 @@ export default class CustomerFeedback extends React.Component {
                             <h5>Anuradha Mitra</h5>
 
                         </div>
-                    </div>
+                  
 
                 </div>,
-                <div className="swiper-slide" style={{ width: 445 }}>
-                    <div className="testimonials-block">
+                <div className="testimonials-block" style={{ width: 445 }}>
+                    
                         <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
                             alt="user Dp" /></div>
                         <div className="testimonial-ratings">
@@ -43,11 +43,11 @@ export default class CustomerFeedback extends React.Component {
                             <h5>Anuradha Mitra</h5>
 
                         </div>
-                    </div>
+                    
 
                 </div>,
-                <div className="swiper-slide" style={{ width: 445 }}>
-                    <div className="testimonials-block">
+                <div className="testimonials-block" style={{ width: 445 }}>
+                    
                         <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
                             alt="user Dp" /></div>
                         <div className="testimonial-ratings">
@@ -59,9 +59,7 @@ export default class CustomerFeedback extends React.Component {
                                             handicraft product from a single stop shop.​​</p>
                             <h5>Anuradha Mitra</h5>
 
-                        </div>
-                    </div>
-
+                        </div>                   
                 </div>,
                 <div className="swiper-slide" style={{ width: 445 }}>
                     <div className="testimonials-block">
@@ -89,7 +87,7 @@ export default class CustomerFeedback extends React.Component {
         return (
             <>
                 {/* //    < !--From Our Customers-- > */}
-                <div className="row py-5 section-background">
+                <div className="row py-5 section-bg">
                     <div className="col">
                         <div className="section-title">
                             <span>From Our Customers</span>
@@ -97,8 +95,8 @@ export default class CustomerFeedback extends React.Component {
                         </div>
 
                         {/* <!-- Swiper --> */}
-                        <div className="swiper-container testimonials">
-                            <div className="swiper-wrapper">
+                        <div className="testimonials">
+                           
                                 <AliceCarousel
                                     animationType='slide'
                                     autoPlayInterval={3000}
@@ -116,7 +114,7 @@ export default class CustomerFeedback extends React.Component {
                                     touchTracking
                                 />
 
-                            </div>
+                            
                             {/* <!-- Add Pagination --> */}
                             <div className="swiper-pagination"></div>
                         </div>

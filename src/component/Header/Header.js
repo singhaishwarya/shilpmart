@@ -2,8 +2,8 @@ import React from "react";
 import { Link, } from "react-router-dom";
 import Navbar from '../Navbar/Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faRandom, faHeart, faShoppingBasket } from '@fortawesome/free-solid-svg-icons'
-import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
+import { faSearch, faRandom, faHeart, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
+import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram, faPinterestP } from '@fortawesome/free-brands-svg-icons'
 
 export default class Header extends React.Component {
 
@@ -43,27 +43,25 @@ export default class Header extends React.Component {
             return null;
         }
         return (
-            seachResults.reduce(
-                function (accumulator, currentValue, currentIndex, array) {
-                    if (currentIndex % 2 === 0)
-                        accumulator.push(array.slice(currentIndex, currentIndex + 2));
-                    return accumulator;
-                }, []).map((item, index) => (
-                    <div className="row" key={index}>
-                        <div className="col-6">
-                            <div className="title-meta">
-                                <img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' style={{ maxHeight: 50 }} />{item[0]}
+            seachResults.map((item, index) => (
+                    
+                        <div className="col-6 serach-result-col">
+                            <a href="#">
+                            <div className="result-product-wrapper">
+                                <span><img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' alt="product"/></span>
+                                <span>
+                                {item}
                                 <button type="submit" className="cart-btn">Add to cart</button>
+                                </span>
+                                
                             </div>
+                            </a>
                         </div>
-                        { item[1] && <div className="col-6">
-                            <div className="title-meta">
-                                <img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' style={{ maxHeight: 50 }} />{item[1]}</div>
-                            <button type="submit" className="cart-btn">Add to cart</button>
+                        
+                        
 
-                        </div>}
-
-                    </div>
+                   
+                    
                 )
                 )
 
@@ -83,10 +81,12 @@ export default class Header extends React.Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-6 col-6">
-                                <div className="s-icons"> <FontAwesomeIcon icon={faFacebook} />
-                                    <FontAwesomeIcon icon={faTwitter} />
-                                    <FontAwesomeIcon icon={faLinkedin} />
-                                    <FontAwesomeIcon icon={faTelegram} />
+                                <div className="s-icons"> 
+                                    <a href="#"><FontAwesomeIcon icon={faFacebook} /></a>
+                                    <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
+                                    <a href="#"><FontAwesomeIcon icon={faPinterestP} /></a>
+                                    <a href="#"><FontAwesomeIcon icon={faLinkedin} /></a>
+                                    <a href="#"><FontAwesomeIcon icon={faTelegram} /></a>
                                 </div>
                             </div>
                             <div className="col-md-6 col-6">
@@ -99,7 +99,7 @@ export default class Header extends React.Component {
                                             <img src={require('../../public/decrease-font-size.svg')} alt="decrease font" />
                                         </div>
                                         <div className="acess-icon balloon">
-                                            <i id="contrast" className="fa fa-adjust" aria-hidden="true" title="contrast" />
+                                            <FontAwesomeIcon icon={faAdjust}/>
                                         </div>
                                         <div className="acess-icon balloon">
                                             <i className="fa fa-undo" aria-hidden="true" title="reset" />
@@ -129,15 +129,24 @@ export default class Header extends React.Component {
                     </div> */}
                     <div className="search-container mx-5 w-100 position-relative">
                         <div className="form-inline my-2 my-lg-0">
-                            <div className="search-bar w-100 d-flex justify-content-center border">
+                            <div className="search-bar w-100 d-flex justify-content-start">
                                 <input onChange={this.onTextChange} value={text} placeholder="Search" />
+                                <div class="search-btn">
+		                        <button class="btn my-2 my-sm-0" type="submit">
+                                    <FontAwesomeIcon icon={faSearch}/>
+                                </button>
+	  </div>
                                 {/* <div className="search-btn"> */}
                                 {/* <button className="btn my-2 my-sm-0" >
                                     <FontAwesomeIcon icon={faSearch} /></button> */}
                                 {/* </div> */}
                             </div>
                         </div>
-                        {this.renderSearchOptions()}
+                        <div className="search-result-wrapper">
+                             <div className="row">
+                                {this.renderSearchOptions()}
+                        </div>
+                        </div>
                     </div>
                     <ul className="navbar-nav flex-row">
                         <li className="nav-item"><Link className="nav-link" to={'/login'}>Login/Register</Link></li>

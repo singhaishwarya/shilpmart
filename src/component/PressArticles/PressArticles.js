@@ -18,13 +18,14 @@ export default class PressArticles extends React.Component {
                                 <img
                                     src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/weaver1-768x403.webp"
                                     className="img-fluid" alt="news" />
+                                    <div className="overlay-news"></div>
                             </figure>
 
                             <div className="news-date"><span id="date">05</span><span id="month">Sep</span></div>
 
                             <div className="news-info-box">
                                 <div className="news-details">
-                                    <div className="news-categories">the new indian express</div>
+                                    <div className="news-categories"><a href="#">the new indian express</a></div>
                                     <h3 className="news-title">News Title</h3>
                                     <div className="news-meta d-flex justify-content-center">
                                         <div className="meta">Admin meta</div>
@@ -46,13 +47,15 @@ export default class PressArticles extends React.Component {
                             <figure className="news-img">
                                 <img
                                     src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/weaver1-768x403.webp"
-                                    className="img-fluid" alt="news" /></figure>
+                                    className="img-fluid" alt="news" />
+                                    <div className="overlay-news"></div>
+                                </figure>
 
                             <div className="news-date"><span id="date">05</span><span id="month">Sep</span></div>
 
                             <div className="news-info-box">
                                 <div className="news-details">
-                                    <div className="news-categories">the new indian express</div>
+                                    <div className="news-categories"><a href="#">the new indian express</a></div>
                                     <h3 className="news-title">News Title</h3>
                                     <div className="news-meta d-flex justify-content-center">
                                         <div className="meta">Admin meta</div>
