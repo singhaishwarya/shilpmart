@@ -14,7 +14,6 @@ export default class ProductDetail extends React.Component {
         this.state = {
             isActiveTab: 0,
             wishlistStatus: false,
-            product_id: this.props._id,
             productDetailData:
             {
                 src: require("../../public/product.jpg"),

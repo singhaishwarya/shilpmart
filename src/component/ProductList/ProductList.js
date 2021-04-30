@@ -117,7 +117,7 @@ export default class ProductList extends React.Component {
                 }
             ],
             layout: "col-lg-3 col-sm-6 col-6", //default 4X4
-            priceRange: [20, 50]
+            priceRange: [200, 500]
         };
     }
     componentDidMount() {
@@ -187,9 +187,8 @@ export default class ProductList extends React.Component {
             hoveredItem,
             layout,
             hoverIcon,
-            wishlistStatus, priceRange } = this.state;
-
-        console.log(productsData);
+            wishlistStatus,
+            priceRange } = this.state;
 
         return (
             <>
@@ -209,10 +208,10 @@ export default class ProductList extends React.Component {
                                                 <Range
                                                     defaultValue={priceRange}
                                                     min={0}
-                                                    max={100}
+                                                    max={2000}
                                                     className='filter-slider'
                                                     allowCross={false}
-                                                    onAfterChange={this.onSliderChange}
+                                                    onAfterChange={value => { this.onSliderChange(value) }}
                                                 />
 
                                             </div>
@@ -220,10 +219,9 @@ export default class ProductList extends React.Component {
 
                                                 <span>
                                                     Price:
-                                            <input type="number" min="0" max="9900" defaultValue={priceRange[0]}
-                                                        id="min_price" className="price-range-field" />
+                                            <input type="number" min="0" max="9900" defaultValue={priceRange[0]} value={priceRange[0]} id="min_price" className="price-range-field" /> <span>-</span>
                                                     <input type="number" min="0" max="10000"
-                                                        defaultValue={priceRange[1]} id="max_price"
+                                                        defaultValue={priceRange[1]} value={priceRange[1]} id="max_price"
                                                         className="price-range-field" /></span>
                                                 <span><button className="price-range-search"
                                                     id="price-range-submit">Filter</button></span>
@@ -285,8 +283,8 @@ export default class ProductList extends React.Component {
 
                                     <div className="grid-view">
                                         {/* <span className="breadcrumb-item active">Show:</span> */}
-                                        <button onClick={() => this.onLayoutChange('2X2')} ><i class="fas fa-th-large"></i></button>
-                                        <button onClick={() => this.onLayoutChange('3X3')} ><i class="fas fa-th"></i></button>
+                                        <button onClick={() => this.onLayoutChange('2X2')} ><i className="fas fa-th-large"></i></button>
+                                        <button onClick={() => this.onLayoutChange('3X3')} ><i className="fas fa-th"></i></button>
                                         <button onClick={() => this.onLayoutChange('4X4')} >4X4</button>
                                     </div>
 
@@ -302,15 +300,12 @@ export default class ProductList extends React.Component {
                                     </form>
 
                                 </div>
-
-
-
                             </section>
 
                             <div className="row">
 
                                 {productsData ? productsData.map((item, index) => {
-                                    return (<div className={layout} key={index} >
+                                    return (<div className={layout} key={index} onClick={() => this.handlePostDetail(index)}>
                                         <div className="product-wrapper">
                                             <div className="prodcut-img"><img src={logo} className="img-fluid" alt="saree" /></div>
                                             <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
