@@ -7,9 +7,9 @@ import Footer from "./component/Footer/Footer";
 import Dashboard from './component/Dashboard/Dashboard';
 import ProductDetail from './component/ProductDetail/ProductDetail';
 import SellerProfile from './component/SellerProfile/SellerProfile';
-import "./index.css";
 import "./public/bootstrap.min.css";
 import "./public/jbility.css";
+import "./index.css";
 import "./public/swiper-bundle.min.css";
 function App() {
   return (
