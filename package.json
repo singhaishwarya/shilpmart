@@ -1,55 +1,54 @@
 {
-    "name": "eShilpMart",
-    "version": "0.1.0",
-    "license": "MIT",
-    "devDependencies": {
-        "chai": "^4.2.0",
-        "gh-pages": "^2.0.1",
-        "prettier": "^1.17.1",
-        "react-scripts": "^3.0.1"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.35",
-        "@fortawesome/free-brands-svg-icons": "^5.15.3",
-        "@fortawesome/free-regular-svg-icons": "^5.15.3",
-        "@fortawesome/free-solid-svg-icons": "^5.15.3",
-        "@fortawesome/react-fontawesome": "^0.1.14",
-        "@szhsin/react-menu": "^1.9.1",
-        "big.js": "^5.2.2",
-        "pagination": "github:react-bootstrap/Pagination",
-        "rc-slider": "^9.7.2",
-        "react": "^16.8.6",
-        "react-alice-carousel": "^2.5.1",
-        "react-dom": "^16.8.6",
-        "react-img-zoom": "^0.1.0",
-        "react-modal-overlay": "^1.0.3",
-        "react-multi-select-component": "^4.0.1",
-        "react-multilevel-menu": "^1.3.0",
-        "react-paginate": "^7.1.2",
-        "react-redux": "^7.2.3",
-        "react-router-dom": "^5.2.0",
-        "react-stars": "^2.2.5"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject",
-        "deploy": "gh-pages -d build"
-    },
-    "prettier": {
-        "trailingComma": "all"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+  "name": "eShilpMart",
+  "version": "0.1.0",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "gh-pages": "^2.0.1",
+    "prettier": "^1.17.1",
+    "react-scripts": "^3.0.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "big.js": "^5.2.2",
+    "pagination": "github:react-bootstrap/Pagination",
+    "rc-slider": "^9.7.2",
+    "react": "^16.8.6",
+    "react-alice-carousel": "^2.5.1",
+    "react-dom": "^16.8.6",
+    "react-img-zoom": "^0.1.0",
+    "react-modal-overlay": "^1.0.3",
+    "react-multi-select-component": "^4.0.1",
+    "react-multilevel-menu": "^1.3.0",
+    "react-paginate": "^7.1.2",
+    "react-redux": "^7.2.3",
+    "react-router-dom": "^5.2.0",
+    "react-stars": "^2.2.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
+  },
+  "prettier": {
+    "trailingComma": "all"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

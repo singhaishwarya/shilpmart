@@ -16,7 +16,7 @@ export default class LiveStats extends React.Component {
         <div className="col-lg-3 col-md-3 col-sm-2 col-12">
 
           <div className="statics">
-            <div className="static-img"><img src={require('../../public/weaver.svg')} className="img-fluid"
+            <div className="static-img"><img src={require('../public/weaver.svg')} className="img-fluid"
               alt="wearver" /></div>
             <div className="static-details">
               <h3><span>5126</span></h3>
@@ -27,7 +27,7 @@ export default class LiveStats extends React.Component {
         </div>
         <div className="col-lg-3 col-md-3 col-sm-2 col-12">
           <div className="statics">
-            <div className="static-img"><img src={require('../../public/artisan.svg')} className="img-fluid"
+            <div className="static-img"><img src={require('../public/artisan.svg')} className="img-fluid"
               alt="artisan" /></div>
             <div className="static-details">
               <h3><span>5126</span></h3>
@@ -37,7 +37,7 @@ export default class LiveStats extends React.Component {
         </div>
         <div className="col-lg-3 col-md-3 col-sm-2 col-12">
           <div className="statics">
-            <div className="static-img"><img src={require('../../public/product.svg')} className="img-fluid"
+            <div className="static-img"><img src={require('../public/product.svg')} className="img-fluid"
               alt="product" /></div>
             <div className="static-details">
               <h3><span>5126</span></h3>
@@ -47,7 +47,7 @@ export default class LiveStats extends React.Component {
         </div>
         <div className="col-lg-3 col-md-3 col-sm-2 col-12">
           <div className="statics">
-            <div className="static-img"><img src={require('../../public/buyer.svg')} className="img-fluid"
+            <div className="static-img"><img src={require('../public/buyer.svg')} className="img-fluid"
               alt="buyer" /></div>
             <div className="static-details">
               <h3><span>5126</span></h3>

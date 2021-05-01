@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, } from "react-router-dom";
-import Navbar from '../Navbar/Navbar'
+import Navbar from './Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faRandom, faHeart, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
-import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram, faPinterestP } from '@fortawesome/free-brands-svg-icons'
+import { faFacebook, faTwitter, faLinkedin, faTelegram, faPinterestP } from '@fortawesome/free-brands-svg-icons'
 
 export default class Header extends React.Component {
 
@@ -38,7 +38,7 @@ export default class Header extends React.Component {
     return (
       seachResults.map((item, index) => (
 
-        <div className="col-6 serach-result-col">
+        <div className="col-6 serach-result-col" key={index}>
           <a href="#">
             <div className="result-product-wrapper">
               <span><img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' alt="product" /></span>
@@ -78,10 +78,10 @@ export default class Header extends React.Component {
                 <div className="acess-container float-right">
                   <div id="acess-icons" className="access_icons">
                     <div className="acess-icon balloon" title="large font size">
-                      <img src={require('../../public/increase-font-size.svg')} alt="" />
+                      <img src={require('../public/increase-font-size.svg')} alt="" />
                     </div>
                     <div className="acess-icon balloon" title="small font size">
-                      <img src={require('../../public/decrease-font-size.svg')} alt="decrease font" />
+                      <img src={require('../public/decrease-font-size.svg')} alt="decrease font" />
                     </div>
                     <div className="acess-icon balloon">
                       <FontAwesomeIcon icon={faAdjust} />
@@ -103,7 +103,7 @@ export default class Header extends React.Component {
 
         < div className="header-middle d-flex justify-content-between align-items-center px-3" >
           <a className="navbar-brand" href="#">
-            <img className="image-middle" src={require('../../public/logo-eshilp.svg')} onClick={() => this.onHomePage()} alt="logoeship" />
+            <img className="image-middle" src={require('../public/logo-eshilp.svg')} onClick={() => this.onHomePage()} alt="logoeship" />
           </a>
           {/* <div >
                         <input id="query" type="text" onChange={this.onTextChange} value={text} />
@@ -119,15 +119,11 @@ export default class Header extends React.Component {
             <div className="form-inline my-2 my-lg-0">
               <div className="search-bar w-100 d-flex justify-content-start">
                 <input onChange={this.onTextChange} value={text} placeholder="Search" />
-                <div class="search-btn">
-                  <button class="btn my-2 my-sm-0" type="submit">
+                <div className="search-btn">
+                  <button className="btn my-2 my-sm-0" type="submit">
                     <FontAwesomeIcon icon={faSearch} />
                   </button>
                 </div>
-                {/* <div className="search-btn"> */}
-                {/* <button className="btn my-2 my-sm-0" >
-                                    <FontAwesomeIcon icon={faSearch} /></button> */}
-                {/* </div> */}
               </div>
             </div>
             <div className="search-result-wrapper">

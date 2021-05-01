@@ -4,7 +4,7 @@ import { Modal } from "react-modal-overlay";
 import "react-modal-overlay/dist/index.css";
 import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ShopByType from "../ShopByType/ShopByType";
+import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
 import { faRandom, faCheck, faPhone, faRupeeSign, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
@@ -16,7 +16,7 @@ export default class ProductDetail extends React.Component {
       wishlistStatus: false,
       productDetailData:
       {
-        src: require("../../public/product.jpg"),
+        src: require("../public/product.jpg"),
         title: '100% silk saree',
         cost: '600',
         sku: 3,
@@ -84,7 +84,7 @@ export default class ProductDetail extends React.Component {
                   cla
                 />
                 {/* <a href="">
-                                    <img className="mainimage img-fluid" src={require("../../public/product.jpg")} />
+                                    <img className="mainimage img-fluid" src={require("../public/product.jpg")} />
                                 </a> */}
               </div>
             </div>
@@ -151,7 +151,7 @@ export default class ProductDetail extends React.Component {
             <div className="product-meta py-2">
               <div className="seller-details-box my-3" onClick={() => this.handleSellerProfile()}>
                 <div className="title-meta"><em>Know your weaver</em></div>
-                <div className="seller-logo"><img src={require("../../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /></div>
+                <div className="seller-logo"><img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /></div>
                 <div className="seller-contact">
                   <p className="s-title">saenterpris36</p>
                   <small> <FontAwesomeIcon icon={faPhone} /> &nbsp; 9304637113</small><br /><br />

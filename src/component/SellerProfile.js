@@ -59,7 +59,7 @@ export default class SellerProfile extends React.Component {
                 <div className="seller-info">
                   <div className="seller-brand">
                     <div className="s-logo">
-                      <img src={require("../../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="logo" /></div>
+                      <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="logo" /></div>
                     <div className="ratings d-flex"><span>
                       <ReactStars count={5} size={15} /></span></div>
                   </div>
@@ -112,16 +112,16 @@ export default class SellerProfile extends React.Component {
               <li className="nav-item">
                 <a className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
                   data-toggle="tab" href="#des" role="tab" aria-controls="home" aria-selected="true"
-                  onClick={() => this.setState({ isActiveTab: 0 })} >DESCRIPTION</a>
+                  onClick={() => this.setState({ isActiveTab: 0 })} >PRODUCTS</a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} data-toggle="tab" href="#del" role="tab" aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })} >REVIEWS</a>
+                <a className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} data-toggle="tab" href="#del" role="tab" aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })} >ABOUT</a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${((isActiveTab === 2) ? 'active' : '')}`} data-toggle="tab" href="#store" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 2 })} >STORE POLICIES</a>
+                <a className={`nav-link ${((isActiveTab === 2) ? 'active' : '')}`} data-toggle="tab" href="#store" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 2 })} >REVIEWS</a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>INQUIRIES</a>
+                <a className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>FOLLOWERS</a>
               </li>
             </ul>
             <div className="tab-content" >

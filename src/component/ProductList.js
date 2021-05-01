@@ -1,12 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faRandom, faHeart, faRupeeSign, faYenSign, faThLarge } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus, faRandom, faHeart, faRupeeSign, faThLarge } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import ReactStars from 'react-stars'
 import { Range } from 'rc-slider';
-import logo from '../../public/bag2.jpeg';
+import logo from '../public/bag2.jpeg';
 import { MultilevelMenu } from 'react-multilevel-menu';
-import MultiSelect from "react-multi-select-component";
 import ReactPaginate from 'react-paginate';
 export default class ProductList extends React.Component {
 
@@ -21,50 +20,50 @@ export default class ProductList extends React.Component {
       currentPage: 0,
       productListData: [
         {
-          img: '../../public/bag2.jpeg',
+          img: '../public/bag2.jpeg',
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11'
         },
         {
-          img: require('../../public/bag1.jpeg'),
+          img: require('../public/bag1.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11'
         }, {
-          img: require('../../public/bag3.jpeg'),
+          img: require('../public/bag3.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11'
         }, {
-          img: require('../../public/bag1.jpeg'),
+          img: require('../public/bag1.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11'
         }, {
-          img: require('../../public/bag2.jpeg'),
+          img: require('../public/bag2.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11'
         }, {
-          img: require('../../public/bag3.jpeg'),
+          img: require('../public/bag3.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11'
         }, {
-          img: require('../../public/bag1.jpeg'),
+          img: require('../public/bag1.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11'
         }, {
-          img: require('../../public/bag3.jpeg'),
+          img: require('../public/bag3.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
@@ -178,14 +177,11 @@ export default class ProductList extends React.Component {
 
   render() {
     const {
-      offers,
-      selectedOffer,
       categories,
       config,
       productsData,
       hoveredItem,
       layout,
-      hoverIcon,
       wishlistStatus,
       priceRange } = this.state;
 
@@ -218,7 +214,7 @@ export default class ProductList extends React.Component {
 
                         <span>
                           Price:
-                                            <input type="number" min="0" max="9900" defaultValue={priceRange[0]} value={priceRange[0]} id="min_price" className="price-range-field" /> <span>-</span>
+                          <input type="number" min="0" max="9900" defaultValue={priceRange[0]} value={priceRange[0]} id="min_price" className="price-range-field" /> <span>-</span>
                           <input type="number" min="0" max="10000"
                             defaultValue={priceRange[1]} value={priceRange[1]} id="max_price"
                             className="price-range-field" /></span>
@@ -283,7 +279,7 @@ export default class ProductList extends React.Component {
                   <div className="grid-view">
                     {/* <span className="breadcrumb-item active">Show:</span> */}
                     <button onClick={() => this.onLayoutChange('2X2')} ><FontAwesomeIcon icon={faThLarge} /> </button>
-                    <button onClick={() => this.onLayoutChange('3X3')} ><i class="fas fa-th"></i></button>
+                    <button onClick={() => this.onLayoutChange('3X3')} ><i className="fas fa-th"></i></button>
                     <button onClick={() => this.onLayoutChange('4X4')} >4X4</button>
                   </div>
 

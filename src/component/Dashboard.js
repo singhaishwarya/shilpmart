@@ -1,14 +1,11 @@
 import React from "react";
-import Swiper from "../Swiper/Swiper";
-import LiveStats from "../LiveStats/LiveStats";
-import PressArticles from "../PressArticles/PressArticles";
-import CustomerFeedback from "../CustomerFeedback/CustomerFeedback";
-import ShopByType from "../ShopByType/ShopByType";
+import Swiper from "./Swiper";
+import LiveStats from "./LiveStats";
+import PressArticles from "./PressArticles";
+import CustomerFeedback from "./CustomerFeedback";
+import ShopByType from "./ShopByType";
 export default class Dashboard extends React.Component {
 
-  constructor(props) {
-    super(props)
-  }
   render() {
     return (
       <>

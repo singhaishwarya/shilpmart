@@ -14,7 +14,7 @@ export default class CustomerFeedback extends React.Component {
       customerFeedbackItems: [
         <div className="swiper-slide" style={{ width: 445 }}>
           <div className="testimonials-block">
-            <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
+            <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
               alt="user Dp" /></div>
             <div className="testimonial-ratings">
               <span>  <ReactStars count={5} size={10} /></span>
@@ -31,7 +31,7 @@ export default class CustomerFeedback extends React.Component {
         </div>,
         <div className="swiper-slide" style={{ width: 445 }}>
           <div className="testimonials-block">
-            <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
+            <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
               alt="user Dp" /></div>
             <div className="testimonial-ratings">
               <span>  <ReactStars count={5} size={10} /></span>
@@ -48,7 +48,7 @@ export default class CustomerFeedback extends React.Component {
         </div>,
         <div className="swiper-slide" style={{ width: 445 }}>
           <div className="testimonials-block">
-            <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
+            <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
               alt="user Dp" /></div>
             <div className="testimonial-ratings">
               <span>  <ReactStars count={5} size={10} /></span>
@@ -65,7 +65,7 @@ export default class CustomerFeedback extends React.Component {
         </div>,
         <div className="swiper-slide" style={{ width: 445 }}>
           <div className="testimonials-block">
-            <div className="testimonial-avatar"><img src={require('../../public/anu.png')} className="img-fluid"
+            <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
               alt="user Dp" /></div>
             <div className="testimonial-ratings">
               <span>  <ReactStars count={5} size={10} /></span>

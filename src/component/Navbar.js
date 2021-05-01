@@ -1,18 +1,63 @@
 import React from "react";
+
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShown: false
+      isMenuShown: false,
+      subMenus: [],
+      menuOptions: [{
+        title: "Mens wear",
+        _id: 1,
+        category: [
+          { title: "Shirting" },
+          { title: "Shirting" },
+          { title: "Shirting" }]
+      }, {
+        title: "Womens wear",
+        _id: 2,
+        category: [
+          { title: "saree" },
+          { title: "saree" },
+          { title: "saree" }]
+
+      }, {
+        title: "Housing",
+        _id: 3,
+        category: [
+          { title: "curtain" },
+          { title: "curtain" },
+          { title: "curtain" }]
+      }],
+      navbarTabs: [{ title: 'Home' }, { title: 'ABOUT US' }, { title: 'SHOP' }, { title: 'CUSTOMER SERVICE' }],
+      isActiveTab: 0
     };
   }
+
+  setIsMenuShown = (status) => {
+    this.setState({ isMenuShown: status })
+  }
+
+  setIsSubmenuShown = (status, index) => {
+    this.setState({
+      isSubmenuShown: status,
+      subMenus: <div className="" >
+        <div className="">
+          <div className="">
+            {this.state.menuOptions[index].category.map((subitem, index) => {
+              return (<div className="col-sm-3 mb-3" key={index}>
+                <h6>{subitem.title}</h6>
+              </div>)
+            })}
+          </div>
+        </div>
+      </div>
+    })
+  }
+
   render() {
 
-    const setIsShown = (val) => {
-      this.setState({ isShown: val })
-    }
-
-    const { isShown } = this.state;
+    const { isMenuShown, menuOptions, subMenus, navbarTabs, isActiveTab } = this.state;
     return (
       <>
         {/* // <!--main - navigation-- > */}
@@ -24,16 +69,25 @@ export default class Navbar extends React.Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               {/* <!--brows-categories-menu--> */}
-              <div onMouseEnter={() => setIsShown(true)}
-                onMouseLeave={() => setIsShown(false)} className="categories-nav dropdown">
+              <div onMouseEnter={() => this.setIsMenuShown(true)}
+                onMouseLeave={() => this.setIsMenuShown(false)} className="categories-nav dropdown">
                 <span className="brows-menu dropdown-toggle" data-toggle="dropdown">
                   <span className="brows-menu-icon"></span>
                   <span >Browse Categories</span>
-                  <span className="arrow" />
+
                 </span>
-                {isShown && (
+                {isMenuShown && (
                   <div className="dropdown-menu nicemenu verticle" data-pos="list.right" data-classes="active">
-                    <div className="nicemenu-item">
+
+
+                    {menuOptions.map((item, index) => {
+                      return (<div className="nicemenu-item" onMouseEnter={() => this.setIsSubmenuShown(true, index)} onMouseLeave={() => this.setState({ subMenus: [] })} key={index}>
+                        <p>{item.title}</p>
+
+                      </div>)
+                    })}
+                    {subMenus}
+                    {/* <div className="nicemenu-item">
                       <p>Men’s Wear</p>
                       <div className="nicemenu-sub">
                         <div className="container">
@@ -50,48 +104,12 @@ export default class Navbar extends React.Component {
                             <div className="col-sm-3 mb-3">
                               <h6>kurtas</h6>
                             </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>shawl</h6>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>dhoti</h6>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>muffler & scarves</h6>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>gloves</h6>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>gamcha</h6>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>lungi</h6>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>accessories</h6>
-                              <ul className="sub-items">
-                                <li>belts</li>
-                                <li>wallets</li>
-                                <li>cuff links</li>
-                                <li>hand kerchiefs</li>
-                                <li>view all</li>
-                              </ul>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>footwear</h6>
-                              <ul className="sub-items">
-                                <li>shoes</li>
-                                <li>ethnic footwear</li>
-                                <li>sandles and floaters</li>
-                              </ul>
-                            </div>
+                           
                           </div>
                         </div>
-
                       </div>
-                    </div>
-                    <div className="nicemenu-item">
+                    </div> */}
+                    {/* <div className="nicemenu-item">
                       <p>Women’s wear</p>
                       <div className="nicemenu-sub">
                         <h6>Sub Menu 2</h6>
@@ -132,17 +150,16 @@ export default class Navbar extends React.Component {
                       <div className="nicemenu-sub">
                         <h6>Sub Menu 8</h6>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 )}
               </div>
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item nav-link active">
-                  <i className="fa fa-home"
-                    aria-hidden="true"></i> Home <span className="sr-only">(current)</span> </li>
-                <li className="nav-item nav-link"> ABOUT US </li>
-                <li className="nav-item nav-link"> SHOP </li>
-                <li className="nav-item nav-link"> CUSTOMER SERVICE </li>
+                {navbarTabs.map((item, index) => {
+                  return (
+                    <li key={index} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}> {item.title} </li>
+                  )
+                })}
               </ul>
             </div>
           </nav>

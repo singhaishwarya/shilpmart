@@ -60,7 +60,7 @@ export default class Footer extends React.Component {
               <div className="col-md-4 col-lg-4 col-12">
                 <h5>We Accept</h5>
                 <div className="payment_method">
-                  <div className="paycard"><img src={require("../../public/pm.webp")} className="img-fluid" alt="pay" /></div>
+                  <div className="paycard"><img src={require("../public/pm.webp")} className="img-fluid" alt="pay" /></div>
                 </div>
               </div>
             </div>
@@ -68,16 +68,16 @@ export default class Footer extends React.Component {
             {/* <!-- Swiper --> */}
             <div className="swiper-container py-5 logos">
               <div className="swiper-wrapper">
-                <div className="swiper-slide"><img src={require("../../public/data_gov.webp")} className="img-fluid" alt="data gov" />
+                <div className="swiper-slide"><img src={require("../public/data_gov.webp")} className="img-fluid" alt="data gov" />
                 </div>
-                <div className="swiper-slide"><img src={require("../../public/india-gov.webp")} className="img-fluid" alt="India gov" />
+                <div className="swiper-slide"><img src={require("../public/india-gov.webp")} className="img-fluid" alt="India gov" />
                 </div>
-                <div className="swiper-slide"><img src={require("../../public/mot.webp")} className="img-fluid" alt="Ministry Textile" />
+                <div className="swiper-slide"><img src={require("../public/mot.webp")} className="img-fluid" alt="Ministry Textile" />
                 </div>
-                <div className="swiper-slide"><img src={require("../../public/di.webp")} className="img-fluid" alt="DIC" /></div>
-                <div className="swiper-slide"><img src={require("../../public/india_post.webp")} className="img-fluid"
+                <div className="swiper-slide"><img src={require("../public/di.webp")} className="img-fluid" alt="DIC" /></div>
+                <div className="swiper-slide"><img src={require("../public/india_post.webp")} className="img-fluid"
                   alt="India Post" /></div>
-                <div className="swiper-slide"><img src={require("../../public/csc.webp")} className="img-fluid" alt="CSC" /></div>
+                <div className="swiper-slide"><img src={require("../public/csc.webp")} className="img-fluid" alt="CSC" /></div>
               </div>
               {/* <!-- Add Pagination --> */}
               <div className="swiper-pagination"></div>
@@ -91,9 +91,9 @@ export default class Footer extends React.Component {
                                 <i className="fa fa-copyright"></i> 2020. <br />
                                 Designed &amp; Developed by Digital India Corporation</small>
               </div>
-              <div className="col-md-6 col-12 text-right"> <a href="#"><img src={require("../../public/gp-300x89.png")}
+              <div className="col-md-6 col-12 text-right"> <a href="#"><img src={require("../public/gp-300x89.png")}
                 className="img-fluid" alt="google play store" /></a> &nbsp;&nbsp; <a href="#"><img
-                  src={require("../../public/as-300x89.png")} className="img-fluid" alt="itue" /></a> </div>
+                  src={require("../public/as-300x89.png")} className="img-fluid" alt="itue" /></a> </div>
             </div>
           </div>
         </div>
