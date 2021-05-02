@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
@@ -9,6 +9,7 @@ export default class Navbar extends React.Component {
       menuOptions: [{
         title: "Mens wear",
         _id: 1,
+        route: 'mens-wear',
         category: [
           { title: "Shirting" },
           { title: "Shirting" },
@@ -16,6 +17,7 @@ export default class Navbar extends React.Component {
       }, {
         title: "Womens wear",
         _id: 2,
+        route: 'womens-wear',
         category: [
           { title: "saree" },
           { title: "saree" },
@@ -24,12 +26,13 @@ export default class Navbar extends React.Component {
       }, {
         title: "Housing",
         _id: 3,
+        route: 'housing',
         category: [
           { title: "curtain" },
           { title: "curtain" },
           { title: "curtain" }]
       }],
-      navbarTabs: [{ title: 'Home' }, { title: 'ABOUT US' }, { title: 'SHOP' }, { title: 'CUSTOMER SERVICE' }],
+      navbarTabs: [{ title: 'Home', route: '' }, { title: 'ABOUT US', route: 'about-us' }, { title: 'SHOP', route: 'shop' }, { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
       isActiveTab: 0
     };
   }
@@ -77,14 +80,15 @@ export default class Navbar extends React.Component {
 
                 </span>
                 {isMenuShown && (
-                  <div className="dropdown-menu nicemenu verticle" data-pos="list.right" data-classes="active">
-
-
+                  <div onMouseLeave={() => this.setState({ subMenus: [] })} className="dropdown-menu nicemenu verticle" data-pos="list.right" data-classes="active">
                     {menuOptions.map((item, index) => {
-                      return (<div className="nicemenu-item" onMouseEnter={() => this.setIsSubmenuShown(true, index)} onMouseLeave={() => this.setState({ subMenus: [] })} key={index}>
-                        <p>{item.title}</p>
-
-                      </div>)
+                      return (
+                        // <Link to={`/product-category/${item.route}`}>
+                        <Link to={`/product-category/${item.route}`}>
+                          <div className="nicemenu-item" onMouseEnter={() => this.setIsSubmenuShown(true, index)} key={index}>
+                            <p>{item.title}</p>
+                          </div>
+                        </Link>)
                     })}
                     {subMenus}
                     {/* <div className="nicemenu-item">
@@ -157,7 +161,9 @@ export default class Navbar extends React.Component {
               <ul className="navbar-nav mr-auto">
                 {navbarTabs.map((item, index) => {
                   return (
-                    <li key={index} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}> {item.title} </li>
+                    <Link to={`/${item.route}`}>
+                      <li key={index} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}> {item.title} </li>
+                    </Link>
                   )
                 })}
               </ul>

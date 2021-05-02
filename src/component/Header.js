@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from './Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faRandom, faHeart, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
@@ -44,7 +44,9 @@ export default class Header extends React.Component {
               <span><img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' alt="product" /></span>
               <span>
                 {item}
-                <button type="submit" className="cart-btn">Add to cart</button>
+                <Link className="nav-link" to={'/product-detail'}>
+                  <button type="submit" className="cart-btn">Add to cart</button>
+                </Link>
               </span>
 
             </div>
@@ -54,10 +56,6 @@ export default class Header extends React.Component {
       ));
   }
 
-
-  onHomePage = () => {
-    // this.props.history.push({ pathname: "/" })
-  }
   render() {
     const { text, seachResults } = this.state;
     return (
@@ -97,24 +95,12 @@ export default class Header extends React.Component {
           </div>
         </div>
         <a className="skipcontent" href="#maincontent">Skip to Content</a>
-
-
-        {/* //   <!--header - middle-- > */}
-
         < div className="header-middle d-flex justify-content-between align-items-center px-3" >
           <a className="navbar-brand" href="#">
-            <img className="image-middle" src={require('../public/logo-eshilp.svg')} onClick={() => this.onHomePage()} alt="logoeship" />
+            <Link to={'/'}>
+              <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
+            </Link>
           </a>
-          {/* <div >
-                        <input id="query" type="text" onChange={this.onTextChange} value={text} />
-                        <div className="mbsc-form-group ">
-                            <div className="mbsc-grid">
-                                {this.renderSearchOptions()}
-
-                            </div>
-                        </div>
-
-                    </div> */}
           <div className="search-container mx-5 w-100 position-relative">
             <div className="form-inline my-2 my-lg-0">
               <div className="search-bar w-100 d-flex justify-content-start">

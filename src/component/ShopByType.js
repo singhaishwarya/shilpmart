@@ -13,42 +13,48 @@ export default class ShopByType extends React.Component {
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1
+        _id: 1,
+        route: 'womens-wear'
       }, {
         img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
-        type: 'Womens wear',
+        type: 'Mens wear',
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1
+        _id: 1,
+        route: 'mens-wear'
       }, {
         img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
-        type: 'Womens wear',
+        type: 'Travel',
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1
+        _id: 1,
+        route: 'travel'
       }, {
         img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
-        type: 'Womens wear',
+        type: 'Housing',
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1
+        _id: 1,
+        route: 'housing'
       }, {
         img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
-        type: 'Womens wear',
+        type: 'Furniture',
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1
+        _id: 1,
+        route: 'furniture'
       }, {
         img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
-        type: 'Womens wear',
+        type: 'Office supplies',
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1
+        _id: 1,
+        route: 'office-supplies'
       }],
       shopByProductData: [
         {
@@ -135,7 +141,7 @@ export default class ShopByType extends React.Component {
         </div>)
       }),
       shopByCategoryItems: this.state.shopByCategoryData.map((item, index) => {
-        return (<div className="swiper-slide" key={index} style={{ width: 310 }} onClick={() => this.productList('category')}>
+        return (<div className="swiper-slide" key={index} style={{ width: 310 }} onClick={() => this.productList(item.route)}>
           <div className="shop-category-wrapper">
             <div className="categorie-img"><a href="#" className="cate-img"><img
               src={item.img}
@@ -156,7 +162,8 @@ export default class ShopByType extends React.Component {
     this.props.history.push({ pathname: "/product-detail" });
   }
   productList = (value) => {
-    this.props.history.push({ pathname: "/product-list" });
+
+    this.props.history.push(`/product-category/${value}`);
   }
 
   render() {

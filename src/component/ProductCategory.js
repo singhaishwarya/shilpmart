@@ -7,7 +7,8 @@ import { Range } from 'rc-slider';
 import logo from '../public/bag2.jpeg';
 import { MultilevelMenu } from 'react-multilevel-menu';
 import ReactPaginate from 'react-paginate';
-export default class ProductList extends React.Component {
+
+export default class ProductCategory extends React.Component {
 
   constructor(props) {
     super(props);
