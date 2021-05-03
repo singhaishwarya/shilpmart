@@ -125,7 +125,7 @@ export default class ShopByType extends React.Component {
   componentDidMount() {
     this.setState({
       shopByProductItems: this.state.shopByProductData.map((item, index) => {
-        return (<div style={{ width: 310 }} key={index} onClick={() => this.productDetail('1')}>
+        return (<div style={{ width: 310 }} key={index} onClick={() => this.productDetail(item._id)}>
           <div className="product-wrapper">
             <div className="prodcut-img">
               <a href="#"><img
@@ -159,7 +159,7 @@ export default class ShopByType extends React.Component {
   }
 
   productDetail = (value) => {
-    this.props.history.push({ pathname: "/product-detail" });
+    this.props.history.push(`/product-detail/${value}`);
   }
   productList = (value) => {
 
@@ -171,7 +171,7 @@ export default class ShopByType extends React.Component {
 
     return (
 
-      <div className="swiper-container">
+      <div className="swiper-container" >
         <div className="swiper-wrapper">
           <AliceCarousel
             animationType='slide'

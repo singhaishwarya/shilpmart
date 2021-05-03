@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from "./component/Login";
+import Registration from "./component/Registration";
 import Header from "./component/Header";
 import ProductCategory from "./component/ProductCategory";
 import Footer from "./component/Footer";
@@ -18,11 +19,13 @@ function App() {
       <div className="grid-container">
         <Header />
         <Switch>
-          <Route path="/" component={Dashboard} exact />
-          <Route path="/login" component={Login} exact />
-          <Route path="/product-category/:categoryId" component={ProductCategory} exact />
-          <Route path="/product-detail/:productId" component={ProductDetail} exact />
-          <Route path="/seller-profile" component={SellerProfile} exact />
+          <Route path='/' component={Dashboard} exact />
+          <Route path='/login' component={Login} exact />
+
+          <Route path='/buyer-registration' component={Registration} exact />
+          <Route path='/product-category/:categoryId' component={ProductCategory} exact />
+          <Route path='/product-detail/:productId' component={ProductDetail} exact />
+          <Route path='/seller-profile' component={SellerProfile} exact />
         </Switch>
         <Footer />
       </div>

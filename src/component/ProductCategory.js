@@ -25,50 +25,58 @@ export default class ProductCategory extends React.Component {
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
-          discount: '11'
+          discount: '11',
+          _id: 1
         },
         {
           img: require('../public/bag1.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
-          discount: '11'
+          discount: '11',
+          _id: 1
         }, {
           img: require('../public/bag3.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
-          discount: '11'
+          discount: '11',
+          _id: 1
         }, {
           img: require('../public/bag1.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
-          discount: '11'
+          discount: '11',
+          _id: 1
         }, {
           img: require('../public/bag2.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
-          discount: '11'
+          discount: '11',
+          _id: 1
         }, {
           img: require('../public/bag3.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
-          discount: '11'
+          discount: '11',
+          _id: 1
         }, {
           img: require('../public/bag1.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
-          discount: '11'
+          discount: '11',
+          _id: 1
         }, {
           img: require('../public/bag3.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
-          discount: '11'
+          discount: '11',
+          _id: 1
         }
 
       ],
@@ -168,9 +176,8 @@ export default class ProductCategory extends React.Component {
     });
 
   }
-  handlePostDetail = (index) => {
-    this.props.history.push({ pathname: "/product-detail", state: { _id: index } }
-    );
+  handlePostDetail = (value) => {
+    this.props.history.push(`/product-detail/${value}`);
   }
   onItemPerPage = (value) => {
     console.log("demo==", value);
@@ -300,7 +307,7 @@ export default class ProductCategory extends React.Component {
 
               <div className="row">
                 {productsData ? productsData.map((item, index) => {
-                  return (<div className={layout} key={index} onClick={() => this.handlePostDetail(index)}>
+                  return (<div className={layout} key={index} onClick={() => this.handlePostDetail(item._id)}>
                     <div className="product-wrapper">
                       <div className="prodcut-img"><img src={logo} className="img-fluid" alt="saree" /></div>
                       <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>

@@ -12,7 +12,7 @@ export default class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isActiveTab: 0,
+      isActiveTab: 1,
       wishlistStatus: false,
       productDetailData:
       {
@@ -24,8 +24,7 @@ export default class ProductDetail extends React.Component {
         tags: "Handlooms"
       },
       visible: true,
-      clicks: 0,
-      show: true,
+      productCount: 0,
       showModal: false
 
     }
@@ -38,10 +37,10 @@ export default class ProductDetail extends React.Component {
   //     });
   // }
   incrementItem = () => {
-    this.setState({ clicks: this.state.clicks + 1 });
+    this.setState({ productCount: this.state.productCount + 1 });
   }
   decreaseItem = () => {
-    this.setState({ clicks: this.state.clicks - 1 });
+    this.setState({ productCount: this.state.productCount - 1 });
   }
   componentDidMount() {
     // this.setState({});
@@ -62,12 +61,14 @@ export default class ProductDetail extends React.Component {
   }
 
   handleSellerProfile = () => {
-    this.props.history.push({ pathname: "/seller-profile" })
+    this.props.history.push({
+      pathname: '/seller-profile'
+    })
 
   }
 
   render() {
-    const { productDetailData, clicks, wishlistStatus, isActiveTab } = this.state;
+    const { productDetailData, productCount, wishlistStatus, isActiveTab } = this.state;
     return (
       <>
         <div className="row">
@@ -109,8 +110,8 @@ export default class ProductDetail extends React.Component {
               <form className="addtocart d-flex justify-content-start">
                 <div className="product-qty">
                   <div className="input-group">
-                    <input type="button" value="-" className="quantity-left-minus" disabled={clicks < 1} onClick={this.decreaseItem} />
-                    <input type="number" value={clicks} min="1" max="100" />
+                    <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={this.decreaseItem} />
+                    <input type="number" value={productCount} min="1" max="100" />
                     <input type="button" value="+" onClick={this.incrementItem} className="quantity-right-plus" />
 
                   </div>
