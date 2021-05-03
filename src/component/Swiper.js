@@ -23,10 +23,9 @@ export default class Swiper extends React.Component {
   render() {
     return (
       <div className="row">
+        
         <div className="col">
-          <div className="swiper-container slider">
-            <div className="swiper-wrapper">
-              <div className="swiper-slide slide">
+         
                 <AliceCarousel
                   animationType='fadeout'
                   autoPlayInterval={3000}
@@ -47,14 +46,8 @@ export default class Swiper extends React.Component {
                   touchTracking
                 />
               </div>
-              {/* <!-- Add Pagination --> */}
-              {/* <!--<div className="swiper-pagination swiper-pagination-white"></div>--> */}
-              {/* <!-- Add Arrows --> */}
-              {/* <div className="swiper-button-next swiper-button-white"></div>
-                        <div className="swiper-button-prev swiper-button-white"></div> */}
-            </div>
-          </div>
-        </div > </div >
+              </div>
+       
     );
   }
 }

@@ -125,11 +125,10 @@ export default class ShopByType extends React.Component {
   componentDidMount() {
     this.setState({
       shopByProductItems: this.state.shopByProductData.map((item, index) => {
-        return (<div style={{ width: 310 }} key={index} onClick={() => this.productDetail('1')}>
-          <div className="product-wrapper">
+        return (<div className="product-wrapper" key={index} onClick={() => this.productDetail('1')}>
+         
             <div className="prodcut-img">
-              <a href="#"><img
-                src={item.img} className="img-fluid"
+              <a href="#"><img src={item.img} className="img-fluid"
                 alt="saree" /></a>
             </div>
             <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
@@ -137,22 +136,22 @@ export default class ShopByType extends React.Component {
             <span className="product-price">
               <FontAwesomeIcon icon={faRupeeSign} /> {item.cost}
             </span>
-          </div>
+         
         </div>)
       }),
       shopByCategoryItems: this.state.shopByCategoryData.map((item, index) => {
-        return (<div className="swiper-slide" key={index} style={{ width: 310 }} onClick={() => this.productList(item.route)}>
-          <div className="shop-category-wrapper">
-            <div className="categorie-img"><a href="#" className="cate-img"><img
-              src={item.img}
-              className="img-fluid" alt="cate img" /></a></div>
+        return (<div className="shop-category-wrapper" key={index} onClick={() => this.productList(item.route)}>
+          
+            <div className="categorie-img">
+              <a href="#" className="cate-img">
+                <img src={item.img} className="img-fluid" alt="cate img" />
+              </a>
+            </div>
             <div className="categorie-img-title">
               <h3>{item.type}</h3>
               <div className="more-products"><a href="#">More Products</a></div>
             </div>
-          </div>
-
-        </div>)
+          </div>)
       })
     });
 
@@ -171,8 +170,7 @@ export default class ShopByType extends React.Component {
 
     return (
 
-      <div className="swiper-container">
-        <div className="swiper-wrapper">
+    
           <AliceCarousel
             animationType='slide'
             autoPlayInterval={3000}
@@ -189,8 +187,7 @@ export default class ShopByType extends React.Component {
             disableButtonsControls //can be enabled if arrows are needed
             touchTracking
           />
-        </div>
-      </div>
+       
     )
   };
 }

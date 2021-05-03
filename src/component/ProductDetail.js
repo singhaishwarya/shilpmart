@@ -78,8 +78,7 @@ export default class ProductDetail extends React.Component {
                   img={productDetailData.src}
                   zoomScale={1.5}
                   height={750}
-                  width="100%"
-                  // height={600}
+                  width="100%"                  
                   transitionTime={0.5}
                   cla
                 />

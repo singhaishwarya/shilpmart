@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from './Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faRandom, faHeart, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
-import { faFacebook, faTwitter, faLinkedin, faTelegram, faPinterestP } from '@fortawesome/free-brands-svg-icons'
+import { faSearch, faRandom, faHeart, faShoppingBasket, faAdjust, faUndo } from '@fortawesome/free-solid-svg-icons'
+import { faFacebook, faTwitter, faLinkedin, faTelegram, faPinterestP, faFacebookF, faLinkedinIn, faPinterest } from '@fortawesome/free-brands-svg-icons'
 
 export default class Header extends React.Component {
 
@@ -37,21 +37,28 @@ export default class Header extends React.Component {
     }
     return (
       seachResults.map((item, index) => (
-
-        <div className="col-6 serach-result-col" key={index}>
-          <a href="#">
-            <div className="result-product-wrapper">
-              <span><img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' alt="product" /></span>
-              <span>
-                {item}
-                <Link className="nav-link" to={'/product-detail'}>
-                  <button type="submit" className="cart-btn">Add to cart</button>
-                </Link>
+        <div className="result-product-wrapper" key={index}>
+          <Link to={'/product-detail'}>         
+              <span className="pro-img"><img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' alt="product" />
               </span>
+              <span>
+                <span className="top-head">
+                  <span className="pro-tile">{item}</span>
+                  <span className="pro-price"><del>1999</del> &nbsp; <span>1500</span></span>
+                  
+                  </span>
+                <span className="footer-head">
+                  <span className="result-cat"><small>Saree, Women's Wear</small></span>
+                  <span className="result-addtocart"><Link to={'/product-detail'}> Add to Cart </Link></span>
+                </span>
+              </span>
+              <span className="sale-sticker">sale!</span>            
+          </Link>
+          </div>
 
-            </div>
-          </a>
-        </div>
+        // <div className="col-6 serach-result-col" key={index}>
+          
+        // </div>
       )
       ));
   }
@@ -65,10 +72,10 @@ export default class Header extends React.Component {
             <div className="row">
               <div className="col-md-6 col-6">
                 <div className="s-icons">
-                  <a href="#"><FontAwesomeIcon icon={faFacebook} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faFacebookF} /></a>
                   <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faPinterestP} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faLinkedin} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faPinterest} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faLinkedinIn} /></a>
                   <a href="#"><FontAwesomeIcon icon={faTelegram} /></a>
                 </div>
               </div>
@@ -84,17 +91,18 @@ export default class Header extends React.Component {
                     <div className="acess-icon balloon">
                       <FontAwesomeIcon icon={faAdjust} />
                     </div>
-                    <div className="acess-icon balloon">
-                      <i className="fa fa-undo" aria-hidden="true" title="reset" />
+                    <div className="acess-icon balloon">                      
+                      <FontAwesomeIcon icon={faUndo}/>
                     </div>
+                    <a className="skipcontent" href="#maincontent">Skip to Content</a>
                   </div>
-                  <a className="skipcontent" href="#maincontent">Skip to Content</a>
+                  
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <a className="skipcontent" href="#maincontent">Skip to Content</a>
+        
         < div className="header-middle d-flex justify-content-between align-items-center px-3" >
           <a className="navbar-brand" href="#">
             <Link to={'/'}>
@@ -113,9 +121,9 @@ export default class Header extends React.Component {
               </div>
             </div>
             <div className="search-result-wrapper">
-              <div className="row">
+              
                 {this.renderSearchOptions()}
-              </div>
+              
             </div>
           </div>
           <ul className="navbar-nav flex-row">
