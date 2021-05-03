@@ -1,10 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from './Navbar'
+import Login from "./Login";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faRandom, faHeart, faShoppingBasket, faAdjust, faUndo } from '@fortawesome/free-solid-svg-icons'
-import { faFacebook, faTwitter, faLinkedin, faTelegram, faPinterestP, faFacebookF, faLinkedinIn, faPinterest } from '@fortawesome/free-brands-svg-icons'
-
+import { faSearch, faRandom, faHeart, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
+import { faFacebook, faTwitter, faLinkedin, faTelegram, faPinterestP } from '@fortawesome/free-brands-svg-icons'
+import Modal from 'react-modal';
+const customStyles = {
+  content: {
+    top: '50%',
+    left: 'auto',
+    // backgroundColor:
+    // right: 'auto',
+    // bottom: 'auto',
+    // marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
 export default class Header extends React.Component {
 
   constructor(props) {
@@ -13,10 +25,29 @@ export default class Header extends React.Component {
       seachResults: [],
       text: '',
       optionData: ['Art Silk banarasi saree', 'saree Art Silk heavy  saree',
-        'TANGAIL SAREE', 'saree TANGAIL SAREE HALF ACHAL', 'saree CHAMARAJ PURE SILK SAREES -WEDDING SILK SAREES', 'saree Raw Silk X Eri Spun Silk Saree Saree', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree KATA BUTI STAR CHOSMA TANT SAREE', 'saree Chamka Saree (Artsilk) saree']
+        'TANGAIL SAREE', 'saree TANGAIL SAREE HALF ACHAL', 'saree CHAMARAJ PURE SILK SAREES -WEDDING SILK SAREES', 'saree Raw Silk X Eri Spun Silk Saree Saree', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree KATA BUTI STAR CHOSMA TANT SAREE', 'saree Chamka Saree (Artsilk) saree'],
+      showModal: false, setIsOpen: false
     }
   }
 
+  // openModal = () => {
+  //   // setIsOpen(true);
+  //   this.setState({
+  //     subtitle: '',
+  //     showModal: true, setIsOpen: true
+  //   })
+  // };
+
+  closeModal = () => {
+    // setIsOpen(false);
+    this.setState({ showModal: false, setIsOpen: false })
+
+  };
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
   onTextChange = (e) => {
     const value = e.target.value.toLowerCase();
     let seachResults = [];
@@ -28,8 +59,7 @@ export default class Header extends React.Component {
       seachResults,
       text: value
     }))
-  }
-
+  };
   renderSearchOptions = () => {
     let { seachResults } = this.state;
     if (seachResults.length === 0) {
@@ -38,35 +68,42 @@ export default class Header extends React.Component {
     return (
       seachResults.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
-          <Link to={'/product-detail'}>         
-              <span className="pro-img"><img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' alt="product" />
+          <Link to={'/product-detail'}>
+            <span className="pro-img"><img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' alt="product" />
+            </span>
+            <span>
+              <span className="top-head">
+                <span className="pro-tile">{item}</span>
+                <span className="pro-price"><del>1999</del> &nbsp; <span>1500</span></span>
+
               </span>
-              <span>
-                <span className="top-head">
-                  <span className="pro-tile">{item}</span>
-                  <span className="pro-price"><del>1999</del> &nbsp; <span>1500</span></span>
-                  
-                  </span>
-                <span className="footer-head">
-                  <span className="result-cat"><small>Saree, Women's Wear</small></span>
-                  <span className="result-addtocart"><Link to={'/product-detail'}> Add to Cart </Link></span>
-                </span>
+              <span className="footer-head">
+                <span className="result-cat"><small>Saree, Women's Wear</small></span>
+                <span className="result-addtocart"><Link to={'/product-detail'}> Add to Cart </Link></span>
               </span>
-              <span className="sale-sticker">sale!</span>            
+            </span>
+            <span className="sale-sticker">sale!</span>
           </Link>
-          </div>
+        </div>
 
         // <div className="col-6 serach-result-col" key={index}>
-          
+
         // </div>
       )
       ));
-  }
+  };
 
   render() {
-    const { text, seachResults } = this.state;
+    const { text, seachResults, showModal } = this.state;
     return (
       <>
+
+        <Modal
+          isOpen={showModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="SIGN IN"
+        ><Login /> </Modal>
         <div className="header-top py-1  ">
           <div className="container-fluid">
             <div className="row">
@@ -91,18 +128,18 @@ export default class Header extends React.Component {
                     <div className="acess-icon balloon">
                       <FontAwesomeIcon icon={faAdjust} />
                     </div>
-                    <div className="acess-icon balloon">                      
-                      <FontAwesomeIcon icon={faUndo}/>
+                    <div className="acess-icon balloon">
+                      <FontAwesomeIcon icon={faUndo} />
                     </div>
                     <a className="skipcontent" href="#maincontent">Skip to Content</a>
                   </div>
-                  
+
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
+
         < div className="header-middle d-flex justify-content-between align-items-center px-3" >
           <a className="navbar-brand" href="#">
             <Link to={'/'}>
@@ -121,13 +158,13 @@ export default class Header extends React.Component {
               </div>
             </div>
             <div className="search-result-wrapper">
-              
-                {this.renderSearchOptions()}
-              
+
+              {this.renderSearchOptions()}
+
             </div>
           </div>
           <ul className="navbar-nav flex-row">
-            <li className="nav-item"><Link className="nav-link" to={'/login'}>Login/Register</Link></li>
+            <li className="nav-item" onClick={this.toggleModal} >Login/Register</li>
             {/* <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">
                             <Link to={'/login'}>Login/Register</Link></a></li> */}
             <li className="nav-item"><a href="#" className="nav-link">

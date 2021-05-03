@@ -125,40 +125,40 @@ export default class ShopByType extends React.Component {
   componentDidMount() {
     this.setState({
       shopByProductItems: this.state.shopByProductData.map((item, index) => {
-        return (<div className="product-wrapper" key={index} onClick={() => this.productDetail('1')}>
-         
-            <div className="prodcut-img">
-              <a href="#"><img src={item.img} className="img-fluid"
-                alt="saree" /></a>
-            </div>
-            <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
-            <h5 className="product-title"><a href="#">{item.title}</a></h5>
-            <span className="product-price">
-              <FontAwesomeIcon icon={faRupeeSign} /> {item.cost}
-            </span>
-         
+        return (<div className="product-wrapper" key={index} onClick={() => this.productDetail(item._id)}>
+
+          <div className="prodcut-img">
+            <a href="#"><img src={item.img} className="img-fluid"
+              alt="saree" /></a>
+          </div>
+          <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
+          <h5 className="product-title"><a href="#">{item.title}</a></h5>
+          <span className="product-price">
+            <FontAwesomeIcon icon={faRupeeSign} /> {item.cost}
+          </span>
+
         </div>)
       }),
       shopByCategoryItems: this.state.shopByCategoryData.map((item, index) => {
         return (<div className="shop-category-wrapper" key={index} onClick={() => this.productList(item.route)}>
-          
-            <div className="categorie-img">
-              <a href="#" className="cate-img">
-                <img src={item.img} className="img-fluid" alt="cate img" />
-              </a>
-            </div>
-            <div className="categorie-img-title">
-              <h3>{item.type}</h3>
-              <div className="more-products"><a href="#">More Products</a></div>
-            </div>
-          </div>)
+
+          <div className="categorie-img">
+            <a href="#" className="cate-img">
+              <img src={item.img} className="img-fluid" alt="cate img" />
+            </a>
+          </div>
+          <div className="categorie-img-title">
+            <h3>{item.type}</h3>
+            <div className="more-products"><a href="#">More Products</a></div>
+          </div>
+        </div>)
       })
     });
 
   }
 
   productDetail = (value) => {
-    this.props.history.push({ pathname: "/product-detail" });
+    this.props.history.push(`/product-detail/${value}`);
   }
   productList = (value) => {
 
@@ -169,25 +169,23 @@ export default class ShopByType extends React.Component {
     const { type, shopByCategoryItems, shopByProductItems } = this.state;
 
     return (
+      <AliceCarousel
+        animationType='slide'
+        autoPlayInterval={3000}
+        autoPlay={true}
+        autoPlayStrategy="all"
+        controlsStrategy="responsive"
+        disableDotsControls
+        disableAutoPlayOnAction={true}
+        items={type === 'product' ? shopByProductItems : shopByCategoryItems}
+        infinite
+        mouseTrackingEnabled={true}
+        // autoHeight={true}
+        autoWidth
+        disableButtonsControls //can be enabled if arrows are needed
+        touchTracking
+      />
 
-    
-          <AliceCarousel
-            animationType='slide'
-            autoPlayInterval={3000}
-            autoPlay={true}
-            autoPlayStrategy="all"
-            controlsStrategy="responsive"
-            disableDotsControls
-            disableAutoPlayOnAction={true}
-            items={type === 'product' ? shopByProductItems : shopByCategoryItems}
-            infinite
-            mouseTrackingEnabled={true}
-            // autoHeight={true}
-            autoWidth
-            disableButtonsControls //can be enabled if arrows are needed
-            touchTracking
-          />
-       
     )
   };
 }
