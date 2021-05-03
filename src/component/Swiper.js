@@ -21,6 +21,7 @@ export default class Swiper extends React.Component {
   }
 
   render() {
+    const { galleryItems } = this.state
     return (
       <div className="row">
         <div className="col">
@@ -37,7 +38,7 @@ export default class Swiper extends React.Component {
                   disableDotsControls
                   disableAutoPlayOnAction={true}
                   fadeOutAnimation={true}
-                  items={this.state.galleryItems}
+                  items={galleryItems}
                   infinite
                   mouseTrackingEnabled={true}
                   // autoHeight={true}

@@ -91,7 +91,6 @@ export default class Header extends React.Component {
     const { text, seachResults, showModal } = this.state;
     return (
       <>
-
         <Modal
           isOpen={showModal}
           onRequestClose={this.closeModal}

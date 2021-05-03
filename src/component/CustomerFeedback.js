@@ -85,7 +85,7 @@ export default class CustomerFeedback extends React.Component {
   }
   render() {
 
-
+    const { customerFeedbackItems } = this.state;
     return (
       <>
         {/* //    < !--From Our Customers-- > */}
@@ -107,7 +107,7 @@ export default class CustomerFeedback extends React.Component {
                   controlsStrategy="responsive"
                   disableDotsControls
                   disableAutoPlayOnAction={true}
-                  items={this.state.customerFeedbackItems}
+                  items={customerFeedbackItems}
                   infinite
                   mouseTrackingEnabled={true}
                   // autoHeight={true}

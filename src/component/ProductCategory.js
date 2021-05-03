@@ -134,7 +134,7 @@ export default class ProductCategory extends React.Component {
   receivedData = () => {
     const { productListData, offset, perPage } = this.state;
     this.setState({
-      pageCount: Math.ceil(productListData.length / this.state.perPage),
+      pageCount: Math.ceil(productListData.length / perPage),
       productsData: productListData.slice(offset, offset + perPage)
     });
   }
@@ -191,7 +191,8 @@ export default class ProductCategory extends React.Component {
       hoveredItem,
       layout,
       wishlistStatus,
-      priceRange } = this.state;
+      priceRange,
+      pageCount } = this.state;
 
     return (
       <>
@@ -339,7 +340,7 @@ export default class ProductCategory extends React.Component {
           nextLabel={"next"}
           breakLabel={"..."}
           breakClassName={"break-me"}
-          pageCount={this.state.pageCount}
+          pageCount={pageCount}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={this.handlePageClick}
