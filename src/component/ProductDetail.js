@@ -1,7 +1,7 @@
 import React from "react";
 import Zoom from 'react-img-zoom'
-import { Modal } from "react-modal-overlay";
-import "react-modal-overlay/dist/index.css";
+//import { Modal } from "react-modal-overlay";
+//import "react-modal-overlay/dist/index.css";
 import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
@@ -128,7 +128,7 @@ export default class ProductDetail extends React.Component {
               <div className="add-question my-3 py-2">
                 <a href="#" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</a>
               </div>
-              <Modal show={this.state.showModal} closeModal={this.toggleModal}>
+              {/* <Modal show={this.state.showModal} closeModal={this.toggleModal}>
                 <form onSubmit={this.handleSubmit}>
                   <h4> Ask a Question </h4>
                   <div className="row">
@@ -145,7 +145,7 @@ export default class ProductDetail extends React.Component {
                   </div>
                   <input type="submit" value="Submit" />
                 </form>
-              </Modal>
+              </Modal> */}
             </div>
 
             <div className="product-meta py-2">

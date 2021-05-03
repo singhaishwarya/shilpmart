@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import Navbar from './Navbar'
 import Login from "./Login";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faRandom, faHeart, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
-import { faFacebook, faTwitter, faLinkedin, faTelegram, faPinterestP } from '@fortawesome/free-brands-svg-icons'
+import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
+import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal';
 const customStyles = {
   content: {
