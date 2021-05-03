@@ -1,37 +1,87 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ReactMegaMenu from "react-mega-menu"
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isMenuShown: false,
       subMenus: [],
-      menuOptions: [{
-        title: "Mens wear",
-        _id: 1,
-        route: 'mens-wear',
-        category: [
-          { title: "Shirting" },
-          { title: "Shirting" },
-          { title: "Shirting" }]
-      }, {
-        title: "Womens wear",
-        _id: 2,
-        route: 'womens-wear',
-        category: [
-          { title: "saree" },
-          { title: "saree" },
-          { title: "saree" }]
+      menuOptions: [
+        {
+          label:
+            <div className="nicemenu-item" >
+              <p>Mens Wear</p>
+            </div>,
+          key: "Category1",
+          items:
+            [{ title: "Shirting" },
+            { title: "Shirting" },
+            { title: "Shirting" }].map((subitem, index) => {
+              return (<div className="col-sm-3 mb-3" key={index}>
+                <h6>{subitem.title}</h6>
+              </div>)
+            })
 
-      }, {
-        title: "Housing",
-        _id: 3,
-        route: 'housing',
-        category: [
-          { title: "curtain" },
-          { title: "curtain" },
-          { title: "curtain" }]
-      }],
+        },
+        {
+          label:
+            <div className="nicemenu-item" >
+              <p>Womens wear</p>
+            </div>,
+          key: "Category2",
+          items:
+            [{ title: "Saree" },
+            { title: "Saree" },
+            { title: "Saree" }].map((subitem, index) => {
+              return (<div className="col-sm-3 mb-3" key={index}>
+                <h6>{subitem.title}</h6>
+              </div>)
+            })
+
+        }, {
+          label:
+            <div className="nicemenu-item" >
+              <p>House Decor</p>
+            </div>,
+          key: "Category3",
+          items:
+            [{ title: "Curtain" },
+            { title: "Curtain" },
+            { title: "Curtain" }].map((subitem, index) => {
+              return (<div className="col-sm-3 mb-3" key={index}>
+                <h6>{subitem.title}</h6>
+              </div>)
+            })
+
+        },
+
+        //   {
+        //   title: "Mens wear",
+        //   _id: 1,
+        //   route: 'mens-wear',
+        //   category: [
+        //     { title: "Shirting" },
+        //     { title: "Shirting" },
+        //     { title: "Shirting" }]
+        // }, {
+        //   title: "Womens wear",
+        //   _id: 2,
+        //   route: 'womens-wear',
+        //   category: [
+        //     { title: "saree" },
+        //     { title: "saree" },
+        //     { title: "saree" }]
+
+        // }, {
+        //   title: "Housing",
+        //   _id: 3,
+        //   route: 'housing',
+        //   category: [
+        //     { title: "curtain" },
+        //     { title: "curtain" },
+        //     { title: "curtain" }]}
+      ],
       navbarTabs: [{ title: 'Home', route: '' }, { title: 'ABOUT US', route: 'about-us' }, { title: 'SHOP', route: 'shop' }, { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
       isActiveTab: 0
     };
@@ -44,17 +94,15 @@ export default class Navbar extends React.Component {
   setIsSubmenuShown = (status, index) => {
     this.setState({
       isSubmenuShown: status,
-      subMenus: <div className="" >
-        <div className="">
-          <div className="">
-            {this.state.menuOptions[index].category.map((subitem, index) => {
-              return (<div className="col-sm-3 mb-3" key={index}>
-                <h6>{subitem.title}</h6>
-              </div>)
-            })}
-          </div>
-        </div>
-      </div>
+      subMenus:
+      {
+        // this.state.menuOptions[index].category.map((subitem, index) => {
+        //   return (<div className="col-sm-3 mb-3" key={index}>
+        //     <h6>{subitem.title}</h6>
+        //   </div>)
+        // })
+      }
+
     })
   }
 
@@ -77,21 +125,20 @@ export default class Navbar extends React.Component {
                 <span className="brows-menu dropdown-toggle" data-toggle="dropdown">
                   <span className="brows-menu-icon"></span>
                   <span >Browse Categories</span>
-
                 </span>
                 {isMenuShown && (
                   <div onMouseLeave={() => this.setState({ subMenus: [] })} className="dropdown-menu nicemenu verticle" data-pos="list.right" data-classes="active">
-                    {menuOptions.map((item, index) => {
-                      return (
-                        // <Link to={`/product-category/${item.route}`}>
-                        <Link to={`/product-category/${item.route}`} key={index}>
-                          <div className="nicemenu-item" onMouseEnter={() => this.setIsSubmenuShown(true, index)} key={index}>
-                            <p>{item.title}</p>
-                          </div>
-                        </Link>)
-                    })}
-                    {subMenus}
-                    {/* <div className="nicemenu-item">
+                    <ReactMegaMenu
+                      tolerance={50}      // optional, defaults to 100
+                      direction={"Right"}  // optional, defaults to "RIGHT", takes in "RIGHT" || "LEFT"
+                      // styleConfig={...}   // defaults to an empty object. not recommended to be left blank.
+                      // onExit={() => {...}}  // a function to be called when a mouse leaves the container
+                      data={menuOptions}        // array of data to be rendered
+                    />
+
+                  </div>)}
+
+                {/* <div className="nicemenu-item">
                       <p>Men’s Wear</p>
                       <div className="nicemenu-sub">
                         <div className="container">
@@ -113,7 +160,7 @@ export default class Navbar extends React.Component {
                         </div>
                       </div>
                     </div> */}
-                    {/* <div className="nicemenu-item">
+                {/* <div className="nicemenu-item">
                       <p>Women’s wear</p>
                       <div className="nicemenu-sub">
                         <h6>Sub Menu 2</h6>
@@ -155,8 +202,8 @@ export default class Navbar extends React.Component {
                         <h6>Sub Menu 8</h6>
                       </div>
                     </div> */}
-                  </div>
-                )}
+                {/* </div> */}
+                {/* // )} */}
               </div>
               <ul className="navbar-nav mr-auto">
                 {navbarTabs.map((item, index) => {
