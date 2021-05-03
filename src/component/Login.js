@@ -4,8 +4,12 @@ export default class Login extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-    }
+
+    console.log("Props in  :", props);
+  }
+
+  handleChange = (event) => {
+    this.props.onClick();
   }
   render() {
     return (
@@ -22,7 +26,7 @@ export default class Login extends React.Component {
         <button>Log in</button>
         <span>No account yet?</span>
 
-        <Link to={'/buyer-registration'}>CREATE AN ACCOUNT</Link>
+        <Link to={'/buyer-registration'} onClick={this.handleChange} >CREATE AN ACCOUNT</Link>
       </>
     )
   };

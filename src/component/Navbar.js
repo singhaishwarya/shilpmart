@@ -84,7 +84,7 @@ export default class Navbar extends React.Component {
                     {menuOptions.map((item, index) => {
                       return (
                         // <Link to={`/product-category/${item.route}`}>
-                        <Link to={`/product-category/${item.route}`}>
+                        <Link to={`/product-category/${item.route}`} key={index}>
                           <div className="nicemenu-item" onMouseEnter={() => this.setIsSubmenuShown(true, index)} key={index}>
                             <p>{item.title}</p>
                           </div>
@@ -161,8 +161,8 @@ export default class Navbar extends React.Component {
               <ul className="navbar-nav mr-auto">
                 {navbarTabs.map((item, index) => {
                   return (
-                    <Link to={`/${item.route}`}>
-                      <li key={index} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}> {item.title} </li>
+                    <Link to={`/${item.route}`} key={index}>
+                      <li className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}> {item.title} </li>
                     </Link>
                   )
                 })}
