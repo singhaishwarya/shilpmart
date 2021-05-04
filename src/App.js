@@ -12,6 +12,9 @@ import "./public/bootstrap.min.css";
 import "./public/jbility.css";
 import "./index.css";
 import "./public/swiper-bundle.min.css"
+import Wishlist from './component/Wishlist';
+import Compare from './component/Compare';
+import Cart from './component/Cart';
 
 function App() {
   return (
@@ -21,11 +24,14 @@ function App() {
         <Switch>
           <Route path='/' component={Dashboard} exact />
           <Route path='/login' component={Login} exact />
-
           <Route path='/buyer-registration' component={Registration} exact />
           <Route path='/product-category/:categoryId' component={ProductCategory} exact />
           <Route path='/product-detail/:productId' component={ProductDetail} exact />
           <Route path='/seller-profile' component={SellerProfile} exact />
+          <Route path='/wishlist' component={Wishlist} exact />
+          <Route path='/compare' component={Compare} exact />
+          <Route path='/cart' component={Cart} exact />
+
         </Switch>
         <Footer />
       </div>
