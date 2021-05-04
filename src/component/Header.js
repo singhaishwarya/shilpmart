@@ -44,6 +44,7 @@ export default class Header extends React.Component {
 
   };
   toggleModal = () => {
+    console.log("Demo===")
     this.setState({
       showModal: !this.state.showModal
     });
@@ -97,13 +98,12 @@ export default class Header extends React.Component {
     const { text, seachResults, showModal } = this.state;
     return (
       <>
-
         <Modal
           isOpen={showModal}
           onRequestClose={this.closeModal}
           style={customStyles}
           contentLabel="SIGN IN"
-        ><Login /> </Modal>
+        ><Login onClick={this.toggleModal} /> </Modal>
         <div className="header-top py-1  ">
           <div className="container-fluid">
             <div className="row">
@@ -139,13 +139,10 @@ export default class Header extends React.Component {
             </div>
           </div>
         </div>
-
         < div className="header-middle d-flex justify-content-between align-items-center px-3" >
-          <a className="navbar-brand" href="#">
-            <Link to={'/'}>
-              <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
-            </Link>
-          </a>
+          <Link to={'/'}>
+            <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
+          </Link>
           <div className="search-container mx-5 w-100 position-relative">
             <div className="form-inline my-2 my-lg-0">
               <div className="search-bar w-100 d-flex justify-content-start">

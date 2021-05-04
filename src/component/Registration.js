@@ -64,6 +64,27 @@ export default class Registration extends React.Component {
           </div>
           <div className="col-md-5 mb-5">
             <h4>Registration</h4>
+            <div className="row">
+              <label>First Name *</label>
+              <input type="text" name="firstname" />
+            </div><div className="row">
+              <label>Last Name *</label>
+              <input type="text" name="lastname" />
+            </div><div className="row">
+              <label>Email *</label>
+              <input type="text" name="email" />
+            </div><div className="row">
+              <label>Mobile Number *</label>
+              <input type="text" name="mobile no" />
+            </div><div className="row">
+              <label>Password *</label>
+              <input type="tepasswordxt" name="password1" />
+            </div>
+            <div className="row">
+              <label>Confirm Password*</label>
+              <input type="password" name="password2" />
+            </div>
+            <button>Register</button>
           </div>
         </div>
       </div>

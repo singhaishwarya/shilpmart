@@ -1,7 +1,6 @@
 import React from "react";
 import Zoom from 'react-img-zoom'
-//import { Modal } from "react-modal-overlay";
-//import "react-modal-overlay/dist/index.css";
+import Modal from "react-modal";
 import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
@@ -24,7 +23,7 @@ export default class ProductDetail extends React.Component {
         tags: "Handlooms"
       },
       visible: true,
-      productCount: 0,
+      productCount: 1,
       showModal: false
 
     }
@@ -36,10 +35,10 @@ export default class ProductDetail extends React.Component {
   //         visible: true
   //     });
   // }
-  incrementItem = () => {
+  countInc = () => {
     this.setState({ productCount: this.state.productCount + 1 });
   }
-  decreaseItem = () => {
+  countDec = () => {
     this.setState({ productCount: this.state.productCount - 1 });
   }
   componentDidMount() {
@@ -66,9 +65,13 @@ export default class ProductDetail extends React.Component {
     })
 
   }
+  productCountManual = (event) => {
+
+    this.setState({ productCount: event.target.value });
+  }
 
   render() {
-    const { productDetailData, productCount, wishlistStatus, isActiveTab } = this.state;
+    const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal } = this.state;
     return (
       <>
         <div className="row">
@@ -79,9 +82,9 @@ export default class ProductDetail extends React.Component {
                   img={productDetailData.src}
                   zoomScale={1.5}
                   height={750}
-                  width="100%"                  
+                  width={700}
+                  // height={600}
                   transitionTime={0.5}
-                  cla
                 />
                 {/* <a href="">
                                     <img className="mainimage img-fluid" src={require("../public/product.jpg")} />
@@ -106,17 +109,17 @@ export default class ProductDetail extends React.Component {
                 <FontAwesomeIcon icon={faRupeeSign} />
                 <span>{productDetailData.cost}</span></p>
               <div className="short-decription"><p>Short Decription</p></div>
-              <form className="addtocart d-flex justify-content-start">
+              <div className="addtocart d-flex justify-content-start">
                 <div className="product-qty">
                   <div className="input-group">
-                    <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={this.decreaseItem} />
-                    <input type="number" value={productCount} min="1" max="100" />
-                    <input type="button" value="+" onClick={this.incrementItem} className="quantity-right-plus" />
+                    <button className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()} >-</button>
+                    <input type="number" value={productCount} onChange={this.productCountManual} />
+                    <button onClick={() => this.countInc()} className="quantity-right-plus" >+</button>
 
                   </div>
                 </div>
                 <button type="submit" className="cart-btn">Add to cart</button>
-              </form>
+              </div>
 
               <div className="action-links">
                 <a href="#"  >
@@ -128,9 +131,13 @@ export default class ProductDetail extends React.Component {
               <div className="add-question my-3 py-2">
                 <a href="#" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</a>
               </div>
-              {/* <Modal show={this.state.showModal} closeModal={this.toggleModal}>
+              <Modal
+                isOpen={showModal}
+                onRequestClose={this.toggleModal}
+                contentLabel="Ask a Question"
+              >
+                {/* <Modal show={this.state.showModal} closeModal={this.toggleModal}> */}
                 <form onSubmit={this.handleSubmit}>
-                  <h4> Ask a Question </h4>
                   <div className="row">
                     <label>Name*</label>
                     <input type="text" name="name" />
@@ -145,7 +152,7 @@ export default class ProductDetail extends React.Component {
                   </div>
                   <input type="submit" value="Submit" />
                 </form>
-              </Modal> */}
+              </Modal>
             </div>
 
             <div className="product-meta py-2">
