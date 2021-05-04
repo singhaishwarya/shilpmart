@@ -184,8 +184,8 @@ export default class Navbar extends React.Component {
                     // <Link to={`/${item.route}`}>
                     //   <li key={index} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}> {item.title} </li>
                     // </Link>
-                    <li >
-                      <Link to={`/${item.route}`} key={index} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>{item.title}</Link>
+                    <li key={index}>
+                      <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>{item.title}</Link>
                     </li>
                   )
                 })}

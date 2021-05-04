@@ -10,7 +10,7 @@ export default class Dashboard extends React.Component {
     return (
       <>
         <section id="maincontent">
-          <div class="container-fluid">
+          <div className="container-fluid">
             <Swiper />
 
             <div className="row py-5">
