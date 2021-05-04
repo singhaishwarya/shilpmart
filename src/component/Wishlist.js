@@ -1,22 +1,21 @@
 import React from "react";
+import ProductGrid from './ProductGrid'
 export default class Wishlist extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      galleryItems: [],
+      layout: 'col-lg-3 col-sm-6 col-6',
     };
   }
 
-  componentDidMount() {
-
-
-  }
-
   render() {
+    const { layout } = this.state
     return (
-      <div className="row">
-      </div >
+      <div className="container-fluid">
+        <div className='row py-5'>
+          <ProductGrid layoutProps={layout} />
+        </div > </div >
     );
   }
 }

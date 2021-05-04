@@ -15,7 +15,11 @@ export default class Compare extends React.Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="container-fluid">
+        <div className="row">
+
+          <h4 className="text-center">Compare</h4>
+        </div>
       </div >
     );
   }
