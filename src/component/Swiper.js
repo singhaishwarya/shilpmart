@@ -24,31 +24,31 @@ export default class Swiper extends React.Component {
     const { galleryItems } = this.state
     return (
       <div className="row">
-        
+
         <div className="col">
-         
-                <AliceCarousel
-                  animationType='fadeout'
-                  autoPlayInterval={3000}
-                  autoPlay={true}
-                  autoPlayStrategy="all"
-                  animationEasingFunction="ease"
-                  // controlsStrategy="responsive"
-                  disableDotsControls
-                  disableAutoPlayOnAction={true}
-                  fadeOutAnimation={true}
-                  items={galleryItems}
-                  infinite
-                  mouseTrackingEnabled={true}
-                  // autoHeight={true}
-                  autoWidth
-                  disableButtonsControls //can be enabled if arrows are needed
-                  // responsive='responsive'
-                  touchTracking
-                />
-              </div>
-              </div>
-       
+
+          <AliceCarousel
+            animationType='fadeout'
+            autoPlayInterval={3000}
+            autoPlay={true}
+            autoPlayStrategy="all"
+            animationEasingFunction="ease"
+            // controlsStrategy="responsive"
+            disableDotsControls
+            disableAutoPlayOnAction={true}
+            fadeOutAnimation={true}
+            items={galleryItems}
+            infinite
+            mouseTrackingEnabled={true}
+            // autoHeight={true}
+            autoWidth
+            disableButtonsControls //can be enabled if arrows are needed
+            // responsive='responsive'
+            touchTracking
+          />
+        </div>
+      </div>
+
     );
   }
 }

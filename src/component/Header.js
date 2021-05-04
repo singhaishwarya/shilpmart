@@ -96,7 +96,8 @@ export default class Header extends React.Component {
         <Modal
           isOpen={showModal}
           onRequestClose={this.closeModal}
-          style={customStyles}          
+          style={customStyles}
+          shouldCloseOnOverlayClick={true}
           contentLabel="SIGN IN"
         >
           <Login onClick={this.toggleModal} /> </Modal>

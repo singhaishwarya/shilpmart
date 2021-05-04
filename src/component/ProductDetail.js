@@ -134,6 +134,7 @@ export default class ProductDetail extends React.Component {
                 isOpen={showModal}
                 onRequestClose={this.toggleModal}
                 contentLabel="Ask a Question"
+                shouldCloseOnOverlayClick={true}
               >
                 {/* <Modal show={this.state.showModal} closeModal={this.toggleModal}> */}
                 <form onSubmit={this.handleSubmit}>

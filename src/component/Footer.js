@@ -1,11 +1,17 @@
 import React from "react";
-
+import AliceCarousel from 'react-alice-carousel';
 export default class Footer extends React.Component {
   state = {
-
+    footerItems: [
+      <div className="swiper-slide"><img src={require("../public/india-gov.webp")} className="img-fluid" alt="India gov" /></div>,
+      <div className="swiper-slide"><img src={require("../public/mot.webp")} className="img-fluid" alt="Ministry Textile" /></div >,
+      <div className="swiper-slide"><img src={require("../public/di.webp")} className="img-fluid" alt="DIC" /></div >,
+      <div className="swiper-slide"><img src={require("../public/india_post.webp")} className="img-fluid" alt="India Post" /></div >,
+      <div className="swiper-slide"> <img src={require("../public/csc.webp")} className="img-fluid" alt="CSC" /></div >]
   };
 
   render() {
+    const { footerItems } = this.state;
     return (
       <>
         <div id="mainFooter">
@@ -68,19 +74,34 @@ export default class Footer extends React.Component {
             {/* <!-- Swiper --> */}
             <div className="swiper-container py-5 logos">
               <div className="swiper-wrapper">
-                <div className="swiper-slide"><img src={require("../public/data_gov.webp")} className="img-fluid" alt="data gov" />
-                </div>
-                <div className="swiper-slide"><img src={require("../public/india-gov.webp")} className="img-fluid" alt="India gov" />
-                </div>
-                <div className="swiper-slide"><img src={require("../public/mot.webp")} className="img-fluid" alt="Ministry Textile" />
-                </div>
-                <div className="swiper-slide"><img src={require("../public/di.webp")} className="img-fluid" alt="DIC" /></div>
-                <div className="swiper-slide"><img src={require("../public/india_post.webp")} className="img-fluid"
-                  alt="India Post" /></div>
-                <div className="swiper-slide"><img src={require("../public/csc.webp")} className="img-fluid" alt="CSC" /></div>
+                {/* <img src={require("../public/data_gov.webp")} className="img-fluid" alt="data gov" />
+                  <img src={require("../public/india-gov.webp")} className="img-fluid" alt="India gov" />
+                  <img src={require("../public/mot.webp")} className="img-fluid" alt="Ministry Textile" />
+                  <img src={require("../public/di.webp")} className="img-fluid" alt="DIC" />
+                  <img src={require("../public/india_post.webp")} className="img-fluid" alt="India Post" />
+                  <img src={require("../public/csc.webp")} className="img-fluid" alt="CSC" /> */}
+
+                <AliceCarousel
+                  animationType='slide'
+                  autoPlayInterval={3000}
+                  autoPlay={true}
+                  disableDotsControls
+                  disableAutoPlayOnAction={true}
+                  items={footerItems}
+                  infinite
+                  disableButtonsControls //can be enabled if arrows are needed
+                  touchTracking
+                />
+                {/* <div className="swiper-slide"><img src={require("../public/data_gov.webp")} className="img-fluid" alt="data gov" />
+                  <img src={require("../public/india-gov.webp")} className="img-fluid" alt="India gov" />
+                  <img src={require("../public/mot.webp")} className="img-fluid" alt="Ministry Textile" />
+                  <img src={require("../public/di.webp")} className="img-fluid" alt="DIC" /><img src={require("../public/india_post.webp")} className="img-fluid"
+                    alt="India Post" />
+                    <img src={require("../public/csc.webp")} className="img-fluid" alt="CSC" /></div> */}
+
+
+
               </div>
-              {/* <!-- Add Pagination --> */}
-              <div className="swiper-pagination"></div>
             </div>
           </div>
         </div>
