@@ -1,5 +1,4 @@
 import React from "react";
-import Zoom from 'react-img-zoom'
 import Modal from "react-modal";
 import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,6 +6,7 @@ import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
 import { faRandom, faCheck, faPhone, faRupeeSign, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
+import ImageGallery from 'react-image-gallery';
 export default class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +24,21 @@ export default class ProductDetail extends React.Component {
       },
       visible: true,
       productCount: 1,
-      showModal: false
+      showModal: false,
+      productImages: [
+        {
+          original: require('../public/bag1.jpeg'),
+          thumbnail: require('../public/bag1.jpeg'),
+        },
+        {
+          original: require('../public/bag2.jpeg'),
+          thumbnail: require('../public/bag2.jpeg'),
+        },
+        {
+          original: require('../public/bag3.jpeg'),
+          thumbnail: require('../public/bag3.jpeg'),
+        },
+      ]
 
     }
   }
@@ -70,21 +84,33 @@ export default class ProductDetail extends React.Component {
     this.setState({ productCount: event.target.value });
   }
 
+  renderRightNav = (onClick, disabled) => {
+    return (
+      <button
+        className='image-gallery-custom-right-nav'
+        disabled={disabled}
+        onClick={onClick} />
+    )
+  }
+  renderLeftNav = (onClick, disabled) => {
+    return (
+      <button
+        className='image-gallery-custom-left-nav'
+        disabled={disabled}
+        onClick={onClick} />
+    )
+  }
   render() {
-    const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal } = this.state;
+    const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal, productImages } = this.state;
     return (
       <>
         <div className="container-fluid">
           <div className="row py-5">
             <div className="col-lg-6 col-md-6 col-12">
               <div className="product-img-wrapper">
-
-                <Zoom
-                  img={productDetailData.src}
-                  zoomScale={1.25}
-                  height={1040}
-                  transitionTime={0.5}
-                  width={780}
+                <ImageGallery items={productImages}
+                  renderLeftNav={this.renderLeftNav}
+                  renderRightNav={this.renderRightNav}
                 />
               </div>
             </div>

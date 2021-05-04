@@ -125,11 +125,7 @@ export default class ShopByType extends React.Component {
       shopByProductItems: []
     };
 
-    
-
   }
-
-  
 
   componentDidMount() {
     this.setState({

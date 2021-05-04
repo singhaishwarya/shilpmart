@@ -13,71 +13,70 @@ export default class CustomerFeedback extends React.Component {
     this.setState({
       customerFeedbackItems: [
         <div className="testimonials-block">
-          
-            <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
-              alt="user Dp" /></div>
-            <div className="testimonial-ratings">
-              <span>  <ReactStars count={5} size={10} /></span>
-            </div>
-            <div className="testimonial-text">
-              <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
-              Textile for giving us a platform to shop our favourite handloom and
+          <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
+            alt="user Dp" /></div>
+          <div className="testimonial-ratings">
+            <span>  <ReactStars count={5} size={10} /></span>
+          </div>
+          <div className="testimonial-text">
+            <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
+            Textile for giving us a platform to shop our favourite handloom and
                                             handicraft product from a single stop shop.​​</p>
-              <h5>Anuradha Mitra</h5>
+            <h5>Anuradha Mitra</h5>
 
-            </div>
-        
+          </div>
+
 
         </div>,
         <div className="testimonials-block">
-          
-        <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
-          alt="user Dp" /></div>
-        <div className="testimonial-ratings">
-          <span>  <ReactStars count={5} size={10} /></span>
-        </div>
-        <div className="testimonial-text">
-          <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
-          Textile for giving us a platform to shop our favourite handloom and
+
+          <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
+            alt="user Dp" /></div>
+          <div className="testimonial-ratings">
+            <span>  <ReactStars count={5} size={10} /></span>
+          </div>
+          <div className="testimonial-text">
+            <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
+            Textile for giving us a platform to shop our favourite handloom and
                                         handicraft product from a single stop shop.​​</p>
-          <h5>Anuradha Mitra</h5>
+            <h5>Anuradha Mitra</h5>
 
-        </div>
-    
+          </div>
 
-    </div>,
+
+        </div>,
         <div className="testimonials-block">
-          
-        <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
-          alt="user Dp" /></div>
-        <div className="testimonial-ratings">
-          <span>  <ReactStars count={5} size={10} /></span>
-        </div>
-        <div className="testimonial-text">
-          <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
-          Textile for giving us a platform to shop our favourite handloom and
+
+          <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
+            alt="user Dp" /></div>
+          <div className="testimonial-ratings">
+            <span>  <ReactStars count={5} size={10} /></span>
+          </div>
+          <div className="testimonial-text">
+            <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
+            Textile for giving us a platform to shop our favourite handloom and
                                         handicraft product from a single stop shop.​​</p>
-          <h5>Anuradha Mitra</h5>
+            <h5>Anuradha Mitra</h5>
 
-        </div>
-    
+          </div>
 
-    </div>,
+
+        </div>,
         <div className="testimonials-block">
-          
-            <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
-              alt="user Dp" /></div>
-            <div className="testimonial-ratings">
-              <span>  <ReactStars count={5} size={10} /></span>
-            </div>
-            <div className="testimonial-text">
-              <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
-              Textile for giving us a platform to shop our favourite handloom and
+
+          <div className="testimonial-avatar"><img src={require('../public/anu.png')} className="img-fluid"
+            alt="user Dp" /></div>
+          <div className="testimonial-ratings">
+            <span>  <ReactStars count={5} size={10} /></span>
+          </div>
+          <div className="testimonial-text">
+            <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
+            Textile for giving us a platform to shop our favourite handloom and
                                             handicraft product from a single stop shop.​​</p>
-              <h5>Anuradha Mitra</h5>
+            <h5>Anuradha Mitra</h5>
 
-            </div>
-        
+          </div>
+
 
         </div>
       ]
@@ -90,34 +89,34 @@ export default class CustomerFeedback extends React.Component {
       <>
         {/* //    < !--From Our Customers-- > */}
         <div className="row py-5 section-bg">
-        <div className="section-title">
-              <span>From Our Customers</span>
-              <p>Customer reviews are important to us</p>
-            </div>
-          <div className="col">           
+          <div className="section-title">
+            <span>From Our Customers</span>
+            <p>Customer reviews are important to us</p>
+          </div>
+          <div className="col">
 
             {/* <!-- Swiper --> */}
             <div className="testimonials">
-             
-                <AliceCarousel
-                  animationType='slide'
-                  autoPlayInterval={3000}
-                  autoPlay={true}
-                  autoPlayStrategy="all"
-                  controlsStrategy="responsive"
-                  disableDotsControls
-                  disableAutoPlayOnAction={true}
-                  items={customerFeedbackItems}
-                  infinite
-                  mouseTrackingEnabled={true}
-                  // autoHeight={true}
-                  autoWidth
-                  disableButtonsControls //can be enabled if arrows are needed
-                  touchTracking
-                />
 
-             
-        
+              <AliceCarousel
+                animationType='slide'
+                autoPlayInterval={3000}
+                autoPlay={true}
+                autoPlayStrategy="all"
+                controlsStrategy="responsive"
+                disableDotsControls
+                disableAutoPlayOnAction={true}
+                items={customerFeedbackItems}
+                infinite
+                mouseTrackingEnabled={true}
+                // autoHeight={true}
+                autoWidth
+                disableButtonsControls //can be enabled if arrows are needed
+                touchTracking
+              />
+
+
+
             </div>
 
 

@@ -49,8 +49,8 @@ export default class Navbar extends React.Component {
       menuOptions: [
         {
           label:
-            
-              <span>Mens Wear</span>,            
+
+            <span>Mens Wear</span>,
           key: "Category1",
           items:
             [{ title: "Shirting" },
@@ -77,7 +77,7 @@ export default class Navbar extends React.Component {
 
         }, {
           label:
-          <span>Womens wear</span>,
+            <span>Women's wear</span>,
           key: "Category3",
           items:
             [{ title: "Curtain" },

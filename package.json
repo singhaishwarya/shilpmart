@@ -20,7 +20,7 @@
     "react": "^16.8.6",
     "react-alice-carousel": "^2.5.1",
     "react-dom": "^16.8.6",
-    "react-img-zoom": "^0.1.0",
+    "react-image-gallery": "^1.0.9",
     "react-mega-menu": "^1.0.1",
     "react-modal": "^3.13.1",
     "react-multi-select-component": "^4.0.1",
