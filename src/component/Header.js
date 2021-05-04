@@ -8,13 +8,12 @@ import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@
 import Modal from 'react-modal';
 const customStyles = {
   content: {
-    top: '50%',
-    left: 'auto',
-    // backgroundColor:
-    // right: 'auto',
-    // bottom: 'auto',
-    // marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',  
+    transform             : 'translate(-50%, -50%)'
   }
 };
 export default class Header extends React.Component {
@@ -85,11 +84,7 @@ export default class Header extends React.Component {
             </span>
             <span className="sale-sticker">sale!</span>
           </Link>
-        </div>
-
-        // <div className="col-6 serach-result-col" key={index}>
-
-        // </div>
+        </div>       
       )
       ));
   };
@@ -104,7 +99,8 @@ export default class Header extends React.Component {
           style={customStyles}
           shouldCloseOnOverlayClick={true}
           contentLabel="SIGN IN"
-        ><Login onClick={this.toggleModal} /> </Modal>
+        >
+          <Login onClick={this.toggleModal} /> </Modal>
         <div className="header-top py-1  ">
           <div className="container-fluid">
             <div className="row">
@@ -162,15 +158,13 @@ export default class Header extends React.Component {
             </div>
           </div>
           <ul className="navbar-nav flex-row">
-            <li className="nav-item" onClick={this.toggleModal} >Login/Register</li>
-            {/* <li className="nav-item"><a href="#loginModal" className="nav-link" data-toggle="modal">
-                            <Link to={'/login'}>Login/Register</Link></a></li> */}
-            <li className="nav-item"><Link to={'/wishlist'}> <a href="#" className="nav-link">
-              <FontAwesomeIcon icon={faHeart} /><span>0</span></a></Link></li>
-            <li className="nav-item"><Link to={'/compare'}><a href="#" className="nav-link">
-              <FontAwesomeIcon icon={faRandom} /><span>0</span></a></Link></li>
-            <li className="nav-item"><Link to={'/cart'}> <a href="#" className="nav-link">
-              <FontAwesomeIcon icon={faShoppingBasket} /><span>0</span></a></Link></li>
+            <li className="nav-item" onClick={this.toggleModal} >Login/Register</li>            
+            <li className="nav-item"><a href="#" className="nav-link">
+              <FontAwesomeIcon icon={faHeart} /><span>0</span></a></li>
+            <li className="nav-item"><a href="#" className="nav-link">
+              <FontAwesomeIcon icon={faRandom} /><span>0</span></a></li>
+            <li className="nav-item"><a href="#" className="nav-link">
+              <FontAwesomeIcon icon={faShoppingBasket} /><span>0</span></a></li>
           </ul>
         </div >
         <Navbar />
