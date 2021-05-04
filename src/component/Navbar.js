@@ -54,35 +54,16 @@ export default class Navbar extends React.Component {
               </div>)
             })
 
-        },
-
-        //   {
-        //   title: "Mens wear",
-        //   _id: 1,
-        //   route: 'mens-wear',
-        //   category: [
-        //     { title: "Shirting" },
-        //     { title: "Shirting" },
-        //     { title: "Shirting" }]
-        // }, {
-        //   title: "Womens wear",
-        //   _id: 2,
-        //   route: 'womens-wear',
-        //   category: [
-        //     { title: "saree" },
-        //     { title: "saree" },
-        //     { title: "saree" }]
-
-        // }, {
-        //   title: "Housing",
-        //   _id: 3,
-        //   route: 'housing',
-        //   category: [
-        //     { title: "curtain" },
-        //     { title: "curtain" },
-        //     { title: "curtain" }]}
-      ],
-      navbarTabs: [{ title: 'Home', route: '' }, { title: 'ABOUT US', route: 'about-us' }, { title: 'SHOP', route: 'shop' }, { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
+      }, {
+        title: "Housing",
+        _id: 3,
+        route: 'housing',
+        category: [
+          { title: "curtain" },
+          { title: "curtain" },
+          { title: "curtain" }]
+      }],
+      navbarTabs: [{ title: 'HOME', route: '' }, { title: 'ABOUT US', route: 'about-us' }, { title: 'SHOP', route: 'shop' }, { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
       isActiveTab: 0
     };
   }
@@ -208,9 +189,12 @@ export default class Navbar extends React.Component {
               <ul className="navbar-nav mr-auto">
                 {navbarTabs.map((item, index) => {
                   return (
-                    <Link to={`/${item.route}`} key={index}>
-                      <li className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}> {item.title} </li>
-                    </Link>
+                    // <Link to={`/${item.route}`}>
+                    //   <li key={index} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}> {item.title} </li>
+                    // </Link>
+                    <li to={'/${itme.route}'}>
+                      <Link key={index} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>{item.title}</Link>
+                    </li>
                   )
                 })}
               </ul>

@@ -286,10 +286,10 @@ export default class ProductCategory extends React.Component {
                   </div>
 
                   <div className="grid-view">
-                    {/* <span className="breadcrumb-item active">Show:</span> */}
-                    <button onClick={() => this.onLayoutChange('2X2')} ><FontAwesomeIcon icon={faThLarge} /> </button>
-                    <button onClick={() => this.onLayoutChange('3X3')} ><i className="fas fa-th"></i></button>
-                    <button onClick={() => this.onLayoutChange('4X4')} >4X4</button>
+                    
+                    <button onClick={() => this.onLayoutChange('2X2')} ></button>
+                    <button onClick={() => this.onLayoutChange('3X3')} ></button>
+                    <button onClick={() => this.onLayoutChange('4X4')} ></button>
                   </div>
 
                   <form method="get" className="shorting-wrapper">

@@ -11,7 +11,7 @@ import SellerProfile from './component/SellerProfile';
 import "./public/bootstrap.min.css";
 import "./public/jbility.css";
 import "./index.css";
-import "./public/swiper-bundle.min.css";
+import "./public/swiper-bundle.min.css"
 
 function App() {
   return (

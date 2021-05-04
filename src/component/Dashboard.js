@@ -9,18 +9,25 @@ export default class Dashboard extends React.Component {
   render() {
     return (
       <>
+      <section id="maincontent">
+        <div class="container-fluid">
         <Swiper />
 
-        <div className="w-100 py-5">
+        <div className="row py-5">
+        
+          <div className="col">
           <div className="section-title">
             <span><a href="#">Shop by Categories</a></span>
             <p>Choose from authentic handmade product categories</p>
           </div>
-          <div className="swiper-container shop-categories">
-            <div className="swiper-wrapper">
+          
+          <div className="shop-categories">
+            
               <ShopByType type='category' {...this.props} />
-            </div>
+            
           </div>
+          </div>
+         
         </div>
 
 
@@ -47,6 +54,8 @@ export default class Dashboard extends React.Component {
         <LiveStats />
         <CustomerFeedback />
         <PressArticles />
+        </div>
+        </section>
       </>
     );
   }
