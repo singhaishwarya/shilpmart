@@ -2,6 +2,11 @@ import React from "react";
 import AliceCarousel from 'react-alice-carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRupeeSign } from '@fortawesome/free-solid-svg-icons'
+const responsive = {
+  0: { items: 1 },
+  568: { items: 2 },
+  1024: { items: 3 },
+};
 export default class ShopByType extends React.Component {
   constructor(props) {
     super(props);
@@ -120,7 +125,11 @@ export default class ShopByType extends React.Component {
       shopByProductItems: []
     };
 
+    
+
   }
+
+  
 
   componentDidMount() {
     this.setState({
@@ -172,7 +181,9 @@ export default class ShopByType extends React.Component {
       <AliceCarousel
         animationType='slide'
         autoPlayInterval={3000}
+        items={3}
         autoPlay={true}
+        responsive={responsive}
         autoPlayStrategy="all"
         controlsStrategy="responsive"
         disableDotsControls

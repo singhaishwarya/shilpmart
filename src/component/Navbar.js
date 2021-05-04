@@ -7,12 +7,50 @@ export default class Navbar extends React.Component {
     this.state = {
       isMenuShown: false,
       subMenus: [],
+      styleConfigObj: {
+        // menuProps: {
+        //   style: {
+        //     border: "2px solid red",
+        //     height: "20em",
+        //     width: "10em",
+        //     padding: "2px",
+        //     margin: "0"
+        //   }
+        // },
+        contentProps: {
+          style: {
+            width: "50em",
+            border: "2px solid yellow",
+            padding: "2px"
+          }
+        },
+        // menuItemProps: {
+        //   style: {
+        //     border: "2px solid green",
+        //     padding: "2px",
+        //     height: "2em"
+        //   }
+        // },
+        // menuItemSelectedProps: {
+        //   style: {
+        //     border: "2px solid purple",
+        //     padding: "2px",
+        //     height: "2em",
+        //     backgroundColor: "grey"
+        //   }
+        // },
+        // containerProps: {
+        //   style: {
+        //     border: "2px solid blue",
+        //     padding: "2px"
+        //   }
+        // }
+      },
       menuOptions: [
         {
           label:
-            <div className="nicemenu-item" >
-              <p>Mens Wear</p>
-            </div>,
+            
+              <span>Mens Wear</span>,            
           key: "Category1",
           items:
             [{ title: "Shirting" },
@@ -26,9 +64,7 @@ export default class Navbar extends React.Component {
         },
         {
           label:
-            <div className="nicemenu-item" >
-              <p>Womens wear</p>
-            </div>,
+            <span>Womens wear</span>,
           key: "Category2",
           items:
             [{ title: "Saree" },
@@ -41,9 +77,7 @@ export default class Navbar extends React.Component {
 
         }, {
           label:
-            <div className="nicemenu-item" >
-              <p>House Decor</p>
-            </div>,
+          <span>Womens wear</span>,
           key: "Category3",
           items:
             [{ title: "Curtain" },
@@ -81,7 +115,7 @@ export default class Navbar extends React.Component {
         //   return (<div className="col-sm-3 mb-3" key={index}>
         //     <h6>{subitem.title}</h6>
         //   </div>)
-        // })
+        // }),
       }
 
     })
@@ -89,7 +123,7 @@ export default class Navbar extends React.Component {
 
   render() {
 
-    const { isMenuShown, menuOptions, subMenus, navbarTabs, isActiveTab } = this.state;
+    const { isMenuShown, menuOptions, subMenus, navbarTabs, isActiveTab, styleConfigObj } = this.state;
     return (
       <>
         {/* // <!--main - navigation-- > */}
@@ -108,11 +142,11 @@ export default class Navbar extends React.Component {
                   <span >Browse Categories</span>
                 </span>
                 {isMenuShown && (
-                  <div onMouseLeave={() => this.setState({ subMenus: [] })} className="dropdown-menu nicemenu verticle" data-pos="list.right" data-classes="active">
+                  <div onMouseLeave={() => this.setState({ subMenus: [] })}>
                     <ReactMegaMenu
                       tolerance={50}      // optional, defaults to 100
-                      direction={"Right"}  // optional, defaults to "RIGHT", takes in "RIGHT" || "LEFT"
-                      // styleConfig={...}   // defaults to an empty object. not recommended to be left blank.
+                      direction={"RIGHT"}  // optional, defaults to "RIGHT", takes in "RIGHT" || "LEFT"
+                      styleConfig={styleConfigObj}   // defaults to an empty object. not recommended to be left blank.
                       // onExit={() => {...}}  // a function to be called when a mouse leaves the container
                       data={menuOptions}        // array of data to be rendered
                     />

@@ -74,22 +74,19 @@ export default class ProductDetail extends React.Component {
     const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal } = this.state;
     return (
       <>
-        <div className="row">
+        <div className="container-fluid">
+        <div className="row py-5">
           <div className="col-lg-6 col-md-6 col-12">
             <div className="product-img-wrapper">
-              <div className="easyzoom">
+             
                 <Zoom
                   img={productDetailData.src}
-                  zoomScale={1.5}
-                  height={750}
-                  width={700}
-                  // height={600}
+                  zoomScale={1.25}
+                  height={750}              
                   transitionTime={0.5}
                 />
-                {/* <a href="">
-                                    <img className="mainimage img-fluid" src={require("../public/product.jpg")} />
-                                </a> */}
-              </div>
+              
+              
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-12">
@@ -106,15 +103,16 @@ export default class ProductDetail extends React.Component {
               </div>
               <h1>{productDetailData.title}</h1>
               <p className="product-price">
-                <FontAwesomeIcon icon={faRupeeSign} />
                 <span>{productDetailData.cost}</span></p>
               <div className="short-decription"><p>Short Decription</p></div>
               <div className="addtocart d-flex justify-content-start">
                 <div className="product-qty">
                   <div className="input-group">
-                    <button className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()} >-</button>
+                    {/* <button className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()} >-</button> */}
+                    <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()}/>
                     <input type="number" value={productCount} onChange={this.productCountManual} />
-                    <button onClick={() => this.countInc()} className="quantity-right-plus" >+</button>
+                    <input type="button" value="+" onClick={() => this.countInc()} className="quantity-right-plus"/>
+                    {/* <button onClick={() => this.countInc()} className="quantity-right-plus" >+</button> */}
 
                   </div>
                 </div>
@@ -124,8 +122,9 @@ export default class ProductDetail extends React.Component {
               <div className="action-links">
                 <a href="#"  >
                   <FontAwesomeIcon icon={faRandom} />  Compare</a>
-                <a href="#"><FontAwesomeIcon icon={wishlistStatus ? faCheck : farHeart}
-                  onClick={() => this.wishlistToggle(wishlistStatus)} />{wishlistStatus ? "Browse Wishlist" : "Add to Wishlist"}</a>
+                <a href="#">
+                  <FontAwesomeIcon icon={wishlistStatus ? faCheck : farHeart}
+                  onClick={() => this.wishlistToggle(wishlistStatus)} /> {wishlistStatus ? "Browse Wishlist" : "Add to Wishlist"}</a>
               </div>
 
               <div className="add-question my-3 py-2">
@@ -161,7 +160,7 @@ export default class ProductDetail extends React.Component {
                 <div className="seller-logo"><img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /></div>
                 <div className="seller-contact">
                   <p className="s-title">saenterpris36</p>
-                  <small> <FontAwesomeIcon icon={faPhone} /> &nbsp; 9304637113</small><br /><br />
+                  <small> <FontAwesomeIcon icon={faPhone} /> &nbsp; 9304637113</small><br />
                   <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; info@eshilpmart.com</small><br />
                   <ReactStars
                     count={5}
@@ -186,7 +185,10 @@ export default class ProductDetail extends React.Component {
             </div>
 
           </div>
-          <div className="row product-description pb-5">
+          
+        </div>
+
+        <div className="row product-description pb-5">
             <ul className="nav nav-tabs" role="tablist">
               <li className="nav-item">
                 <a className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
@@ -203,6 +205,7 @@ export default class ProductDetail extends React.Component {
                 <a className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>INQUIRIES</a>
               </li>
             </ul>
+            <div className="clearfix"></div>
             <div className="tab-content" >
               <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
                 role="tabpanel" aria-labelledby="home-tab">No description available </div>
@@ -213,12 +216,17 @@ export default class ProductDetail extends React.Component {
                             There are no inquiries yet. </div>
             </div>
           </div>
-        </div>
-
-        <div className="categorie-img-title">
+        
+        <div className="row py-5">
+          <div className="col shopby-product">
+        <div className="related-title">
           <h3>Related Products</h3>
         </div>
         <ShopByType type='product' />
+        </div>
+        </div>
+        </div>
+        
       </>
     )
   }
