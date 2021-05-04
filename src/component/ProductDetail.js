@@ -75,121 +75,120 @@ export default class ProductDetail extends React.Component {
     return (
       <>
         <div className="container-fluid">
-        <div className="row py-5">
-          <div className="col-lg-6 col-md-6 col-12">
-            <div className="product-img-wrapper">
-             
+          <div className="row py-5">
+            <div className="col-lg-6 col-md-6 col-12">
+              <div className="product-img-wrapper">
+
                 <Zoom
                   img={productDetailData.src}
                   zoomScale={1.25}
-                  height={750}              
+                  height={1040}
                   transitionTime={0.5}
+                  width={780}
                 />
-              
-              
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-6 col-12">
-            <div className="product-summary-wrapper">
-              <div className="breadcrumb-section d-flex justify-content-between">
-                <nav aria-label="breadcrumb">
-                  <ol className="breadcrumb bg-transparent">
-                    <li className="breadcrumb-item"><a href="#">Home</a></li>
-                    <li className="breadcrumb-item"><a href="#">Shop</a></li>
-                    <li className="breadcrumb-item"><a href="#">Product category</a></li>
-                    <li className="breadcrumb-item active" aria-current="page">product title</li>
-                  </ol>
-                </nav>
               </div>
-              <h1>{productDetailData.title}</h1>
-              <p className="product-price">
-                <span>{productDetailData.cost}</span></p>
-              <div className="short-decription"><p>Short Decription</p></div>
-              <div className="addtocart d-flex justify-content-start">
-                <div className="product-qty">
-                  <div className="input-group">
-                    {/* <button className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()} >-</button> */}
-                    <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()}/>
-                    <input type="number" value={productCount} onChange={this.productCountManual} />
-                    <input type="button" value="+" onClick={() => this.countInc()} className="quantity-right-plus"/>
-                    {/* <button onClick={() => this.countInc()} className="quantity-right-plus" >+</button> */}
+            </div>
+            <div className="col-lg-6 col-md-6 col-12">
+              <div className="product-summary-wrapper">
+                <div className="breadcrumb-section d-flex justify-content-between">
+                  <nav aria-label="breadcrumb">
+                    <ol className="breadcrumb bg-transparent">
+                      <li className="breadcrumb-item"><a href="#">Home</a></li>
+                      <li className="breadcrumb-item"><a href="#">Shop</a></li>
+                      <li className="breadcrumb-item"><a href="#">Product category</a></li>
+                      <li className="breadcrumb-item active" aria-current="page">product title</li>
+                    </ol>
+                  </nav>
+                </div>
+                <h1>{productDetailData.title}</h1>
+                <p className="product-price">
+                  <span>{productDetailData.cost}</span></p>
+                <div className="short-decription"><p>Short Decription</p></div>
+                <div className="addtocart d-flex justify-content-start">
+                  <div className="product-qty">
+                    <div className="input-group">
+                      {/* <button className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()} >-</button> */}
+                      <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()} />
+                      <input type="number" value={productCount} onChange={this.productCountManual} />
+                      <input type="button" value="+" onClick={() => this.countInc()} className="quantity-right-plus" />
+                      {/* <button onClick={() => this.countInc()} className="quantity-right-plus" >+</button> */}
 
+                    </div>
+                  </div>
+                  <button type="submit" className="cart-btn">Add to cart</button>
+                </div>
+
+                <div className="action-links">
+                  <a href="#"  >
+                    <FontAwesomeIcon icon={faRandom} />  Compare</a>
+                  <a href="#">
+                    <FontAwesomeIcon icon={wishlistStatus ? faCheck : farHeart}
+                      onClick={() => this.wishlistToggle(wishlistStatus)} /> {wishlistStatus ? "Browse Wishlist" : "Add to Wishlist"}</a>
+                </div>
+
+                <div className="add-question my-3 py-2">
+                  <a href="#" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</a>
+                </div>
+                <Modal
+                  isOpen={showModal}
+                  onRequestClose={this.toggleModal}
+                  contentLabel="Ask a Question"
+                  shouldCloseOnOverlayClick={true}
+                >
+                  {/* <Modal show={this.state.showModal} closeModal={this.toggleModal}> */}
+                  <form onSubmit={this.handleSubmit}>
+                    <div className="row">
+                      <label>Name*</label>
+                      <input type="text" name="name" />
+                    </div>
+                    <div className="row">
+                      <label>Email*</label>
+                      <input type="text" name="email" />
+                    </div>
+                    <div className="row">
+                      <label>Your inquiry *</label>
+                      <textarea type="text" name="inquiry" />
+                    </div>
+                    <input type="submit" value="Submit" />
+                  </form>
+                </Modal>
+              </div>
+
+              <div className="product-meta py-2">
+                <div className="seller-details-box my-3" onClick={() => this.handleSellerProfile()}>
+                  <div className="title-meta"><em>Know your weaver</em></div>
+                  <div className="seller-logo"><img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /></div>
+                  <div className="seller-contact">
+                    <p className="s-title">saenterpris36</p>
+                    <small> <FontAwesomeIcon icon={faPhone} /> &nbsp; 9304637113</small><br />
+                    <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; info@eshilpmart.com</small><br />
+                    <ReactStars
+                      count={5}
+                      edit={false}
+                      size={15}
+                      color2={'#ffd700'} />
                   </div>
                 </div>
-                <button type="submit" className="cart-btn">Add to cart</button>
-              </div>
+                <div className="clearfix"></div>
+                <span className="sku">SKU: <span>{productDetailData.sku}</span></span>
+                <span className="sku">Categories: <span>{productDetailData.category}</span></span>
+                <span className="sku">Tags: <span>{productDetailData.tags}</span></span>
 
-              <div className="action-links">
-                <a href="#"  >
-                  <FontAwesomeIcon icon={faRandom} />  Compare</a>
-                <a href="#">
-                  <FontAwesomeIcon icon={wishlistStatus ? faCheck : farHeart}
-                  onClick={() => this.wishlistToggle(wishlistStatus)} /> {wishlistStatus ? "Browse Wishlist" : "Add to Wishlist"}</a>
-              </div>
-
-              <div className="add-question my-3 py-2">
-                <a href="#" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</a>
-              </div>
-              <Modal
-                isOpen={showModal}
-                onRequestClose={this.toggleModal}
-                contentLabel="Ask a Question"
-                shouldCloseOnOverlayClick={true}
-              >
-                {/* <Modal show={this.state.showModal} closeModal={this.toggleModal}> */}
-                <form onSubmit={this.handleSubmit}>
-                  <div className="row">
-                    <label>Name*</label>
-                    <input type="text" name="name" />
-                  </div>
-                  <div className="row">
-                    <label>Email*</label>
-                    <input type="text" name="email" />
-                  </div>
-                  <div className="row">
-                    <label>Your inquiry *</label>
-                    <textarea type="text" name="inquiry" />
-                  </div>
-                  <input type="submit" value="Submit" />
-                </form>
-              </Modal>
-            </div>
-
-            <div className="product-meta py-2">
-              <div className="seller-details-box my-3" onClick={() => this.handleSellerProfile()}>
-                <div className="title-meta"><em>Know your weaver</em></div>
-                <div className="seller-logo"><img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /></div>
-                <div className="seller-contact">
-                  <p className="s-title">saenterpris36</p>
-                  <small> <FontAwesomeIcon icon={faPhone} /> &nbsp; 9304637113</small><br />
-                  <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; info@eshilpmart.com</small><br />
-                  <ReactStars
-                    count={5}
-                    edit={false}
-                    size={15}
-                    color2={'#ffd700'} />
+                <div className="social-share">
+                  <span>Share:</span>
+                  <a href="#"> <FontAwesomeIcon icon={faFacebook} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faPinterest} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faLinkedin} /></a>
+                  <a href="#"><FontAwesomeIcon icon={faTelegram} /></a>
                 </div>
               </div>
-              <div className="clearfix"></div>
-              <span className="sku">SKU: <span>{productDetailData.sku}</span></span>
-              <span className="sku">Categories: <span>{productDetailData.category}</span></span>
-              <span className="sku">Tags: <span>{productDetailData.tags}</span></span>
 
-              <div className="social-share">
-                <span>Share:</span>
-                <a href="#"> <FontAwesomeIcon icon={faFacebook} /></a>
-                <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
-                <a href="#"><FontAwesomeIcon icon={faPinterest} /></a>
-                <a href="#"><FontAwesomeIcon icon={faLinkedin} /></a>
-                <a href="#"><FontAwesomeIcon icon={faTelegram} /></a>
-              </div>
             </div>
 
           </div>
-          
-        </div>
 
-        <div className="row product-description pb-5">
+          <div className="row product-description pb-5">
             <ul className="nav nav-tabs" role="tablist">
               <li className="nav-item">
                 <a className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
@@ -217,17 +216,17 @@ export default class ProductDetail extends React.Component {
                             There are no inquiries yet. </div>
             </div>
           </div>
-        
-        <div className="row py-5">
-          <div className="col shopby-product">
-        <div className="related-title">
-          <h3>Related Products</h3>
+
+          <div className="row py-5">
+            <div className="col shopby-product">
+              <div className="related-title">
+                <h3>Related Products</h3>
+              </div>
+              <ShopByType type='product' />
+            </div>
+          </div>
         </div>
-        <ShopByType type='product' />
-        </div>
-        </div>
-        </div>
-        
+
       </>
     )
   }

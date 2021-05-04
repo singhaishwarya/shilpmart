@@ -18,7 +18,7 @@ export default class PressArticles extends React.Component {
                 <img
                   src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/weaver1-768x403.webp"
                   className="img-fluid" alt="news" />
-                  <div className="overlay-news"></div>
+                <div className="overlay-news"></div>
               </figure>
 
               <div className="news-date"><span id="date">05</span><span id="month">Sep</span></div>
@@ -37,7 +37,7 @@ export default class PressArticles extends React.Component {
                 </div>
 
               </div>
-            
+
             </div>
           </div>
         </div>,
@@ -48,7 +48,7 @@ export default class PressArticles extends React.Component {
                 <img
                   src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/weaver1-768x403.webp"
                   className="img-fluid" alt="news" />
-                  <div className="overlay-news"></div>
+                <div className="overlay-news"></div>
               </figure>
 
               <div className="news-date"><span id="date">05</span><span id="month">Sep</span></div>
@@ -67,7 +67,7 @@ export default class PressArticles extends React.Component {
                 </div>
 
               </div>
-            
+
             </div>
           </div> </div>]
     });

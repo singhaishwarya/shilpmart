@@ -198,7 +198,7 @@ export default class ProductCategory extends React.Component {
               </section>
 
               <div className='row'>
-                <ProductGrid layoutProps={layout} />
+                <ProductGrid layoutProps={layout} historyProps={this.props} />
               </div>
             </div>
           </div>

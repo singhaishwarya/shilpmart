@@ -8,12 +8,12 @@ import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@
 import Modal from 'react-modal';
 const customStyles = {
   content: {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',  
-    transform             : 'translate(-50%, -50%)'
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
   }
 };
 export default class Header extends React.Component {
@@ -43,7 +43,6 @@ export default class Header extends React.Component {
 
   };
   toggleModal = () => {
-    console.log("Demo===")
     this.setState({
       showModal: !this.state.showModal
     });
@@ -84,7 +83,7 @@ export default class Header extends React.Component {
             </span>
             <span className="sale-sticker">sale!</span>
           </Link>
-        </div>       
+        </div>
       )
       ));
   };
@@ -158,7 +157,7 @@ export default class Header extends React.Component {
             </div>
           </div>
           <ul className="navbar-nav flex-row">
-            <li className="nav-item" onClick={this.toggleModal} >Login/Register</li>            
+            <li className="nav-item" onClick={this.toggleModal} >Login/Register</li>
             <li className="nav-item"><a href="#" className="nav-link">
               <FontAwesomeIcon icon={faHeart} /><span>0</span></a></li>
             <li className="nav-item"><a href="#" className="nav-link">

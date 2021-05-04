@@ -89,7 +89,7 @@ export default class ProductGrid extends React.Component {
     });
   }
   handlePostDetail = (value) => {
-    this.props.history.push(`/product-detail/${value}`);
+    this.props.historyProps.history.push(`/product-detail/${value}`);
   }
 
   toggleHover = (val, index) => {
@@ -116,15 +116,16 @@ export default class ProductGrid extends React.Component {
 
     const { productsData, wishlistStatus, hoveredItem, pageCount } = this.state
     const { layoutProps } = this.props
-    console.log("demo===", this.state)
     return (
       <>
         { productsData ? productsData.map((item, index) => {
           return (
             <div key={index} className={layoutProps} onClick={() => this.handlePostDetail(item._id)}>
               <div className="product-wrapper">
-                <div className="prodcut-img">
-                  <img src={logo} className="img-fluid" alt="saree" />
+                <div className="pressBlock-container">
+                  <figure>
+                    <img src={logo} className="img-fluid" alt="saree" />
+                  </figure>
                 </div>
                 <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
                 <div className="shop-wrapper">
