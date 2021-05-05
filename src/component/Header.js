@@ -15,7 +15,7 @@ const customStyles = {
     left: '50%',
     right: 'auto',
     bottom: 'auto',
-    marginRight: '-50%',    
+    marginRight: '-50%',
     transform: 'translate(-50%, -50%)'
   }
 };
@@ -177,11 +177,14 @@ export default class Header extends React.Component {
           <ul className="navbar-nav flex-row">
             <li className="nav-item" onClick={this.toggleModal}>Login/Register</li>
             <li className="nav-item"><a href="#" className="nav-link">
-              <FontAwesomeIcon icon={faHeart} /><span>0</span></a></li>
+              <Link to={'/wishlist'}>
+                <FontAwesomeIcon icon={faHeart} /><span>0</span></Link></a></li>
+            <li className="nav-item">
+              <a href="#" className="nav-link"> <Link to={'/compare'}>
+                <FontAwesomeIcon icon={faRandom} /><span>0</span></Link></a></li>
             <li className="nav-item"><a href="#" className="nav-link">
-              <FontAwesomeIcon icon={faRandom} /><span>0</span></a></li>
-            <li className="nav-item"><a href="#" className="nav-link">
-              <FontAwesomeIcon icon={faShoppingBasket} /><span>0</span></a></li>
+              <Link to={'/cart'}> <FontAwesomeIcon icon={faShoppingBasket} /><span>0</span></Link>
+            </a></li>
           </ul>
         </div >
         <Navbar />

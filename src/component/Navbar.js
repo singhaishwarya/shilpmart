@@ -6,11 +6,10 @@ export default class Navbar extends React.Component {
     super(props);
     this.state = {
       isMenuShown: false,
-      subMenus: [],      
+      subMenus: [],
       menuOptions: [
         {
           label:
-
             <span>Mens Wear</span>,
           key: "Category1",
           items:
@@ -123,8 +122,6 @@ export default class Navbar extends React.Component {
             })
 
         }
-      
-      
       ],
       navbarTabs: [{ title: 'HOME', route: '' }, { title: 'ABOUT US', route: 'about-us' }, { title: 'SHOP', route: 'product-category/all' }, { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
       isActiveTab: 0
@@ -182,12 +179,12 @@ export default class Navbar extends React.Component {
 
                   </div>)}
 
-               
+
               </div>
               <ul className="navbar-nav mr-auto">
                 {navbarTabs.map((item, index) => {
                   return (
-                    
+
                     <li key={index}>
                       <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>{item.title}</Link>
                     </li>

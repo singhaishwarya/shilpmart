@@ -132,7 +132,7 @@ export default class ShopByType extends React.Component {
         return (<div className="product-wrapper" key={index} >
           <div className="prodcut-img">
             <a href="#"><img src={item.img} className="img-fluid"
-              // onClick={() => this.productDetail(item._id)}
+              onClick={() => this.productDetail(item._id)}
               alt="saree" /></a>
           </div>
           <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
@@ -148,7 +148,7 @@ export default class ShopByType extends React.Component {
           <div className="categorie-img">
             <a href="#" className="cate-img">
               <img src={item.img} className="img-fluid"
-                // onClick={() => this.productList(item.route)} 
+                onClick={() => this.productList(item.route)}
                 alt="cate img" />
             </a>
           </div>
@@ -171,32 +171,29 @@ export default class ShopByType extends React.Component {
   }
 
   render() {
-   // const demoItems = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => <div style={{
+    // const demoItems = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => <div style={{
     //   display: "inline-block",
     //   width: "100%",
     //   height: 200,
     //   border: "2px solid #fff",
     //   background: "teal"
     // }} role="button" />);
-        const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
+    const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
 
     return (
       <AliceCarousel
-        animationType='slide'
         autoPlayInterval={3000}
-        //items={3}
-        autoPlay={true}
-        // responsive={responsive}
+        autoPlay={type === 'product' ? true : false}
         autoPlayStrategy="all"
         // controlsStrategy="responsive"
         disableDotsControls
         // disableAutoPlayOnAction={true}
-         items={type === 'product' ? shopByProductItems : shopByCategoryItems}
-         responsive={responsive}
-          mouseTracking         
-          infinite        
-          disableButtonsControls //can be enabled if arrows are needed
-          touchTracking
+        items={type === 'product' ? shopByProductItems : shopByCategoryItems}
+        responsive={responsive}
+        mouseTracking
+        infinite
+        disableButtonsControls //can be enabled if arrows are needed
+        touchTracking
       />
 
     )

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMailBulk, faPhone, faMapMarker, faUserPlus, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { MultilevelMenu } from 'react-multilevel-menu';
 import ReactStars from 'react-stars'
+import ProductGrid from './ProductGrid'
 
 export default class SellerProfile extends React.Component {
   constructor(props) {
@@ -107,8 +108,8 @@ export default class SellerProfile extends React.Component {
 	                        </div>
             </div>
           </div>
-          <div className="row product-description pb-5">
-            <ul className="nav nav-tabs" >
+          <div className="">
+            <ul className="nav nav-tabs" role="tablist">
               <li className="nav-item">
                 <a className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
                   data-toggle="tab" href="#des" role="tab" aria-controls="home" aria-selected="true"
@@ -118,22 +119,23 @@ export default class SellerProfile extends React.Component {
                 <a className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} data-toggle="tab" href="#del" role="tab" aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })} >ABOUT</a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${((isActiveTab === 2) ? 'active' : '')}`} data-toggle="tab" href="#store" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 2 })} >REVIEWS</a>
+                <a className={`nav-link ${((isActiveTab === 2) ? 'active' : '')}`} data-toggle="tab" href="#store" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 2 })} >STORE POLICIES</a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>FOLLOWERS</a>
+                <a className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>REVIEWS</a>
               </li>
             </ul>
+            <div className="clearfix"></div>
             <div className="tab-content" >
               <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
-                role="tabpanel" aria-labelledby="home-tab">No description available </div>
+                role="tabpanel" aria-labelledby="home-tab"><ProductGrid historyProps={this.props} /> </div>
               <div className={`tab-pane fade ${((isActiveTab === 1) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="profile-tab">
                 There are no reviews yet. </div>
               <div className={`tab-pane fade ${((isActiveTab === 2) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab">Lorem Ipsum  printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </div>
               <div className={`tab-pane fade ${((isActiveTab === 3) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab"> GENERAL INQUIRIES
-              There are no inquiries yet.
-                            </div>
+                            There are no inquiries yet. </div>
             </div>
+
           </div>
         </div>
 

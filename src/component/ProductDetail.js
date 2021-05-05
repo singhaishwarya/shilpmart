@@ -14,7 +14,7 @@ export default class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isActiveTab: 1,
+      isActiveTab: 0,
       wishlistStatus: false,
       shareUrl: 'https://app.digitalindiacorporation.in/v1/digi/',
       title: 'eShilpmart',
@@ -83,6 +83,9 @@ export default class ProductDetail extends React.Component {
       pathname: '/seller-profile'
     })
 
+    // this.props.historyProps.history.push({ pathname: "/seller-profile", state: {  } } );
+
+
   }
   productCountManual = (event) => {
 
@@ -114,8 +117,6 @@ export default class ProductDetail extends React.Component {
             <div className="col-lg-6 col-md-6 col-12">
               <div className="product-img-wrapper">
                 <ImageGallery items={productImages}
-                  //renderLeftNav={this.renderLeftNav}
-                  //renderRightNav={this.renderRightNav}
                   thumbnailPosition='left'
                 />
               </div>
@@ -128,7 +129,7 @@ export default class ProductDetail extends React.Component {
                       <li className="breadcrumb-item"><a href="#">Home</a></li>
                       <li className="breadcrumb-item"><a href="#">Shop</a></li>
                       <li className="breadcrumb-item"><a href="#">Product category</a></li>
-                      <li className="breadcrumb-item active" aria-current="page">product title</li>
+                      <li className="breadcrumb-item active" aria-current="page">Product title</li>
                     </ol>
                   </nav>
                 </div>
@@ -143,19 +144,17 @@ export default class ProductDetail extends React.Component {
                       <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()} />
                       <input type="number" value={productCount} onChange={this.productCountManual} />
                       <input type="button" value="+" onClick={() => this.countInc()} className="quantity-right-plus" />
-                      {/* <button onClick={() => this.countInc()} className="quantity-right-plus" >+</button> */}
-
                     </div>
                   </div>
                   <button type="submit" className="cart-btn">Add to cart</button>
                 </div>
-
                 <div className="action-links">
                   <a href="#"  >
-                    <FontAwesomeIcon icon={faRandom} />  Compare</a>
+                    <FontAwesomeIcon icon={faRandom} />Compare</a>
                   <a href="#">
                     <FontAwesomeIcon icon={wishlistStatus ? faCheck : farHeart}
-                      onClick={() => this.wishlistToggle(wishlistStatus)} /> {wishlistStatus ? "Browse Wishlist" : "Add to Wishlist"}</a>
+                      onClick={() => this.wishlistToggle(wishlistStatus)} /> {wishlistStatus ? "Browse Wishlist" : "Add to Wishlist"}
+                  </a>
                 </div>
 
                 <div className="add-question my-3 py-2">
@@ -192,7 +191,7 @@ export default class ProductDetail extends React.Component {
                   <div className="seller-logo"><img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /></div>
                   <div className="seller-contact">
                     <p className="s-title">saenterpris36</p>
-                    <small> <FontAwesomeIcon icon={faPhone} /> &nbsp; 9304637113</small><br />
+                    <small><FontAwesomeIcon icon={faPhone} /> &nbsp; 9304637113</small><br />
                     <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; info@eshilpmart.com</small><br />
                     <ReactStars
                       count={5}
