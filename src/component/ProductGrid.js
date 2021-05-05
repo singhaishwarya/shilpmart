@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartPlus, faRandom, faHeart, faRupeeSign, faThLarge } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import logo from '../public/bag2.jpeg';
-import ReactPaginate from 'react-paginate';
+
 
 export default class ProductGrid extends React.Component {
 
@@ -122,10 +122,13 @@ export default class ProductGrid extends React.Component {
           return (
             <div key={index} className={layoutProps} onClick={() => this.handlePostDetail(item._id)}>
               <div className="product-wrapper">
-                <div className="pressBlock-container">
+                {/* <div className="pressBlock-container">
                   <figure>
                     <img src={logo} className="img-fluid" alt="saree" />
                   </figure>
+                </div> */}
+                <div className="prodcut-img">
+                  <a href="#"><img src={item.img} className="img-fluid" alt="saree" /></a>
                 </div>
                 <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
                 <div className="shop-wrapper">
@@ -151,19 +154,9 @@ export default class ProductGrid extends React.Component {
             </div>
           )
         }) : ''}
-        <ReactPaginate
-          previousLabel={'prev'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'} />
+        
       </>
+      
     );
   }
 }

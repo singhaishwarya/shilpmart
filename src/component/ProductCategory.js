@@ -3,6 +3,7 @@ import ReactStars from 'react-stars'
 import { Range } from 'rc-slider';
 import ProductGrid from './ProductGrid'
 import { MultilevelMenu } from 'react-multilevel-menu';
+import ReactPaginate from 'react-paginate';
 export default class ProductCategory extends React.Component {
 
   constructor(props) {
@@ -200,6 +201,19 @@ export default class ProductCategory extends React.Component {
               <div className='row'>
                 <ProductGrid layoutProps={layout} historyProps={this.props} />
               </div>
+              <ReactPaginate
+      previousLabel={'Pre'}
+      nextLabel={'Next'}
+      breakLabel={'...'}
+      breakClassName={'break-me'}
+      //pageCount={pageCount}      
+      marginPagesDisplayed={2}
+      pageRangeDisplayed={5}
+      onPageChange={this.handlePageClick}
+      containerClassName={'pagination'}
+      subContainerClassName={'pages paginationItem'}
+      activeClassName={'active'} />
+             
             </div>
           </div>
         </div>

@@ -6,46 +6,7 @@ export default class Navbar extends React.Component {
     super(props);
     this.state = {
       isMenuShown: false,
-      subMenus: [],
-      styleConfigObj: {
-        // menuProps: {
-        //   style: {
-        //     border: "2px solid red",
-        //     height: "20em",
-        //     width: "10em",
-        //     padding: "2px",
-        //     margin: "0"
-        //   }
-        // },
-        contentProps: {
-          style: {
-            width: "50em",
-            border: "2px solid yellow",
-            padding: "2px"
-          }
-        },
-        // menuItemProps: {
-        //   style: {
-        //     border: "2px solid green",
-        //     padding: "2px",
-        //     height: "2em"
-        //   }
-        // },
-        // menuItemSelectedProps: {
-        //   style: {
-        //     border: "2px solid purple",
-        //     padding: "2px",
-        //     height: "2em",
-        //     backgroundColor: "grey"
-        //   }
-        // },
-        // containerProps: {
-        //   style: {
-        //     border: "2px solid blue",
-        //     padding: "2px"
-        //   }
-        // }
-      },
+      subMenus: [],      
       menuOptions: [
         {
           label:
@@ -55,9 +16,10 @@ export default class Navbar extends React.Component {
           items:
             [{ title: "Shirting" },
             { title: "Shirting" },
+            { title: "Shirting" },
             { title: "Shirting" }].map((subitem, index) => {
-              return (<div className="col-sm-3 mb-3" key={index}>
-                <h6>{subitem.title}</h6>
+              return (<div className="sub-categories" key={index}>
+                <Link>{subitem.title}</Link>
               </div>)
             })
 
@@ -70,25 +32,100 @@ export default class Navbar extends React.Component {
             [{ title: "Saree" },
             { title: "Saree" },
             { title: "Saree" }].map((subitem, index) => {
-              return (<div className="col-sm-3 mb-3" key={index}>
-                <h6>{subitem.title}</h6>
+              return (<div className="sub-categories" key={index}>
+                <Link>{subitem.title}</Link>
               </div>)
             })
 
         }, {
           label:
-            <span>Women's wear</span>,
+            <span>Home textile</span>,
           key: "Category3",
           items:
             [{ title: "Curtain" },
             { title: "Curtain" },
             { title: "Curtain" }].map((subitem, index) => {
-              return (<div className="col-sm-3 mb-3" key={index}>
-                <h6>{subitem.title}</h6>
+              return (<div className="sub-categories" key={index}>
+                <Link>{subitem.title}</Link>
               </div>)
             })
 
-        }],
+        },
+        {
+          label:
+            <span>Home Decor & Utility</span>,
+          key: "Category3",
+          items:
+            [{ title: "Curtain" },
+            { title: "Curtain" },
+            { title: "Curtain" }].map((subitem, index) => {
+              return (<div className="sub-categories" key={index}>
+                <Link>{subitem.title}</Link>
+              </div>)
+            })
+
+        },
+        {
+          label:
+            <span>Furniture</span>,
+          key: "Category3",
+          items:
+            [{ title: "Curtain" },
+            { title: "Curtain" },
+            { title: "Curtain" }].map((subitem, index) => {
+              return (<div className="sub-categories" key={index}>
+                <Link>{subitem.title}</Link>
+              </div>)
+            })
+
+        },
+
+        {
+          label:
+            <span>Floor Coverings</span>,
+          key: "Category3",
+          items:
+            [{ title: "Curtain" },
+            { title: "Curtain" },
+            { title: "Curtain" }].map((subitem, index) => {
+              return (<div className="sub-categories" key={index}>
+                <Link>{subitem.title}</Link>
+              </div>)
+            })
+
+        },
+
+        {
+          label:
+            <span>Travel Accessories</span>,
+          key: "Category3",
+          items:
+            [{ title: "Curtain" },
+            { title: "Curtain" },
+            { title: "Curtain" }].map((subitem, index) => {
+              return (<div className="sub-categories" key={index}>
+                <Link>{subitem.title}</Link>
+              </div>)
+            })
+
+        },
+        {
+          label:
+            <span>Office Supplies</span>,
+          key: "Category3",
+          items:
+            [{ title: "Curtain" },
+            { title: "Curtain2" },
+            { title: "Curtain3" }].map((subitem, index) => {
+              return (<div className="sub-categories" key={index}>
+                <Link>{subitem.title}</Link>
+              </div>)
+            })
+
+        }
+      
+      
+      ],
       navbarTabs: [{ title: 'HOME', route: '' }, { title: 'ABOUT US', route: 'about-us' }, { title: 'SHOP', route: 'product-category/all' }, { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
       isActiveTab: 0
     };
@@ -145,79 +182,12 @@ export default class Navbar extends React.Component {
 
                   </div>)}
 
-                {/* <div className="nicemenu-item">
-                      <p>Men’s Wear</p>
-                      <div className="nicemenu-sub">
-                        <div className="container">
-                          <div className="row">
-                            <div className="col-sm-3 mb-3">
-                              <h6>shirtings</h6>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>trousers</h6>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>jackets & coats</h6>
-                            </div>
-                            <div className="col-sm-3 mb-3">
-                              <h6>kurtas</h6>
-                            </div>
-                           
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-                {/* <div className="nicemenu-item">
-                      <p>Women’s wear</p>
-                      <div className="nicemenu-sub">
-                        <h6>Sub Menu 2</h6>
-                      </div>
-                    </div>
-                    <div className="nicemenu-item">
-                      <p>Home Textiles</p>
-                      <div className="nicemenu-sub">
-                        <h6>Sub Menu 3</h6>
-                      </div>
-                    </div>
-                    <div className="nicemenu-item">
-                      <p>Home Textiles</p>
-                      <div className="nicemenu-sub">
-                        <h6>Sub Menu 4</h6>
-                      </div>
-                    </div>
-                    <div className="nicemenu-item">
-                      <p>Furnitures</p>
-                      <div className="nicemenu-sub">
-                        <h6>Sub Menu 5</h6>
-                      </div>
-                    </div>
-                    <div className="nicemenu-item">
-                      <p>Floor Coverings</p>
-                      <div className="nicemenu-sub">
-                        <h6>Sub Menu 6</h6>
-                      </div>
-                    </div>
-                    <div className="nicemenu-item">
-                      <p>Travel Accessories</p>
-                      <div className="nicemenu-sub">
-                        <h6>Sub Menu 7</h6>
-                      </div>
-                    </div>
-                    <div className="nicemenu-item">
-                      <p>Office Supplies</p>
-                      <div className="nicemenu-sub">
-                        <h6>Sub Menu 8</h6>
-                      </div>
-                    </div> */}
-                {/* </div> */}
-                {/* // )} */}
+               
               </div>
               <ul className="navbar-nav mr-auto">
                 {navbarTabs.map((item, index) => {
                   return (
-                    // <Link to={`/${item.route}`}>
-                    //   <li key={index} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}> {item.title} </li>
-                    // </Link>
+                    
                     <li key={index}>
                       <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>{item.title}</Link>
                     </li>

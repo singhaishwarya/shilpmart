@@ -2,16 +2,18 @@ import React from "react";
 import AliceCarousel from 'react-alice-carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRupeeSign } from '@fortawesome/free-solid-svg-icons'
-const responsive = {
-  0: { items: 1 },
-  568: { items: 2 },
-  1024: { items: 3 },
-};
+
+
 export default class ShopByType extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       type: this.props.type,
+      responsive: {
+        0: { items: 2 },
+        568: { items: 3 },
+        1024: { items: 5 },
+      },
       shopByCategoryData: [{
         img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
         type: 'Womens wear',
@@ -171,26 +173,26 @@ export default class ShopByType extends React.Component {
   }
 
   render() {
-    const { type, shopByCategoryItems, shopByProductItems } = this.state;
+      
+        const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
 
     return (
       <AliceCarousel
         animationType='slide'
         autoPlayInterval={3000}
-        items={3}
+        //items={3}
         autoPlay={true}
-        responsive={responsive}
+        // responsive={responsive}
         autoPlayStrategy="all"
-        controlsStrategy="responsive"
+        // controlsStrategy="responsive"
         disableDotsControls
-        disableAutoPlayOnAction={true}
-        items={type === 'product' ? shopByProductItems : shopByCategoryItems}
-        infinite
-        mouseTrackingEnabled={true}
-        // autoHeight={true}
-        autoWidth
-        disableButtonsControls //can be enabled if arrows are needed
-        touchTracking
+        // disableAutoPlayOnAction={true}
+         items={type === 'product' ? shopByProductItems : shopByCategoryItems}
+         responsive={responsive}
+          mouseTracking         
+          infinite        
+          disableButtonsControls //can be enabled if arrows are needed
+          touchTracking
       />
 
     )

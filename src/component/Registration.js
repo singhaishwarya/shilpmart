@@ -6,8 +6,8 @@ export default class Registration extends React.Component {
     return (
 
       <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-7 mb-5">
+        <div className="row py-5">
+          <div className="col-md-6 col-12 mb-5">
             <h4 className="text-center">How It Works</h4>
             <div className="container">
               <div className="main-timeline">
@@ -62,30 +62,62 @@ export default class Registration extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-md-5 mb-5">
+          
+          <div className="col-md-6 col-12 mb-5">
             <h4>Registration</h4>
-            <div className="row">
-              <label>First Name *</label>
-              <input type="text" name="firstname" />
-            </div><div className="row">
-              <label>Last Name *</label>
-              <input type="text" name="lastname" />
-            </div><div className="row">
-              <label>Email *</label>
-              <input type="text" name="email" />
-            </div><div className="row">
-              <label>Mobile Number *</label>
-              <input type="text" name="mobile no" />
-            </div><div className="row">
-              <label>Password *</label>
-              <input type="tepasswordxt" name="password1" />
-            </div>
-            <div className="row">
-              <label>Confirm Password*</label>
-              <input type="password" name="password2" />
-            </div>
-            <button>Register</button>
-          </div>
+        <form action="#" className="login-card">
+        <div class="row">
+        <div class="col-lg-6 col-12">
+        <div class="form-group"><label for="fname">First Name*</label>
+        <input type="text" class="form-control" id="fname"  />
+        
+        </div>
+        </div>
+        <div class="col-lg-6 col-12">
+        <div class="form-group"><label for="lname">Last Name*</label>
+        <input type="text" class="form-control" id="lname"  />
+        
+        </div>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="col-lg-6 col-12">
+        <div class="form-group"><label for="email">Email*</label>
+        <input type="email" class="form-control" id="email"  />
+        
+        </div>
+        </div>
+        <div class="col-lg-6 col-12">
+        <div class="form-group"><label for="mNo">Mobile No.*</label>
+        <input type="tel" class="form-control" id="mNo" />
+        
+        </div>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="col-lg-6 col-12">
+        <div class="form-group"><label for="pass">Password*</label>
+        <input type="password" class="form-control" id="pass" />
+        
+        </div>
+        </div>
+        <div class="col-lg-6 col-12">
+        <div class="form-group"><label for="cpass">Confirm Password*</label>
+        <input type="password" class="form-control" id="cpass" />
+        
+        </div>
+        </div>
+        </div>
+        <input type="button" className="btn login-btn" value="Register"/>
+        
+        </form> 
+        </div>
+
+
+
+
         </div>
       </div>
 

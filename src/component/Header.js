@@ -12,7 +12,7 @@ const customStyles = {
     left: '50%',
     right: 'auto',
     bottom: 'auto',
-    marginRight: '-50%',
+    marginRight: '-50%',    
     transform: 'translate(-50%, -50%)'
   }
 };
@@ -89,14 +89,14 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { text, seachResults, showModal } = this.state;
+    const { text, seachResults, showModal, closeModal } = this.state;
     return (
       <>
         <Modal
           isOpen={showModal}
           onRequestClose={this.closeModal}
           style={customStyles}
-          shouldCloseOnOverlayClick={true}
+          shouldCloseOnOverlayClick={false}
           contentLabel="SIGN IN"
         >
           <Login onClick={this.toggleModal} /> </Modal>

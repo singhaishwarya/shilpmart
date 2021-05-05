@@ -6,6 +6,11 @@ export default class Login extends React.Component {
     super(props);
 
   }
+  closeModal = () => {
+    // setIsOpen(false);
+    this.setState({ showModal: false, setIsOpen: false })
+
+  };
 
   handleChange = (event) => {
     this.props.onClick();
@@ -28,7 +33,7 @@ export default class Login extends React.Component {
         <Link to={'/buyer-registration'} onClick={this.handleChange} >CREATE AN ACCOUNT</Link> */}
         <div class="login-card">
           <h4 class="modal-title">Sign in</h4>
-
+          
           <form action="#!">
             <div class="form-group">
               <label for="email" class="sr-only">Email</label>

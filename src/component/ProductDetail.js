@@ -109,8 +109,9 @@ export default class ProductDetail extends React.Component {
             <div className="col-lg-6 col-md-6 col-12">
               <div className="product-img-wrapper">
                 <ImageGallery items={productImages}
-                  renderLeftNav={this.renderLeftNav}
-                  renderRightNav={this.renderRightNav}
+                  //renderLeftNav={this.renderLeftNav}
+                  //renderRightNav={this.renderRightNav}
+                  thumbnailPosition='left'
                 />
               </div>
             </div>
