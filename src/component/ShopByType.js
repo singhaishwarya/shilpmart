@@ -23,45 +23,37 @@ export default class ShopByType extends React.Component {
         _id: 1,
         route: 'womens-wear'
       }, {
-        img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
+        img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/mens_wear-300x300.webp',
         type: 'Mens wear',
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1,
+        _id: 2,
         route: 'mens-wear'
       }, {
-        img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
+        img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/travel-300x300.webp',
         type: 'Travel',
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1,
+        _id: 3,
         route: 'travel'
       }, {
-        img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
-        type: 'Housing',
+        img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/home_texttiles-300x300.webp',
+        type: 'Home Textile',
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1,
+        _id: 4,
         route: 'housing'
       }, {
-        img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
-        type: 'Furniture',
+        img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/decor-300x300.webp',
+        type: 'Home Decore Utility',
         cost: '999',
         average_rating: 4,
         discount: '11',
-        _id: 1,
+        _id: 5,
         route: 'furniture'
-      }, {
-        img: 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp',
-        type: 'Office supplies',
-        cost: '999',
-        average_rating: 4,
-        discount: '11',
-        _id: 1,
-        route: 'office-supplies'
       }],
       shopByProductData: [
         {
@@ -124,7 +116,12 @@ export default class ShopByType extends React.Component {
         }
       ],
       shopByCategoryItems: [],
-      shopByProductItems: []
+      shopByProductItems: [],
+      responsive: {
+        0: { items: 1 },
+        568: { items: 3 },
+        1024: { items: 5 },
+      }
     };
 
   }
@@ -132,10 +129,10 @@ export default class ShopByType extends React.Component {
   componentDidMount() {
     this.setState({
       shopByProductItems: this.state.shopByProductData.map((item, index) => {
-        return (<div className="product-wrapper" key={index} onClick={() => this.productDetail(item._id)}>
-
+        return (<div className="product-wrapper" key={index} >
           <div className="prodcut-img">
             <a href="#"><img src={item.img} className="img-fluid"
+              // onClick={() => this.productDetail(item._id)}
               alt="saree" /></a>
           </div>
           <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
@@ -147,11 +144,12 @@ export default class ShopByType extends React.Component {
         </div>)
       }),
       shopByCategoryItems: this.state.shopByCategoryData.map((item, index) => {
-        return (<div className="shop-category-wrapper" key={index} onClick={() => this.productList(item.route)}>
-
+        return (<div key={index} >
           <div className="categorie-img">
             <a href="#" className="cate-img">
-              <img src={item.img} className="img-fluid" alt="cate img" />
+              <img src={item.img} className="img-fluid"
+                // onClick={() => this.productList(item.route)} 
+                alt="cate img" />
             </a>
           </div>
           <div className="categorie-img-title">
@@ -173,7 +171,13 @@ export default class ShopByType extends React.Component {
   }
 
   render() {
-      
+   // const demoItems = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => <div style={{
+    //   display: "inline-block",
+    //   width: "100%",
+    //   height: 200,
+    //   border: "2px solid #fff",
+    //   background: "teal"
+    // }} role="button" />);
         const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
 
     return (

@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal';
+import {
+  FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
+} from "react-share";
 const customStyles = {
   content: {
     top: '50%',
@@ -25,7 +28,8 @@ export default class Header extends React.Component {
       text: '',
       optionData: ['Art Silk banarasi saree', 'saree Art Silk heavy  saree',
         'TANGAIL SAREE', 'saree TANGAIL SAREE HALF ACHAL', 'saree CHAMARAJ PURE SILK SAREES -WEDDING SILK SAREES', 'saree Raw Silk X Eri Spun Silk Saree Saree', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree KATA BUTI STAR CHOSMA TANT SAREE', 'saree Chamka Saree (Artsilk) saree'],
-      showModal: false, setIsOpen: false
+      showModal: false, setIsOpen: false, shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/'],
+      title: 'eShilpmart'
     }
   }
 
@@ -89,7 +93,7 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { text, seachResults, showModal, closeModal } = this.state;
+    const { text, showModal, shareUrl, title } = this.state;
     return (
       <>
         <Modal
@@ -105,11 +109,25 @@ export default class Header extends React.Component {
             <div className="row">
               <div className="col-md-6 col-6">
                 <div className="s-icons">
-                  <a href="#"><FontAwesomeIcon icon={faFacebookF} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faPinterest} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faLinkedinIn} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faTelegram} /></a>
+                  <a href="#">
+                    <FacebookShareButton url={shareUrl} quote={title}>
+                      <FontAwesomeIcon icon={faFacebookF} />
+                    </FacebookShareButton>
+                  </a>
+                  <a href="#">
+                    <TwitterShareButton url={shareUrl[0]} quote={title}>
+                      <FontAwesomeIcon icon={faTwitter} />
+                    </TwitterShareButton></a>
+                  <a href="#"><PinterestShareButton url={shareUrl[1]} quote={title}>
+                    <FontAwesomeIcon icon={faPinterest} />
+                  </PinterestShareButton></a>
+                  <a href="#"><LinkedinShareButton url={shareUrl[2]} quote={title}>
+                    <FontAwesomeIcon icon={faLinkedinIn} />
+                  </LinkedinShareButton></a>
+                  <a href="#">
+                    <TelegramShareButton url={shareUrl[3]} quote={title}>
+                      <FontAwesomeIcon icon={faTelegram} />
+                    </TelegramShareButton></a>
                 </div>
               </div>
               <div className="col-md-6 col-6">
@@ -157,7 +175,7 @@ export default class Header extends React.Component {
             </div>
           </div>
           <ul className="navbar-nav flex-row">
-            <li className="nav-item" onClick={this.toggleModal} >Login/Register</li>
+            <li className="nav-item" onClick={this.toggleModal}>Login/Register</li>
             <li className="nav-item"><a href="#" className="nav-link">
               <FontAwesomeIcon icon={faHeart} /><span>0</span></a></li>
             <li className="nav-item"><a href="#" className="nav-link">

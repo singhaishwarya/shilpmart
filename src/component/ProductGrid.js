@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faRandom, faHeart, faRupeeSign, faThLarge } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus, faRandom, faHeart, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import logo from '../public/bag2.jpeg';
 

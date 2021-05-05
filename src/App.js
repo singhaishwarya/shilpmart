@@ -8,13 +8,16 @@ import Footer from "./component/Footer";
 import Dashboard from './component/Dashboard';
 import ProductDetail from './component/ProductDetail';
 import SellerProfile from './component/SellerProfile';
+import Wishlist from './component/Wishlist';
+import Compare from './component/Compare';
+import Cart from './component/Cart';
 import "./public/bootstrap.min.css";
 import "./public/jbility.css";
 import "./index.css";
 import "./public/swiper-bundle.min.css"
-import Wishlist from './component/Wishlist';
-import Compare from './component/Compare';
-import Cart from './component/Cart';
+import 'react-alice-carousel/lib/alice-carousel.css';
+import 'rc-slider/assets/index.css';
+import 'react-image-gallery/styles/css/image-gallery.css';
 
 function App() {
   return (

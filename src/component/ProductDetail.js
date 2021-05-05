@@ -7,12 +7,17 @@ import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@for
 import { faRandom, faCheck, faPhone, faRupeeSign, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
+import {
+  FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
+} from "react-share";
 export default class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isActiveTab: 1,
       wishlistStatus: false,
+      shareUrl: 'https://app.digitalindiacorporation.in/v1/digi/',
+      title: 'eShilpmart',
       productDetailData:
       {
         src: require("../public/product.jpg"),
@@ -101,7 +106,7 @@ export default class ProductDetail extends React.Component {
     )
   }
   render() {
-    const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal, productImages } = this.state;
+    const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal, productImages, shareUrl, title } = this.state;
     return (
       <>
         <div className="container-fluid">
@@ -128,7 +133,7 @@ export default class ProductDetail extends React.Component {
                   </nav>
                 </div>
                 <h1>{productDetailData.title}</h1>
-                <p className="product-price">
+                <p className="product-price"><FontAwesomeIcon icon={faRupeeSign} />
                   <span>{productDetailData.cost}</span></p>
                 <div className="short-decription"><p>Short Decription</p></div>
                 <div className="addtocart d-flex justify-content-start">
@@ -203,11 +208,25 @@ export default class ProductDetail extends React.Component {
 
                 <div className="social-share">
                   <span>Share:</span>
-                  <a href="#"> <FontAwesomeIcon icon={faFacebook} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faPinterest} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faLinkedin} /></a>
-                  <a href="#"><FontAwesomeIcon icon={faTelegram} /></a>
+                  <a href="#">
+                    <FacebookShareButton url={shareUrl} quote={title}>
+                      <FontAwesomeIcon icon={faFacebook} />
+                    </FacebookShareButton>
+                  </a>
+                  <a href="#">
+                    <TwitterShareButton url={shareUrl} quote={title}>
+                      <FontAwesomeIcon icon={faTwitter} />
+                    </TwitterShareButton></a>
+                  <a href="#"><PinterestShareButton url={shareUrl} quote={title}>
+                    <FontAwesomeIcon icon={faPinterest} />
+                  </PinterestShareButton></a>
+                  <a href="#"><LinkedinShareButton url={shareUrl} quote={title}>
+                    <FontAwesomeIcon icon={faLinkedin} />
+                  </LinkedinShareButton></a>
+                  <a href="#">
+                    <TelegramShareButton url={shareUrl} quote={title}>
+                      <FontAwesomeIcon icon={faTelegram} />
+                    </TelegramShareButton></a>
                 </div>
               </div>
 
