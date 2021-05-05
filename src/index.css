@@ -1874,14 +1874,6 @@ color: #e87f13;
 font-weight: 600;
 }
 
-.product-summary-wrapper .product-price::before{
-	content: '\f156';
-font-family: fontawesome;
-padding-right: 5px;
-font-size: 20px;
-font-weight: normal;
-}
-
 .short-decription{
 	color:#777
 }
