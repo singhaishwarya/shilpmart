@@ -116,12 +116,7 @@ export default class ShopByType extends React.Component {
         }
       ],
       shopByCategoryItems: [],
-      shopByProductItems: [],
-      responsive: {
-        0: { items: 1 },
-        568: { items: 3 },
-        1024: { items: 5 },
-      }
+      shopByProductItems: []
     };
 
   }

@@ -18,7 +18,7 @@ export default class Navbar extends React.Component {
             { title: "Shirting" },
             { title: "Shirting" }].map((subitem, index) => {
               return (<div className="sub-categories" key={index}>
-                <Link>{subitem.title}</Link>
+                <Link to={''}>{subitem.title}</Link>
               </div>)
             })
 
@@ -32,7 +32,7 @@ export default class Navbar extends React.Component {
             { title: "Saree" },
             { title: "Saree" }].map((subitem, index) => {
               return (<div className="sub-categories" key={index}>
-                <Link>{subitem.title}</Link>
+                <Link to={''}>{subitem.title}</Link>
               </div>)
             })
 
@@ -45,7 +45,7 @@ export default class Navbar extends React.Component {
             { title: "Curtain" },
             { title: "Curtain" }].map((subitem, index) => {
               return (<div className="sub-categories" key={index}>
-                <Link>{subitem.title}</Link>
+                <Link to={''}>{subitem.title}</Link>
               </div>)
             })
 
@@ -59,7 +59,7 @@ export default class Navbar extends React.Component {
             { title: "Curtain" },
             { title: "Curtain" }].map((subitem, index) => {
               return (<div className="sub-categories" key={index}>
-                <Link>{subitem.title}</Link>
+                <Link to={''}>{subitem.title}</Link>
               </div>)
             })
 
@@ -73,7 +73,7 @@ export default class Navbar extends React.Component {
             { title: "Curtain" },
             { title: "Curtain" }].map((subitem, index) => {
               return (<div className="sub-categories" key={index}>
-                <Link>{subitem.title}</Link>
+                <Link to={''}>{subitem.title}</Link>
               </div>)
             })
 
@@ -88,7 +88,7 @@ export default class Navbar extends React.Component {
             { title: "Curtain" },
             { title: "Curtain" }].map((subitem, index) => {
               return (<div className="sub-categories" key={index}>
-                <Link>{subitem.title}</Link>
+                <Link to={''}>{subitem.title}</Link>
               </div>)
             })
 
@@ -103,7 +103,7 @@ export default class Navbar extends React.Component {
             { title: "Curtain" },
             { title: "Curtain" }].map((subitem, index) => {
               return (<div className="sub-categories" key={index}>
-                <Link>{subitem.title}</Link>
+                <Link to={''}>{subitem.title}</Link>
               </div>)
             })
 
@@ -117,7 +117,7 @@ export default class Navbar extends React.Component {
             { title: "Curtain2" },
             { title: "Curtain3" }].map((subitem, index) => {
               return (<div className="sub-categories" key={index}>
-                <Link>{subitem.title}</Link>
+                <Link to={''}>{subitem.title}</Link>
               </div>)
             })
 
@@ -132,24 +132,9 @@ export default class Navbar extends React.Component {
     this.setState({ isMenuShown: status })
   }
 
-  setIsSubmenuShown = (status, index) => {
-    this.setState({
-      isSubmenuShown: status,
-      subMenus:
-      {
-        // this.state.menuOptions[index].category.map((subitem, index) => {
-        //   return (<div className="col-sm-3 mb-3" key={index}>
-        //     <h6>{subitem.title}</h6>
-        //   </div>)
-        // }),
-      }
-
-    })
-  }
-
   render() {
 
-    const { isMenuShown, menuOptions, subMenus, navbarTabs, isActiveTab, styleConfigObj } = this.state;
+    const { isMenuShown, menuOptions, navbarTabs, isActiveTab, styleConfigObj } = this.state;
     return (
       <>
         {/* // <!--main - navigation-- > */}

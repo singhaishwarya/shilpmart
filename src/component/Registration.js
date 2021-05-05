@@ -1,6 +1,88 @@
 import React from "react";
 export default class Registration extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fields: {},
+      errors: {}
+    }
+  }
+
+  handleValidation() {
+    let fields = this.state.fields;
+    let errors = {};
+    let formIsValid = true;
+
+    //Name
+    if (!fields["firstName"]) {
+      formIsValid = false;
+      errors["firstName"] = "Cannot be empty";
+    }
+
+    if (typeof fields["firstName"] !== "undefined") {
+      if (!fields["firstName"].match(/^[a-zA-Z]+$/)) {
+        formIsValid = false;
+        errors["firstName"] = "Only letters";
+      }
+    }
+
+    //Email
+    if (!fields["email"]) {
+      formIsValid = false;
+      errors["email"] = "Cannot be empty";
+    }
+
+    if (typeof fields["email"] !== "undefined") {
+      let lastAtPos = fields["email"].lastIndexOf('@');
+      let lastDotPos = fields["email"].lastIndexOf('.');
+
+      if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["email"].indexOf('@@') === -1 && lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
+        formIsValid = false;
+        errors["email"] = "Email is not valid";
+      }
+    }
+    //Contact
+    if (typeof fields["contact"] !== "undefined") {
+      var pattern = new RegExp(/^[0-9\b]+$/);
+
+      if (!pattern.test(fields["contact"])) {
+
+        formIsValid = false;
+
+        errors["contact"] = "Please enter only number.";
+
+      } else if (fields["contact"].length !== 10) {
+
+        formIsValid = false;
+
+        errors["contact"] = "Please enter valid contact number.";
+
+      }
+    }
+
+    this.setState({ errors: errors });
+    return formIsValid;
+  }
+
+  signUpSubmit(e) {
+    e.preventDefault();
+
+    if (this.handleValidation()) {
+      alert("Form submitted");
+    } else {
+      alert("Form has errors.")
+    }
+
+  }
+
+  handleChange(field, e) {
+    let fields = this.state.fields;
+    fields[field] = e.target.value;
+    this.setState({ fields });
+  }
+
   render() {
 
     return (
@@ -62,58 +144,62 @@ export default class Registration extends React.Component {
               </div>
             </div>
           </div>
-          
+
           <div className="col-md-6 col-12 mb-5">
             <h4>Registration</h4>
-        <form action="#" className="login-card">
-        <div class="row">
-        <div class="col-lg-6 col-12">
-        <div class="form-group"><label for="fname">First Name*</label>
-        <input type="text" class="form-control" id="fname"  />
-        
-        </div>
-        </div>
-        <div class="col-lg-6 col-12">
-        <div class="form-group"><label for="lname">Last Name*</label>
-        <input type="text" class="form-control" id="lname"  />
-        
-        </div>
-        </div>
-        </div>
+            <form action="#" className="login-card" onSubmit={this.signUpSubmit.bind(this)}>
+              <div className="row">
+                <div className="col-lg-6 col-12">
+                  <div className="form-group"><label htmlFor="fname">First Name*</label>
+                    <input type="text" onChange={this.handleChange.bind(this, "firstName")} value={this.state.fields["firstName"]} className="form-control" id="fname" />
 
-        <div class="row">
-        <div class="col-lg-6 col-12">
-        <div class="form-group"><label for="email">Email*</label>
-        <input type="email" class="form-control" id="email"  />
-        
-        </div>
-        </div>
-        <div class="col-lg-6 col-12">
-        <div class="form-group"><label for="mNo">Mobile No.*</label>
-        <input type="tel" class="form-control" id="mNo" />
-        
-        </div>
-        </div>
-        </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12">
+                  <div className="form-group"><label htmlFor="lname">Last Name*</label>
+                    <input type="text" onChange={this.handleChange.bind(this, "lastName")} value={this.state.fields["lastName"]} className="form-control" id="lname" />
 
-        <div class="row">
-        <div class="col-lg-6 col-12">
-        <div class="form-group"><label for="pass">Password*</label>
-        <input type="password" class="form-control" id="pass" />
-        
-        </div>
-        </div>
-        <div class="col-lg-6 col-12">
-        <div class="form-group"><label for="cpass">Confirm Password*</label>
-        <input type="password" class="form-control" id="cpass" />
-        
-        </div>
-        </div>
-        </div>
-        <input type="button" className="btn login-btn" value="Register"/>
-        
-        </form> 
-        </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-lg-6 col-12">
+                  <div className="form-group"><label htmlFor="email">Email*</label>
+                    <input type="email" onChange={this.handleChange.bind(this, "email")} value={this.state.fields["email"]} className="form-control" id="email" />
+
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12">
+                  <div className="form-group"><label htmlFor="mNo">Mobile No.*</label>
+                    <input type="tel" onChange={this.handleChange.bind(this, "contact")} value={this.state.fields["contact"]} className="form-control" id="mNo" />
+
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-lg-6 col-12">
+                  <div className="form-group"><label htmlFor="pass">Password*</label>
+                    <input type="password" onChange={this.handleChange.bind(this, "password")} value={this.state.fields["password"]} className="form-control" id="pass" />
+
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12">
+                  <div className="form-group"><label htmlFor="cpass">Confirm Password*</label>
+                    <input type="password" onChange={this.handleChange.bind(this, "confirmPassword")} value={this.state.fields["confirmPassword"]} className="form-control" id="cpass" />
+
+                  </div>
+                </div>
+              </div>
+              <fieldset>
+                <button className="btn btn-lg pro" id="submit"
+                  value="Submit">Register</button>
+              </fieldset>
+              {/* <input type="button" className="btn login-btn" value="Register" /> */}
+
+            </form>
+          </div>
 
 
 

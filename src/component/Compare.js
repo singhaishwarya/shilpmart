@@ -19,6 +19,8 @@ export default class Compare extends React.Component {
         <div className='row'>
 
           <h4 className='text-center'>Compare</h4>
+
+
         </div>
       </div >
     );

@@ -100,7 +100,7 @@ export default class Header extends React.Component {
           isOpen={showModal}
           onRequestClose={this.closeModal}
           style={customStyles}
-          shouldCloseOnOverlayClick={false}
+          shouldCloseOnOverlayClick={true}
           contentLabel="SIGN IN"
         >
           <Login onClick={this.toggleModal} /> </Modal>
@@ -176,15 +176,14 @@ export default class Header extends React.Component {
           </div>
           <ul className="navbar-nav flex-row">
             <li className="nav-item" onClick={this.toggleModal}>Login/Register</li>
-            <li className="nav-item"><a href="#" className="nav-link">
-              <Link to={'/wishlist'}>
-                <FontAwesomeIcon icon={faHeart} /><span>0</span></Link></a></li>
-            <li className="nav-item">
-              <a href="#" className="nav-link"> <Link to={'/compare'}>
-                <FontAwesomeIcon icon={faRandom} /><span>0</span></Link></a></li>
-            <li className="nav-item"><a href="#" className="nav-link">
-              <Link to={'/cart'}> <FontAwesomeIcon icon={faShoppingBasket} /><span>0</span></Link>
-            </a></li>
+            <li className="nav-item"><Link to={'/wishlist'}><div className="nav-link">
+              <FontAwesomeIcon icon={faHeart} /><span>0</span></div></Link></li>
+            <li className="nav-item"><Link to={'/compare'}>
+              <div className="nav-link">
+                <FontAwesomeIcon icon={faRandom} /><span>0</span></div></Link></li>
+            <li className="nav-item"> <Link to={'/cart'}><div className="nav-link">
+              <FontAwesomeIcon icon={faShoppingBasket} /><span>0</span>
+            </div></Link></li>
           </ul>
         </div >
         <Navbar />
