@@ -53,7 +53,7 @@ export default class Navbar extends React.Component {
         {
           label:
             <span>Home Decor & Utility</span>,
-          key: "Category3",
+          key: "Category4",
           items:
             [{ title: "Curtain" },
             { title: "Curtain" },
@@ -67,7 +67,7 @@ export default class Navbar extends React.Component {
         {
           label:
             <span>Furniture</span>,
-          key: "Category3",
+          key: "Category5",
           items:
             [{ title: "Curtain" },
             { title: "Curtain" },
@@ -82,7 +82,7 @@ export default class Navbar extends React.Component {
         {
           label:
             <span>Floor Coverings</span>,
-          key: "Category3",
+          key: "Category6",
           items:
             [{ title: "Curtain" },
             { title: "Curtain" },
@@ -97,7 +97,7 @@ export default class Navbar extends React.Component {
         {
           label:
             <span>Travel Accessories</span>,
-          key: "Category3",
+          key: "Category7",
           items:
             [{ title: "Curtain" },
             { title: "Curtain" },
@@ -111,7 +111,7 @@ export default class Navbar extends React.Component {
         {
           label:
             <span>Office Supplies</span>,
-          key: "Category3",
+          key: "Category8",
           items:
             [{ title: "Curtain" },
             { title: "Curtain2" },
@@ -144,7 +144,7 @@ export default class Navbar extends React.Component {
               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
               aria-label="Toggle navigation"> <span className="navbar-toggler-icon" />
             </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div className="collapse navbar-collapse" >
               {/* <!--brows-categories-menu--> */}
               <div onMouseEnter={() => this.setIsMenuShown(true)}
                 onMouseLeave={() => this.setIsMenuShown(false)} className="categories-nav dropdown">

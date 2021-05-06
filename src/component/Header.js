@@ -132,7 +132,7 @@ export default class Header extends React.Component {
               </div>
               <div className="col-md-6 col-6">
                 <div className="acess-container float-right">
-                  <div id="acess-icons" className="access_icons">
+                  <div className="access_icons">
                     <div className="acess-icon balloon" title="large font size">
                       <img src={require('../public/increase-font-size.svg')} alt="" />
                     </div>

@@ -32,13 +32,13 @@ export default class Login extends React.Component {
           <form action="#!">
             <div className="form-group">
               <label for="email" className="sr-only">Email</label>
-              <input type="email" name="email" id="email" className="form-control" placeholder="Email address" />
+              <input type="email" name="email" className="form-control" placeholder="Email address" />
             </div>
             <div className="form-group mb-4">
               <label for="password" className="sr-only">Password</label>
-              <input type="password" name="password" id="password" className="form-control" placeholder="***********" />
+              <input type="password" name="password" className="form-control" placeholder="***********" />
             </div>
-            <input name="login" id="login" className="btn btn-block login-btn mb-4" type="button" value="Login" />
+            <input name="login" className="btn btn-block login-btn mb-4" type="button" value="Login" />
           </form>
           <Link to={'/buyer-registration'} className="forgot-password-link" onClick={this.handleChange} >Forgot password?</Link>
           <p className="login-card-footer-text">Don't have an account? <Link to={'/buyer-registration'} onClick={this.handleChange} >Register here</Link></p>
