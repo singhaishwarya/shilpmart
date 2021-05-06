@@ -7,8 +7,13 @@ import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust } from 
 import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal';
 import {
-  FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
+  FacebookShareButton,
+  TwitterShareButton,
+  PinterestShareButton,
+  TelegramShareButton,
+  LinkedinShareButton
 } from "react-share";
+
 const customStyles = {
   content: {
     top: '50%',
@@ -19,6 +24,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)'
   }
 };
+
 export default class Header extends React.Component {
 
   constructor(props) {
