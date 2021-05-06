@@ -46,7 +46,7 @@ export default class ProductGrid extends React.Component {
           discount: '11',
           _id: 1
         }, {
-          img: require('../public/bag2.jpeg'),
+          img: require('../public/small-img.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
@@ -191,8 +191,8 @@ export default class ProductGrid extends React.Component {
           }) : ''}
         </div>
         <ReactPaginate
-          previousLabel={'<'}
-          nextLabel={'>'}
+          previousLabel={''}
+          nextLabel={''}
           breakLabel={'...'}
           breakClassName={'break-me'}
           pageCount={pageCount}
