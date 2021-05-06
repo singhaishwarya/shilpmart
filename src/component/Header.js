@@ -7,8 +7,13 @@ import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust } from 
 import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal';
 import {
-  FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
+  FacebookShareButton,
+  TwitterShareButton,
+  PinterestShareButton,
+  TelegramShareButton,
+  LinkedinShareButton
 } from "react-share";
+
 const customStyles = {
   content: {
     top: '50%',
@@ -19,6 +24,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)'
   }
 };
+
 export default class Header extends React.Component {
 
   constructor(props) {
@@ -132,7 +138,7 @@ export default class Header extends React.Component {
               </div>
               <div className="col-md-6 col-6">
                 <div className="acess-container float-right">
-                  <div id="acess-icons" className="access_icons">
+                  <div className="access_icons">
                     <div className="acess-icon balloon" title="large font size">
                       <img src={require('../public/increase-font-size.svg')} alt="" />
                     </div>

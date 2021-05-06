@@ -4,8 +4,9 @@ export default class Registration extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
-      fields: {},
+      fields: [],
       errors: {}
     }
   }
@@ -84,7 +85,7 @@ export default class Registration extends React.Component {
   }
 
   render() {
-
+    const { fields } = this.state
     return (
 
       <div className="container-fluid">
@@ -95,7 +96,7 @@ export default class Registration extends React.Component {
               <div className="main-timeline">
 
                 {/* <!-- start timeline section--> */}
-                <div className="timeline"> <span id="topdot"></span>
+                <div className="timeline">
                   <div className="numbers"><span className="numbers_tp">1</span></div>
                   <div className="icon"></div>
                   <div className="date-content">
@@ -147,17 +148,19 @@ export default class Registration extends React.Component {
 
           <div className="col-md-6 col-12 mb-5">
             <h4>Registration</h4>
-            <form action="#" className="login-card" onSubmit={this.signUpSubmit.bind(this)}>
+            <form action="#" className="login-card" onSubmit={this.signUpSubmit.bind}>
               <div className="row">
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="fname">First Name*</label>
-                    <input type="text" onChange={this.handleChange.bind(this, "firstName")} value={this.state.fields["firstName"]} className="form-control" id="fname" />
+                    <input type="text" className="form-control" value={fields["firstName"] || ''} onChange={this.handleChange.bind(this, "firstName")} />
+
+                    {/* <input type="text" onChange={this.handleChange.bind(this, "firstName")} value={} className="form-control" /> */}
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="lname">Last Name*</label>
-                    <input type="text" onChange={this.handleChange.bind(this, "lastName")} value={this.state.fields["lastName"]} className="form-control" id="lname" />
+                    <input type="text" onChange={this.handleChange.bind(this, "lastName")} value={fields["lastName"] || ''} className="form-control" />
 
                   </div>
                 </div>
@@ -166,13 +169,13 @@ export default class Registration extends React.Component {
               <div className="row">
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="email">Email*</label>
-                    <input type="email" onChange={this.handleChange.bind(this, "email")} value={this.state.fields["email"]} className="form-control" id="email" />
+                    <input type="email" onChange={this.handleChange.bind(this, "email")} value={fields["email"] || ''} className="form-control" />
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="mNo">Mobile No.*</label>
-                    <input type="tel" onChange={this.handleChange.bind(this, "contact")} value={this.state.fields["contact"]} className="form-control" id="mNo" />
+                    <input type="tel" onChange={this.handleChange.bind(this, "contact")} value={fields["contact"] || 0} className="form-control" />
 
                   </div>
                 </div>
@@ -181,19 +184,19 @@ export default class Registration extends React.Component {
               <div className="row">
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="pass">Password*</label>
-                    <input type="password" onChange={this.handleChange.bind(this, "password")} value={this.state.fields["password"]} className="form-control" id="pass" />
+                    <input type="password" onChange={this.handleChange.bind(this, "password")} value={fields["password"] || 0} className="form-control" />
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="cpass">Confirm Password*</label>
-                    <input type="password" onChange={this.handleChange.bind(this, "confirmPassword")} value={this.state.fields["confirmPassword"]} className="form-control" id="cpass" />
+                    <input type="password" onChange={this.handleChange.bind(this, "confirmPassword")} value={fields["confirmPassword"] || 0} className="form-control" />
 
                   </div>
                 </div>
               </div>
               <fieldset>
-                <button className="btn btn-lg pro" id="submit"
+                <button className="btn btn-lg pro"
                   value="Submit">Register</button>
               </fieldset>
               {/* <input type="button" className="btn login-btn" value="Register" /> */}

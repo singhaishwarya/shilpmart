@@ -54,8 +54,7 @@ export default class ProductCategory extends React.Component {
     };
   }
 
-  onSliderChange = (value) => {
-    console.log(value);
+  onSliderPriceChange = (value) => {
     this.setState({ priceRange: value })
   }
   ratingChanged = (value) => {
@@ -67,7 +66,15 @@ export default class ProductCategory extends React.Component {
   selectedItem = (event) => {
     console.log(event);
   }
+  onManualPriceChange = (index, e) => {
 
+    const { priceRange } = this.state;
+    priceRange.splice(index, 1, e.target.value * 1)
+    this.setState({ priceRange: [...priceRange] }, () => {
+      this.onSliderPriceChange([...priceRange]);
+
+    });
+  }
   render() {
 
     const {
@@ -90,20 +97,25 @@ export default class ProductCategory extends React.Component {
                     <div className='price-range-wrapper'>
                       <div id='slider-range' className='price-filter-range' name='rangeInput'>
                         <Range
-                          defaultValue={priceRange}
+                          value={priceRange}
                           min={0}
-                          max={2000}
+                          max={5000}
                           className='filter-slider'
                           allowCross={false}
-                          onAfterChange={value => { this.onSliderChange(value) }}
+                          onChange={value => { this.onSliderPriceChange(value) }}
+                          onAfterChange={value => { this.onSliderPriceChange(value) }}
                         />
                       </div>
                       <div className='price-range d-flex justify-content-between'>
                         <span>
                           Price:
-                          <input type='number' min='0' max='9900' defaultValue={priceRange[0]} value={priceRange[0]} id='min_price' className='price-range-field' /> <span>-</span>
-                          <input type='number' min='0' max='10000'
-                            defaultValue={priceRange[1]} value={priceRange[1]} id='max_price'
+                          <input type='number' min={0} max={priceRange[0] || 5000} value={priceRange[0] || 0} className='price-range-field'
+                            onChange={(e) => this.onManualPriceChange(0, e)}
+                          />
+
+                          <span>-</span>
+                          <input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
+                            onChange={(e) => this.onManualPriceChange(1, e)}
                             className='price-range-field' /></span>
                         <span><button className='price-range-search'
                           id='price-range-submit'>Filter</button></span>
