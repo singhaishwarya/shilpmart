@@ -85,6 +85,7 @@ export default class ProductCategory extends React.Component {
 
     return (
       <>
+      <section id="maincontent">
         <div className='container-fluid'>
           <div className='row py-5'>
             <div className='col-lg-3'>
@@ -163,6 +164,7 @@ export default class ProductCategory extends React.Component {
             </div>
           </div>
         </div>
+        </section>
       </>
     );
   }

@@ -125,7 +125,7 @@ export default class SellerProfile extends React.Component {
                 <a className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>REVIEWS</a>
               </li>
             </ul>
-            <div className="clearfix"></div>
+            
             <div className="tab-content" >
               <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
                 role="tabpanel" aria-labelledby="home-tab"><ProductGrid historyProps={this.props} /> </div>

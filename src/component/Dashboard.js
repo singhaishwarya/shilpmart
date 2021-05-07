@@ -12,25 +12,17 @@ export default class Dashboard extends React.Component {
         <section id="maincontent">
           <div className="container-fluid">
             <Swiper />
-
             <div className="row py-5">
-
               <div className="col">
                 <div className="section-title">
                   <span><a href="#">Shop by Categories</a></span>
                   <p>Choose from authentic handmade product categories</p>
                 </div>
-
                 <div className="shop-categories">
-
                   <ShopByType type='category' {...this.props} />
-
                 </div>
               </div>
-
             </div>
-
-
             <div className="row py-5 section-bg">
               <div className="col shopby-product">
                 <div className="section-title">

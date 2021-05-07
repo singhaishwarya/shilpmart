@@ -21,9 +21,8 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="grid-container">
-        <Header />
+    <BrowserRouter>      
+        <header><Header /></header>
         <Switch>
           <Route path='/' component={Dashboard} exact />
           <Route path='/login' component={Login} exact />
@@ -34,10 +33,8 @@ function App() {
           <Route path='/wishlist' component={Wishlist} exact />
           <Route path='/compare' component={Compare} exact />
           <Route path='/cart' component={Cart} exact />
-
         </Switch>
-        <Footer />
-      </div>
+        <Footer />      
     </BrowserRouter>
   );
 }

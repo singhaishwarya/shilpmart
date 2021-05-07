@@ -157,7 +157,7 @@ export default class ProductGrid extends React.Component {
               </form>
             </div>
           </section>}
-        <div className='row'>
+        <div className='row py-2'>
           {productsData ? productsData.map((item, index) => {
             return (
               <div key={index} className={layout} onClick={() => this.handlePostDetail(item._id)}>

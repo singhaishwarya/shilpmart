@@ -10,6 +10,16 @@ import ImageGallery from 'react-image-gallery';
 import {
   FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
 } from "react-share";
+// const askForm = {
+//   content : {
+//     top         : '50%',
+//     left        : '50%',
+//     right       : 'auto',
+//     bottom      : 'auto',   
+//     marginRight : '-50%',   
+//     transform   : 'translate(-50%, -50%)'
+//   }
+// };
 export default class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +37,10 @@ export default class ProductDetail extends React.Component {
         category: "Saree",
         tags: "Handlooms"
       },
+
+      
+      
+
       visible: true,
       productCount: 1,
       showModal: false,
@@ -112,9 +126,10 @@ export default class ProductDetail extends React.Component {
     const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal, productImages, shareUrl, title } = this.state;
     return (
       <>
+      <section id="maincontent">
         <div className="container-fluid">
           <div className="row py-5">
-            <div className="col-lg-6 col-md-6 col-12">
+            <div className="col-lg-6 col-md-6 col-12 mb-4">
               <div className="product-img-wrapper">
                 <ImageGallery items={productImages}
                   thumbnailPosition='left'
@@ -134,8 +149,7 @@ export default class ProductDetail extends React.Component {
                   </nav>
                 </div>
                 <h1>{productDetailData.title}</h1>
-                <p className="product-price"><FontAwesomeIcon icon={faRupeeSign} />
-                  <span>{productDetailData.cost}</span></p>
+                <p className="product-price"><span>{productDetailData.cost}</span></p>
                 <div className="short-decription"><p>Short Decription</p></div>
                 <div className="addtocart d-flex justify-content-start">
                   <div className="product-qty">
@@ -150,7 +164,7 @@ export default class ProductDetail extends React.Component {
                 </div>
                 <div className="action-links">
                   <a href="#"  >
-                    <FontAwesomeIcon icon={faRandom} />Compare</a>
+                    <FontAwesomeIcon icon={faRandom} /> Compare</a>
                   <a href="#">
                     <FontAwesomeIcon icon={wishlistStatus ? faCheck : farHeart}
                       onClick={() => this.wishlistToggle(wishlistStatus)} /> {wishlistStatus ? "Browse Wishlist" : "Add to Wishlist"}
@@ -160,27 +174,39 @@ export default class ProductDetail extends React.Component {
                 <div className="add-question my-3 py-2">
                   <a href="#" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</a>
                 </div>
-                <Modal
+                <Modal className='custom-modal-width login-card'
                   isOpen={showModal}
                   onRequestClose={this.toggleModal}
                   contentLabel="Ask a Question"
+                  //style={askForm}
                   shouldCloseOnOverlayClick={true}
                 >
                   {/* <Modal show={this.state.showModal} closeModal={this.toggleModal}> */}
                   <form onSubmit={this.handleSubmit}>
-                    <div className="row">
-                      <label>Name*</label>
-                      <input type="text" name="name" />
-                    </div>
-                    <div className="row">
-                      <label>Email*</label>
-                      <input type="text" name="email" />
-                    </div>
-                    <div className="row">
-                      <label>Your inquiry *</label>
-                      <textarea type="text" name="inquiry" />
-                    </div>
-                    <input type="submit" value="Submit" />
+                    <h4 className="mb-4">Ask a Question</h4>
+                    <div className="form-group row">
+                          <label for="name" className="col-sm-3 col-12 col-form-label">Name<span>*</span></label>
+                          <div className="col-sm-9 col-12">
+                            <input type="text" readonly className="form-control" id="name" value=""/>
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          <label for="Email" className="col-sm-3 col-12 col-form-label">Email<span>*</span></label>
+                          <div className="col-sm-9 col-12">
+                            <input type="text" readonly className="form-control" id="Email" value=""/>
+                            <small>Your email address will not be published.</small>
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          <label for="inquiry" className="col-sm-3 col-12 col-form-label">Your inquiry<span>*</span></label>
+                          <div className="col-sm-9 col-12">
+                            <textarea className="form-control" placeholder="Type your Question..."/>
+                          </div>
+                        </div>
+                   
+                    <input className="btn login-btn float-right" type="submit" value="Submit" />
                   </form>
                 </Modal>
               </div>
@@ -271,6 +297,7 @@ export default class ProductDetail extends React.Component {
             </div>
           </div>
         </div>
+        </section>
 
       </>
     )
