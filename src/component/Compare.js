@@ -4,7 +4,25 @@ export default class Compare extends React.Component {
   constructor() {
     super();
     this.state = {
-      galleryItems: [],
+      productsToCompare: [{
+        imageSrc: require("../public/bag1.jpeg"),
+        title: 'Bag 1',
+        description: 'Canvas material, water proof lining.',
+        cost: '600',
+        sku: 3,
+        category: "Saree",
+        tags: "Handlooms",
+        availability: "yes"
+      }, {
+        imageSrc: require("../public/bag2.jpeg"),
+        title: 'bag 2',
+        description: 'Canvas material, water proof lining.',
+        cost: '600',
+        sku: 3,
+        category: "Saree",
+        tags: "Handlooms",
+        availability: "yes"
+      }]
     };
   }
 
@@ -14,47 +32,41 @@ export default class Compare extends React.Component {
   }
 
   render() {
+    const { productsToCompare } = this.state
     return (
       <div className="row py-5">
         <div className="col">
 
+
           <div className="compare-wrapper-row">
-            <div className="compare-col">&nbsp;</div>
             <div className="compare-col">
-
-              <div className="compare-product">
-                <a href="#" className="remove-item">Remove</a>
-                <a href="#" className="mb-2"><img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2021/02/IMG_20210225_080525_780-300x375.jpg" alt="product img" className="img-fluid" /></a>
-                <a href="#" className="product-name mb-2">Product Title</a>
-                <div className="proPrice mb-2">1500</div>
-                <a href="#" className="add-cart">Add to Cart</a>
-              </div>
-
+              <div className="compare-col-row">&nbsp;</div>
+              <div className="compare-col-row compare-title">Description</div>
+              <div className="compare-col-row compare-title">Availability</div>
             </div>
-            <div className="compare-col">&nbsp;</div>
-            <div className="compare-col">&nbsp;</div>
-            <div className="compare-col">&nbsp;</div>
-            <div className="compare-col">&nbsp;</div>
+            {productsToCompare.map((item, index) => {
+              return (
+                <div className="compare-col" key={index}>
+                  <div className="compare-col-row">
+                    <a href="#" className="remove-item">Remove</a>
+                    <a href="#" className="mb-2">
+                      <img src={item.imageSrc} alt="product img" className="img-fluid" />
+                    </a>
+                    <a href="#" className="product-name mb-2">{item.title}</a>
+                    <div className="proPrice mb-2">{item.cost}</div>
+                    <span><a href="#" className="add-cart">Add to Cart</a> </span>
+                  </div>
+                  <div className="compare-col-row"><p>{item.description}</p></div>
+                  <div className="compare-col-row"><p className="in-stock">{item.availability === 'yes' ? 'In Stock' : 'Out Of Stock'}</p></div>
+                </div>
+              )
+            })}
+
+
+
+
           </div>
 
-          <div className="compare-wrapper-row compare-title">
-            <div className="compare-col">Description</div>
-            <div className="compare-col"><p>Canvas material, water proof lining.</p></div>
-            <div className="compare-col">&nbsp;</div>
-            <div className="compare-col">&nbsp;</div>
-            <div className="compare-col">&nbsp;</div>
-            <div className="compare-col">&nbsp;</div>
-          </div>
-
-
-          <div className="compare-wrapper-row compare-title">
-            <div className="compare-col">Availability</div>
-            <div className="compare-col"><p className="in-stock">In Stock</p></div>
-            <div className="compare-col"><p className="out-stock">Out of Stock</p></div>
-            <div className="compare-col">&nbsp;</div>
-            <div className="compare-col">&nbsp;</div>
-            <div className="compare-col">&nbsp;</div>
-          </div>
 
 
         </div>

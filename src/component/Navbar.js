@@ -123,7 +123,10 @@ export default class Navbar extends React.Component {
 
         }
       ],
-      navbarTabs: [{ title: 'HOME', route: '' }, { title: 'ABOUT US', route: 'about-us' }, { title: 'SHOP', route: 'product-category/all' }, { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
+      navbarTabs: [{ title: 'HOME', route: '' },
+      { title: 'ABOUT US', route: 'about-us' },
+      { title: 'SHOP', route: 'product-category/all' },
+      { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
       isActiveTab: 0
     };
   }
@@ -134,7 +137,7 @@ export default class Navbar extends React.Component {
 
   render() {
 
-    const { isMenuShown, menuOptions, navbarTabs, isActiveTab, styleConfigObj } = this.state;
+    const { isMenuShown, menuOptions, navbarTabs, isActiveTab } = this.state;
     return (
       <>
         {/* // <!--main - navigation-- > */}
@@ -157,7 +160,6 @@ export default class Navbar extends React.Component {
                     <ReactMegaMenu
                       tolerance={50}      // optional, defaults to 100
                       direction={"RIGHT"}  // optional, defaults to "RIGHT", takes in "RIGHT" || "LEFT"
-                      styleConfig={styleConfigObj}   // defaults to an empty object. not recommended to be left blank.
                       // onExit={() => {...}}  // a function to be called when a mouse leaves the container
                       data={menuOptions}        // array of data to be rendered
                     />

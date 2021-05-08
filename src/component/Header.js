@@ -13,6 +13,8 @@ import {
   TelegramShareButton,
   LinkedinShareButton
 } from "react-share";
+import Auth from '../Auth';
+import ReactMegaMenu from "react-mega-menu"
 
 const customStyles = {
   content: {
@@ -35,10 +37,26 @@ export default class Header extends React.Component {
       optionData: ['Art Silk banarasi saree', 'saree Art Silk heavy  saree',
         'TANGAIL SAREE', 'saree TANGAIL SAREE HALF ACHAL', 'saree CHAMARAJ PURE SILK SAREES -WEDDING SILK SAREES', 'saree Raw Silk X Eri Spun Silk Saree Saree', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree KATA BUTI STAR CHOSMA TANT SAREE', 'saree Chamka Saree (Artsilk) saree'],
       showModal: false, setIsOpen: false, shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/'],
-      title: 'eShilpmart'
+      title: 'eShilpmart',
+      isLoggedIn: localStorage.getItem('isLoggedIn'),
+      menuOptions: [
+        {
+          label:
+            <span><Link to='/my-account/orders'>Order</Link></span>,
+          key: "1"
+        },
+        // {
+        //   label:
+        //     <span>Settings</span>,
+        //   key: "Settings"
+        // }
+      ], isMenuShown: false
     }
   }
 
+  setIsMenuShown = (status) => {
+    this.setState({ isMenuShown: status })
+  }
   // openModal = () => {
   //   // setIsOpen(true);
   //   this.setState({
@@ -52,7 +70,7 @@ export default class Header extends React.Component {
     this.setState({ showModal: false, setIsOpen: false })
 
   };
-  toggleModal = () => {
+  login = () => {
     this.setState({
       showModal: !this.state.showModal
     });
@@ -69,6 +87,7 @@ export default class Header extends React.Component {
       text: value
     }))
   };
+
   renderSearchOptions = () => {
     let { seachResults } = this.state;
     if (seachResults.length === 0) {
@@ -99,7 +118,8 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { text, showModal, shareUrl, title } = this.state;
+    const { text, showModal, shareUrl, title, isLoggedIn, menuOptions, isMenuShown } = this.state;
+
     return (
       <>
         <Modal
@@ -108,8 +128,9 @@ export default class Header extends React.Component {
           style={customStyles}
           shouldCloseOnOverlayClick={true}
           contentLabel="SIGN IN"
+          ariaHideApp={false}
         >
-          <Login onClick={this.toggleModal} /> </Modal>
+          <Login loginClick={this.login} /> </Modal>
         <div className="header-top py-1  ">
           <div className="container-fluid">
             <div className="row">
@@ -181,7 +202,13 @@ export default class Header extends React.Component {
             </div>
           </div>
           <ul className="navbar-nav flex-row">
-            <li className="nav-item" onClick={this.toggleModal}>Login/Register</li>
+            {isLoggedIn ? <div onMouseEnter={() => this.setIsMenuShown(true)}
+              onMouseLeave={() => this.setIsMenuShown(false)} ><li className="nav-item" >Account</li>
+              {isMenuShown && (<ReactMegaMenu
+                tolerance={50}      // optional, defaults to 100
+                direction={"DOWN"}  // optional, defaults to "RIGHT", takes in "RIGHT" || "LEFT"
+                data={menuOptions}        // array of data to be rendered
+              />)} </div> : <li className="nav-item" onClick={this.login}>Login/Register</li>}
             <li className="nav-item"><Link to={'/wishlist'}><div className="nav-link">
               <FontAwesomeIcon icon={faHeart} /><span>0</span></div></Link></li>
             <li className="nav-item"><Link to={'/compare'}>
