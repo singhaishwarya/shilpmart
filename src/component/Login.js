@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Auth from '../Auth';
+
 export default class Login extends React.Component {
 
   login = (event) => {
     Auth.authenticate();
     localStorage.setItem('isLoggedIn', Auth.getAuth());
-    console.log(event, '====', Auth.getAuth());
+
     this.props.loginClick();
   }
 
@@ -29,8 +30,8 @@ export default class Login extends React.Component {
           <div className="form-group mb-4">
             <label htmlFor="password" className="sr-only">Password</label>
             <input type="password" name="password" className="form-control" autoComplete="on" placeholder="***********" />
-          </div> <Link to={'/my-account/orders'} className="forgot-password-link" onClick={this.login} >
-            <input name="login" className="btn btn-block login-btn mb-4" type="button" value="Login" /></Link>
+          </div> <div className="forgot-password-link" onClick={this.login} >
+            <input name="login" className="btn btn-block login-btn mb-4" type="button" value="Login" /></div>
         </form>
        Forgot password?
         <p className="login-card-footer-text">Don't have an account? <Link to={'/buyer-registration'} onClick={this.handleChange} >Register here</Link></p>
