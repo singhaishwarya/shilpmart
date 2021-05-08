@@ -46,7 +46,7 @@ export default class ProductGrid extends React.Component {
           discount: '11',
           _id: 1
         }, {
-          img: require('../public/bag2.jpeg'),
+          img: require('../public/small-img.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
@@ -157,7 +157,7 @@ export default class ProductGrid extends React.Component {
               </form>
             </div>
           </section>}
-        <div className='row'>
+        <div className='row py-2'>
           {productsData ? productsData.map((item, index) => {
             return (
               <div key={index} className={layout} onClick={() => this.handlePostDetail(item._id)}>
@@ -191,8 +191,8 @@ export default class ProductGrid extends React.Component {
           }) : ''}
         </div>
         <ReactPaginate
-          previousLabel={'<'}
-          nextLabel={'>'}
+          previousLabel={''}
+          nextLabel={''}
           breakLabel={'...'}
           breakClassName={'break-me'}
           pageCount={pageCount}

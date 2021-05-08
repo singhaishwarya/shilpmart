@@ -147,11 +147,11 @@ export default class Registration extends React.Component {
           </div>
 
           <div className="col-md-6 col-12 mb-5">
-            <h4>Registration</h4>
-            <form action="#" className="login-card" onSubmit={this.signUpSubmit.bind}>
+            <h4 className="mb-4">Registration</h4>
+            <form action="#" className="login-card shadow p-4 border rounded" onSubmit={this.signUpSubmit.bind}>
               <div className="row">
                 <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="fname">First Name*</label>
+                  <div className="form-group"><label htmlFor="fname">First Name<span>*</span></label>
                     <input type="text" className="form-control" value={fields["firstName"] || ''} onChange={this.handleChange.bind(this, "firstName")} />
 
                     {/* <input type="text" onChange={this.handleChange.bind(this, "firstName")} value={} className="form-control" /> */}
@@ -159,7 +159,7 @@ export default class Registration extends React.Component {
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="lname">Last Name*</label>
+                  <div className="form-group"><label htmlFor="lname">Last Name<span>*</span></label>
                     <input type="text" onChange={this.handleChange.bind(this, "lastName")} value={fields["lastName"] || ''} className="form-control" />
 
                   </div>
@@ -168,13 +168,13 @@ export default class Registration extends React.Component {
 
               <div className="row">
                 <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="email">Email*</label>
+                  <div className="form-group"><label htmlFor="email">Email<span>*</span></label>
                     <input type="email" onChange={this.handleChange.bind(this, "email")} value={fields["email"] || ''} className="form-control" />
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="mNo">Mobile No.*</label>
+                  <div className="form-group"><label htmlFor="mNo">Mobile No.<span>*</span></label>
                     <input type="tel" onChange={this.handleChange.bind(this, "contact")} value={fields["contact"] || 0} className="form-control" />
 
                   </div>
@@ -183,21 +183,20 @@ export default class Registration extends React.Component {
 
               <div className="row">
                 <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="pass">Password*</label>
+                  <div className="form-group"><label htmlFor="pass">Password<span>*</span></label>
                     <input type="password" onChange={this.handleChange.bind(this, "password")} value={fields["password"] || 0} className="form-control" />
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="cpass">Confirm Password*</label>
+                  <div className="form-group"><label htmlFor="cpass">Confirm Password<span>*</span></label>
                     <input type="password" onChange={this.handleChange.bind(this, "confirmPassword")} value={fields["confirmPassword"] || 0} className="form-control" />
 
                   </div>
                 </div>
               </div>
               <fieldset>
-                <button className="btn btn-lg pro"
-                  value="Submit">Register</button>
+                <button className="btn login-btn" value="Submit">Register</button>
               </fieldset>
               {/* <input type="button" className="btn login-btn" value="Register" /> */}
 

@@ -19,6 +19,7 @@ export default class Footer extends React.Component {
     const { footerItems, responsive } = this.state;
     return (
       <>
+      <footer>
         <div id="mainFooter">
           <div className="container-fluid">
             <div className="row py-5 border-bottom">
@@ -125,6 +126,7 @@ export default class Footer extends React.Component {
             </div>
           </div>
         </div>
+        </footer>
       </>);
   }
 }

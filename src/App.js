@@ -30,35 +30,33 @@ import Auth from './Auth';
 function App() {
   return (
     <BrowserRouter>
-      <div className="grid-container">
-        <Header />
-        <Switch>
-          <Route path='/' component={Dashboard} exact />
-          <Route path='/login' component={Login} exact />
-          <Route path='/buyer-registration' component={Registration} exact />
-          <Route path='/product-category/:categoryId' component={ProductCategory} exact />
-          <Route path='/product-detail/:productId' component={ProductDetail} exact />
-          <Route path='/seller-profile' component={SellerProfile} exact />
-          <Route path='/wishlist' component={Wishlist} exact />
-          <Route path='/compare' component={Compare} exact />
-          <Route path='/cart' component={Cart} exact />
-          {/* <PrivateRoute path='/my-account/orders' component={Orders} /> */}
-          <MyAccount>
-            <Route component={({ match }) =>
-              <div>
-                <PrivateRoute path='/my-account/order' component={Orders} />
-                <PrivateRoute path='/my-account/settings' component={Settings} />
-                <PrivateRoute path='/my-account/address' component={Address} />
-                <PrivateRoute path='/my-account/details' component={AccountDetails} />
-                <PrivateRoute path='/my-account/support-tickets' component={Support} />
-                <PrivateRoute path='/my-account/inquiry' component={Inquiry} />
-                <PrivateRoute path='/my-account/wishlist' component={Wishlist} />
-              </div>
-            } />
-          </MyAccount>
-        </Switch>
-        <Footer />
-      </div>
+      <header><Header /></header>
+      <Switch>
+        <Route path='/' component={Dashboard} exact />
+        <Route path='/login' component={Login} exact />
+        <Route path='/buyer-registration' component={Registration} exact />
+        <Route path='/product-category/:categoryId' component={ProductCategory} exact />
+        <Route path='/product-detail/:productId' component={ProductDetail} exact />
+        <Route path='/seller-profile' component={SellerProfile} exact />
+        <Route path='/wishlist' component={Wishlist} exact />
+        <Route path='/compare' component={Compare} exact />
+        <Route path='/cart' component={Cart} exact />
+        {/* <PrivateRoute path='/my-account/orders' component={Orders} /> */}
+        <MyAccount>
+          <Route component={({ match }) =>
+            <div>
+              <PrivateRoute path='/my-account/order' component={Orders} />
+              <PrivateRoute path='/my-account/settings' component={Settings} />
+              <PrivateRoute path='/my-account/address' component={Address} />
+              <PrivateRoute path='/my-account/details' component={AccountDetails} />
+              <PrivateRoute path='/my-account/support-tickets' component={Support} />
+              <PrivateRoute path='/my-account/inquiry' component={Inquiry} />
+              <PrivateRoute path='/my-account/wishlist' component={Wishlist} />
+            </div>
+          } />
+        </MyAccount>
+      </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }
