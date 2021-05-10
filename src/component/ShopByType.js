@@ -1,9 +1,8 @@
 import React from "react";
 import AliceCarousel from 'react-alice-carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRupeeSign } from '@fortawesome/free-solid-svg-icons'
-
-
+import { faRupeeSign, faCartPlus, faRandom, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 export default class ShopByType extends React.Component {
   constructor(props) {
     super(props);
@@ -62,7 +61,8 @@ export default class ShopByType extends React.Component {
           cost: '999',
           average_rating: 4,
           discount: '11',
-          _id: 1
+          _id: 1,
+          wishlistStatus: 1
         },
         {
           img: require('../public/bag1.jpeg'),
@@ -70,49 +70,56 @@ export default class ShopByType extends React.Component {
           cost: '999',
           average_rating: 4,
           discount: '11',
-          _id: 2
+          _id: 2,
+          wishlistStatus: 0
         }, {
           img: require('../public/bag3.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11',
-          _id: 3
+          _id: 3,
+          wishlistStatus: 0
         }, {
           img: require('../public/bag1.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11',
-          _id: 4
+          _id: 4,
+          wishlistStatus: 1
         }, {
-          img: require('../public/bag2.jpeg'),
+          img: require('../public/small-img.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11',
-          _id: 5
+          _id: 5,
+          wishlistStatus: 0
         }, {
           img: require('../public/bag3.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11',
-          _id: 6
+          _id: 6,
+          wishlistStatus: 1
         }, {
           img: require('../public/bag1.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11',
-          _id: 7
+          _id: 7,
+          wishlistStatus: 0
         }, {
           img: require('../public/bag3.jpeg'),
           title: 'beag full streep size',
           cost: '999',
           average_rating: 4,
           discount: '11',
-          _id: 8
+          _id: 8,
+          wishlistStatus: 1
         }
       ],
       shopByCategoryItems: [],
@@ -122,6 +129,8 @@ export default class ShopByType extends React.Component {
   }
 
   componentDidMount() {
+    const { wishlistStatus, hoveredItem } = this.state;
+
     this.setState({
       shopByProductItems: this.state.shopByProductData.map((item, index) => {
         return (<div className="product-wrapper" key={index} >
@@ -130,12 +139,26 @@ export default class ShopByType extends React.Component {
               onClick={() => this.productDetail(item._id)}
               alt="saree" /></a>
           </div>
+          <div className="shop-wrapper">
+            <div className="shopBtn">
+              <div className="shop-btn"><span>
+                <FontAwesomeIcon icon={faCartPlus} /></span></div>
+              <div className="shop-btn"><span>
+                <FontAwesomeIcon icon={faRandom} />
+              </span></div>
+              <div className="shop-btn"><span>
+                <FontAwesomeIcon
+                  icon={(wishlistStatus && hoveredItem === index) ? faHeart : farHeart}
+                  onClick={() => this.wishlistToggle(wishlistStatus, index)}
+                />
+              </span></div>
+            </div>
+          </div>
           <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
           <h5 className="product-title"><a href="#">{item.title}</a></h5>
           <span className="product-price">
             <FontAwesomeIcon icon={faRupeeSign} /> {item.cost}
           </span>
-
         </div>)
       }),
       shopByCategoryItems: this.state.shopByCategoryData.map((item, index) => {
@@ -164,7 +187,10 @@ export default class ShopByType extends React.Component {
 
     this.props.history.push(`/product-category/${value}`);
   }
-
+  wishlistToggle = (val, index) => {
+    console.log("demo===, ", val, index)
+    this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
+  }
   render() {
     // const demoItems = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => <div style={{
     //   display: "inline-block",

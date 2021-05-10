@@ -54,6 +54,15 @@ export default class Header extends React.Component {
     }
   }
 
+  componentDidMount = () => {
+    document.addEventListener('mousedown', this.handleClick, false)
+  }
+
+  componentWillUnmount = () => {
+
+    document.removeEventListener('mousedown', this.handleClick, false)
+  }
+
   setIsMenuShown = (status) => {
     this.setState({ isMenuShown: status })
   }
@@ -87,6 +96,16 @@ export default class Header extends React.Component {
       text: value
     }))
   };
+  handleClick = (e) => {
+    if (this.node.contains(e.target)) {
+      return
+    }
+    this.handleClickOutside();
+  }
+
+  handleClickOutside = () => {
+    this.setState({ text: '', seachResults: [] });
+  }
 
   renderSearchOptions = () => {
     let { seachResults } = this.state;
@@ -184,9 +203,9 @@ export default class Header extends React.Component {
           <Link to={'/'}>
             <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
           </Link>
-          <div className="search-container mx-5 w-100 position-relative">
+          <div className="search-container mx-5 w-100 position-relative" >
             <div className="form-inline my-2 my-lg-0">
-              <div className="search-bar w-100 d-flex justify-content-start">
+              <div className="search-bar w-100 d-flex justify-content-start" ref={node => this.node = node}>
                 <input onChange={this.onTextChange} value={text} placeholder="Search" />
                 <div className="search-btn">
                   <button className="btn my-2 my-sm-0" type="submit">
@@ -196,9 +215,7 @@ export default class Header extends React.Component {
               </div>
             </div>
             <div className="search-result-wrapper">
-
               {this.renderSearchOptions()}
-
             </div>
           </div>
           <ul className="navbar-nav flex-row">
