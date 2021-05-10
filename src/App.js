@@ -44,7 +44,7 @@ function App() {
         {/* <PrivateRoute path='/my-account/orders' component={Orders} /> */}
         <MyAccount>
           <Route component={({ match }) =>
-            <div>
+            <>
               <PrivateRoute path='/my-account/order' component={Orders} />
               <PrivateRoute path='/my-account/settings' component={Settings} />
               <PrivateRoute path='/my-account/address' component={Address} />
@@ -52,7 +52,7 @@ function App() {
               <PrivateRoute path='/my-account/support-tickets' component={Support} />
               <PrivateRoute path='/my-account/inquiry' component={Inquiry} />
               <PrivateRoute path='/my-account/wishlist' component={Wishlist} />
-            </div>
+            </>
           } />
         </MyAccount>
       </Switch>

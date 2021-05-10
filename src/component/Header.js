@@ -222,9 +222,9 @@ export default class Header extends React.Component {
             {isLoggedIn ? <div onMouseEnter={() => this.setIsMenuShown(true)}
               onMouseLeave={() => this.setIsMenuShown(false)} ><li className="nav-item" >Account</li>
               {isMenuShown && (<ReactMegaMenu
-                tolerance={50}      // optional, defaults to 100
-                direction={"DOWN"}  // optional, defaults to "RIGHT", takes in "RIGHT" || "LEFT"
-                data={menuOptions}        // array of data to be rendered
+                tolerance={50}
+                direction={"DOWN"}
+                data={menuOptions}
               />)} </div> : <li className="nav-item" onClick={this.login}>Login/Register</li>}
             <li className="nav-item"><Link to={'/wishlist'}><div className="nav-link">
               <FontAwesomeIcon icon={faHeart} /><span>0</span></div></Link></li>

@@ -123,10 +123,11 @@ export default class Navbar extends React.Component {
 
         }
       ],
-      navbarTabs: [{ title: 'HOME', route: '' },
-      { title: 'ABOUT US', route: 'about-us' },
-      { title: 'SHOP', route: 'product-category/all' },
-      { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
+      navbarTabs: [
+        { title: 'HOME', route: '' },
+        { title: 'ABOUT US', route: 'about-us' },
+        { title: 'SHOP', route: 'product-category/all' },
+        { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
       isActiveTab: 0
     };
   }
