@@ -16,7 +16,7 @@ export default class Cart extends React.Component {
   render() {
     return (
       <div className="row">
-      </div >
+      </div>
     );
   }
 }
