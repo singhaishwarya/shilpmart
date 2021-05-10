@@ -219,13 +219,13 @@ export default class Header extends React.Component {
             </div>
           </div>
           <ul className="navbar-nav flex-row">
-            {isLoggedIn ? <div onMouseEnter={() => this.setIsMenuShown(true)}
-              onMouseLeave={() => this.setIsMenuShown(false)} ><li className="nav-item" >Account</li>
+            {isLoggedIn ? <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
+              onMouseLeave={() => this.setIsMenuShown(false)} >My Account
               {isMenuShown && (<ReactMegaMenu
                 tolerance={50}
                 direction={"DOWN"}
-                data={menuOptions}
-              />)} </div> : <li className="nav-item" onClick={this.login}>Login/Register</li>}
+                data={menuOptions}        // array of data to be rendered
+              />)} </li> : <li className="nav-item" onClick={this.login}>Login/Register</li>}
             <li className="nav-item"><Link to={'/wishlist'}><div className="nav-link">
               <FontAwesomeIcon icon={faHeart} /><span>0</span></div></Link></li>
             <li className="nav-item"><Link to={'/compare'}>

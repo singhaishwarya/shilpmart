@@ -34,6 +34,8 @@ export default class Compare extends React.Component {
   render() {
     const { productsToCompare } = this.state
     return (
+      <section id="main-content">
+        <div className="container-fluid">
       <div className="row py-5">
         <div className="col">
 
@@ -49,7 +51,7 @@ export default class Compare extends React.Component {
                 <div className="compare-col" key={index}>
                   <div className="compare-col-row">
                     <a href="#" className="remove-item">Remove</a>
-                    <a href="#" className="mb-2">
+                    <a href="#" className="item-img mb-2">
                       <img src={item.imageSrc} alt="product img" className="img-fluid" />
                     </a>
                     <a href="#" className="product-name mb-2">{item.title}</a>
@@ -71,6 +73,8 @@ export default class Compare extends React.Component {
 
         </div>
       </div>
+      </div>
+      </section>
     );
   }
 }

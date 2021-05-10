@@ -277,7 +277,7 @@ a {
 /* mega-menu-css */
 .css-1cqgl9p {
 	margin: 10px auto 10px -15px;
-	/* border: 1px solid blue; */
+	border: 1px solid #eee;
 	width: 100%;
 }
 .css-1mgtuk2 {
@@ -2317,7 +2317,7 @@ padding-right: 5px;
 
 /*compaire products css*/
 .compare-wrapper-row {
-	display: flex;
+	display: flex;	
 	flex-direction: row;
 	flex-wrap: nowrap;
 }
@@ -2330,6 +2330,7 @@ padding-right: 5px;
     justify-content: flex-start;
     display: flex;
     flex-direction: column;
+		max-width: 250px;
 }
 .compare-col p {
 	font-size: 14px;
@@ -2408,6 +2409,11 @@ padding-right: 5px;
 }
 .remove-item:hover::after {
 	content: '\f068';
+}
+
+.item-img{
+	max-height: 375px;
+	overflow: hidden;
 }
 .product-name {
 	color: #333;
@@ -2503,6 +2509,181 @@ padding-right: 5px;
 	color: #999;
 }
 
+/* my-account-css */
+.myaccout-sidebar{
+	padding: 0 15px;
+}
+.myaccout-sidebar ul{list-style: none;
+	margin: 15px 0;
+	padding: 0;
+	border-top: 1px solid #eaeaea;}
+	.myaccout-sidebar ul li{
+		list-style: none;
+border-bottom: 1px solid #eaeaea;
+position: relative;
+	}
+
+	.myaccout-sidebar ul li a {
+    padding: 12px 0;
+		color: #000;
+		font-weight: 600;
+    display: block;
+}
+.myaccout-sidebar ul li a:hover{
+	color: #e87f13;
+	padding-left: 5px;
+	
+}
+
+
+.myaccout-sidebar ul li a::before {
+	display: inline-block;
+	font-family: 'fontawesome';
+	font-weight: normal;
+	font-style: normal;
+	letter-spacing: normal;
+	text-rendering: auto;
+	font-size: inherit;
+	text-rendering: auto;
+	content: '\f0e4';
+	color: #e87f13;
+	line-height: 22px;
+	margin-left: 8px;
+	width: 20px;
+	text-align: right;		
+	opacity: .45;
+	float: right;
+	
+}
+.myaccout-sidebar ul li.order a::before{
+content: '\f07a';	
+}
+.myaccout-sidebar ul li.address a::before{
+	content: '\f015';	
+	}
+
+.myaccout-sidebar ul li.account-details a::before{
+		content: '\f007';	
+		}
+
+.myaccout-sidebar ul li.support a::before{
+			content: '\f145';	
+			}
+
+.myaccout-sidebar ul li.inquire a::before{
+				content: '\f059';	
+				}
+.myaccout-sidebar ul li.wishlist a::before{
+					content: '\f004';	
+					}
+					
+.myaccout-sidebar ul li.logout a::before{
+						content: '\f08b';	
+						}
+.myaccout-sidebar ul li.is-active a::before{
+		opacity: 1;
+	}
+
+.user-profile{
+	display: flex;
+}
+.user-profile .user-img{
+	margin-right: 15px;
+}
+.user-profile .user-info p{
+	display: block;
+font-size: 18px;
+line-height: 1;
+margin-bottom: 5px;
+color: #333;
+}
+.user-profile .user-info a{
+	font-size: 12px;
+}
+
+.my-account-links{
+	display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+margin-top: 30px;
+margin-left: -10px;
+margin-right: -10px;
+}
+.my-account-links div{
+	flex: 1 1 33%;
+max-width: 33%;
+width: 33%;
+padding-left: 10px;
+padding-right: 10px;
+margin-bottom: 20px;
+}
+
+.my-account-links a{display: block;
+	padding: 20px;
+	box-shadow: 0 0 4px rgba(0,0,0,.18);
+	font-size: 14px;
+	font-weight: 600;
+	text-align: center;
+	text-transform: uppercase;
+	color: #3f3f3f;}
+
+	.my-account-links a:hover{
+		background-color: #eee;
+		color: #e87f13;
+	}
+
+	.my-account-links a:hover::before{
+		color: #e87f13;
+	}
+
+	.my-account-links a::before{
+		content: "";
+		font-family:fontawesome;
+		display: block;
+		color: #d0d0d0;
+		margin-bottom: 10px;
+		font-size: 50px;
+		font-weight: 400;
+		line-height: 50px;
+		transition: color .25s ease;
+	}
+	.my-account-links .orders a::before{
+		content: '\f0f6';
+	}
+	.my-account-links .address a::before{
+		content: '\f041';
+	}
+	.my-account-links .account-details a::before{
+		content: '\f2be';
+	}
+	.my-account-links .followings a::before{
+		content: '\f013';
+	}
+	.my-account-links .support a::before{
+		content: '\f145';
+	}
+	.my-account-links .inquiry a::before{
+		content: '\f29c';
+	}
+	.my-account-links .wishlist a::before{
+		content: '\f08a';
+	}
+	.my-account-links .logout a::before{
+		content: '\f08b';
+	}
+
+	.flexi{
+		display: flex;
+		justify-content: space-between;
+	}
+	.coloumn-2{
+		flex:1 1 50%;
+	}
+
+	.coloumn-2 small{float: right;
+		padding-right: 30px;
+		font-size: 14px;
+		color: #ccc;}
 
 /* seller-profile css */
 .show-title {
