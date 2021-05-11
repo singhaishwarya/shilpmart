@@ -13,7 +13,7 @@ import {
   TelegramShareButton,
   LinkedinShareButton
 } from "react-share";
-import Auth from '../Auth';
+
 import ReactMegaMenu from "react-mega-menu"
 
 const customStyles = {

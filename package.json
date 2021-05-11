@@ -31,7 +31,8 @@
     "react-router-dom": "^5.2.0",
     "react-share": "^4.4.0",
     "react-stars": "^2.2.5",
-    "redux": "^4.1.0"
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
