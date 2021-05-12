@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ReactMegaMenu from "react-mega-menu"
+// import ReactMegaMenu from "react-mega-menu"
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons'
@@ -12,12 +12,13 @@ const baseUrl = 'https://admin.digitalindiacorporation.in/api';
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
-    this.props.fetchAllCategory(0);
     this.state = {
       currentTier: 0,
       isMenuShown: false,
+      isSubMenuShown: false,
       subMenuOptions: [],
-      menuOptions: [],
+      subMenu: [], mainMenu: [],
+      isLoading: true,
       navbarTabs: [
         { title: 'HOME', route: '' },
         { title: 'ABOUT US', route: 'about-us' },
@@ -26,43 +27,62 @@ class Navbar extends React.Component {
       isActiveTab: 0
     };
   }
+  componentDidMount() {
+    var _this = this;
+    this.getSubmenuOptions(0).then((result) => {
+      _this.setState({ mainMenu: result ? result : [] });
+    })
+  }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.category[0].parent_id === 0) {
-      let locMenu = nextProps.category.map((item, index) => {
-        return ({
-          label: <>
-            <span key={index} onMouseOver={() => this.submenuOptions(item.id)}>{item.title}</span>
-            <FontAwesomeIcon icon={faCaretRight} /></>,
-          key: item.id,
-          items: []
-        })
+  getSubmenuOptions = async (id) => {
+    try {
+      let response = await axios.get(baseUrl + `/categories`, {
+        params: { parent_id: id }
+      }).then(response => {
+        return response.data.data.length ? response.data.data : [];
+      }).catch(error => {
+        throw (error);
       });
-      this.setState({ menuOptions: locMenu });
-    }
-    else {
-      let submenu = nextProps.category.map((item, index) => {
-        return (<div className="sub-categories" key={index}>
-          <Link to={''}>{item.title}</Link>
-        </div>)
-      }), objIndex;
-      objIndex = this.state.menuOptions.findIndex((obj => obj.key === this.state.currentTier));
-      this.state.menuOptions[objIndex].items = submenu;
+      return response;
+    } catch (err) {
+      console.log(err);
     }
   }
-
-  submenuOptions = (id) => {
-    this.props.fetchAllCategory(id)
-    this.setState({ currentTier: id })
-  }
-
   setIsMenuShown = (status) => {
     this.setState({ isMenuShown: status })
   }
+  showSubMenuOption = (status, key, id) => {
+    this.setState({ isSubMenuShown: status, submenuShowKey: key })
+    var _this = this;
+    _this.getSubmenuOptions(id).then((result) => {
+      let submenuLoc = result.length && result.map((item, index) => {
+        return (
+          <div key={index} className="col-sm-3 mb-3">
+            <h6>{item.title}</h6>
+            {/* {
+              _this.getSubmenuOptions(item.id).then((result) => {
+
+                result.length && result.map((item1, index) => {
+                  return <ul key={index} className="sub-items">
+                    <li>{item.title}=={item1.title}</li>
+                  </ul>
+                })
+              })
+            } */}
+          </div>
+
+        )
+      });
+      _this.setState({ subMenu: submenuLoc })
+    })
+  }
+
   render() {
-    const { isMenuShown, menuOptions, navbarTabs, isActiveTab } = this.state;
+
+    const { isMenuShown, navbarTabs, isActiveTab, isSubMenuShown, submenuShowKey, subMenu, mainMenu } = this.state;
+
     return (
-      < div className="main-menu" >
+      <div className="main-menu" >
         <nav className="navbar navbar-expand-lg navbar-light border-top border-bottom">
           <button className="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -76,15 +96,20 @@ class Navbar extends React.Component {
                 <span >Browse Categories</span>
                 <FontAwesomeIcon icon={isMenuShown ? faCaretDown : faCaretRight} />
               </span>
-              {isMenuShown &&
-                <div >
-                  <ReactMegaMenu
-                    tolerance={50}
-                    direction={"RIGHT"}
-                    onExit={() => this.setState({ subMenuOptions: [] })}
-                    data={menuOptions}
-                  />
-                </div>}
+              {isMenuShown && (
+                <div className="dropdown-menu nicemenu verticle" data-pos="list.right" data-classes="active">
+                  {mainMenu.length && mainMenu.map((item, index) => {
+                    return (< div key={index} ><div className="nicemenu-item" >
+                      <p onMouseOver={() => this.showSubMenuOption(true, index, item.id)}>{item.title}</p></div> {
+                        (isSubMenuShown && submenuShowKey == index) &&
+                        < div className="container">
+                          <div className="row">
+                            {subMenu}
+                          </div>
+                        </div>}</div>)
+                  })}
+                </div>
+              )}
             </div>
             <ul className="navbar-nav mr-auto">
               {navbarTabs.map((item, index) => {
@@ -97,7 +122,7 @@ class Navbar extends React.Component {
               })}
             </ul>
           </div>
-        </nav>
+        </nav >
       </div >
     );
   }
