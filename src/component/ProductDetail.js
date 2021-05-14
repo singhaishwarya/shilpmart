@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faPhone, faRupeeSign, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faPhone, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
 import {
@@ -144,7 +144,7 @@ export default class ProductDetail extends React.Component {
                     </nav>
                   </div>
                   <h1>{productDetailData.content?.title}</h1>
-                  <p className="product-price"><FontAwesomeIcon icon={faRupeeSign} /><span> {productDetailData?.price ? productDetailData.price[0].price : '0'}</span></p>
+                  <p className="product-price"><span> {productDetailData?.price ? productDetailData.price[0].price : '0'}</span></p>
                   <div className="short-decription"><p>{productDetailData.content?.product_description}</p></div>
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">

@@ -7,6 +7,9 @@ a {
 .header-top {
 	background: url('https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/t_bg.webp') repeat-x #e87f13;
 }
+.search-container{
+	max-width: 800px;
+}
 /*header-fix-css*/
 .main-menu {
 	background-color: #fff;
@@ -284,6 +287,7 @@ a {
 	min-width: 227px !important;
 	height: 100% !important;
 	margin: 0;
+	border-left: 1px solid #eee;
 	background-color: #ccc !important;
 }
 .css-13azwyo {
@@ -319,6 +323,10 @@ a {
 	float: left;
 }
 .css-1mgtuk2 li a{display: block; width: 100%;}
+.css-1mgtuk2 li a svg{
+	float: right;
+	margin-top: 4px;
+}
 .css-1mgtuk2 li a:hover{
 	color: #e87f13;
 }
@@ -1944,6 +1952,7 @@ a:hover, a:focus {
 .product-img-wrapper {
 	position: relative;
 	overflow: hidden;
+	z-index: 0;
 }
 .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail {
 	height: 100px;
@@ -1999,6 +2008,7 @@ a:hover, a:focus {
 .product-summary-wrapper h1 {
 	text-align: left;
 	font-weight: 600;
+	font-weight: normal;
 	text-transform: capitalize;
 }
 .product-summary-wrapper .product-price {
@@ -2818,6 +2828,9 @@ margin-bottom: 20px;
 	flex-direction: column;
 }
 .shop-tools{display: none !important;}
+.image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail{
+	height: auto;
+}
 }
 
 
