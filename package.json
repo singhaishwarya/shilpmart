@@ -6,9 +6,10 @@
     "chai": "^4.2.0",
     "gh-pages": "^2.0.1",
     "prettier": "^1.17.1",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^3.4.1"
   },
   "dependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.14.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
@@ -16,10 +17,12 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "axios": "^0.21.1",
     "big.js": "^5.2.2",
+    "customize-cra": "^1.0.0",
     "pagination": "github:react-bootstrap/Pagination",
     "rc-slider": "^9.7.2",
     "react": "^16.8.6",
     "react-alice-carousel": "^2.5.1",
+    "react-app-rewired": "^2.1.8",
     "react-dom": "^16.8.6",
     "react-image-gallery": "^1.0.9",
     "react-mega-menu": "^1.0.1",
@@ -35,9 +38,9 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "gh-pages -d build"
   },
