@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ReactMegaMenu from "react-mega-menu"
 import CategoryService from '../services/CategoryService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCaretRight, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 
 export default class Navbar extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ export default class Navbar extends React.Component {
               state: { category_id: item.id, category_title: item.title }
             }}>
               <span key={index}>{item.title}</span>
-              <FontAwesomeIcon icon={faCaretRight} />
+              <FontAwesomeIcon icon={faAngleRight} />
             </Link>,
             key: item.id,
             items: item.child.map((subitem1, index) => {
@@ -91,7 +91,7 @@ export default class Navbar extends React.Component {
                 <span className="brows-menu dropdown-toggle" data-toggle="dropdown">
                   <span className="brows-menu-icon"></span>
                   <span >Browse Categories</span>
-                  <FontAwesomeIcon icon={isMenuShown ? faCaretUp : faCaretDown} />
+                  <FontAwesomeIcon icon={isMenuShown ? faAngleUp : faAngleDown} />
                 </span>
                 {isMenuShown && (
                   <div>
