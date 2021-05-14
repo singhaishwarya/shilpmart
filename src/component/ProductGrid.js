@@ -13,12 +13,11 @@ export default class ProductGrid extends React.Component {
       pathname: props.historyProps.location?.pathname,
       offset: 0,
       productsData: [],
-      perPage: 5,
       currentPage: 0,
-      perPage: 12,
+      per_page: 12,
       layout: 'col-lg-3 col-sm-6 col-6', //default 4X4
       productListData: [],
-      config: { cat_ids: [props.historyProps.history.location.state?.category_id] }
+      filterConfig: { cat_ids: [props.historyProps.history.location.state?.category_id] }
     }
   }
   componentWillMount() {
@@ -27,14 +26,14 @@ export default class ProductGrid extends React.Component {
 
   componentWillReceiveProps() {
     if (this.props.historyProps.history.location.state?.category_id !== this.props.historyProps.location.state?.category_id) {
-      this.state.config.cat_ids = [this.props.historyProps.history.location.state?.category_id];
+      this.state.filterConfig.cat_ids = [this.props.historyProps.history.location.state?.category_id];
     }
     this.receivedData();
   }
 
   receivedData = () => {
     try {
-      ProductService.fetchAllProducts(this.state.config).then((result) => {
+      ProductService.fetchAllProducts(this.state.filterConfig).then((result) => {
         this.setState({ productListData: result })
       });
       const { productListData, offset, perPage } = this.state;
@@ -74,14 +73,14 @@ export default class ProductGrid extends React.Component {
     });
   }
   onItemPerPage = (value) => {
-    this.state.config.perPage = value;
-    // this.setState({ perPage: value })
+    this.state.filterConfig.per_page = value;
+    this.setState({ per_page: value })
     this.receivedData();
   }
 
   render() {
 
-    const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, perPage } = this.state
+    const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, per_page } = this.state
 
     return (
       <>
@@ -96,11 +95,11 @@ export default class ProductGrid extends React.Component {
             <div className='shop-tools d-flex align-items-center'>
               <div className='per-pge-view'>
                 <span>Show :</span>
-                <span className={(perPage === 12 ? 'active-view' : '')} onClick={() => this.onItemPerPage(12)}>12</span>
+                <span className={(per_page === 12 ? 'active-view' : '')} onClick={() => this.onItemPerPage(12)}>12</span>
                 <span>/</span>
-                <span className={(perPage === 24 ? 'active-view' : '')} onClick={() => this.onItemPerPage(24)}>24</span>
+                <span className={(per_page === 24 ? 'active-view' : '')} onClick={() => this.onItemPerPage(24)}>24</span>
                 <span>/</span>
-                <span className={(perPage === 36 ? 'active-view' : '')} onClick={() => this.onItemPerPage(36)}>36</span>
+                <span className={(per_page === 36 ? 'active-view' : '')} onClick={() => this.onItemPerPage(36)}>36</span>
               </div>
               <div className='grid-view'>
                 <button onClick={() => this.onLayoutChange('2X2')} ></button>
@@ -148,7 +147,6 @@ export default class ProductGrid extends React.Component {
                     </div>
                   </div>
                   <h5 className="product-title">{item.content && item.content.title}</h5>
-                  {/* <h5 className="product-title">{item.content && item.content.product_description}</h5> */}
                   <span className="product-price">
                     <FontAwesomeIcon icon={faRupeeSign} />
                     {item.price[0]?.price}</span>

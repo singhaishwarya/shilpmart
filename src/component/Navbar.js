@@ -28,7 +28,7 @@ export default class Navbar extends React.Component {
           return {
             label: <Link to={{
               pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
-              state: { category_id: item.id }
+              state: { category_id: item.id, category_title: item.title }
             }}>
               <span key={index}>{item.title}</span>
               <FontAwesomeIcon icon={faCaretRight} />
@@ -39,7 +39,7 @@ export default class Navbar extends React.Component {
                 <div className="sub-categories" key={index}>
                   <Link to={{
                     pathname: `/product-category/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
-                    state: { category_id: subitem1.id }
+                    state: { category_id: subitem1.id, category_title: subitem1.title }
                   }}>
                     {subitem1.title}
                   </Link>
@@ -48,7 +48,7 @@ export default class Navbar extends React.Component {
                       <div className="super-sub-categories" key={index}>
                         <Link to={{
                           pathname: `/product-category/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
-                          state: { category_id: subitem2.id }
+                          state: { category_id: subitem2.id, category_title: subitem2.title }
                         }}>
                           <span>
                             {subitem2.title}
