@@ -13,7 +13,7 @@ import {
   TelegramShareButton,
   LinkedinShareButton
 } from "react-share";
-import Auth from '../Auth';
+import ProductService from '../services/ProductService';
 import ReactMegaMenu from "react-mega-menu"
 
 const customStyles = {
@@ -34,9 +34,9 @@ export default class Header extends React.Component {
     this.state = {
       seachResults: [],
       text: '',
-      optionData: ['Art Silk banarasi saree', 'saree Art Silk heavy  saree',
-        'TANGAIL SAREE', 'saree TANGAIL SAREE HALF ACHAL', 'saree CHAMARAJ PURE SILK SAREES -WEDDING SILK SAREES', 'saree Raw Silk X Eri Spun Silk Saree Saree', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree Tussar Ghiccha Silk Saree with Madhubani Hand Painting', 'saree KATA BUTI STAR CHOSMA TANT SAREE', 'saree Chamka Saree (Artsilk) saree'],
-      showModal: false, setIsOpen: false, shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/', 'https://app.digitalindiacorporation.in/v1/digi/'],
+      showModal: false,
+      setIsOpen: false,
+      shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/'],
       title: 'eShilpmart',
       isLoggedIn: localStorage.getItem('isLoggedIn'),
       menuOptions: [
@@ -85,15 +85,17 @@ export default class Header extends React.Component {
     });
   };
   onTextChange = (e) => {
-    const value = e.target.value.toLowerCase();
-    let seachResults = [];
-    if (value.length > 0) {
-      seachResults = this.state.optionData.sort().filter(v => v.toLowerCase().includes(value))
-    }
 
+    let seachResults = [];
+    const searchQuery = e.target.value.toLowerCase();
+    if (searchQuery.length > 0) {
+      ProductService.fetchAllProducts({ q: searchQuery }).then((result) => {
+        seachResults = result?.sort().filter(v => v.toLowerCase().includes(searchQuery))
+      });
+    }
     this.setState(() => ({
       seachResults,
-      text: value
+      text: searchQuery
     }))
   };
   handleClick = (e) => {
@@ -109,11 +111,8 @@ export default class Header extends React.Component {
 
   renderSearchOptions = () => {
     let { seachResults } = this.state;
-    if (seachResults.length === 0) {
-      return null;
-    }
     return (
-      seachResults.map((item, index) => (
+      seachResults?.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
           <Link to={'/product-detail'}>
             <span className="pro-img"><img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' alt="product" />
@@ -164,14 +163,14 @@ export default class Header extends React.Component {
                     <TwitterShareButton url={shareUrl[0]} quote={title}>
                       <FontAwesomeIcon icon={faTwitter} />
                     </TwitterShareButton></a>
-                  <a href="#"><PinterestShareButton url={shareUrl[1]} quote={title}>
+                  <a href="#"><PinterestShareButton url={shareUrl[0]} quote={title}>
                     <FontAwesomeIcon icon={faPinterest} />
                   </PinterestShareButton></a>
-                  <a href="#"><LinkedinShareButton url={shareUrl[2]} quote={title}>
+                  <a href="#"><LinkedinShareButton url={shareUrl[0]} quote={title}>
                     <FontAwesomeIcon icon={faLinkedinIn} />
                   </LinkedinShareButton></a>
                   <a href="#">
-                    <TelegramShareButton url={shareUrl[3]} quote={title}>
+                    <TelegramShareButton url={shareUrl[0]} quote={title}>
                       <FontAwesomeIcon icon={faTelegram} />
                     </TelegramShareButton></a>
                 </div>

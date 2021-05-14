@@ -55,7 +55,7 @@ a {
 	border-radius: 8px;
 	position: absolute;
 	background-color: #e87f13;
-	top: 22px;
+	top: 4px;
 	left: 10px;
 	font-size: 10px;
 	text-align: center;
@@ -276,8 +276,7 @@ a {
 }
 /* mega-menu-css */
 .css-1cqgl9p {
-	margin: 10px auto 10px -15px;
-	border: 1px solid #eee;
+	margin: 10px auto 10px -15px;	
 	width: 100%;
 }
 .css-1mgtuk2 {
@@ -299,7 +298,11 @@ a {
 }
 .css-13azwyo > div {
 	display: inline-flex;
+<<<<<<< HEAD
 	flex-wrap: wrap;
+=======
+	flex-wrap:wrap;
+>>>>>>> main
 }
 .css-1mgtuk2 li {
 	display: flex;
@@ -317,8 +320,13 @@ a {
 }
 .css-1mgtuk2 li span {
 	display: block;
+	float: left;
 }
-.css-1mgtuk2 li:after {
+.css-1mgtuk2 li a{display: block; width: 100%;}
+.css-1mgtuk2 li a:hover{
+	color: #e87f13;
+}
+/* .css-1mgtuk2 li:after {
 	content: '\f105';
 	font-family: fontawesome;
 	position: absolute;
@@ -326,7 +334,7 @@ a {
 	color: rgba(82,82,82,.45);
 	font-weight: 300;
 	font-size: 14px;
-}
+} */
 .sub-categories {
 	flex: 1 0 25%;
 }
@@ -337,6 +345,20 @@ a {
 	letter-spacing: 1px;
 }
 .sub-categories a:hover {
+	color: #e87f13;
+}
+
+.super-sub-categories {
+	line-height: 28px;
+}
+.super-sub-categories a {
+	color: #333;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: normal;
+}
+.super-sub-categories a:hover {
 	color: #e87f13;
 }
 .ReactModal__Overlay--after-open {
@@ -395,13 +417,21 @@ font-style: italic;
 	display: block;
 	margin-right: 10px;
 }
-.categories-nav::after {
+/* .categories-nav::after {
 	content: '\f107';
 	font-family: fontawesome;
 	position: absolute;
 	top: 9px;
 	right: 0;
 	padding: 0 5px;
+} */
+.svg-inline--fa.fa-w-6{
+	margin-left: 15px;
+    float: right;
+    /* margin-top: 5px; */
+}
+.svg-inline--fa.fa-w-10 {
+	margin-left: 15px;
 }
 .brows-menu > span {
 	text-transform: uppercase;
