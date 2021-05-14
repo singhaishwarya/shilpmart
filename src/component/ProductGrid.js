@@ -4,7 +4,7 @@ import { faCartPlus, faRandom, faHeart, faRupeeSign } from '@fortawesome/free-so
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import ReactPaginate from 'react-paginate';
 import ProductService from '../services/ProductService';
-
+import { Link } from "react-router-dom";
 export default class ProductGrid extends React.Component {
 
   constructor(props) {
@@ -46,6 +46,7 @@ export default class ProductGrid extends React.Component {
     }
 
   }
+
   handlePostDetail = (value) => {
     this.props.historyProps.history.push(`/product-detail/${value}`);
   }
@@ -81,15 +82,15 @@ export default class ProductGrid extends React.Component {
   render() {
 
     const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, per_page } = this.state
-
     return (
       <>
-        {(pathname !== "/wishlist") &&
+        {(pathname !== "/wishlist" && productListData.length > 0) &&
           <section className='topsection d-flex justify-content-between'>
             {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>
               <ol className='breadcrumb bg-transparent'>
-                <li className='breadcrumb-item'><a href='#'>Home</a></li>
-                <li className='breadcrumb-item active' aria-current='page'>Shop</li>
+                <li className='breadcrumb-item'> <Link to={'/'}>Home</Link></li>
+                <li className='breadcrumb-item' aria-current='product-category'> <Link to={'/cart'}>Shop</Link></li>
+                <li className='breadcrumb-item active' aria-current='page'> {this.props.categogyTitle}</li>
               </ol>
             </nav>}
             <div className='shop-tools d-flex align-items-center'>
@@ -119,7 +120,7 @@ export default class ProductGrid extends React.Component {
             </div>
           </section>}
         <div className='row py-2'>
-          {productListData ? productListData.map((item, index) => {
+          {productListData.length > 0 ? productListData.map((item, index) => {
             return (
               <div key={index} className={layout} >
                 <div className="product-wrapper">
@@ -153,9 +154,9 @@ export default class ProductGrid extends React.Component {
                 </div>
               </div>
             )
-          }) : ''}
+          }) : <span>No products were found matching your selection.</span>}
         </div>
-        <ReactPaginate
+        {/* <ReactPaginate
           previousLabel={''}
           nextLabel={''}
           breakLabel={'...'}
@@ -166,7 +167,7 @@ export default class ProductGrid extends React.Component {
           onPageChange={this.handlePageClick}
           containerClassName={'pagination'}
           subContainerClassName={'pages paginationItem'}
-          activeClassName={'active'} />
+          activeClassName={'active'} /> */}
       </>
 
     );

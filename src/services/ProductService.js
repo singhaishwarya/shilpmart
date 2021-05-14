@@ -7,7 +7,7 @@ export default class ProductService extends Component {
   static fetchAllProducts = async (config) => {
     try {
       const response = await axios.get(baseUrl + `products`, { params: config });
-      return response.data.data.data;
+      return response.data.data ? response.data.data.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;

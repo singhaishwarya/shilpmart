@@ -7,7 +7,7 @@ export default class CategoryService extends Component {
   static fetchAllCategory = async (config) => {
     try {
       const response = await axios.get(baseUrl + `categories`, { params: config });
-      return response.data.data;
+      return response.data ? response.data.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;

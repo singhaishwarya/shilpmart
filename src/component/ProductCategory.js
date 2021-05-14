@@ -29,7 +29,7 @@ export default class ProductCategory extends React.Component {
       },
       categories: [],
       priceRange: [200, 500],
-      filterConfig: { parent_id: props.history.location.state?.category_id },
+      filterConfig: { parent_id: props.history.location.state?.category_id || 0 },
       categogy_title: props.history.location.state?.category_title
     };
   }
@@ -79,7 +79,6 @@ export default class ProductCategory extends React.Component {
           }]
       })
     })
-
   }
   render() {
 
@@ -87,6 +86,7 @@ export default class ProductCategory extends React.Component {
       categories,
       multilevelMenuConfig,
       priceRange,
+      categogy_title
     } = this.state;
 
     return (
@@ -166,7 +166,7 @@ export default class ProductCategory extends React.Component {
               </div>
               <div className='col-lg-9'>
 
-                <ProductGrid historyProps={this.props} />
+                <ProductGrid historyProps={this.props} categogyTitle={categogy_title} />
               </div>
             </div>
           </div>
