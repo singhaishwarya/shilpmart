@@ -299,6 +299,7 @@ a {
 }
 .css-13azwyo > div {
 	display: inline-flex;
+	flex-wrap: wrap;
 }
 .css-1mgtuk2 li {
 	display: flex;
@@ -327,7 +328,7 @@ a {
 	font-size: 14px;
 }
 .sub-categories {
-	flex: 25% 0 1;
+	flex: 1 0 25%;
 }
 .sub-categories a {
 	font-weight: 700;
