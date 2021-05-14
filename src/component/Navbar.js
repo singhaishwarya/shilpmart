@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReactMegaMenu from "react-mega-menu"
+import CategoryService from '../services/CategoryService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 
-import axios from 'axios';
-
-const baseUrl = 'https://admin.digitalindiacorporation.in/api';
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
@@ -13,38 +13,43 @@ export default class Navbar extends React.Component {
       menuOptions: [],
       navbarTabs: [{ title: 'HOME', route: '' },
       { title: 'ABOUT US', route: '' },
-      { title: 'SHOP', route: 'product-category/all' },
+      { title: 'SHOP', route: 'product-category' },
       { title: 'CUSTOMER SERVICE', route: '' }],
-      isActiveTab: 0
+      isActiveTab: 0, config: { parent_id: 0 }
     };
   }
   componentDidMount() {
-    var _this = this;
-    this.getSubmenuOptions(0).then((result) => {
-      _this.setState({ menuOptions: result ? result : [] });
-    })
+    this.getSubmenuOptions();
   }
-  getSubmenuOptions = async (id) => {
+  getSubmenuOptions = () => {
     try {
-      let response = await axios.get(baseUrl + `/categories`, {
-        params: { parent_id: id }
-      }).then(response => {
-        let MegaMenu = response.data.data.map((item, index) => {
+      CategoryService.fetchAllCategory(this.state.config).then((result) => {
+        let MegaMenu = result.map((item, index) => {
           return {
-            label: <Link to={`/product-category/${item.id}`}>
+            label: <Link to={{
+              pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
+              state: { category_id: item.id }
+            }}>
               <span key={index}>{item.title}</span>
+              <FontAwesomeIcon icon={faCaretRight} />
             </Link>,
             key: item.id,
             items: item.child.map((subitem1, index) => {
               return (
                 <div className="sub-categories" key={index}>
-                  <Link to={`/product-category/${subitem1.id}`}>
+                  <Link to={{
+                    pathname: `/product-category/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
+                    state: { category_id: subitem1.id }
+                  }}>
                     {subitem1.title}
                   </Link>
                   {subitem1.child.map((subitem2, index) => {
                     return (
                       <div className="super-sub-categories" key={index}>
-                        <Link to={`/product-category/${subitem2.id}`}>
+                        <Link to={{
+                          pathname: `/product-category/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
+                          state: { category_id: subitem2.id }
+                        }}>
                           <span>
                             {subitem2.title}
                           </span>
@@ -56,11 +61,8 @@ export default class Navbar extends React.Component {
             })
           }
         })
-        return response.data.data.length ? MegaMenu : [];
-      }).catch(error => {
-        throw (error);
-      });
-      return response;
+        this.setState({ menuOptions: result.length > 0 ? MegaMenu : [] });
+      })
     } catch (err) {
       console.log(err);
     }
@@ -89,6 +91,7 @@ export default class Navbar extends React.Component {
                 <span className="brows-menu dropdown-toggle" data-toggle="dropdown">
                   <span className="brows-menu-icon"></span>
                   <span >Browse Categories</span>
+                  <FontAwesomeIcon icon={isMenuShown ? faCaretDown : faCaretRight} />
                 </span>
                 {isMenuShown && (
                   <div>

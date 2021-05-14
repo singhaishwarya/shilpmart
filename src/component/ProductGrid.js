@@ -3,17 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartPlus, faRandom, faHeart, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import ReactPaginate from 'react-paginate';
-import { connect } from 'react-redux';
-import { ProductService } from '../services/ProductService';
-import axios from 'axios';
-const baseUrl = 'https://admin.digitalindiacorporation.in/api/';
+import ProductService from '../services/ProductService';
 
 export default class ProductGrid extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      pathname: this.props.historyProps.location.pathname,
+      pathname: props.historyProps.location?.pathname,
       offset: 0,
       productsData: [],
       perPage: 5,
@@ -21,29 +18,33 @@ export default class ProductGrid extends React.Component {
       perPage: 12,
       layout: 'col-lg-3 col-sm-6 col-6', //default 4X4
       productListData: [],
-      categoryId: [this.props.historyProps.match.params.categoryId],
-      config: { category_ids: this.props.historyProps.match.params.categoryId }
+      config: { cat_ids: [props.historyProps.history.location.state?.category_id] }
     }
   }
-  componentDidMount() {
-    this.receivedData()
+  componentWillMount() {
+    this.receivedData();
+  }
+
+  componentWillReceiveProps() {
+    if (this.props.historyProps.history.location.state?.category_id !== this.props.historyProps.location.state?.category_id) {
+      this.state.config.cat_ids = [this.props.historyProps.history.location.state?.category_id];
+    }
+    this.receivedData();
   }
 
   receivedData = () => {
-
-    axios.get(baseUrl + `products`, {
-      params: this.state.config
-    }).then(response => {
-      this.setState({ productListData: response.data.data.data })
-    }).catch(error => {
-      throw (error);
-    });
-
-    const { productListData, offset, perPage } = this.state;
-    this.setState({
-      //   pageCount: Math.ceil(productListData.length / perPage),
-      productsData: productListData//.slice(offset, offset + perPage)
-    });
+    try {
+      ProductService.fetchAllProducts(this.state.config).then((result) => {
+        this.setState({ productListData: result })
+      });
+      const { productListData, offset, perPage } = this.state;
+      this.setState({
+        //   pageCount: Math.ceil(productListData.length / perPage),
+        productsData: productListData//.slice(offset, offset + perPage)
+      });
+    } catch (err) {
+      console.log(err);
+    }
 
   }
   handlePostDetail = (value) => {
@@ -74,7 +75,7 @@ export default class ProductGrid extends React.Component {
   }
   onItemPerPage = (value) => {
     this.state.config.perPage = value;
-    this.setState({ perPage: value })
+    // this.setState({ perPage: value })
     this.receivedData();
   }
 
@@ -125,8 +126,8 @@ export default class ProductGrid extends React.Component {
                 <div className="product-wrapper">
                   <div className="prodcut-img" onClick={() => this.handlePostDetail(item._id)}>
                     <a href="#">
-                      <img src={item.images.length && item.images[0].image_url} className="img-fluid"
-                        alt={item.images.length && item.images[0].caption}
+                      <img src={item.images[0]?.image_url} className="img-fluid"
+                        alt={item.images[0]?.caption}
                         onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                       /></a>
                   </div>
@@ -147,10 +148,10 @@ export default class ProductGrid extends React.Component {
                     </div>
                   </div>
                   <h5 className="product-title">{item.content && item.content.title}</h5>
-                  <h5 className="product-title">{item.content && item.content.product_description}</h5>
+                  {/* <h5 className="product-title">{item.content && item.content.product_description}</h5> */}
                   <span className="product-price">
                     <FontAwesomeIcon icon={faRupeeSign} />
-                    {item.price.length && item.price[0].price}</span>
+                    {item.price[0]?.price}</span>
                 </div>
               </div>
             )
