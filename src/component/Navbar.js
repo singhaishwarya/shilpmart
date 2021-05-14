@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ReactMegaMenu from "react-mega-menu"
 import CategoryService from '../services/CategoryService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCaretRight, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 
 export default class Navbar extends React.Component {
   constructor(props) {
@@ -91,7 +91,7 @@ export default class Navbar extends React.Component {
                 <span className="brows-menu dropdown-toggle" data-toggle="dropdown">
                   <span className="brows-menu-icon"></span>
                   <span >Browse Categories</span>
-                  <FontAwesomeIcon icon={isMenuShown ? faCaretDown : faCaretRight} />
+                  <FontAwesomeIcon icon={isMenuShown ? faCaretUp : faCaretDown} />
                 </span>
                 {isMenuShown && (
                   <div>
