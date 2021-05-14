@@ -25,33 +25,12 @@ export default class ProductCategory extends React.Component {
         backgroundColor: ``,
         selectedListFontColor: ``,
         highlightOnSelect: true,
-        useDividers: false,
-        parent_id: props.history.location.state?.category_id
+        useDividers: false
       },
-      categories: [
-
-        {
-          label: 'Travel Accessories',
-          items: [
-            {
-              label: 'Bag',
-              onSelected: function () { }
-            },
-            {
-              label: 'Luggage',
-              onSelected: function () { }
-            }, {
-              label: 'Cover',
-              onSelected: function () { }
-            },
-            {
-              label: 'Mask',
-              onSelected: function () { }
-            }
-          ]
-        }
-      ],
-      priceRange: [200, 500]
+      categories: [],
+      priceRange: [200, 500],
+      filterConfig: { parent_id: props.history.location.state?.category_id || 0 },
+      categogy_title: props.history.location.state?.category_title
     };
   }
   componentDidMount() {
@@ -59,7 +38,7 @@ export default class ProductCategory extends React.Component {
   }
   componentWillReceiveProps() {
     if (this.props.history.location.state?.category_id !== this.props.location.state?.category_id) {
-      this.setState({ parent_id: [this.props.history.location.state?.category_id] });
+      this.state.filterConfig.parent_id = this.props.history.location.state?.category_id;
     }
     this.getCaregoryFilter();
   }
@@ -86,12 +65,20 @@ export default class ProductCategory extends React.Component {
     });
   }
   getCaregoryFilter = () => {
-    CategoryService.fetchAllCategory(this.state.config).then((result) => {
-      console.log("Demo===", result)
-      //   let MegaMenu = result.map((item, index) => {
-
+    CategoryService.fetchAllCategory(this.state.filterConfig).then((result) => {
+      this.setState({
+        categories:
+          [{
+            label: this.state.categogy_title,
+            items: result.map((item) => {
+              return ({
+                label: item.title,
+                onSelected: function () { }
+              })
+            })
+          }]
+      })
     })
-
   }
   render() {
 
@@ -99,6 +86,7 @@ export default class ProductCategory extends React.Component {
       categories,
       multilevelMenuConfig,
       priceRange,
+      categogy_title
     } = this.state;
 
     return (
@@ -178,7 +166,7 @@ export default class ProductCategory extends React.Component {
               </div>
               <div className='col-lg-9'>
 
-                <ProductGrid historyProps={this.props} />
+                <ProductGrid historyProps={this.props} categogyTitle={categogy_title} />
               </div>
             </div>
           </div>

@@ -15,6 +15,7 @@ import {
 } from "react-share";
 import ProductService from '../services/ProductService';
 import ReactMegaMenu from "react-mega-menu"
+import CategoryService from '../services/CategoryService';
 
 const customStyles = {
   content: {
@@ -33,7 +34,7 @@ export default class Header extends React.Component {
     super(props)
     this.state = {
       seachResults: [],
-      text: '',
+      searchQuery: '',
       showModal: false,
       setIsOpen: false,
       shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/'],
@@ -44,23 +45,27 @@ export default class Header extends React.Component {
           label:
             <span><Link to='/my-account/orders'>Order</Link></span>,
           key: "1"
-        },
-        // {
-        //   label:
-        //     <span>Settings</span>,
-        //   key: "Settings"
-        // }
+        }
       ], isMenuShown: false
     }
   }
 
   componentDidMount = () => {
-    document.addEventListener('mousedown', this.handleClick, false)
+    document.addEventListener('mousedown', this.handleClickOutside, false)
+  }
+
+  getCategoryTitles = () => {
+    try {
+      CategoryService.fetchAllCategory(this.state.config).then((result) => {
+
+      })
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   componentWillUnmount = () => {
-
-    document.removeEventListener('mousedown', this.handleClick, false)
+    document.removeEventListener('mousedown', this.handleClickOutside, false)
   }
 
   setIsMenuShown = (status) => {
@@ -84,29 +89,22 @@ export default class Header extends React.Component {
       showModal: !this.state.showModal
     });
   };
-  onTextChange = (e) => {
 
-    let seachResults = [];
-    const searchQuery = e.target.value.toLowerCase();
-    if (searchQuery.length > 0) {
-      ProductService.fetchAllProducts({ q: searchQuery }).then((result) => {
-        seachResults = result?.sort().filter(v => v.toLowerCase().includes(searchQuery))
+  onTextChange = (e) => {
+    const searchString = e.target.value.toLowerCase();
+    if (searchString.length >= 3) {
+      ProductService.fetchAllProducts({ q: searchString }).then((result) => {
+        this.setState({ seachResults: result });
       });
     }
-    this.setState(() => ({
-      seachResults,
-      text: searchQuery
-    }))
+    this.setState({ searchQuery: searchString })
   };
-  handleClick = (e) => {
+
+  handleClickOutside = (e) => {
     if (this.node.contains(e.target)) {
       return
     }
-    this.handleClickOutside();
-  }
-
-  handleClickOutside = () => {
-    this.setState({ text: '', seachResults: [] });
+    this.setState({ seachResults: [] });
   }
 
   renderSearchOptions = () => {
@@ -114,18 +112,20 @@ export default class Header extends React.Component {
     return (
       seachResults?.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
-          <Link to={'/product-detail'}>
-            <span className="pro-img"><img src='https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/12/011-300x300.jpg' alt="product" />
+          <Link to={`/product-detail/${item.id}`}>
+            <span className="pro-img">
+              <img onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
+                src={item.images[0]?.image_url} />
             </span>
             <span>
               <span className="top-head">
-                <span className="pro-tile">{item}</span>
-                <span className="pro-price"><del>1999</del> &nbsp; <span>1500</span></span>
+                <span className="pro-tile">{item.content.title}</span>
+                <span className="pro-price"><del>1999</del> &nbsp; <span>{item.price[0] ? item.price[0].price : 0}</span></span>
 
               </span>
               <span className="footer-head">
                 <span className="result-cat"><small>Saree, Women's Wear</small></span>
-                <span className="result-addtocart"><Link to={'/product-detail'}> Add to Cart </Link></span>
+                <span className="result-addtocart"> Add to Cart</span>
               </span>
             </span>
             <span className="sale-sticker">sale!</span>
@@ -136,7 +136,7 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { text, showModal, shareUrl, title, isLoggedIn, menuOptions, isMenuShown } = this.state;
+    const { searchQuery, showModal, shareUrl, title, isLoggedIn, menuOptions, isMenuShown } = this.state;
 
     return (
       <>
@@ -202,10 +202,10 @@ export default class Header extends React.Component {
           <Link to={'/'}>
             <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
           </Link>
-          <div className="search-container mx-5 w-100 position-relative" >
+          <div className="search-container mx-5 w-100 position-relative" ref={node => this.node = node}>
             <div className="form-inline my-2 my-lg-0">
-              <div className="search-bar w-100 d-flex justify-content-start" ref={node => this.node = node}>
-                <input onChange={this.onTextChange} value={text} placeholder="Search" />
+              <div className="search-bar w-100 d-flex justify-content-start" >
+                <input onChange={this.onTextChange} value={searchQuery} placeholder="Search" />
                 <div className="search-btn">
                   <button className="btn my-2 my-sm-0" type="submit">
                     <FontAwesomeIcon icon={faSearch} />
