@@ -1,135 +1,71 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReactMegaMenu from "react-mega-menu"
+import CategoryService from '../services/CategoryService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isMenuShown: false,
-      subMenus: [],
-      menuOptions: [
-        {
-          label:
-            <span>Mens Wear</span>,
-          key: "Category1",
-          items:
-            [{ title: "Shirting" },
-            { title: "Shirting" },
-            { title: "Shirting" },
-            { title: "Shirting" }].map((subitem, index) => {
-              return (<div className="sub-categories" key={index}>
-                <Link to={''}>{subitem.title}</Link>
-              </div>)
-            })
-
-        },
-        {
-          label:
-            <span>Womens wear</span>,
-          key: "Category2",
-          items:
-            [{ title: "Saree" },
-            { title: "Saree" },
-            { title: "Saree" }].map((subitem, index) => {
-              return (<div className="sub-categories" key={index}>
-                <Link to={''}>{subitem.title}</Link>
-              </div>)
-            })
-
-        }, {
-          label:
-            <span>Home textile</span>,
-          key: "Category3",
-          items:
-            [{ title: "Curtain" },
-            { title: "Curtain" },
-            { title: "Curtain" }].map((subitem, index) => {
-              return (<div className="sub-categories" key={index}>
-                <Link to={''}>{subitem.title}</Link>
-              </div>)
-            })
-
-        },
-        {
-          label:
-            <span>Home Decor & Utility</span>,
-          key: "Category4",
-          items:
-            [{ title: "Curtain" },
-            { title: "Curtain" },
-            { title: "Curtain" }].map((subitem, index) => {
-              return (<div className="sub-categories" key={index}>
-                <Link to={''}>{subitem.title}</Link>
-              </div>)
-            })
-
-        },
-        {
-          label:
-            <span>Furniture</span>,
-          key: "Category5",
-          items:
-            [{ title: "Curtain" },
-            { title: "Curtain" },
-            { title: "Curtain" }].map((subitem, index) => {
-              return (<div className="sub-categories" key={index}>
-                <Link to={''}>{subitem.title}</Link>
-              </div>)
-            })
-
-        },
-
-        {
-          label:
-            <span>Floor Coverings</span>,
-          key: "Category6",
-          items:
-            [{ title: "Curtain" },
-            { title: "Curtain" },
-            { title: "Curtain" }].map((subitem, index) => {
-              return (<div className="sub-categories" key={index}>
-                <Link to={''}>{subitem.title}</Link>
-              </div>)
-            })
-
-        },
-
-        {
-          label:
-            <span>Travel Accessories</span>,
-          key: "Category7",
-          items:
-            [{ title: "Curtain" },
-            { title: "Curtain" },
-            { title: "Curtain" }].map((subitem, index) => {
-              return (<div className="sub-categories" key={index}>
-                <Link to={''}>{subitem.title}</Link>
-              </div>)
-            })
-
-        },
-        {
-          label:
-            <span>Office Supplies</span>,
-          key: "Category8",
-          items:
-            [{ title: "Curtain" },
-            { title: "Curtain2" },
-            { title: "Curtain3" }].map((subitem, index) => {
-              return (<div className="sub-categories" key={index}>
-                <Link to={''}>{subitem.title}</Link>
-              </div>)
-            })
-
-        }
-      ],
-      navbarTabs: [
-        { title: 'HOME', route: '' },
-        { title: 'ABOUT US', route: 'about-us' },
-        { title: 'SHOP', route: 'product-category/all' },
-        { title: 'CUSTOMER SERVICE', route: 'customer-service' }],
-      isActiveTab: 0
+      menuOptions: [],
+      navbarTabs: [{ title: 'HOME', route: '' },
+      { title: 'ABOUT US', route: '' },
+      { title: 'SHOP', route: 'product-category' },
+      { title: 'CUSTOMER SERVICE', route: '' }],
+      isActiveTab: 0, config: { parent_id: 0 }
     };
+  }
+  componentDidMount() {
+    this.getSubmenuOptions();
+  }
+  getSubmenuOptions = () => {
+    try {
+      CategoryService.fetchAllCategory(this.state.config).then((result) => {
+        let MegaMenu = result.map((item, index) => {
+          return {
+            label: <Link to={{
+              pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
+              state: { category_id: item.id }
+            }}>
+              <span key={index}>{item.title}</span>
+              <FontAwesomeIcon icon={faCaretRight} />
+            </Link>,
+            key: item.id,
+            items: item.child.map((subitem1, index) => {
+              return (
+                <div className="sub-categories" key={index}>
+                  <Link to={{
+                    pathname: `/product-category/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
+                    state: { category_id: subitem1.id }
+                  }}>
+                    {subitem1.title}
+                  </Link>
+                  {subitem1.child.map((subitem2, index) => {
+                    return (
+                      <div className="super-sub-categories" key={index}>
+                        <Link to={{
+                          pathname: `/product-category/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
+                          state: { category_id: subitem2.id }
+                        }}>
+                          <span>
+                            {subitem2.title}
+                          </span>
+                        </Link>
+                      </div>
+                    )
+                  })}
+                </div>)
+            })
+          }
+        })
+        this.setState({ menuOptions: result.length > 0 ? MegaMenu : [] });
+      })
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   setIsMenuShown = (status) => {
@@ -155,24 +91,20 @@ export default class Navbar extends React.Component {
                 <span className="brows-menu dropdown-toggle" data-toggle="dropdown">
                   <span className="brows-menu-icon"></span>
                   <span >Browse Categories</span>
+                  <FontAwesomeIcon icon={isMenuShown ? faCaretDown : faCaretRight} />
                 </span>
                 {isMenuShown && (
-                  <div onMouseLeave={() => this.setState({ subMenus: [] })}>
+                  <div>
                     <ReactMegaMenu
-                      tolerance={50}      // optional, defaults to 100
-                      direction={"RIGHT"}  // optional, defaults to "RIGHT", takes in "RIGHT" || "LEFT"
-                      // onExit={() => {...}}  // a function to be called when a mouse leaves the container
-                      data={menuOptions}        // array of data to be rendered
+                      tolerance={50}
+                      direction={"RIGHT"}
+                      data={menuOptions}
                     />
-
                   </div>)}
-
-
               </div>
               <ul className="navbar-nav mr-auto">
                 {navbarTabs.map((item, index) => {
                   return (
-
                     <li key={index}>
                       <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>{item.title}</Link>
                     </li>
@@ -186,6 +118,3 @@ export default class Navbar extends React.Component {
     );
   }
 }
-
-
-

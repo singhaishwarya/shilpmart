@@ -188,7 +188,6 @@ export default class ShopByType extends React.Component {
     this.props.history.push(`/product-category/${value}`);
   }
   wishlistToggle = (val, index) => {
-    console.log("demo===, ", val, index)
     this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
   }
   render() {

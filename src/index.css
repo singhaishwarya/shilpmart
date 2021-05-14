@@ -338,6 +338,19 @@ a {
 .sub-categories a:hover {
 	color: #e87f13;
 }
+
+.super-sub-categories {
+	flex: 25% 0 1;
+}
+.super-sub-categories a {
+	font-weight: 300;
+	color: #000;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+.super-sub-categories a:hover {
+	color: #e87f13;
+}
 .ReactModal__Overlay--after-open {
 	z-index: 2;
 	background-color: rgba(0,0,0,0.75) !important;

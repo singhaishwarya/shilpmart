@@ -3,6 +3,7 @@ import ReactStars from 'react-stars'
 import { Range } from 'rc-slider';
 import ProductGrid from './ProductGrid'
 import { MultilevelMenu } from 'react-multilevel-menu';
+import CategoryService from '../services/CategoryService';
 
 export default class ProductCategory extends React.Component {
 
@@ -17,15 +18,15 @@ export default class ProductCategory extends React.Component {
         { label: 'Special Price', value: 'pear' }
       ],
       selectedOffer: [],
-      config: {
+      multilevelMenuConfig: {
         paddingAtStart: true,
-        // classname: 'my-custom-class',
         listBackgroundColor: ``,
         fontColor: `rgb(8, 54, 71)`,
         backgroundColor: ``,
         selectedListFontColor: ``,
         highlightOnSelect: true,
         useDividers: false,
+        parent_id: props.history.location.state?.category_id
       },
       categories: [
 
@@ -53,6 +54,15 @@ export default class ProductCategory extends React.Component {
       priceRange: [200, 500]
     };
   }
+  componentDidMount() {
+    this.getCaregoryFilter()
+  }
+  componentWillReceiveProps() {
+    if (this.props.history.location.state?.category_id !== this.props.location.state?.category_id) {
+      this.setState({ parent_id: [this.props.history.location.state?.category_id] });
+    }
+    this.getCaregoryFilter();
+  }
 
   onSliderPriceChange = (value) => {
     this.setState({ priceRange: value })
@@ -75,95 +85,103 @@ export default class ProductCategory extends React.Component {
 
     });
   }
+  getCaregoryFilter = () => {
+    CategoryService.fetchAllCategory(this.state.config).then((result) => {
+      console.log("Demo===", result)
+      //   let MegaMenu = result.map((item, index) => {
+
+    })
+
+  }
   render() {
 
     const {
       categories,
-      config,
+      multilevelMenuConfig,
       priceRange,
     } = this.state;
 
     return (
       <>
-      <section id="maincontent">
-        <div className='container-fluid'>
-          <div className='row py-5'>
-            <div className='col-lg-3'>
-              <div className='shop-sidebar'>
-                <article className='filter-group'>
-                  <header className='card-header'>
-                    <h6 className='title'>Filter by price </h6>
-                  </header>
-                  <div className='filter-content'>
-                    <div className='price-range-wrapper'>
-                      <div id='slider-range' className='price-filter-range' name='rangeInput'>
-                        <Range
-                          value={priceRange}
-                          min={0}
-                          max={5000}
-                          className='filter-slider'
-                          allowCross={false}
-                          onChange={value => { this.onSliderPriceChange(value) }}
-                          onAfterChange={value => { this.onSliderPriceChange(value) }}
+        <section id="maincontent">
+          <div className='container-fluid'>
+            <div className='row py-5'>
+              <div className='col-lg-3'>
+                <div className='shop-sidebar'>
+                  <article className='filter-group'>
+                    <header className='card-header'>
+                      <h6 className='title'>Filter by price </h6>
+                    </header>
+                    <div className='filter-content'>
+                      <div className='price-range-wrapper'>
+                        <div id='slider-range' className='price-filter-range' name='rangeInput'>
+                          <Range
+                            value={priceRange}
+                            min={0}
+                            max={5000}
+                            className='filter-slider'
+                            allowCross={false}
+                            onChange={value => { this.onSliderPriceChange(value) }}
+                            onAfterChange={value => { this.onSliderPriceChange(value) }}
+                          />
+                        </div>
+                        <div className='price-range d-flex justify-content-between'>
+                          <span>
+                            Price:
+                          <input type='number' min={0} max={priceRange[0] || 5000} value={priceRange[0] || 0} className='price-range-field'
+                              onChange={(e) => this.onManualPriceChange(0, e)}
+                            />
+
+                            <span>-</span>
+                            <input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
+                              onChange={(e) => this.onManualPriceChange(1, e)}
+                              className='price-range-field' /></span>
+                          <span><button className='price-range-search'
+                            id='price-range-submit'>Filter</button></span>
+                        </div>
+                        <div id='searchResults' className='search-results-block'></div>
+                      </div>
+                    </div>
+                  </article>
+                  <article className='filter-group'>
+                    <header className='card-header'>
+                      <h6 className='title'>Rating </h6>
+                    </header>
+                    <div className='filter-content'>
+                      <div className='filter-rateings'>
+                        <div className='testimonial-ratings justify-content-start'>
+                          <ReactStars
+                            count={5}
+                            onChange={this.ratingChanged}
+                            size={24}
+                            color2={'#ffd700'} />
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                  <article className='filter-group'>
+                    <header className='card-header'>
+                      <h6 className='title'>Categories </h6>
+                    </header>
+                    <div className='filter-content'>
+                      <div className='categories-list'>
+                        <MultilevelMenu
+                          list={categories}
+                          configuration={multilevelMenuConfig}
+                          selectedListItem={this.selectedItem}
+                          selectedLabel={this.selectedItem}
                         />
                       </div>
-                      <div className='price-range d-flex justify-content-between'>
-                        <span>
-                          Price:
-                          <input type='number' min={0} max={priceRange[0] || 5000} value={priceRange[0] || 0} className='price-range-field'
-                            onChange={(e) => this.onManualPriceChange(0, e)}
-                          />
+                    </div>
+                  </article>
+                </div>
+              </div>
+              <div className='col-lg-9'>
 
-                          <span>-</span>
-                          <input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
-                            onChange={(e) => this.onManualPriceChange(1, e)}
-                            className='price-range-field' /></span>
-                        <span><button className='price-range-search'
-                          id='price-range-submit'>Filter</button></span>
-                      </div>
-                      <div id='searchResults' className='search-results-block'></div>
-                    </div>
-                  </div>
-                </article>
-                <article className='filter-group'>
-                  <header className='card-header'>
-                    <h6 className='title'>Rating </h6>
-                  </header>
-                  <div className='filter-content'>
-                    <div className='filter-rateings'>
-                      <div className='testimonial-ratings justify-content-start'>
-                        <ReactStars
-                          count={5}
-                          onChange={this.ratingChanged}
-                          size={24}
-                          color2={'#ffd700'} />
-                      </div>
-                    </div>
-                  </div>
-                </article>
-                <article className='filter-group'>
-                  <header className='card-header'>
-                    <h6 className='title'>Categories </h6>
-                  </header>
-                  <div className='filter-content'>
-                    <div className='categories-list'>
-                      <MultilevelMenu
-                        list={categories}
-                        configuration={config}
-                        selectedListItem={this.selectedItem}
-                        selectedLabel={this.selectedItem}
-                      />
-                    </div>
-                  </div>
-                </article>
+                <ProductGrid historyProps={this.props} />
               </div>
             </div>
-            <div className='col-lg-9'>
-
-              <ProductGrid historyProps={this.props} />
-            </div>
           </div>
-        </div>
         </section>
       </>
     );
