@@ -35,7 +35,7 @@ function App() {
         <Route path='/' component={Dashboard} exact />
         <Route path='/login' component={Login} exact />
         <Route path='/buyer-registration' component={Registration} exact />
-        <Route path='/product-category/:categoryId' component={ProductCategory} exact />
+        <Route path='/product-category/:categoryId?' component={ProductCategory} />
         <Route path='/product-detail/:productId' component={ProductDetail} exact />
         <Route path='/seller-profile' component={SellerProfile} exact />
         <Route path='/wishlist' component={Wishlist} exact />
