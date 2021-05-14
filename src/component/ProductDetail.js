@@ -27,7 +27,7 @@ export default class ProductDetail extends React.Component {
     super(props);
     this.state = {
       isActiveTab: 0,
-      filterConfig: { product_ids: [props.match.params.productId] },
+      filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
       shareUrl: 'https://app.digitalindiacorporation.in/v1/digi/',
       title: 'eShilpmart',
@@ -53,11 +53,10 @@ export default class ProductDetail extends React.Component {
   }
   getProductDetails = () => {
     try {
-      ProductService.fetchAllProducts(this.state.filterConfig).then((result) => {
-        console.log("demo===", result[0])
+      ProductService.fetchAllProducts(this.state.filterParams).then((result) => {
         this.setState({
           productDetailData: result[0],
-          productDetailDataImages: result[0].images.map((item, index) => (
+          productDetailDataImages: result[0]?.images.map((item, index) => (
             {
               'original': item.image_url,
               'thumbnail': item.image_url
@@ -124,9 +123,9 @@ export default class ProductDetail extends React.Component {
               <div className="col-lg-6 col-md-6 col-12 mb-4">
                 <div className="product-img-wrapper">
                   <ImageGallery
-                    items={productDetailData.images?.length > 0 ? productDetailDataImages : notFountImage}
+                    items={productDetailData?.images?.length > 0 ? productDetailDataImages : notFountImage}
                     thumbnailPosition='left'
-                    showThumbnails={productDetailData.images?.length > 0 ? true : false}
+                    showThumbnails={productDetailData?.images?.length > 0 ? true : false}
                     onErrorImageURL={require('../public/No_Image_Available.jpeg')}
                   />
                 </div>
@@ -139,13 +138,13 @@ export default class ProductDetail extends React.Component {
                         <li className="breadcrumb-item"><a href="#">Home</a></li>
                         <li className="breadcrumb-item"><a href="#">Shop</a></li>
                         <li className="breadcrumb-item"><a href="#">Product category</a></li>
-                        <li className="breadcrumb-item active" aria-current="page">{productDetailData.content?.title}</li>
+                        <li className="breadcrumb-item active" aria-current="page">{productDetailData?.content?.title}</li>
                       </ol>
                     </nav>
                   </div>
-                  <h1>{productDetailData.content?.title}</h1>
-                  <p className="product-price"><FontAwesomeIcon icon={faRupeeSign} /><span> {productDetailData?.price ? productDetailData.price[0].price : '0'}</span></p>
-                  <div className="short-decription"><p>{productDetailData.content?.product_description}</p></div>
+                  <h1>{productDetailData?.content?.title}</h1>
+                  <p className="product-price"><FontAwesomeIcon icon={faRupeeSign} /><span> {productDetailData?.price ? productDetailData?.price[0].price : '0'}</span></p>
+                  <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div>
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
                       <div className="input-group">
@@ -224,7 +223,7 @@ export default class ProductDetail extends React.Component {
                   <div className="clearfix"></div>
                   <span className="sku">SKU: <span>-</span></span>
                   <span className="sku">Categories: <span>-</span></span>
-                  <span className="sku">Tags: <span>{productDetailData.content?.product_tags}</span></span>
+                  <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span>
 
                   <div className="social-share">
                     <span>Share:</span>
@@ -274,7 +273,7 @@ export default class ProductDetail extends React.Component {
               <div className="clearfix"></div>
               <div className="tab-content" >
                 <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
-                  role="tabpanel" aria-labelledby="home-tab">{productDetailData.content?.product_description} </div>
+                  role="tabpanel" aria-labelledby="home-tab">{productDetailData?.content?.product_description} </div>
                 <div className={`tab-pane fade ${((isActiveTab === 1) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="profile-tab">
                   There are no reviews yet. </div>
                 <div className={`tab-pane fade ${((isActiveTab === 2) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab">Lorem Ipsum  printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </div>

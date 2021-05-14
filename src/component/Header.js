@@ -54,10 +54,10 @@ export default class Header extends React.Component {
     document.addEventListener('mousedown', this.handleClickOutside, false)
   }
 
-  getCategoryTitles = () => {
+  getCategoryTitles = (id) => {
     try {
-      CategoryService.fetchAllCategory(this.state.config).then((result) => {
-
+      CategoryService.fetchAllCategory({ parent_id: id }).then((result) => {
+        return result;
       })
     } catch (err) {
       console.log(err);
@@ -91,13 +91,23 @@ export default class Header extends React.Component {
   };
 
   onTextChange = (e) => {
+    this.setState({ searchQuery: e.target.value })
     const searchString = e.target.value.toLowerCase();
     if (searchString.length >= 3) {
+      // let categoryData = [];
       ProductService.fetchAllProducts({ q: searchString }).then((result) => {
+
         this.setState({ seachResults: result });
+        // categoryData = result.map((item) => (
+        //   item?.category.map((item) => (
+        //     this.getCategoryTitles(item.category_id)
+        //   ))
+
+        //   // categoryData.push 
+        // ))
+        // console.log("democategoryData", categoryData)
       });
     }
-    this.setState({ searchQuery: searchString })
   };
 
   handleClickOutside = (e) => {
@@ -223,7 +233,7 @@ export default class Header extends React.Component {
               {isMenuShown && (<ReactMegaMenu
                 tolerance={50}
                 direction={"DOWN"}
-                data={menuOptions}        // array of data to be rendered
+                data={menuOptions}
               />)} </li> : <li className="nav-item" onClick={this.login}>Login/Register</li>}
             <li className="nav-item"><Link to={'/wishlist'}><div className="nav-link">
               <FontAwesomeIcon icon={faHeart} /><span>0</span></div></Link></li>

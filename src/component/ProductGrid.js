@@ -17,7 +17,7 @@ export default class ProductGrid extends React.Component {
       per_page: 12,
       layout: 'col-lg-3 col-sm-6 col-6', //default 4X4
       productListData: [],
-      filterConfig: { cat_ids: [props.historyProps.history.location.state?.category_id] }
+      filterParams: { cat_ids: [props.historyProps.history.location.state?.category_id] }
     }
   }
   componentWillMount() {
@@ -26,14 +26,14 @@ export default class ProductGrid extends React.Component {
 
   componentWillReceiveProps() {
     if (this.props.historyProps.history.location.state?.category_id !== this.props.historyProps.location.state?.category_id) {
-      this.state.filterConfig.cat_ids = [this.props.historyProps.history.location.state?.category_id];
+      this.state.filterParams.cat_ids = [this.props.historyProps.history.location.state?.category_id];
     }
     this.receivedData();
   }
 
   receivedData = () => {
     try {
-      ProductService.fetchAllProducts(this.state.filterConfig).then((result) => {
+      ProductService.fetchAllProducts(this.state.filterParams).then((result) => {
         this.setState({ productListData: result })
       });
       const { productListData, offset, perPage } = this.state;
@@ -74,7 +74,7 @@ export default class ProductGrid extends React.Component {
     });
   }
   onItemPerPage = (value) => {
-    this.state.filterConfig.per_page = value;
+    this.state.filterParams.per_page = value;
     this.setState({ per_page: value })
     this.receivedData();
   }
@@ -147,7 +147,7 @@ export default class ProductGrid extends React.Component {
                       </span></div>
                     </div>
                   </div>
-                  <h5 className="product-title">{item.content && item.content.title}</h5>
+                  <h5 className="product-title">{item.content?.title}</h5>
                   <span className="product-price">
                     <FontAwesomeIcon icon={faRupeeSign} />
                     {item.price[0]?.price}</span>

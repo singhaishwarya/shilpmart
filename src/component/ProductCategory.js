@@ -29,7 +29,7 @@ export default class ProductCategory extends React.Component {
       },
       categories: [],
       priceRange: [200, 500],
-      filterConfig: { parent_id: props.history.location.state?.category_id || 0 },
+      filterParams: { parent_id: props.history.location.state?.category_id || 0 },
       categogy_title: props.history.location.state?.category_title
     };
   }
@@ -38,7 +38,7 @@ export default class ProductCategory extends React.Component {
   }
   componentWillReceiveProps() {
     if (this.props.history.location.state?.category_id !== this.props.location.state?.category_id) {
-      this.state.filterConfig.parent_id = this.props.history.location.state?.category_id;
+      this.state.filterParams.parent_id = this.props.history.location.state?.category_id;
     }
     this.getCaregoryFilter();
   }
@@ -65,7 +65,7 @@ export default class ProductCategory extends React.Component {
     });
   }
   getCaregoryFilter = () => {
-    CategoryService.fetchAllCategory(this.state.filterConfig).then((result) => {
+    CategoryService.fetchAllCategory(this.state.filterParams).then((result) => {
       this.setState({
         categories:
           [{

@@ -15,7 +15,7 @@ export default class Navbar extends React.Component {
       { title: 'ABOUT US', route: '' },
       { title: 'SHOP', route: 'product-category' },
       { title: 'CUSTOMER SERVICE', route: '' }],
-      isActiveTab: 0, config: { parent_id: 0 }
+      isActiveTab: 0, filterParams: { parent_id: 0 }
     };
   }
   componentDidMount() {
@@ -23,7 +23,7 @@ export default class Navbar extends React.Component {
   }
   getSubmenuOptions = () => {
     try {
-      CategoryService.fetchAllCategory(this.state.config).then((result) => {
+      CategoryService.fetchAllCategory(this.state.filterParams).then((result) => {
         let MegaMenu = result.map((item, index) => {
           return {
             label: <Link to={{
