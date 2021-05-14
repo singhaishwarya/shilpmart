@@ -4,5 +4,6 @@
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 160
   },
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "git.ignoreLimitWarning": true
 }
