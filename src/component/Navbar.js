@@ -99,6 +99,7 @@ export default class Navbar extends React.Component {
                       tolerance={50}
                       direction={"RIGHT"}
                       data={menuOptions}
+                      styleConfig={"mega-menu"}
                     />
                   </div>)}
               </div>
