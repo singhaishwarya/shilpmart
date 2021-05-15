@@ -26,7 +26,8 @@ export default class ProductGrid extends React.Component {
 
   componentWillReceiveProps() {
     if (this.props.historyProps.history.location.state?.category_id !== this.props.historyProps.location.state?.category_id) {
-      this.state.filterParams.cat_ids = [this.props.historyProps.history.location.state?.category_id];
+      // this.state.filterParams.cat_ids = [this.props.historyProps.history.location.state?.category_id];
+      this.setState({ filterParams: { cat_ids: [this.props.historyProps.history.location.state?.category_id] } });
     }
     this.receivedData();
   }

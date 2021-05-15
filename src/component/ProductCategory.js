@@ -38,7 +38,10 @@ export default class ProductCategory extends React.Component {
   }
   componentWillReceiveProps() {
     if (this.props.history.location.state?.category_id !== this.props.location.state?.category_id) {
-      this.state.filterParams.parent_id = this.props.history.location.state?.category_id;
+      // this.state.filterParams.parent_id = this.props.history.location.state?.category_id;
+
+      this.setState({ filterParams: { parent_id: this.props.history.location.state?.category_id } });
+
     }
     this.getCategoryFilter();
   }
@@ -148,18 +151,18 @@ export default class ProductCategory extends React.Component {
                     </div>
                   </article>
                   <article className='filter-group'>
-                    <header className='card-header'>
+                    {/* <header className='card-header'>
                       <h6 className='title'>Categories </h6>
-                    </header>
+                    </header> */}
                     <div className='filter-content'>
-                      <div className='categories-list'>
+                      {/* <div className='categories-list'>
                         <MultilevelMenu
                           list={categories}
                           configuration={multilevelMenuConfig}
                           selectedListItem={this.selectedItem}
                           selectedLabel={this.selectedItem}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </article>
                 </div>
