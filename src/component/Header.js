@@ -93,7 +93,7 @@ export default class Header extends React.Component {
   onTextChange = (e) => {
     this.setState({ searchQuery: e.target.value })
     const searchString = e.target.value.toLowerCase();
-    if (searchString.length >= 3) {
+    if (searchString?.length >= 3) {
       // let categoryData = [];
       ProductService.fetchAllProducts({ q: searchString }).then((result) => {
 

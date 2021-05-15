@@ -33,9 +33,10 @@ export default class ProductGrid extends React.Component {
 
   receivedData = () => {
     try {
-      ProductService.fetchAllProducts(this.state.filterParams).then((result) => {
+      ProductService.fetchAllProducts(this.state.filterParams?.cat_ids[0] !== undefined ? this.state.filterParams : '').then((result) => {
         this.setState({ productListData: result })
       });
+
       const { productListData, offset, perPage } = this.state;
       this.setState({
         //   pageCount: Math.ceil(productListData.length / perPage),
@@ -84,7 +85,7 @@ export default class ProductGrid extends React.Component {
     const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, per_page } = this.state
     return (
       <>
-        {(pathname !== "/wishlist" && productListData.length > 0) &&
+        {(pathname !== "/wishlist" && productListData?.length > 0) &&
           <section className='topsection d-flex justify-content-between'>
             {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>
               <ol className='breadcrumb bg-transparent'>
@@ -120,7 +121,7 @@ export default class ProductGrid extends React.Component {
             </div>
           </section>}
         <div className='row py-2'>
-          {productListData.length > 0 ? productListData.map((item, index) => {
+          {productListData?.length > 0 ? productListData.map((item, index) => {
             return (
               <div key={index} className={layout} >
                 <div className="product-wrapper">

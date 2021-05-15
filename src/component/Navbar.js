@@ -24,7 +24,7 @@ export default class Navbar extends React.Component {
   getSubmenuOptions = () => {
     try {
       CategoryService.fetchAllCategory(this.state.filterParams).then((result) => {
-        let MegaMenu = result.map((item, index) => {
+        let MegaMenu = result?.map((item, index) => {
           return {
             label: <Link to={{
               pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
@@ -61,7 +61,7 @@ export default class Navbar extends React.Component {
             })
           }
         })
-        this.setState({ menuOptions: result.length > 0 ? MegaMenu : [] });
+        this.setState({ menuOptions: result?.length > 0 ? MegaMenu : [] });
       })
     } catch (err) {
       console.log(err);

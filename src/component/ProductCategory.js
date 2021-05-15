@@ -34,13 +34,13 @@ export default class ProductCategory extends React.Component {
     };
   }
   componentDidMount() {
-    this.getCaregoryFilter()
+    this.getCategoryFilter()
   }
   componentWillReceiveProps() {
     if (this.props.history.location.state?.category_id !== this.props.location.state?.category_id) {
       this.state.filterParams.parent_id = this.props.history.location.state?.category_id;
     }
-    this.getCaregoryFilter();
+    this.getCategoryFilter();
   }
 
   onSliderPriceChange = (value) => {
@@ -64,13 +64,13 @@ export default class ProductCategory extends React.Component {
 
     });
   }
-  getCaregoryFilter = () => {
+  getCategoryFilter = () => {
     CategoryService.fetchAllCategory(this.state.filterParams).then((result) => {
       this.setState({
         categories:
           [{
             label: this.state.categogy_title,
-            items: result.map((item) => {
+            items: result?.map((item) => {
               return ({
                 label: item.title,
                 onSelected: function () { }
