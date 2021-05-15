@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ReactMegaMenu from "react-mega-menu"
 import CategoryService from '../services/CategoryService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp, faAngleRight, faHome } from '@fortawesome/free-solid-svg-icons'
 
 export default class Navbar extends React.Component {
   constructor(props) {
@@ -107,7 +107,8 @@ export default class Navbar extends React.Component {
                 {navbarTabs.map((item, index) => {
                   return (
                     <li key={index}>
-                      <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>{item.title}</Link>
+                      <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>
+                        <FontAwesomeIcon icon={item.title == 'HOME' ? faHome : ''} />{item.title}</Link>
                     </li>
                   )
                 })}

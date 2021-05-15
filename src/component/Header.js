@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from './Navbar'
 import Login from "./Login";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal';
 import {
@@ -64,10 +64,6 @@ export default class Header extends React.Component {
     }
   }
 
-  componentWillUnmount = () => {
-    document.removeEventListener('mousedown', this.handleClickOutside, false)
-  }
-
   setIsMenuShown = (status) => {
     this.setState({ isMenuShown: status })
   }
@@ -108,13 +104,19 @@ export default class Header extends React.Component {
         // console.log("democategoryData", categoryData)
       });
     }
+    else {
+      this.setState({ seachResults: [] });
+
+    }
   };
 
   handleClickOutside = (e) => {
-    if (this.node.contains(e.target)) {
+    if (e?.target && this.node.contains(e?.target)) {
       return
+    } else {
+      this.setState({ seachResults: [] });
     }
-    this.setState({ seachResults: [] });
+
   }
 
   renderSearchOptions = () => {
@@ -122,7 +124,10 @@ export default class Header extends React.Component {
     return (
       seachResults?.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
-          <Link to={`/product-detail/${item.id}`}>
+          <Link to={`/product-detail/${item.id}`}
+            onClick={() => this.setState({ searchQuery: '', seachResults: [] })
+            }
+          >
             <span className="pro-img">
               <img onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                 src={item.images[0]?.image_url} />
@@ -212,10 +217,12 @@ export default class Header extends React.Component {
           <Link to={'/'}>
             <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
           </Link>
-          <div className="search-container mx-5 w-100 position-relative" ref={node => this.node = node}>
+          <div className="search-container mx-5 w-100 position-relative"
+            ref={node => this.node = node}
+          >
             <div className="form-inline my-2 my-lg-0">
               <div className="search-bar w-100 d-flex justify-content-start" >
-                <input onChange={this.onTextChange} value={searchQuery} placeholder="Search" />
+                <input onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search" />
                 <div className="search-btn">
                   <button className="btn my-2 my-sm-0" type="submit">
                     <FontAwesomeIcon icon={faSearch} />

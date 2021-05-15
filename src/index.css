@@ -19,7 +19,7 @@ a {
 	z-index: 1
 }
 .main-menu .navbar-nav li:first-child a::before {
-	content: '\f015';
+	/* content: '\f015'; */
 	font-family: fontawesome;
 	padding-right: 5px;
 }
