@@ -29,7 +29,7 @@ export default class Navbar extends React.Component {
             label: <Link to={{
               pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
               state: { category_id: item.id, category_title: item.title }
-            }}>
+            }} onClick={() => this.setIsMenuShown(false)}>
               <span key={index}>{item.title}</span>
               <FontAwesomeIcon icon={faAngleRight} />
             </Link>,
@@ -38,18 +38,18 @@ export default class Navbar extends React.Component {
               return (
                 <div className="sub-categories" key={index}>
                   <Link to={{
-                    pathname: `/product-category/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
+                    pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
                     state: { category_id: subitem1.id, category_title: subitem1.title }
-                  }}>
+                  }} onClick={() => this.setIsMenuShown(false)}>
                     {subitem1.title}
                   </Link>
                   {subitem1.child.map((subitem2, index) => {
                     return (
                       <div className="super-sub-categories" key={index}>
                         <Link to={{
-                          pathname: `/product-category/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
+                          pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
                           state: { category_id: subitem2.id, category_title: subitem2.title }
-                        }}>
+                        }} onClick={() => this.setIsMenuShown(false)}>
                           <span>
                             {subitem2.title}
                           </span>
