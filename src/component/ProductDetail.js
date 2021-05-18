@@ -40,10 +40,28 @@ export default class ProductDetail extends React.Component {
         thumbnail: require('../public/No_Image_Available.jpeg'),
       }],
     }
+    this.currentUrlParams = new URLSearchParams(window.location.search);
+
   }
 
-  componentDidMount() {
-    this.getProductDetails();
+  // componentDidMount() {
+  //   this.getProductDetails();
+  // }
+
+  componentWillMount() {
+
+    this.unlisten = this.props.history.listen((location, action) => {
+      const urlParams = new URLSearchParams(location.search);
+      let entries = urlParams.entries(), queryParams = {};
+      for (const entry of entries) {
+        switch (entry[0]) {
+          case 'q':
+            queryParams.q = [entry[1]];
+        }
+      }
+      this.getProductDetails(queryParams);
+    })
+
   }
   countInc = () => {
     this.setState({ productCount: this.state.productCount + 1 });

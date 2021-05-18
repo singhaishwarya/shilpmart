@@ -120,23 +120,24 @@ export default class Header extends React.Component {
   }
 
   renderSearchOptions = () => {
-    let { seachResults } = this.state;
+    let { seachResults, searchQuery } = this.state;
     return (
       seachResults?.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
-          <Link to={`/product-detail/${item.id}`}
+          < Link to={{
+            pathname: `/product-detail/${item?.id}`,
+            search: "?q=" + searchQuery
+          }}
             onClick={() => this.setState({ searchQuery: '', seachResults: [] })
-            }
-          >
+            } >
             <span className="pro-img">
               <img onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
-                src={item.images[0]?.image_url} />
+                src={item?.images[0]?.image_url} />
             </span>
             <span>
               <span className="top-head">
-                <span className="pro-tile">{item.content.title}</span>
-                <span className="pro-price"><del>1999</del> &nbsp; <span>{item.price[0] ? item.price[0].price : 0}</span></span>
-
+                <span className="pro-tile">{item?.content?.title}</span>
+                <span className="pro-price"><del>1999</del> &nbsp; <span>{item?.price[0] ? item?.price[0].price : 0} </span></span>
               </span>
               <span className="footer-head">
                 <span className="result-cat"><small>Saree, Women's Wear</small></span>
