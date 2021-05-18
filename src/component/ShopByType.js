@@ -196,7 +196,11 @@ export default class ShopByType extends React.Component {
   }
 
   productDetail = (value) => {
-    this.props.history.push(`/product-detail/${value}`);
+
+    this.props.history.push({
+      pathname: '/product-detail',
+      search: "?pid=" + value
+    });
   }
   productList = (value) => {
 

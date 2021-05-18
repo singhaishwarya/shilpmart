@@ -24,36 +24,45 @@ export default class ProductGrid extends React.Component {
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
   }
-  componentWillMount() {
-    this.unlisten = this.props.history.listen((location, action) => {
-      const urlParams = new URLSearchParams(location.search);
-      let entries = urlParams.entries(), queryParams = {};
-      for (const entry of entries) {
-        switch (entry[0]) {
-          case 'cat_ids':
-            queryParams.cat_ids = [entry[1]];
-          case 'order_by':
-            queryParams.order_by = urlParams.get('order_by');
-          case 'sort_by':
-            queryParams.sort_by = urlParams.get('sort_by');
-          case 'per_page':
-            queryParams.per_page = urlParams.get('per_page');
+  componentWillReceiveProps() {
+    this.getProductList(this.getQueryParams());
 
-        }
-      }
-      this.receivedData(queryParams);
-    })
-
-  }
-  componentWillUnmount() {
-    this.unlisten();
   }
 
   componentDidMount() {
-    this.receivedData();
+    this.getProductList(this.getQueryParams());
   }
 
-  receivedData = (queryParams) => {
+  getQueryParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let entries = urlParams.entries(),
+      queryParams = {};
+    for (const entry of entries) {
+      switch (entry[0]) {
+        case 'cat_ids':
+          queryParams.cat_ids = [entry[1]];
+          break
+        case 'order_by':
+          queryParams.order_by = urlParams.get('order_by');
+          break
+        case 'sort_by':
+          queryParams.sort_by = urlParams.get('sort_by');
+          break
+        case 'per_page':
+          queryParams.per_page = urlParams.get('per_page');
+          break
+        case 'q':
+          queryParams.q = urlParams.get('q');
+          break
+        default:
+          return;
+      }
+    }
+
+    return queryParams;
+  }
+
+  getProductList = (queryParams) => {
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({ productListData: result })
@@ -71,7 +80,10 @@ export default class ProductGrid extends React.Component {
   }
 
   handlePostDetail = (value) => {
-    this.props.history.push(`/product-detail/${value}`);
+    this.props.history.push({
+      pathname: '/product-detail',
+      search: "?pid=" + value
+    });
   }
 
   toggleHover = (val, index) => {
@@ -87,7 +99,7 @@ export default class ProductGrid extends React.Component {
       currentPage: selectedPage,
       offset: offset
     }, () => {
-      this.receivedData()
+      this.getProductList()
     });
   }
   onLayoutChange = (value) => {
@@ -111,6 +123,7 @@ export default class ProductGrid extends React.Component {
     });
     this.currentUrlParams.set('sort_by', ['price-asc', 'price-desc'].includes(e.target.value) ? 'price' : e.target.value);
     this.currentUrlParams.set('order_by', e.target.value === 'price-asc' ? 'asc' : 'desc');
+
     this.props.history.push({
       pathname: this.props.location.pathname,
       search: "&" + this.currentUrlParams.toString()

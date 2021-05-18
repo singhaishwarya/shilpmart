@@ -125,8 +125,8 @@ export default class Header extends React.Component {
       seachResults?.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
           < Link to={{
-            pathname: `/product-detail/${item?.id}`,
-            search: "?q=" + searchQuery
+            pathname: `/product-detail`,
+            search: "?pid=" + item?.id
           }}
             onClick={() => this.setState({ searchQuery: '', seachResults: [] })
             } >

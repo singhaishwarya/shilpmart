@@ -43,25 +43,27 @@ export default class ProductDetail extends React.Component {
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
   }
+  componentWillReceiveProps() {
+    this.getProductDetails(this.getQueryParams());
+  }
 
-  // componentDidMount() {
-  //   this.getProductDetails();
-  // }
+  componentDidMount() {
+    this.getProductDetails(this.getQueryParams());
+  }
 
-  componentWillMount() {
-
-    this.unlisten = this.props.history.listen((location, action) => {
-      const urlParams = new URLSearchParams(location.search);
-      let entries = urlParams.entries(), queryParams = {};
-      for (const entry of entries) {
-        switch (entry[0]) {
-          case 'q':
-            queryParams.q = [entry[1]];
-        }
+  getQueryParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let entries = urlParams.entries(), queryParams = {};
+    for (const entry of entries) {
+      switch (entry[0]) {
+        case 'pid':
+          queryParams.product_ids = [entry[1]];
+          break
+        default:
+          return;
       }
-      this.getProductDetails(queryParams);
-    })
-
+    }
+    return queryParams;
   }
   countInc = () => {
     this.setState({ productCount: this.state.productCount + 1 });
@@ -69,9 +71,9 @@ export default class ProductDetail extends React.Component {
   countDec = () => {
     this.setState({ productCount: this.state.productCount - 1 });
   }
-  getProductDetails = () => {
+  getProductDetails = (queryParams) => {
     try {
-      ProductService.fetchAllProducts(this.state.filterParams).then((result) => {
+      ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({
           productDetailData: result[0],
           productDetailDataImages: result[0]?.images.map((item, index) => (
