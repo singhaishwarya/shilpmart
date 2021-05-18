@@ -13,7 +13,7 @@ export default class Navbar extends React.Component {
       menuOptions: [],
       navbarTabs: [{ title: 'HOME', route: '' },
       { title: 'ABOUT US', route: '' },
-      { title: 'SHOP', route: 'product-category' },
+      { title: 'SHOP', route: 'product-list' },
       { title: 'CUSTOMER SERVICE', route: '' }],
       isActiveTab: 0, filterParams: { parent_id: 0 }
     };
@@ -27,8 +27,11 @@ export default class Navbar extends React.Component {
         let MegaMenu = result?.map((item, index) => {
           return {
             label: <Link to={{
-              pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
-              state: { category_id: item.id, category_title: item.title }
+              pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
+              search: "?cat_ids=" + item.id,
+              state: {
+                category_id: item.id, category_breadcrumbs: [{ id: item.id, title: item.title }]
+              }
             }} onClick={() => this.setIsMenuShown(false)}>
               <span key={index}>{item.title}</span>
               <FontAwesomeIcon icon={faAngleRight} />
@@ -38,8 +41,9 @@ export default class Navbar extends React.Component {
               return (
                 <div className="sub-categories" key={index}>
                   <Link to={{
-                    pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
-                    state: { category_id: subitem1.id, category_title: subitem1.title }
+                    pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
+                    search: "?cat_ids=" + subitem1.id,
+                    state: { category_id: subitem1.id, category_breadcrumbs: [{ id: item.id, title: item.title }, { id: subitem1.id, title: subitem1.title }] }
                   }} onClick={() => this.setIsMenuShown(false)}>
                     {subitem1.title}
                   </Link>
@@ -47,8 +51,12 @@ export default class Navbar extends React.Component {
                     return (
                       <div className="super-sub-categories" key={index}>
                         <Link to={{
-                          pathname: `/product-category/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
-                          state: { category_id: subitem2.id, category_title: subitem2.title }
+                          pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
+                          search: "?cat_ids=" + subitem2.id,
+                          state: {
+                            category_id: subitem2.id,
+                            category_breadcrumbs: [{ id: item.id, title: item.title }, { id: subitem1.id, title: subitem1.title }, { id: subitem2.id, title: subitem2.title }]
+                          }
                         }} onClick={() => this.setIsMenuShown(false)}>
                           <span>
                             {subitem2.title}

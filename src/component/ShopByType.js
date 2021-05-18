@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRupeeSign, faCartPlus, faRandom, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import CategoryService from '../services/CategoryService';
+import ProductService from '../services/ProductService';
 
 export default class ShopByType extends React.Component {
   constructor(props) {
@@ -132,7 +133,7 @@ export default class ShopByType extends React.Component {
 
   componentDidMount() {
     const { wishlistStatus, hoveredItem } = this.state;
-    this.state.type === 'product' ? this.getProductsList() : this.getCateroryList();
+    // this.state.type === 'product' ? this.getProductsList() : this.getCateroryList();
     this.setState({
       shopByProductItems: this.state.shopByProductData.map((item, index) => {
         return (<div className="product-wrapper" key={index} >
@@ -183,20 +184,23 @@ export default class ShopByType extends React.Component {
   }
   getCateroryList = () => {
     CategoryService.fetchAllCategory({ parent_id: 0 }).then((result) => {
-      console.log("demo", result);
-      // this.setState({
-      // })
+
+      console.log("demo categories", result)
     });
   }
-  getProductsList = () => {
 
+  getProductsList = () => {
+    ProductService.fetchAllProducts().then((result) => {
+      console.log("demo products", result)
+    })
   }
+
   productDetail = (value) => {
     this.props.history.push(`/product-detail/${value}`);
   }
   productList = (value) => {
 
-    this.props.history.push(`/product-category/${value}`);
+    this.props.history.push(`/product-list/${value}`);
   }
   wishlistToggle = (val, index) => {
     this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });

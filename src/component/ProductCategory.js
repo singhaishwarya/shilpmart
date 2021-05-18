@@ -12,10 +12,10 @@ export default class ProductCategory extends React.Component {
     this.state = {
       product_category: this.props.category,
       offers: [
-        { label: 'Buy More, Save More', value: 'grapes' },
-        { label: 'Exchange Offer', value: 'mango' },
-        { label: 'No Cost EMI', value: 'strawberry', disabled: true },
-        { label: 'Special Price', value: 'pear' }
+        { label: 'Buy More, Save More', value: 'bmsm' },
+        { label: 'Exchange Offer', value: 'eo' },
+        { label: 'No Cost EMI', value: 'nce', disabled: true },
+        { label: 'Special Price', value: 'sp' }
       ],
       selectedOffer: [],
       multilevelMenuConfig: {
@@ -29,21 +29,8 @@ export default class ProductCategory extends React.Component {
       },
       categories: [],
       priceRange: [200, 500],
-      filterParams: { parent_id: props.history.location.state?.category_id || 0 },
-      categogy_title: props.history.location.state?.category_title
+      category_breadcrumbs: props.history.location.state?.category_breadcrumbs
     };
-  }
-  componentDidMount() {
-    this.getCategoryFilter()
-  }
-  componentWillReceiveProps() {
-    if (this.props.history.location.state?.category_id !== this.props.location.state?.category_id) {
-      // this.state.filterParams.parent_id = this.props.history.location.state?.category_id;
-
-      this.setState({ filterParams: { parent_id: this.props.history.location.state?.category_id } });
-
-    }
-    this.getCategoryFilter();
   }
 
   onSliderPriceChange = (value) => {
@@ -89,7 +76,8 @@ export default class ProductCategory extends React.Component {
       categories,
       multilevelMenuConfig,
       priceRange,
-      categogy_title
+      category_breadcrumbs,
+      filterParams
     } = this.state;
 
     return (
@@ -154,8 +142,8 @@ export default class ProductCategory extends React.Component {
                     {/* <header className='card-header'>
                       <h6 className='title'>Categories </h6>
                     </header> */}
-                    <div className='filter-content'>
-                      {/* <div className='categories-list'>
+                    {/* <div className='filter-content'> */}
+                    {/* <div className='categories-list'>
                         <MultilevelMenu
                           list={categories}
                           configuration={multilevelMenuConfig}
@@ -163,13 +151,12 @@ export default class ProductCategory extends React.Component {
                           selectedLabel={this.selectedItem}
                         />
                       </div> */}
-                    </div>
+                    {/* </div> */}
                   </article>
                 </div>
               </div>
               <div className='col-lg-9'>
-
-                <ProductGrid historyProps={this.props} categogyTitle={categogy_title} />
+                <ProductGrid categoryBreadcrumbs={category_breadcrumbs} {...this.props} />
               </div>
             </div>
           </div>

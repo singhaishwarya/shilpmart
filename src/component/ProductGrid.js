@@ -10,31 +10,52 @@ export default class ProductGrid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pathname: props.historyProps.location?.pathname,
+      pathname: props.location.pathname,
       offset: 0,
       productsData: [],
       currentPage: 0,
       per_page: 12,
       layout: 'col-lg-3 col-sm-6 col-6', //default 4X4
       productListData: [],
-      filterParams: { cat_ids: [props.historyProps.history.location.state?.category_id] }
-    }
+      filterParams: {},
+      categoryBreadcrumbs: props.categoryBreadcrumbs,
+      sortBy: "",
+    };
+    this.currentUrlParams = new URLSearchParams(window.location.search);
+
   }
   componentWillMount() {
+    this.unlisten = this.props.history.listen((location, action) => {
+      const urlParams = new URLSearchParams(location.search);
+      let entries = urlParams.entries(), queryParams = {};
+      for (const entry of entries) {
+        switch (entry[0]) {
+          case 'cat_ids':
+            queryParams.cat_ids = [entry[1]];
+          case 'order_by':
+            queryParams.order_by = urlParams.get('order_by');
+          case 'sort_by':
+            queryParams.sort_by = urlParams.get('sort_by');
+          case 'per_page':
+            queryParams.per_page = urlParams.get('per_page');
+
+        }
+      }
+      this.receivedData(queryParams);
+    })
+
+  }
+  componentWillUnmount() {
+    this.unlisten();
+  }
+
+  componentDidMount() {
     this.receivedData();
   }
 
-  componentWillReceiveProps() {
-    if (this.props.historyProps.history.location.state?.category_id !== this.props.historyProps.location.state?.category_id) {
-      // this.state.filterParams.cat_ids = [this.props.historyProps.history.location.state?.category_id];
-      this.setState({ filterParams: { cat_ids: [this.props.historyProps.history.location.state?.category_id] } });
-    }
-    this.receivedData();
-  }
-
-  receivedData = () => {
+  receivedData = (queryParams) => {
     try {
-      ProductService.fetchAllProducts(this.state.filterParams?.cat_ids[0] !== undefined ? this.state.filterParams : '').then((result) => {
+      ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({ productListData: result })
       });
 
@@ -50,7 +71,7 @@ export default class ProductGrid extends React.Component {
   }
 
   handlePostDetail = (value) => {
-    this.props.historyProps.history.push(`/product-detail/${value}`);
+    this.props.history.push(`/product-detail/${value}`);
   }
 
   toggleHover = (val, index) => {
@@ -78,12 +99,27 @@ export default class ProductGrid extends React.Component {
   onItemPerPage = (value) => {
     this.state.filterParams.per_page = value;
     this.setState({ per_page: value })
-    this.receivedData();
+    this.currentUrlParams.set('per_page', value)
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
   }
-
+  handleOnSort(e) {
+    this.setState({
+      sortBy: e.target.value
+    });
+    this.currentUrlParams.set('sort_by', ['price-asc', 'price-desc'].includes(e.target.value) ? 'price' : e.target.value);
+    this.currentUrlParams.set('order_by', e.target.value === 'price-asc' ? 'asc' : 'desc');
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    })
+  }
   render() {
 
-    const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, per_page } = this.state
+    const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, per_page, } = this.state
+    let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
     return (
       <>
         {(pathname !== "/wishlist" && productListData?.length > 0) &&
@@ -91,8 +127,22 @@ export default class ProductGrid extends React.Component {
             {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>
               <ol className='breadcrumb bg-transparent'>
                 <li className='breadcrumb-item'> <Link to={'/'}>Home</Link></li>
-                <li className='breadcrumb-item' aria-current='product-category'> <Link to={'/cart'}>Shop</Link></li>
-                <li className='breadcrumb-item active' aria-current='page'> {this.props.categogyTitle}</li>
+                <li className='breadcrumb-item' aria-current='product-list'> <Link to={'/product-list'}>Shop</Link></li>
+                {categoryBreadcrumbs?.map((item, index) => {
+                  return (<li key={index}
+                    className={`breadcrumb-item ${(index === categoryBreadcrumbs?.length - 1 ? 'active' : '')}`} aria-current='product-list'>
+                    {(index === categoryBreadcrumbs?.length - 1) ? item.title :
+                      < Link to={{
+                        pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
+                        search: "?cat_ids=" + item.id,
+                        state: {
+                          category_id: item.id,
+                          category_breadcrumbs: [{ id: item.id, title: item.title }]
+                        }
+                      }} >{item.title}</Link>}
+                  </li>)
+                })}
+                {/* <li className='breadcrumb-item active' aria-current='page'> {this.state.categogyTitle}</li> */}
               </ol>
             </nav>}
             <div className='shop-tools d-flex align-items-center'>
@@ -110,12 +160,12 @@ export default class ProductGrid extends React.Component {
                 <button onClick={() => this.onLayoutChange('4X4')} ></button>
               </div>
               <form method='get' className='shorting-wrapper'>
-                <select name='orderby' className='form-control' aria-label='Shop order'>
+                <select name='orderby' className='form-control' aria-label='Shop order' value={this.state.sortBy} onChange={(e) => this.handleOnSort(e)}>
                   <option value='menu_order' defaultValue='selected'>Default sorting</option>
                   <option value='popularity'>Sort by popularity</option>
                   <option value='rating'>Sort by average rating</option>
-                  <option value='date'>Sort by latest</option>
-                  <option value='price'>Sort by price: low to high</option>
+                  <option value='created_at'>Sort by latest</option>
+                  <option value='price-asc'>Sort by price: low to high</option>
                   <option value='price-desc'>Sort by price: high to low</option>
                 </select>
               </form>
@@ -126,7 +176,7 @@ export default class ProductGrid extends React.Component {
             return (
               <div key={index} className={layout} >
                 <div className="product-wrapper">
-                  <div className="prodcut-img" onClick={() => this.handlePostDetail(item._id)}>
+                  <div className="prodcut-img" onClick={() => this.handlePostDetail(item.id)}>
                     <a href="#">
                       <img src={item.images[0]?.image_url} className="img-fluid"
                         alt={item.images[0]?.caption}
