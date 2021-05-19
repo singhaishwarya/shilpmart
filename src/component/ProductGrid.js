@@ -25,15 +25,16 @@ export default class ProductGrid extends React.Component {
 
   }
   componentWillReceiveProps() {
-    this.getProductList(this.getQueryParams());
-
+    // this.setState(this.state)
+    this.getProductList(this.getSetQueryParams())
   }
 
   componentDidMount() {
-    this.getProductList(this.getQueryParams());
+
+    this.getProductList(this.getSetQueryParams());
   }
 
-  getQueryParams() {
+  getSetQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);
     let entries = urlParams.entries(),
       queryParams = {};
@@ -46,10 +47,18 @@ export default class ProductGrid extends React.Component {
           queryParams.order_by = urlParams.get('order_by');
           break
         case 'sort_by':
-          queryParams.sort_by = urlParams.get('sort_by');
+          queryParams.sort_by = ['price-asc', 'price-desc'].includes(urlParams.get('sort_by')) ? 'price' : urlParams.get('sort_by')
+          this.setState({ sortBy: urlParams.get('sort_by') })
           break
         case 'per_page':
           queryParams.per_page = urlParams.get('per_page');
+          this.setState({ per_page: queryParams.per_page * 1 })
+          break
+        case 'min_price':
+          queryParams.min_price = urlParams.get('min_price');
+          break
+        case 'max_price':
+          queryParams.max_price = urlParams.get('max_price');
           break
         case 'q':
           queryParams.q = urlParams.get('q');
@@ -58,7 +67,6 @@ export default class ProductGrid extends React.Component {
           return;
       }
     }
-
     return queryParams;
   }
 
@@ -118,11 +126,9 @@ export default class ProductGrid extends React.Component {
     });
   }
   handleOnSort(e) {
-    this.setState({
-      sortBy: e.target.value
-    });
-    this.currentUrlParams.set('sort_by', ['price-asc', 'price-desc'].includes(e.target.value) ? 'price' : e.target.value);
+    this.setState({ sortBy: e.target.value });
     this.currentUrlParams.set('order_by', e.target.value === 'price-asc' ? 'asc' : 'desc');
+    this.currentUrlParams.set('sort_by', e.target.value);
 
     this.props.history.push({
       pathname: this.props.location.pathname,
@@ -133,6 +139,7 @@ export default class ProductGrid extends React.Component {
 
     const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, per_page, } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
+
     return (
       <>
         {(pathname !== "/wishlist" && productListData?.length > 0) &&

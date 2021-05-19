@@ -31,10 +31,71 @@ export default class ProductCategory extends React.Component {
       priceRange: [200, 500],
       category_breadcrumbs: props.history.location.state?.category_breadcrumbs
     };
+    this.currentUrlParams = new URLSearchParams(window.location.search);
+
+  }
+  componentWillReceiveProps() {
+    this.getSetQueryParams()
+  }
+  componentDidMount() {
+
+    this.getSetQueryParams();
+  }
+  getSetQueryParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let entries = urlParams.entries(),
+      queryParams = {};
+    const { priceRange } = this.state;
+
+    for (const entry of entries) {
+      switch (entry[0]) {
+        case 'min_price':
+          priceRange.splice(0, 1, entry[1] * 1)
+          this.setState({ priceRange: [...priceRange] }, () => {
+            this.setState({ priceRange: [...priceRange] })
+          })
+          break
+        case 'max_price':
+          priceRange.splice(1, 1, entry[1] * 1)
+          this.setState({ priceRange: [...priceRange] }, () => {
+            this.setState({ priceRange: [...priceRange] })
+          })
+          break
+
+        default:
+          return;
+      }
+    }
+
+    return queryParams;
+  }
+  onSliderPriceChange = (value) => {
+    this.setState({ priceRange: value });
+    this.currentUrlParams.set('min_price', value[0])
+    this.currentUrlParams.set('max_price', value[1])
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
+
   }
 
-  onSliderPriceChange = (value) => {
-    this.setState({ priceRange: value })
+  onManualPriceChange = (index, e) => {
+
+    const { priceRange } = this.state;
+    priceRange.splice(index, 1, e.target.value * 1)
+    this.setState({ priceRange: [...priceRange] }, () => {
+      this.onSliderPriceChange([...priceRange]);
+    });
+
+  }
+  filterByPriceRange = () => {
+    this.currentUrlParams.set('min_price', this.state.priceRange[0])
+    this.currentUrlParams.set('max_price', this.state.priceRange[1])
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
   }
   ratingChanged = (value) => {
     console.log(value);
@@ -45,15 +106,7 @@ export default class ProductCategory extends React.Component {
   selectedItem = (event) => {
     console.log(event);
   }
-  onManualPriceChange = (index, e) => {
 
-    const { priceRange } = this.state;
-    priceRange.splice(index, 1, e.target.value * 1)
-    this.setState({ priceRange: [...priceRange] }, () => {
-      this.onSliderPriceChange([...priceRange]);
-
-    });
-  }
   getCategoryFilter = () => {
     CategoryService.fetchAllCategory(this.state.filterParams).then((result) => {
       this.setState({
@@ -79,7 +132,6 @@ export default class ProductCategory extends React.Component {
       category_breadcrumbs,
       filterParams
     } = this.state;
-
     return (
       <>
         <section id="maincontent">
@@ -95,13 +147,13 @@ export default class ProductCategory extends React.Component {
                       <div className='price-range-wrapper'>
                         <div id='slider-range' className='price-filter-range' name='rangeInput'>
                           <Range
-                            value={priceRange}
+                            defaultValue={priceRange}
                             min={0}
                             max={5000}
                             className='filter-slider'
                             allowCross={false}
-                            onChange={value => { this.onSliderPriceChange(value) }}
                             onAfterChange={value => { this.onSliderPriceChange(value) }}
+                            draggableTrack={true}
                           />
                         </div>
                         <div className='price-range d-flex justify-content-between'>
@@ -115,7 +167,10 @@ export default class ProductCategory extends React.Component {
                             <input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
                               onChange={(e) => this.onManualPriceChange(1, e)}
                               className='price-range-field' /></span>
-                          <span><button className='price-range-search'
+                          <span><button onClick={() => {
+                            this.filterByPriceRange()
+
+                          }} className='price-range-search'
                             id='price-range-submit'>Filter</button></span>
                         </div>
                         <div id='searchResults' className='search-results-block'></div>
