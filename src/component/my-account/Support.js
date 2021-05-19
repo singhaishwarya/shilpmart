@@ -10,9 +10,34 @@ export default class Support extends React.Component {
 
   render() {
     return (
-      <div className="row py-5">
-        <h1>demo Support</h1>
-      </div>
+      <>      
+        <table class="table table-striped">
+          <thead>
+            <th scope="col">Status</th>
+            <th scope="col">Ticket(s)</th>
+            <th scope="col">Category</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Actions</th>
+          </thead>
+          <tbody>
+            {/* <tr>
+              <td scope="row">1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+              <td>@mdo</td>
+            </tr> */}
+            <tr>
+              <td><p>You do not have any support ticket yet! </p></td>
+              <td></td>
+              
+            </tr>
+            
+           
+         </tbody>
+        </table>
+     
+      </>
     );
   }
 }

@@ -10,9 +10,34 @@ export default class Inquiry extends React.Component {
 
   render() {
     return (
-      <div className="row py-5">
-        <h1>demo Inquiry</h1>
-      </div>
+      <>      
+        <table class="table table-striped">
+          <thead>
+            <th scope="col">Query</th>
+            <th scope="col">Product</th>
+            <th scope="col">Store</th>
+            <th scope="col">Additional Info</th>
+            <th scope="col">Actions</th>
+          </thead>
+          <tbody>
+            {/* <tr>
+              <td scope="row">1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+              <td>@mdo</td>
+            </tr> */}
+            <tr>
+              <td><p>You do not have any enquiry yet! </p></td>
+              <td></td>
+              
+            </tr>
+            
+           
+         </tbody>
+        </table>
+     
+      </>
     );
   }
 }

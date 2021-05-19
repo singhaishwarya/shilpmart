@@ -38,6 +38,7 @@ export default class Swiper extends React.Component {
             disableAutoPlayOnAction={true}
             fadeOutAnimation={true}
             items={galleryItems}
+            mouseTracking
             infinite
             mouseTrackingEnabled={true}
             // autoHeight={true}
