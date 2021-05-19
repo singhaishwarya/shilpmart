@@ -120,7 +120,7 @@ export default class Header extends React.Component {
   }
 
   renderSearchOptions = () => {
-    let { seachResults, searchQuery } = this.state;
+    let { seachResults } = this.state;
     return (
       seachResults?.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
@@ -131,8 +131,11 @@ export default class Header extends React.Component {
             onClick={() => this.setState({ searchQuery: '', seachResults: [] })
             } >
             <span className="pro-img">
-              <img onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
-                src={item?.images[0]?.image_url} />
+              <img onError={e => {
+                e.currentTarget.src = require('../public/No_Image_Available.jpeg')
+              }}
+                src={item?.images[0]?.image_url}
+                alt={item?.content?.title} />
             </span>
             <span>
               <span className="top-head">

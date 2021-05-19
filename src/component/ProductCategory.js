@@ -126,11 +126,11 @@ export default class ProductCategory extends React.Component {
   render() {
 
     const {
-      categories,
-      multilevelMenuConfig,
+      // categories,
+      // multilevelMenuConfig,
       priceRange,
       category_breadcrumbs,
-      filterParams
+      // filterParams
     } = this.state;
     return (
       <>

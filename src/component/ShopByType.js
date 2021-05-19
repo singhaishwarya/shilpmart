@@ -1,12 +1,15 @@
-import React from "react";
+import React, { Component } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRupeeSign, faCartPlus, faRandom, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import CategoryService from '../services/CategoryService';
 import ProductService from '../services/ProductService';
+import { connect } from 'react-redux';
+import * as wishlistAction from '../actions/wishlist';
 
-export default class ShopByType extends React.Component {
+class ShopByType extends Component {
+  // export default class  extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,10 +29,14 @@ export default class ShopByType extends React.Component {
     this.state.type === 'product' ? this.getProductsList() : this.getCateroryList();
   }
 
+  componentWillReceiveProps() {
+    this.state.type === 'product' ? this.getProductsList() : this.getCateroryList();
+  }
+
   getCateroryList = () => {
     CategoryService.fetchAllCategory({ parent_id: 0 }).then((result) => {
       this.setState({
-        shopByCategoryItems: result.map((item, index) =>
+        shopByCategoryItems: result?.map((item, index) =>
         (<div key={index} >
           <div className="categorie-img" onClick={() => this.productList(item.id)}>
             <a href="#" className="cate-img">
@@ -53,11 +60,12 @@ export default class ShopByType extends React.Component {
     const { wishlistStatus, hoveredItem } = this.state;
     ProductService.fetchAllProducts().then((result) => {
       this.setState({
-        shopByProductItems: result.map((item, index) =>
+        shopByProductItems: result?.map((item, index) =>
         (<div className="product-wrapper" key={index} >
           <div className="prodcut-img" onClick={() => this.productDetail(item.id)}>
             <a href="#">
-              <img src={item.images[0]?.image_url} className="img-fluid"
+              <img src={item.images[0]?.image_url}
+                className="img-fluid"
                 onClick={() => this.productDetail(item.id)}
                 alt={item.images[0]?.caption}
                 onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
@@ -73,8 +81,8 @@ export default class ShopByType extends React.Component {
               </span></div>
               <div className="shop-btn"><span>
                 <FontAwesomeIcon
-                  icon={(wishlistStatus && hoveredItem === index) ? faHeart : farHeart}
-                  onClick={() => this.wishlistToggle(wishlistStatus, index)}
+                  icon={this.props.wishlist.find(element => element.id === item.id) ? faHeart : farHeart}
+                  onClick={() => { this.props.wishlist.find(element => element.id === item.id) ? this.removeWishlist(wishlistStatus, index, item) : this.wishlistToggle(wishlistStatus, index, item) }}
                 />
               </span></div>
             </div>
@@ -104,19 +112,24 @@ export default class ShopByType extends React.Component {
     });
   }
 
-  wishlistToggle = (val, index) => {
+  wishlistToggle = (val, index, product) => {
     this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
+    this.props.addWishlist(product);
+    // console.log("wishlist in redux", this.props.wishlist)
+
   }
+
+  removeWishlist = (val, index, product) => {
+
+    this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
+    this.props.deleteWishlist(product.id);
+
+  }
+
   render() {
-    // const demoItems = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => <div style={{
-    //   display: "inline-block",
-    //   width: "100%",
-    //   height: 200,
-    //   border: "2px solid #fff",
-    //   background: "teal"
-    // }} role="button" />);
     const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
 
+    console.log("wishlist in redux", this.props.wishlist)
     return (
       <AliceCarousel
         autoPlayInterval={3000}
@@ -136,3 +149,18 @@ export default class ShopByType extends React.Component {
     )
   };
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    wishlist: state.wishlist
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addWishlist: wishlist => dispatch(wishlistAction.addWishlist(wishlist)),
+    deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopByType);

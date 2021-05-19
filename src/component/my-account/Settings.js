@@ -9,7 +9,7 @@ export default class Settings extends React.Component {
   }
 
   render() {
-    const { productsToCompare } = this.state
+    // const { productsToCompare } = this.state
     return (
       <div className="row py-5">
         <h1>demo Settings</h1>

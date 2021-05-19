@@ -37,7 +37,7 @@ export default class Navbar extends React.Component {
               <FontAwesomeIcon icon={faAngleRight} />
             </Link>,
             key: item.id,
-            items: item.child.map((subitem1, index) => {
+            items: item.child?.map((subitem1, index) => {
               return (
                 <div className="sub-categories" key={index}>
                   <Link to={{
@@ -47,7 +47,7 @@ export default class Navbar extends React.Component {
                   }} onClick={() => this.setIsMenuShown(false)}>
                     {subitem1.title}
                   </Link>
-                  {subitem1.child.map((subitem2, index) => {
+                  {subitem1.child?.map((subitem2, index) => {
                     return (
                       <div className="super-sub-categories" key={index}>
                         <Link to={{
@@ -112,7 +112,7 @@ export default class Navbar extends React.Component {
                   </div>)}
               </div>
               <ul className="navbar-nav mr-auto">
-                {navbarTabs.map((item, index) => {
+                {navbarTabs?.map((item, index) => {
                   return (
                     <li key={index}>
                       <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>

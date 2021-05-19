@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartPlus, faRandom, faHeart, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
-import ReactPaginate from 'react-paginate';
+// import ReactPaginate from 'react-paginate';
 import ProductService from '../services/ProductService';
 import { Link } from "react-router-dom";
 export default class ProductGrid extends React.Component {
@@ -76,7 +76,7 @@ export default class ProductGrid extends React.Component {
         this.setState({ productListData: result })
       });
 
-      const { productListData, offset, perPage } = this.state;
+      const { productListData } = this.state;
       this.setState({
         //   pageCount: Math.ceil(productListData.length / perPage),
         productsData: productListData//.slice(offset, offset + perPage)
@@ -147,10 +147,11 @@ export default class ProductGrid extends React.Component {
             {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>
               <ol className='breadcrumb bg-transparent'>
                 <li className='breadcrumb-item'> <Link to={'/'}>Home</Link></li>
-                <li className='breadcrumb-item' aria-current='product-list'> <Link to={'/product-list'}>Shop</Link></li>
+                <li className='breadcrumb-item'
+                  aria-current={true}> <Link to={'/product-list'}>Shop</Link></li>
                 {categoryBreadcrumbs?.map((item, index) => {
                   return (<li key={index}
-                    className={`breadcrumb-item ${(index === categoryBreadcrumbs?.length - 1 ? 'active' : '')}`} aria-current='product-list'>
+                    className={`breadcrumb-item ${(index === categoryBreadcrumbs?.length - 1 ? 'active' : '')}`} aria-current={true}>
                     {(index === categoryBreadcrumbs?.length - 1) ? item.title :
                       < Link to={{
                         pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
@@ -192,7 +193,7 @@ export default class ProductGrid extends React.Component {
             </div>
           </section>}
         <div className='row py-2'>
-          {productListData?.length > 0 ? productListData.map((item, index) => {
+          {productListData?.length > 0 ? productListData?.map((item, index) => {
             return (
               <div key={index} className={layout} >
                 <div className="product-wrapper">

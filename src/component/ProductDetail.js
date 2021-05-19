@@ -76,7 +76,7 @@ export default class ProductDetail extends React.Component {
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({
           productDetailData: result[0],
-          productDetailDataImages: result[0]?.images.map((item, index) => (
+          productDetailDataImages: result[0]?.images?.map((item, index) => (
             {
               'original': item.image_url,
               'thumbnail': item.image_url
