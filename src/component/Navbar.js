@@ -116,7 +116,7 @@ export default class Navbar extends React.Component {
                   return (
                     <li key={index}>
                       <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>
-                        {item.title === 'HOME' && <FontAwesomeIcon icon={faHome} />}{item.title} </Link>
+                        {item.title === 'HOME' && <FontAwesomeIcon icon={faHome} />} {item.title} </Link>
                     </li>
                   )
                 })}

@@ -5,6 +5,11 @@ export default class CustomerFeedback extends React.Component {
   constructor() {
     super();
     this.state = {
+      responsive: {
+        0: { items: 1 },
+        568: { items: 3 },
+        1024: { items: 5 },
+      },
       customerFeedbackData: [], customerFeedbackItems: [],
     };
   }
@@ -84,7 +89,7 @@ export default class CustomerFeedback extends React.Component {
   }
   render() {
 
-    const { customerFeedbackItems } = this.state;
+    const { customerFeedbackItems, responsive } = this.state;
     return (
       <>
         {/* //    < !--From Our Customers-- > */}
@@ -107,6 +112,8 @@ export default class CustomerFeedback extends React.Component {
                 disableDotsControls
                 disableAutoPlayOnAction={true}
                 items={customerFeedbackItems}
+                responsive={responsive}
+                mouseTracking
                 infinite
                 mouseTrackingEnabled={true}
                 // autoHeight={true}
