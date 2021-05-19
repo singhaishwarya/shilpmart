@@ -28,7 +28,7 @@ class Wishlist extends Component {
     this.setState({
       name: ''
     });
-    this.props.addWishlist(wishlist);
+    this.props.addToWishlist(wishlist);
   }
 
   listView(data, index) {
@@ -83,7 +83,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addWishlist: wishlist => dispatch(wishlistAction.addWishlist(wishlist)),
+    addToWishlist: wishlist => dispatch(wishlistAction.addToWishlist(wishlist)),
     deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index))
   }
 };

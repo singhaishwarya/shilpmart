@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Navbar from './Navbar'
 import Login from "./Login";
@@ -16,6 +16,7 @@ import {
 import ProductService from '../services/ProductService';
 import ReactMegaMenu from "react-mega-menu"
 import CategoryService from '../services/CategoryService';
+import { connect } from 'react-redux';
 
 const customStyles = {
   content: {
@@ -27,9 +28,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)'
   }
 };
-
-export default class Header extends React.Component {
-
+class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -247,12 +246,12 @@ export default class Header extends React.Component {
                 data={menuOptions}
               />)} </li> : <li className="nav-item" onClick={this.login}>Login/Register</li>}
             <li className="nav-item"><Link to={'/wishlist'}><div className="nav-link">
-              <FontAwesomeIcon icon={faHeart} /><span>0</span></div></Link></li>
+              <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link></li>
             <li className="nav-item"><Link to={'/compare'}>
               <div className="nav-link">
-                <FontAwesomeIcon icon={faRandom} /><span>0</span></div></Link></li>
+                <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></div></Link></li>
             <li className="nav-item"> <Link to={'/cart'}><div className="nav-link">
-              <FontAwesomeIcon icon={faShoppingBasket} /><span>0</span>
+              <FontAwesomeIcon icon={faShoppingBasket} /><span>{this.props?.cart?.length}</span>
             </div></Link></li>
           </ul>
         </div >
@@ -261,3 +260,12 @@ export default class Header extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    wishlist: state.wishlist,
+    compare: state.compare,
+    cart: state.cart
+  }
+};
+export default connect(mapStateToProps, null)(Header);

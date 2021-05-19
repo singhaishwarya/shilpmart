@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import category from './categoryReducer';
 import wishlist from './wishlistReducer';
 import compare from './compareReducer';
+import cart from './cartReducer';
 
 export default combineReducers({
-  category: category,
   wishlist: wishlist,
-  compare: compare
+  compare: compare,
+  cart: cart
 });

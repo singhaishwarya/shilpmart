@@ -7,9 +7,10 @@ import CategoryService from '../services/CategoryService';
 import ProductService from '../services/ProductService';
 import { connect } from 'react-redux';
 import * as wishlistAction from '../actions/wishlist';
+import * as compareAction from '../actions/compare';
+import * as cartAction from '../actions/cart';
 
 class ShopByType extends Component {
-  // export default class  extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,9 +76,9 @@ class ShopByType extends Component {
           <div className="shop-wrapper">
             <div className="shopBtn">
               <div className="shop-btn"><span>
-                <FontAwesomeIcon icon={faCartPlus} /></span></div>
+                <FontAwesomeIcon icon={faCartPlus} onClick={() => { this.props.addToCart(item) }} /></span></div>
               <div className="shop-btn"><span>
-                <FontAwesomeIcon icon={faRandom} />
+                <FontAwesomeIcon icon={faRandom} onClick={() => { this.props.addToCompare(item) }} />
               </span></div>
               <div className="shop-btn"><span>
                 <FontAwesomeIcon
@@ -114,8 +115,7 @@ class ShopByType extends Component {
 
   wishlistToggle = (val, index, product) => {
     this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
-    this.props.addWishlist(product);
-    // console.log("wishlist in redux", this.props.wishlist)
+    this.props.addToWishlist(product);
 
   }
 
@@ -129,7 +129,6 @@ class ShopByType extends Component {
   render() {
     const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
 
-    console.log("wishlist in redux", this.props.wishlist)
     return (
       <AliceCarousel
         autoPlayInterval={3000}
@@ -158,8 +157,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addWishlist: wishlist => dispatch(wishlistAction.addWishlist(wishlist)),
-    deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index))
+    addToWishlist: wishlist => dispatch(wishlistAction.addToWishlist(wishlist)),
+    deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index)),
+    addToCompare: compare => dispatch(compareAction.addToCompare(compare)),
+    addToCart: cart => dispatch(cartAction.addToCart(cart))
   }
 };
 

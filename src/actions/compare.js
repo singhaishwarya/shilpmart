@@ -1,8 +1,8 @@
-import { FETCH_COMPARE, ADD_COMPARE, REMOVE_COMPARE } from './types';
+import { FETCH_COMPARE, ADD_TO_COMPARE, REMOVE_COMPARE } from './types';
 
-export const addCompare = (product) => {
+export const addToCompare = (product) => {
   return {
-    type: ADD_COMPARE,
+    type: ADD_TO_COMPARE,
     product: product
   }
 };

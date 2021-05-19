@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/types';
 
 export default function compareReducer(state = [], action) {
   switch (action.type) {
-    case actionTypes.ADD_COMPARE:
+    case actionTypes.ADD_TO_COMPARE:
       return [
         ...state,
         Object.assign({}, action.product)
