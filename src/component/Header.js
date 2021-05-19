@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Navbar from './Navbar'
 import Login from "./Login";
+import CartOverlay from "./CartOverlay";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
@@ -18,12 +19,23 @@ import ReactMegaMenu from "react-mega-menu"
 import CategoryService from '../services/CategoryService';
 import { connect } from 'react-redux';
 
-const customStyles = {
+const customLoginStyles = {
   content: {
     top: '50%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+
+const customCartStyles = {
+  content: {
+    top: '48%',
+    left: '79%',
+    right: '28%',
+    bottom: '0%',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)'
   }
@@ -79,9 +91,9 @@ class Header extends Component {
     this.setState({ showModal: false, setIsOpen: false })
 
   };
-  login = () => {
+  dismissModal = (type) => {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal, overlayType: type
     });
   };
 
@@ -154,19 +166,20 @@ class Header extends Component {
   };
 
   render() {
-    const { searchQuery, showModal, shareUrl, title, isLoggedIn, menuOptions, isMenuShown } = this.state;
+    const { searchQuery, showModal, shareUrl, title, isLoggedIn, menuOptions, isMenuShown, overlayType } = this.state;
 
     return (
       <>
         <Modal
           isOpen={showModal}
           onRequestClose={this.closeModal}
-          style={customStyles}
+          style={overlayType === 'login' ? customLoginStyles : customCartStyles}
           shouldCloseOnOverlayClick={true}
-          contentLabel="SIGN IN"
+          contentLabel={overlayType === 'login' ? "SIGN IN" : "Shopping Cart"}
           ariaHideApp={false}
         >
-          <Login loginClick={this.login} /> </Modal>
+          {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} /> : <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
+        </Modal>
         <div className="header-top py-1  ">
           <div className="container-fluid">
             <div className="row">
@@ -210,7 +223,6 @@ class Header extends Component {
                     </div>
                     <a className="skipcontent" href="#maincontent">Skip to Content</a>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -244,13 +256,13 @@ class Header extends Component {
                 tolerance={50}
                 direction={"DOWN"}
                 data={menuOptions}
-              />)} </li> : <li className="nav-item" onClick={this.login}>Login/Register</li>}
+              />)} </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
             <li className="nav-item"><Link to={'/wishlist'}><div className="nav-link">
               <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link></li>
             <li className="nav-item"><Link to={'/compare'}>
               <div className="nav-link">
                 <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></div></Link></li>
-            <li className="nav-item"> <Link to={'/cart'}><div className="nav-link">
+            <li className="nav-item" onClick={() => this.dismissModal('cart')}> <Link to={'/cart'}><div className="nav-link">
               <FontAwesomeIcon icon={faShoppingBasket} /><span>{this.props?.cart?.length}</span>
             </div></Link></li>
           </ul>
@@ -261,7 +273,7 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     wishlist: state.wishlist,
     compare: state.compare,

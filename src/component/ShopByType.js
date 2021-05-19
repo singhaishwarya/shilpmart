@@ -83,7 +83,7 @@ class ShopByType extends Component {
               <div className="shop-btn"><span>
                 <FontAwesomeIcon
                   icon={this.props.wishlist.find(element => element.id === item.id) ? faHeart : farHeart}
-                  onClick={() => { this.props.wishlist.find(element => element.id === item.id) ? this.removeWishlist(wishlistStatus, index, item) : this.wishlistToggle(wishlistStatus, index, item) }}
+                  onClick={() => { this.props.wishlist.find(element => element.id === item.id) ? this.removeWishlist(index, item) : this.wishlistToggle(index, item) }}
                 />
               </span></div>
             </div>
@@ -113,13 +113,13 @@ class ShopByType extends Component {
     });
   }
 
-  wishlistToggle = (val, index, product) => {
+  wishlistToggle = (index, product) => {
     this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
     this.props.addToWishlist(product);
 
   }
 
-  removeWishlist = (val, index, product) => {
+  removeWishlist = (index, product) => {
 
     this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
     this.props.deleteWishlist(product.id);
@@ -149,7 +149,7 @@ class ShopByType extends Component {
   };
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     wishlist: state.wishlist
   }

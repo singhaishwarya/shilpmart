@@ -16,6 +16,7 @@ export default class Cart extends React.Component {
   render() {
     return (
       <div className="row">
+        <span>NO PRODUCTS IN THE CART.</span>
       </div>
     );
   }

@@ -1,12 +1,16 @@
-import React from "react";
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartPlus, faRandom, faHeart, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 // import ReactPaginate from 'react-paginate';
 import ProductService from '../services/ProductService';
 import { Link } from "react-router-dom";
-export default class ProductGrid extends React.Component {
+import { connect } from 'react-redux';
+import * as wishlistAction from '../actions/wishlist';
+import * as compareAction from '../actions/compare';
+import * as cartAction from '../actions/cart';
 
+class ProductGrid extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -97,8 +101,16 @@ export default class ProductGrid extends React.Component {
   toggleHover = (val, index) => {
     this.setState({ hoverIcon: val, hoveredItem: index });
   }
-  wishlistToggle = (val, index) => {
+  wishlistToggle = (index, product) => {
     this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
+    this.props.addToWishlist(product);
+
+  }
+  removeWishlist = (index, product) => {
+
+    this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
+    this.props.deleteWishlist(product.id);
+
   }
   handlePageClick = (e) => {
     const selectedPage = e.selected;
@@ -208,17 +220,16 @@ export default class ProductGrid extends React.Component {
                   <div className="shop-wrapper">
                     <div className="shopBtn">
                       <div className="shop-btn"><span>
-                        <FontAwesomeIcon icon={faCartPlus} /></span></div>
+                        <FontAwesomeIcon icon={faCartPlus} onClick={() => { this.props.addToCart(item) }} /></span></div>
                       <div className="shop-btn"><span>
-                        <FontAwesomeIcon icon={faRandom} />
+                        <FontAwesomeIcon icon={faRandom} onClick={() => { this.props.addToCompare(item) }} />
                       </span></div>
                       <div className="shop-btn"><span>
                         <FontAwesomeIcon
-                          icon={(wishlistStatus && hoveredItem === index) ? faHeart : farHeart}
-                          onClick={() => this.wishlistToggle(wishlistStatus, index)}
-                        />
-                      </span></div>
-                    </div>
+                          icon={this.props.wishlist.find(element => element.id === item.id) ? faHeart : farHeart}
+                          onClick={() => { this.props.wishlist.find(element => element.id === item.id) ? this.removeWishlist(index, item) : this.wishlistToggle(index, item) }}
+                        /></span>
+                      </div></div>
                   </div>
                   <h5 className="product-title">{item.content?.title}</h5>
                   <span className="product-price">
@@ -246,3 +257,21 @@ export default class ProductGrid extends React.Component {
     );
   }
 }
+
+
+const mapStateToProps = state => {
+  return {
+    wishlist: state.wishlist
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToWishlist: wishlist => dispatch(wishlistAction.addToWishlist(wishlist)),
+    deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index)),
+    addToCompare: compare => dispatch(compareAction.addToCompare(compare)),
+    addToCart: cart => dispatch(cartAction.addToCart(cart))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductGrid);

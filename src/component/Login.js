@@ -8,7 +8,7 @@ export default class Login extends React.Component {
     Auth.authenticate();
     localStorage.setItem('isLoggedIn', Auth.getAuth());
 
-    this.props.loginClick();
+    this.props.dismissModal('login');
   }
 
   register = (event) => {
