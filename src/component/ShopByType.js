@@ -99,7 +99,7 @@ class ShopByType extends Component {
   }
 
   productDetail = (value) => {
-
+    console.log("demo", this.props)
     this.props.history.push({
       pathname: '/product-detail',
       search: "?pid=" + value

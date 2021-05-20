@@ -32,12 +32,14 @@ const customLoginStyles = {
 
 const customCartStyles = {
   content: {
-    top: '48%',
-    left: '79%',
-    right: '28%',
+    width: '30%',
+    transition: 'all 5.3s ease-in-out',
+    top: '0%',
+    left: '100%',
+    right: '0%',
     bottom: '0%',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-100%, 0)',
+    borderRadius: '0'
   }
 };
 class Header extends Component {
@@ -170,16 +172,19 @@ class Header extends Component {
 
     return (
       <>
-        <Modal
-          isOpen={showModal}
-          onRequestClose={this.closeModal}
-          style={overlayType === 'login' ? customLoginStyles : customCartStyles}
-          shouldCloseOnOverlayClick={true}
-          contentLabel={overlayType === 'login' ? "SIGN IN" : "Shopping Cart"}
-          ariaHideApp={false}
-        >
-          {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} /> : <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
-        </Modal>
+        <div style={{ transition: 'all 5.3s ease-in-out' }}>
+          <Modal
+            isOpen={showModal}
+            onRequestClose={this.closeModal}
+            style={overlayType === 'login' ? customLoginStyles : customCartStyles}
+            shouldCloseOnOverlayClick={true}
+            contentLabel={overlayType === 'login' ? "SIGN IN" : "Shopping Cart"}
+            ariaHideApp={false}
+          >
+            {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} /> :
+              <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
+          </Modal>
+        </div>
         <div className="header-top py-1  ">
           <div className="container-fluid">
             <div className="row">
@@ -257,14 +262,17 @@ class Header extends Component {
                 direction={"DOWN"}
                 data={menuOptions}
               />)} </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
-            <li className="nav-item"><Link to={'/wishlist'}><div className="nav-link">
-              <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link></li>
-            <li className="nav-item"><Link to={'/compare'}>
-              <div className="nav-link">
-                <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></div></Link></li>
-            <li className="nav-item" onClick={() => this.dismissModal('cart')}> <Link to={'/cart'}><div className="nav-link">
-              <FontAwesomeIcon icon={faShoppingBasket} /><span>{this.props?.cart?.length}</span>
-            </div></Link></li>
+            <li className="nav-item">
+              <Link to={'/wishlist'}><div className="nav-link">
+                <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link></li>
+            <li className="nav-item">
+              <Link to={'/compare'}>
+                <div className="nav-link">
+                  <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></div></Link></li>
+            <li className="nav-item" onClick={() => this.dismissModal('cart')}>
+              <a href="#"> <div className="nav-link">
+                <FontAwesomeIcon icon={faShoppingBasket} /><span>{this.props?.cart?.length}</span>
+              </div></a></li>
           </ul>
         </div >
         <Navbar />

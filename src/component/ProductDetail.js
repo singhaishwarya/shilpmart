@@ -307,7 +307,7 @@ export default class ProductDetail extends React.Component {
                 <div className="related-title">
                   <h3>Related Products</h3>
                 </div>
-                <ShopByType type='product' />
+                <ShopByType type='product'  {...this.props} />
               </div>
             </div>
           </div>

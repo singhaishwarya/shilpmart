@@ -1,6 +1,6 @@
 import React from "react";
 import AliceCarousel from 'react-alice-carousel';
-import ReactStars from 'react-stars'
+import ReactStars from 'react-stars';
 export default class CustomerFeedback extends React.Component {
   constructor() {
     super();
