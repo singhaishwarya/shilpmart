@@ -1,4 +1,5 @@
 import React from "react";
+import AuthService from '../services/AuthService';
 export default class Registration extends React.Component {
 
   constructor(props) {
@@ -6,7 +7,7 @@ export default class Registration extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      fields: [],
+      fields: {},
       errors: {}
     }
   }
@@ -17,48 +18,48 @@ export default class Registration extends React.Component {
     let formIsValid = true;
 
     //Name
-    if (!fields["firstName"]) {
+    if (!fields.first_name) {
       formIsValid = false;
-      errors["firstName"] = "Cannot be empty";
+      errors["first_name"] = "Cannot be empty";
     }
 
-    if (typeof fields["firstName"] !== "undefined") {
-      if (!fields["firstName"].match(/^[a-zA-Z]+$/)) {
+    if (typeof fields.first_name !== "undefined") {
+      if (!fields["first_name"].match(/^[a-zA-Z]+$/)) {
         formIsValid = false;
-        errors["firstName"] = "Only letters";
+        errors["first_name"] = "Only letters";
       }
     }
 
     //Email
-    if (!fields["email"]) {
+    if (!fields.email) {
       formIsValid = false;
       errors["email"] = "Cannot be empty";
     }
 
-    if (typeof fields["email"] !== "undefined") {
-      let lastAtPos = fields["email"].lastIndexOf('@');
-      let lastDotPos = fields["email"].lastIndexOf('.');
+    if (typeof fields.email !== "undefined") {
+      let lastAtPos = fields.email.lastIndexOf('@');
+      let lastDotPos = fields.email.lastIndexOf('.');
 
-      if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["email"].indexOf('@@') === -1 && lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
+      if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields.email.indexOf('@@') === -1 && lastDotPos > 2 && (fields.email.length - lastDotPos) > 2)) {
         formIsValid = false;
         errors["email"] = "Email is not valid";
       }
     }
-    //Contact
-    if (typeof fields["contact"] !== "undefined") {
+    //mobile
+    if (typeof fields.mobile !== "undefined") {
       var pattern = new RegExp(/^[0-9\b]+$/);
 
-      if (!pattern.test(fields["contact"])) {
+      if (!pattern.test(fields.mobile)) {
 
         formIsValid = false;
 
-        errors["contact"] = "Please enter only number.";
+        errors["mobile"] = "Please enter only number.";
 
-      } else if (fields["contact"].length !== 10) {
+      } else if (fields.mobile.length !== 10) {
 
         formIsValid = false;
 
-        errors["contact"] = "Please enter valid contact number.";
+        errors["mobile"] = "Please enter valid mobile number.";
 
       }
     }
@@ -71,7 +72,13 @@ export default class Registration extends React.Component {
     e.preventDefault();
 
     if (this.handleValidation()) {
-      alert("Form submitted");
+      AuthService.register(this.state.fields)
+        .then((result) => {
+
+        })
+        .catch(() => {
+        });
+
     } else {
       alert("Form has errors.")
     }
@@ -148,19 +155,19 @@ export default class Registration extends React.Component {
 
           <div className="col-md-6 col-12 mb-5">
             <h4 className="mb-4">Registration</h4>
-            <form action="#" className="login-card shadow p-4 border rounded" onSubmit={this.signUpSubmit.bind}>
+            <form action="#" className="login-card shadow p-4 border rounded" onSubmit={(e) => this.signUpSubmit(e)}>
               <div className="row">
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="fname">First Name<span>*</span></label>
-                    <input type="text" className="form-control" value={fields["firstName"] || ''} onChange={this.handleChange.bind(this, "firstName")} />
+                    <input type="text" className="form-control" value={fields.first_name || ''} onChange={this.handleChange.bind(this, "first_name")} />
 
-                    {/* <input type="text" onChange={this.handleChange.bind(this, "firstName")} value={} className="form-control" /> */}
+                    {/* <input type="text" onChange={this.handleChange.bind(this, "first_name")} value={} className="form-control" /> */}
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="lname">Last Name<span>*</span></label>
-                    <input type="text" onChange={this.handleChange.bind(this, "lastName")} value={fields["lastName"] || ''} className="form-control" />
+                    <input type="text" onChange={this.handleChange.bind(this, "last_name")} value={fields.last_name || ''} className="form-control" />
 
                   </div>
                 </div>
@@ -169,13 +176,13 @@ export default class Registration extends React.Component {
               <div className="row">
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="email">Email<span>*</span></label>
-                    <input type="email" onChange={this.handleChange.bind(this, "email")} value={fields["email"] || ''} className="form-control" />
+                    <input type="email" onChange={this.handleChange.bind(this, "email")} value={fields.email || ''} className="form-control" />
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="mNo">Mobile No.<span>*</span></label>
-                    <input type="tel" onChange={this.handleChange.bind(this, "contact")} value={fields["contact"] || 0} className="form-control" />
+                    <input type="tel" onChange={this.handleChange.bind(this, "mobile")} value={fields.mobile || ''} className="form-control" />
 
                   </div>
                 </div>
@@ -184,22 +191,20 @@ export default class Registration extends React.Component {
               <div className="row">
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="pass">Password<span>*</span></label>
-                    <input type="password" onChange={this.handleChange.bind(this, "password")} value={fields["password"] || 0} className="form-control" />
+                    <input type="password" onChange={this.handleChange.bind(this, "password")} value={fields.password || ''} className="form-control" />
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="cpass">Confirm Password<span>*</span></label>
-                    <input type="password" onChange={this.handleChange.bind(this, "confirmPassword")} value={fields["confirmPassword"] || 0} className="form-control" />
+                    <input type="password" onChange={this.handleChange.bind(this, "c_password")} value={fields.c_password || ''} className="form-control" />
 
                   </div>
                 </div>
               </div>
               <fieldset>
-                <button className="btn login-btn" value="Submit">Register</button>
+                <button className="btn login-btn" value="Submit"  >Register</button>
               </fieldset>
-              {/* <input type="button" className="btn login-btn" value="Register" /> */}
-
             </form>
           </div>
 

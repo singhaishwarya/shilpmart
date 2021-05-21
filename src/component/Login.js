@@ -1,12 +1,68 @@
-import React from "react";
+import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import Auth from '../Auth';
+import { connect } from 'react-redux';
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import AuthService from '../services/AuthService';
+import CheckButton from "react-validation/build/button";
+import * as authAction from '../actions/auth';
 
-export default class Login extends React.Component {
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
+class Login extends Component {
+  constructor(props) {
+    super(props);
 
-  login = (event) => {
-    Auth.authenticate();
-    localStorage.setItem('isLoggedIn', Auth.getAuth());
+    this.handleLogin = this.handleLogin.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+
+    this.state = {
+      username: "",
+      password: "",
+      loading: false,
+    };
+  }
+
+
+  onChangeUsername = (e) => {
+    this.setState({
+      username: e.target.value,
+    });
+  }
+
+  onChangePassword = (e) => {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+
+
+  handleLogin = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      loading: true,
+    });
+
+    this.form.validateAll();
+
+    const { username, password } = this.state;
+    AuthService.login({ username: username, password: password })
+      .then((result) => {
+
+        result && this.props.userDetail(result.data);
+      })
+      .catch((err) => {
+        console.log("errrr", err)
+      });
 
     this.props.dismissModal('login');
   }
@@ -18,25 +74,74 @@ export default class Login extends React.Component {
   }
 
   render() {
+    const { isLoggedIn,
+      // message 
+    } = this.props;
+
+    if (isLoggedIn) {
+      // return <Redirect to="/profile" />;
+    }
     return (
       <><div className="login-card">
         <h4 className="modal-title">Sign in</h4>
-
-        <form action="#!">
+        <Form
+          onSubmit={this.handleLogin}
+          ref={(c) => {
+            this.form = c;
+          }}
+        >
           <div className="form-group">
-            <label htmlFor="email" className="sr-only">Email</label>
-            <input type="email" name="email" className="form-control" autoComplete="on" placeholder="Email address" />
+            <label htmlFor="username">Username</label>
+            <Input
+              type="text"
+              className="form-control"
+              name="username"
+              value={this.state.username}
+              onChange={this.onChangeUsername}
+              validations={[required]}
+            />
           </div>
-          <div className="form-group mb-4">
-            <label htmlFor="password" className="sr-only">Password</label>
-            <input type="password" name="password" className="form-control" autoComplete="on" placeholder="***********" />
-          </div> <div className="forgot-password-link" onClick={this.login} >
-            <input name="login" className="btn btn-block login-btn mb-4" type="button" value="Login" /></div>
-        </form>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <Input
+              type="password"
+              className="form-control"
+              name="password"
+              value={this.state.password}
+              onChange={this.onChangePassword}
+              validations={[required]}
+            />
+          </div>
+
+          <div className="form-group">
+            <button
+              className="btn btn-primary btn-block"
+              disabled={this.state.loading}
+            >
+              {this.state.loading && (
+                <span className="spinner-border spinner-border-sm"></span>
+              )}
+              <span>Login</span>
+            </button>
+          </div>
+          <CheckButton
+            style={{ display: "none" }}
+            ref={(c) => { this.checkBtn = c; }}
+          />
+        </Form>
        Forgot password?
-        <p className="login-card-footer-text">Don't have an account? <Link to={'/buyer-registration'} onClick={this.handleChange} >Register here</Link></p>
+        <p className="login-card-footer-text">Don't have an account? <Link to={'/buyer-registration'} onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
       </div>
       </>
     )
   };
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userDetail: user => dispatch(authAction.userDetail(user))
+  }
+};
+
+export default connect(null, mapDispatchToProps)(Login);

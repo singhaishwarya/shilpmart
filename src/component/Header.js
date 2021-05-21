@@ -52,7 +52,7 @@ class Header extends Component {
       setIsOpen: false,
       shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/'],
       title: 'eShilpmart',
-      isLoggedIn: localStorage.getItem('isLoggedIn'),
+      isLoggedIn: this.props.userData,
       menuOptions: [
         {
           label:
@@ -255,13 +255,20 @@ class Header extends Component {
             </div>
           </div>
           <ul className="navbar-nav flex-row">
-            {isLoggedIn ? <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
+            {this.props.userData.token ? <ui className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
               onMouseLeave={() => this.setIsMenuShown(false)} >My Account
-              {isMenuShown && (<ReactMegaMenu
-                tolerance={50}
-                direction={"DOWN"}
-                data={menuOptions}
-              />)} </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
+              {isMenuShown && (
+                <>
+                  <Link to='/my-account/order'> <li>Orders</li></Link>
+                  <Link to='/my-account/settings'><li>Settings</li></Link>
+                </>
+                // <ReactMegaMenu
+                //   tolerance={50}
+                //   direction={"DOWN"}
+                //   data={menuOptions}
+                // />
+              )
+              } </ui> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
             <li className="nav-item">
               <Link to={'/wishlist'}><div className="nav-link">
                 <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link></li>
@@ -285,7 +292,8 @@ const mapStateToProps = state => {
   return {
     wishlist: state.wishlist,
     compare: state.compare,
-    cart: state.cart
+    cart: state.cart,
+    userData: state.userData
   }
 };
 export default connect(mapStateToProps, null)(Header);
