@@ -269,7 +269,7 @@ class Header extends Component {
           </div>
           <ul className="navbar-nav flex-row">
             {this.props.userData.token ? <ui className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
-              onMouseLeave={() => this.setIsMenuShown(false)} >My Account
+              onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
               {isMenuShown &&
                 <>
                   <Link to='/my-account/order'> <li>Orders</li></Link>

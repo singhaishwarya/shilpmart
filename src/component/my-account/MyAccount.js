@@ -6,7 +6,7 @@ export default class MyAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      accountSidebar: [{ title: 'Dashboard', class: 'dashboard', route: '/my-account/order' },
+      accountSidebar: [{ title: 'Dashboard', class: 'dashboard', route: '/my-account/dashboard' },
       { title: 'Orders', class: 'order', route: '/my-account/order' },
       { title: 'Address', class: 'address', route: '/my-account/address' },
       { title: 'Account Details', class: 'account-details', route: '/my-account/details' },

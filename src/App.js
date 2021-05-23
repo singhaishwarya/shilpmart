@@ -15,10 +15,12 @@ import Cart from './component/Cart';
 import MyAccount from './component/my-account/MyAccount';
 import Orders from './component/my-account/Orders';
 import Settings from './component/my-account/Settings';
-import Address from './component/my-account/Address';
+import Address from './component/my-account/Address/Address';
+import AddAddress from './component/my-account/Address/AddAddress';
 import AccountDetails from './component/my-account/AccountDetails';
 import Support from './component/my-account/Support';
 import Inquiry from './component/my-account/Inquiry';
+import MyDashboard from './component/my-account/Dashboard';
 import "./public/bootstrap.min.css";
 import "./public/jbility.css";
 import "./index.css";
@@ -52,13 +54,15 @@ class App extends Component {
           <MyAccount>
             <Route component={({ match }) =>
               <>
-                <PrivateRoute isAuthenticated={userData} path='/order' component={Orders} />
-                <PrivateRoute isAuthenticated={userData} path='/settings' component={Settings} />
-                <PrivateRoute isAuthenticated={userData} path='/address' component={Address} />
-                <PrivateRoute isAuthenticated={userData} path='/details' component={AccountDetails} />
-                <PrivateRoute isAuthenticated={userData} path='/support-tickets' component={Support} />
-                <PrivateRoute isAuthenticated={userData} path='/inquiry' component={Inquiry} />
-                <PrivateRoute isAuthenticated={userData} path='/wishlist' component={Wishlist} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/dashboard' component={MyDashboard} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/order' component={Orders} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/settings' component={Settings} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/address' component={Address} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/add-address' component={AddAddress} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/details' component={AccountDetails} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/support-tickets' component={Support} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/inquiry' component={Inquiry} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/wishlist' component={Wishlist} />
               </>
             } />
           </MyAccount>
