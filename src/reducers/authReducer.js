@@ -6,9 +6,7 @@ export default function authReducer(state = {}, action) {
       return action.user;
 
     case actionTypes.LOGOUT:
-      return state.filter((data, i) =>
-        data.id !== action.id
-      );
+      return action.user = {};
 
     default:
       return state;

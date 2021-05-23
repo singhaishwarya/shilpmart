@@ -2,15 +2,16 @@ import axios from 'axios';
 import { Component } from "react";
 import { baseUrl, config } from './index.js';
 
-export default class ProductService extends Component {
-  static fetchAllProducts = async (data) => {
-    try {
-      config.url = baseUrl + 'products';
-      config.method = 'get';
-      config.params = data;
+export default class CartService extends Component {
 
+  static add = async (data) => {
+    try {
+
+      config.url = baseUrl + 'cart-item-add-remove';
+      config.method = 'post';
+      config.data = data;
       const response = await axios(config);
-      return response.data.data ? response.data.data.data : [];
+      return response.data ? response.data.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;

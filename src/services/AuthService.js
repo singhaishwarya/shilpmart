@@ -1,23 +1,12 @@
 import axios from "axios";
 import { Component } from "react";
-
-const BASE_URL = 'https://admin.digitalindiacorporation.in/api/';
-
-const config = {
-  method: 'post',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }
-};
+import { baseUrl, config } from './index.js';
 
 export default class AuthService extends Component {
 
   static login = async (data) => {
     try {
-      config.data = data;
-      config.url = BASE_URL + 'mobile-login';
-      const response = await axios(config);
+      const response = await axios.post(baseUrl + `mobile-login`, data, config);
       return response.data ? response.data : [];
     } catch (error) {
       const { response } = error;
@@ -29,24 +18,19 @@ export default class AuthService extends Component {
   static register = async (data) => {
 
     try {
-
-      config.data = data;
-      config.url = BASE_URL + 'mobile-register';
-
-      const response = await axios(config);
-      return response.data ? response.data.data : [];
+      const response = await axios.post(baseUrl + `mobile-register`, data, config);
+      return response.data ? response.data : [];
     } catch (error) {
       const { response } = error;
-      if (!response) return;
-      console.log(`FETCH GET ERROR`, response);
+      if (!response) { console.log(`FETCH GET ERROR`, response); return; }
+      return response.data ? response.data : [];
     }
   }
 
-  static logout = async (data) => {
+  static logout = async () => {
     try {
-
-      config.data = data;
-      config.url = BASE_URL + 'mobile-logout';
+      config.url = baseUrl + 'mobile-logout';
+      config.method = 'post';
 
       const response = await axios(config);
       return response.data ? response.data.data : [];
@@ -56,6 +40,7 @@ export default class AuthService extends Component {
       console.log(`FETCH GET ERROR`, response);
     }
   }
+
 }
 
 

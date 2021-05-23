@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import AuthService from '../services/AuthService';
-import CheckButton from "react-validation/build/button";
 import * as authAction from '../actions/auth';
 
 const required = (value) => {
@@ -27,7 +26,7 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      loading: false,
+      errorMsg: ''
     };
   }
 
@@ -48,41 +47,27 @@ class Login extends Component {
   handleLogin = (e) => {
     e.preventDefault();
 
-    this.setState({
-      loading: true,
-    });
-
     this.form.validateAll();
 
     const { username, password } = this.state;
     AuthService.login({ username: username, password: password })
       .then((result) => {
-
+        if (!result) {
+          this.setState({ errorMsg: "The password you entered for the username " + username + " is incorrect" });
+          return;
+        }
         result && this.props.userDetail(result.data);
+        this.props.dismissModal('login');
       })
       .catch((err) => {
-        console.log("errrr", err)
+        console.error(err);
       });
-
-    this.props.dismissModal('login');
-  }
-
-  register = (event) => {
-    // Auth.authenticate();
-    console.log("register");
-    // this.props.onClick();
   }
 
   render() {
-    const { isLoggedIn,
-      // message 
-    } = this.props;
-
-    if (isLoggedIn) {
-      // return <Redirect to="/profile" />;
-    }
+    const { errorMsg } = this.state
     return (
-      <><div className="login-card">
+      <div className="login-card">
         <h4 className="modal-title">Sign in</h4>
         <Form
           onSubmit={this.handleLogin}
@@ -112,7 +97,7 @@ class Login extends Component {
               validations={[required]}
             />
           </div>
-
+          <div>{errorMsg}</div>
           <div className="form-group">
             <button
               className="btn btn-primary btn-block"
@@ -124,15 +109,11 @@ class Login extends Component {
               <span>Login</span>
             </button>
           </div>
-          <CheckButton
-            style={{ display: "none" }}
-            ref={(c) => { this.checkBtn = c; }}
-          />
+
         </Form>
        Forgot password?
         <p className="login-card-footer-text">Don't have an account? <Link to={'/buyer-registration'} onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
       </div>
-      </>
     )
   };
 }

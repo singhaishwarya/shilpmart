@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faRandom, faHeart, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 // import ReactPaginate from 'react-paginate';
 import ProductService from '../services/ProductService';
 import { Link } from "react-router-dom";
@@ -9,12 +6,13 @@ import { connect } from 'react-redux';
 import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
-
+import ProductTile from './ProductTile';
 class ProductGrid extends Component {
   constructor(props) {
     super(props);
+    console.log("Demoprops===", props)
     this.state = {
-      pathname: props.location.pathname,
+      pathname: props?.location?.pathname,
       offset: 0,
       productsData: [],
       currentPage: 0,
@@ -106,7 +104,7 @@ class ProductGrid extends Component {
     this.props.addToWishlist(product);
 
   }
-  removeWishlist = (index, product) => {
+  deleteWishlist = (index, product) => {
 
     this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
     this.props.deleteWishlist(product.id);
@@ -151,7 +149,7 @@ class ProductGrid extends Component {
 
     const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, per_page, } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
-
+    console.log("DemohistoryProps", pathname)
     return (
       <>
         {(pathname !== "/wishlist" && productListData?.length > 0) &&
@@ -208,35 +206,8 @@ class ProductGrid extends Component {
           {productListData?.length > 0 ? productListData?.map((item, index) => {
             return (
               <div key={index} className={layout} >
-                <div className="product-wrapper">
-                  <div className="prodcut-img" onClick={() => this.handlePostDetail(item.id)}>
-                    <a href="#">
-                      <img src={item.images[0]?.image_url} className="img-fluid"
-                        alt={item.images[0]?.caption}
-                        onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
-                      /></a>
-                  </div>
-                  <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
-                  <div className="shop-wrapper">
-                    <div className="shopBtn">
-                      <div className="shop-btn"><span>
-                        <FontAwesomeIcon icon={faCartPlus} onClick={() => { this.props.addToCart(item) }} /></span></div>
-                      <div className="shop-btn"><span>
-                        <FontAwesomeIcon icon={faRandom} onClick={() => { this.props.addToCompare(item) }} />
-                      </span></div>
-                      <div className="shop-btn"><span>
-                        <FontAwesomeIcon
-                          icon={this.props.wishlist.find(element => element.id === item.id) ? faHeart : farHeart}
-                          onClick={() => { this.props.wishlist.find(element => element.id === item.id) ? this.removeWishlist(index, item) : this.wishlistToggle(index, item) }}
-                        /></span>
-                      </div></div>
-                  </div>
-                  <h5 className="product-title">{item.content?.title}</h5>
-                  <span className="product-price">
-                    <FontAwesomeIcon icon={faRupeeSign} />
-                    {item.price[0]?.price}</span>
-                </div>
-              </div>
+
+                <ProductTile data={item} {...this.props} /></div>
             )
           }) : <span>No products were found matching your selection.</span>}
         </div>

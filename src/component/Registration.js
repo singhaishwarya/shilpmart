@@ -1,88 +1,92 @@
 import React from "react";
 import AuthService from '../services/AuthService';
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import validator from 'validator';
+
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
+
+const mobile = (value) => {
+  // var pattern = new RegExp(/(\+*)((0[ -]+)*|(91 )*)(\d{12}+|\d{10}+))|\d{5}([- ]*)\d{6}/);
+  // console.log('====', value, pattern.test(value), '=====', 10 > value.length > 10)
+  if (value.length !== 10) {
+    // if (!validator.isMobilePhone(value, 'en-IN')) {
+    return <div className="alert alert-danger" role="alert">
+      Length of mobile number should be numeric and contain 10 digit.
+      </div>
+    // );
+  }
+};
+
+const email = (value) => {
+  if (!validator.isEmail(value)) {
+    return <div className="alert alert-danger" role="alert">
+      Enter a valide email sould be contain maximum length 50 (example@domainname)
+         </div>
+  }
+};
+
+const lt50 = (value) => {
+  if (0 < value.length >= 50) {
+    return <div className="alert alert-danger" role="alert"> It must be string & contain maximum length 50 char.</div>
+  }
+};
+
+const isValidpassword = (value) => {
+  var pattern = new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$/);
+  if (!pattern.test(value)) {
+    return <div className="alert alert-danger" role="alert">  Password must contain at leaset eight alpha numaric and one special char and contain one special char</div>
+
+  }
+}
+
 export default class Registration extends React.Component {
 
   constructor(props) {
     super(props);
 
+    this.handleSignUp = this.handleSignUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
     this.state = {
-      fields: {},
+      fields: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        c_password: '',
+        mobile: ''
+      },
       errors: {}
     }
   }
 
-  handleValidation() {
-    let fields = this.state.fields;
-    let errors = {};
-    let formIsValid = true;
-
-    //Name
-    if (!fields.first_name) {
-      formIsValid = false;
-      errors["first_name"] = "Cannot be empty";
-    }
-
-    if (typeof fields.first_name !== "undefined") {
-      if (!fields["first_name"].match(/^[a-zA-Z]+$/)) {
-        formIsValid = false;
-        errors["first_name"] = "Only letters";
-      }
-    }
-
-    //Email
-    if (!fields.email) {
-      formIsValid = false;
-      errors["email"] = "Cannot be empty";
-    }
-
-    if (typeof fields.email !== "undefined") {
-      let lastAtPos = fields.email.lastIndexOf('@');
-      let lastDotPos = fields.email.lastIndexOf('.');
-
-      if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields.email.indexOf('@@') === -1 && lastDotPos > 2 && (fields.email.length - lastDotPos) > 2)) {
-        formIsValid = false;
-        errors["email"] = "Email is not valid";
-      }
-    }
-    //mobile
-    if (typeof fields.mobile !== "undefined") {
-      var pattern = new RegExp(/^[0-9\b]+$/);
-
-      if (!pattern.test(fields.mobile)) {
-
-        formIsValid = false;
-
-        errors["mobile"] = "Please enter only number.";
-
-      } else if (fields.mobile.length !== 10) {
-
-        formIsValid = false;
-
-        errors["mobile"] = "Please enter valid mobile number.";
-
-      }
-    }
-
-    this.setState({ errors: errors });
-    return formIsValid;
-  }
-
-  signUpSubmit(e) {
+  handleSignUp(e) {
     e.preventDefault();
+    AuthService.register(this.state.fields)
+      .then((result) => {
 
-    if (this.handleValidation()) {
-      AuthService.register(this.state.fields)
-        .then((result) => {
+        if (!result) return
 
-        })
-        .catch(() => {
-        });
-
-    } else {
-      alert("Form has errors.")
-    }
-
+        if (result.success) {
+          this.props.history.push({
+            pathname: '/'
+          });
+        }
+        else {
+          alert(Object.values(result.data)[0])
+        }
+      })
+      .catch(() => {
+      });
   }
 
   handleChange(field, e) {
@@ -93,6 +97,7 @@ export default class Registration extends React.Component {
 
   render() {
     const { fields } = this.state
+    console.log("=====", this.form?.validateAll())
     return (
 
       <div className="container-fluid">
@@ -155,19 +160,37 @@ export default class Registration extends React.Component {
 
           <div className="col-md-6 col-12 mb-5">
             <h4 className="mb-4">Registration</h4>
-            <form action="#" className="login-card shadow p-4 border rounded" onSubmit={(e) => this.signUpSubmit(e)}>
-              <div className="row">
+            {/* <form action="#" className="login-card shadow p-4 border rounded" onSubmit={(e) => this.handleSignUp(e)}>
+              <div className="row"> */}
+
+            <Form
+              onSubmit={this.handleSignUp}
+              ref={(c) => { this.form = c; }}
+            > <div className="row">
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="fname">First Name<span>*</span></label>
-                    <input type="text" className="form-control" value={fields.first_name || ''} onChange={this.handleChange.bind(this, "first_name")} />
-
-                    {/* <input type="text" onChange={this.handleChange.bind(this, "first_name")} value={} className="form-control" /> */}
-
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="first_name"
+                      value={fields.first_name}
+                      onChange={this.handleChange.bind(this, "first_name")}
+                      validations={[required, lt50]}
+                    />
+                    {/* <input type="text" className="form-control" value={fields.first_name || ''} onChange={this.handleChange.bind(this, "first_name")} /> */}
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="lname">Last Name<span>*</span></label>
-                    <input type="text" onChange={this.handleChange.bind(this, "last_name")} value={fields.last_name || ''} className="form-control" />
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="last_name"
+                      value={fields.last_name}
+                      onChange={this.handleChange.bind(this, "last_name")}
+                      validations={[required, lt50]}
+                    />
+                    {/* <input type="text" onChange={this.handleChange.bind(this, "last_name")} value={fields.last_name || ''} className="form-control" /> */}
 
                   </div>
                 </div>
@@ -176,13 +199,29 @@ export default class Registration extends React.Component {
               <div className="row">
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="email">Email<span>*</span></label>
-                    <input type="email" onChange={this.handleChange.bind(this, "email")} value={fields.email || ''} className="form-control" />
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="email"
+                      value={fields.email}
+                      onChange={this.handleChange.bind(this, "email")}
+                      validations={[required, email, lt50]}
+                    />
+                    {/* <input type="email" onChange={this.handleChange.bind(this, "email")} value={fields.email || ''} className="form-control" /> */}
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="mNo">Mobile No.<span>*</span></label>
-                    <input type="tel" onChange={this.handleChange.bind(this, "mobile")} value={fields.mobile || ''} className="form-control" />
+                    <Input
+                      type="number"
+                      className="form-control"
+                      name="mobile"
+                      value={fields.mobile}
+                      onChange={this.handleChange.bind(this, "mobile")}
+                      validations={[required, mobile]}
+                    />
+                    {/* <input type="number" onChange={this.handleChange.bind(this, "mobile")} value={fields.mobile || ''} className="form-control" /> */}
 
                   </div>
                 </div>
@@ -191,13 +230,29 @@ export default class Registration extends React.Component {
               <div className="row">
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="pass">Password<span>*</span></label>
-                    <input type="password" onChange={this.handleChange.bind(this, "password")} value={fields.password || ''} className="form-control" />
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="password"
+                      value={fields.password}
+                      onChange={this.handleChange.bind(this, "password")}
+                      validations={[required, isValidpassword]}
+                    />
+                    {/* <input type="password" onChange={this.handleChange.bind(this, "password")} value={fields.password || ''} className="form-control" /> */}
 
                   </div>
                 </div>
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="cpass">Confirm Password<span>*</span></label>
-                    <input type="password" onChange={this.handleChange.bind(this, "c_password")} value={fields.c_password || ''} className="form-control" />
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="c_password"
+                      value={fields.c_password}
+                      onChange={this.handleChange.bind(this, "c_password")}
+                      validations={[required, isValidpassword]}
+                    />
+                    {/* <input type="password" onChange={this.handleChange.bind(this, "c_password")} value={fields.c_password || ''} className="form-control" /> */}
 
                   </div>
                 </div>
@@ -205,12 +260,8 @@ export default class Registration extends React.Component {
               <fieldset>
                 <button className="btn login-btn" value="Submit"  >Register</button>
               </fieldset>
-            </form>
+            </Form>
           </div>
-
-
-
-
         </div>
       </div>
 

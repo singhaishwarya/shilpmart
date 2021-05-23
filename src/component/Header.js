@@ -15,9 +15,10 @@ import {
   LinkedinShareButton
 } from "react-share";
 import ProductService from '../services/ProductService';
-import ReactMegaMenu from "react-mega-menu"
 import CategoryService from '../services/CategoryService';
 import { connect } from 'react-redux';
+import AuthService from '../services/AuthService';
+import * as authAction from '../actions/auth';
 
 const customLoginStyles = {
   content: {
@@ -167,6 +168,18 @@ class Header extends Component {
       ));
   };
 
+  logout = () => {
+    console.log("Demo logout")
+    AuthService.logout()
+      .then((result) => {
+
+        this.props.logout();
+      })
+      .catch((err) => {
+        console.log("errrr", err)
+      });
+  }
+
   render() {
     const { searchQuery, showModal, shareUrl, title, isLoggedIn, menuOptions, isMenuShown, overlayType } = this.state;
 
@@ -257,17 +270,17 @@ class Header extends Component {
           <ul className="navbar-nav flex-row">
             {this.props.userData.token ? <ui className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
               onMouseLeave={() => this.setIsMenuShown(false)} >My Account
-              {isMenuShown && (
+              {isMenuShown &&
                 <>
                   <Link to='/my-account/order'> <li>Orders</li></Link>
                   <Link to='/my-account/settings'><li>Settings</li></Link>
+                  <Link onClick={() => this.logout()}>Log-Out</Link>
                 </>
                 // <ReactMegaMenu
                 //   tolerance={50}
                 //   direction={"DOWN"}
                 //   data={menuOptions}
                 // />
-              )
               } </ui> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
             <li className="nav-item">
               <Link to={'/wishlist'}><div className="nav-link">
@@ -296,4 +309,12 @@ const mapStateToProps = state => {
     userData: state.userData
   }
 };
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: user => dispatch(authAction.logout(user))
+  }
+};
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

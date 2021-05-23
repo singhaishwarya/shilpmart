@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import AliceCarousel from 'react-alice-carousel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRupeeSign, faCartPlus, faRandom, faHeart } from '@fortawesome/free-solid-svg-icons'
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import CategoryService from '../services/CategoryService';
 import ProductService from '../services/ProductService';
 import { connect } from 'react-redux';
 import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
+import ProductTile from './ProductTile';
 
 class ShopByType extends Component {
   constructor(props) {
@@ -57,49 +55,31 @@ class ShopByType extends Component {
     });
   }
 
+  // addWishlistApi = (id) => {
+  //   WishlistService.add({ product_id: id }).then((result) => {
+  //   })
+  // }
+  // deleteWishlistApi = (id) => {
+
+  // }
+  // addCartApi = (id) => {
+  //   CartService.add({ product_id: id, quantity: 1, variation_index: 0 }).then((result) => {
+  //   })
+  // }
+  // addCompareApi = (id) => {
+  //   CompareService.add({ product_id: id }).then((result) => {
+  //   })
+  // }
   getProductsList = () => {
-    const { wishlistStatus, hoveredItem } = this.state;
     ProductService.fetchAllProducts().then((result) => {
       this.setState({
-        shopByProductItems: result?.map((item, index) =>
-        (<div className="product-wrapper" key={index} >
-          <div className="prodcut-img" onClick={() => this.productDetail(item.id)}>
-            <a href="#">
-              <img src={item.images[0]?.image_url}
-                className="img-fluid"
-                onClick={() => this.productDetail(item.id)}
-                alt={item.images[0]?.caption}
-                onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
-              />
-            </a>
-          </div>
-          <div className="shop-wrapper">
-            <div className="shopBtn">
-              <div className="shop-btn"><span>
-                <FontAwesomeIcon icon={faCartPlus} onClick={() => { this.props.addToCart(item) }} /></span></div>
-              <div className="shop-btn"><span>
-                <FontAwesomeIcon icon={faRandom} onClick={() => { this.props.addToCompare(item) }} />
-              </span></div>
-              <div className="shop-btn"><span>
-                <FontAwesomeIcon
-                  icon={this.props.wishlist.find(element => element.id === item.id) ? faHeart : farHeart}
-                  onClick={() => { this.props.wishlist.find(element => element.id === item.id) ? this.removeWishlist(index, item) : this.wishlistToggle(index, item) }}
-                />
-              </span></div>
-            </div>
-          </div>
-          <div className="prdocut-dis-lable"><span>{item.discount}%</span></div>
-          <h5 className="product-title"><a href="#">{item.content?.title}</a></h5>
-          <span className="product-price">
-            <FontAwesomeIcon icon={faRupeeSign} /> {item.price[0]?.price}
-          </span>
-        </div>))
+        shopByProductItems: result?.map((item) =>
+          (<ProductTile data={item} {...this.props} />))
       })
     })
   }
 
   productDetail = (value) => {
-    console.log("demo", this.props)
     this.props.history.push({
       pathname: '/product-detail',
       search: "?pid=" + value
@@ -113,18 +93,7 @@ class ShopByType extends Component {
     });
   }
 
-  wishlistToggle = (index, product) => {
-    this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
-    this.props.addToWishlist(product);
 
-  }
-
-  removeWishlist = (index, product) => {
-
-    this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
-    this.props.deleteWishlist(product.id);
-
-  }
 
   render() {
     const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
@@ -151,7 +120,8 @@ class ShopByType extends Component {
 
 const mapStateToProps = state => {
   return {
-    wishlist: state.wishlist
+    wishlist: state.wishlist,
+    userData: state.userData
   }
 };
 
@@ -165,3 +135,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopByType);
+

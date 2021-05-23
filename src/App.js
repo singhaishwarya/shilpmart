@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from "./component/Login";
 import Registration from "./component/Registration";
 import Header from "./component/Header";
@@ -27,38 +27,38 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import 'rc-slider/assets/index.css';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { connect } from 'react-redux';
+import PrivateRoute from './PrivateRoute';
 
 class App extends Component {
   constructor(props) {
     super(props);
-
   }
-
   render() {
+
+    const { userData } = this.props;
     return (
       <BrowserRouter>
         <header><Header /></header>
         <Switch>
-          <Route path='/' component={Dashboard} exact />
-          <Route path='/login' component={Login} exact />
-          <Route path='/buyer-registration' component={Registration} exact />
-          <Route path='/product-list' component={ProductCategory} />
-          <Route path='/product-detail' component={ProductDetail} />
-          <Route path='/seller-profile' component={SellerProfile} exact />
-          <Route path='/wishlist' component={Wishlist} exact />
-          <Route path='/compare' component={Compare} exact />
-          <Route path='/cart' component={Cart} exact />
-          {/* <PrivateRoute path='/my-account/orders' component={Orders} /> */}
+          <Route isAuthenticated={userData} path='/' component={Dashboard} exact />
+          <Route isAuthenticated={userData} path='/login' component={Login} exact />
+          <Route isAuthenticated={userData} path='/buyer-registration' component={Registration} exact />
+          <Route isAuthenticated={userData} path='/product-list' component={ProductCategory} />
+          <Route isAuthenticated={userData} path='/product-detail' component={ProductDetail} />
+          <Route isAuthenticated={userData} path='/seller-profile' component={SellerProfile} exact />
+          <Route isAuthenticated={userData} path='/wishlist' component={Wishlist} exact />
+          <Route isAuthenticated={userData} path='/compare' component={Compare} exact />
+          <Route isAuthenticated={userData} path='/cart' component={Cart} exact />
           <MyAccount>
             <Route component={({ match }) =>
               <>
-                <PrivateRoute path='/my-account/order' component={Orders} />
-                <PrivateRoute path='/my-account/settings' component={Settings} />
-                <PrivateRoute path='/my-account/address' component={Address} />
-                <PrivateRoute path='/my-account/details' component={AccountDetails} />
-                <PrivateRoute path='/my-account/support-tickets' component={Support} />
-                <PrivateRoute path='/my-account/inquiry' component={Inquiry} />
-                <PrivateRoute path='/my-account/wishlist' component={Wishlist} />
+                <PrivateRoute isAuthenticated={userData} path='/order' component={Orders} />
+                <PrivateRoute isAuthenticated={userData} path='/settings' component={Settings} />
+                <PrivateRoute isAuthenticated={userData} path='/address' component={Address} />
+                <PrivateRoute isAuthenticated={userData} path='/details' component={AccountDetails} />
+                <PrivateRoute isAuthenticated={userData} path='/support-tickets' component={Support} />
+                <PrivateRoute isAuthenticated={userData} path='/inquiry' component={Inquiry} />
+                <PrivateRoute isAuthenticated={userData} path='/wishlist' component={Wishlist} />
               </>
             } />
           </MyAccount>
@@ -68,22 +68,6 @@ class App extends Component {
     );
   }
 }
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      props.userData ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login"
-          }}
-        />
-      )
-    }
-  />
-)
 
 const mapStateToProps = state => {
   return {
@@ -91,5 +75,5 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, null)(App);
 
