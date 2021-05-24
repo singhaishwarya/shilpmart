@@ -64,8 +64,7 @@ export default class Registration extends React.Component {
         password: '',
         c_password: '',
         mobile: ''
-      },
-      errors: {}
+      }
     }
   }
 
@@ -231,7 +230,7 @@ export default class Registration extends React.Component {
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="pass">Password<span>*</span></label>
                     <Input
-                      type="text"
+                      type="password"
                       className="form-control"
                       name="password"
                       value={fields.password}
