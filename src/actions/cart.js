@@ -1,4 +1,4 @@
-import { FETCH_CART, ADD_TO_CART, REMOVE_CART } from './types';
+import { ADD_TO_CART, REMOVE_CART, EMPTY_CART } from './types';
 
 export const addToCart = (product) => {
   return {
@@ -7,16 +7,15 @@ export const addToCart = (product) => {
   }
 };
 
-export const fetchCart = (product) => {
-  return {
-    type: FETCH_CART,
-    product: product
-  }
-};
-
 export const deleteCart = (id) => {
   return {
     type: REMOVE_CART,
     id: id
+  }
+}
+
+export const emptyCart = () => {
+  return {
+    type: EMPTY_CART
   }
 }

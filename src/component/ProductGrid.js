@@ -231,7 +231,8 @@ class ProductGrid extends Component {
 
 const mapStateToProps = state => {
   return {
-    wishlist: state.wishlist
+    wishlist: state.wishlist,
+    userData: state.userData
   }
 };
 

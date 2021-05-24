@@ -13,8 +13,9 @@ export default function cartReducer(state = [], action) {
         data.id !== action.id
       );
 
-    case actionTypes.FETCH_CART:
-      return action.product;
+    case actionTypes.EMPTY_CART:
+      return action.cart.splice(0, action.cart.length);
+
 
     default:
       return state;

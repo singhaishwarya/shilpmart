@@ -19,7 +19,9 @@ import CategoryService from '../services/CategoryService';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import * as authAction from '../actions/auth';
-
+import * as wishlistAction from '../actions/wishlist';
+import * as compareAction from '../actions/compare';
+import * as cartAction from '../actions/cart';
 const customLoginStyles = {
   content: {
     top: '50%',
@@ -173,6 +175,9 @@ class Header extends Component {
       .then((result) => {
 
         this.props.logout();
+        this.props.emptyCart();
+        this.props.emptyWishlist();
+        this.props.emptyCompare();
       })
       .catch((err) => {
         console.log("errrr", err)
@@ -273,7 +278,7 @@ class Header extends Component {
                 <>
                   <Link to='/my-account/order'> <li>Orders</li></Link>
                   <Link to='/my-account/settings'><li>Settings</li></Link>
-                  <Link onClick={() => this.logout()}>Log-Out</Link>
+                  <Link to="" onClick={() => this.logout()}>Log-Out</Link>
                 </>
                 // <ReactMegaMenu
                 //   tolerance={50}
@@ -310,10 +315,13 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: user => dispatch(authAction.logout(user))
+    logout: user => dispatch(authAction.logout(user)),
+    emptyWishlist: index => dispatch(wishlistAction.emptyWishlist(index)),
+    emptyCart: index => dispatch(cartAction.emptyCart(index)),
+    emptyCompare: index => dispatch(compareAction.emptyCompare(index)),
+
+
   }
 };
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

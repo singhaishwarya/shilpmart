@@ -10,17 +10,15 @@ class Wishlist extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      wishlistData: this.props.wishlist || []
-    }
   }
+
   componentDidMount() {
     const { userData, wishlist } = this.props;
     if (Object.keys(userData).length > 0) {
-      if (wishlist.length > 0) {
+      if (wishlist[0].length > 0) {
         let productids = [];
-        wishlist.map((item) => {
-          this.props.deleteWishlist(item.id)
+
+        wishlist[0].map((item) => {
           productids.push(item.id)
         })
         this.addToWishlist(productids);
@@ -37,14 +35,15 @@ class Wishlist extends Component {
     });
   }
 
-  deleteWishlist(e, item) {
-    e.preventDefault();
-    Object.keys(this.props.userData).length > 0 ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id);
+  deleteWishlist(item) {
+    Object.keys(this.props.userData).length > 0 ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id)
   }
+
   deleteWishlistApi(item) {
-    WishlistService.deleteWishlist({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
-      this.getWishlist()
-    });
+    this.props.deleteWishlist(item.id)
+    // WishlistService.deleteWishlist({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
+    this.getWishlist()
+    // });
   }
 
   getWishlist = () => {
@@ -53,26 +52,27 @@ class Wishlist extends Component {
       result && result.map((item) => (
         productids?.push(item.product_id)
       ))
-      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        this.setState({
-          wishlistData: result1
-        })
-      })
+      //   ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+      //     // this.setState({
+      //     //   wishlistData: result1
+      //     // })
+      //     this.props.addToWishlist(result1);
+      //   })
     })
   }
 
   render() {
-    const { wishlistData } = this.state
+    const { wishlist } = this.props
     return (
       <div className="container" >
-        { (wishlistData?.length > 0) ? (<>
+        { (wishlist?.length > 0) ? (<>
           <span>YOUR PRODUCTS WISHLIST</span>
           <div className='row py-2'>
-            {wishlistData?.map((item, index) => {
+            {wishlist?.map((item, index) => {
               return (
                 <div key={index} className='col-lg-3 col-sm-6 col-6' >
                   <a href="#" className="remove-item" onClick={() => {
-                    this.props.deleteWishlist(item)
+                    this.deleteWishlist(item)
                   }}>Remove</a>
                   <ProductTile data={item} {...this.props} />
                 </div>
@@ -101,7 +101,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addToCart: cart => dispatch(cartAction.addToCart(cart)),
     addToCompare: compare => dispatch(compareAction.addToCompare(compare)),
-    deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index))
+    deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index)),
+    addToWishlist: wishist => dispatch(wishlistAction.addToWishlist(wishist)),
   }
 };
 
