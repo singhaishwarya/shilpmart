@@ -6,7 +6,6 @@ import Select from "react-validation/build/select";
 import validator from 'validator';
 
 const required = (value) => {
-  console.log("Demo==required", value)
   if (!value) {
     return (
       // alert("This field is required!")
@@ -84,7 +83,6 @@ export default class AddAddress extends React.Component {
 
   render() {
     const { fields } = this.state
-    console.log("=====", fields)
     return (
 
       <div className="container-fluid">

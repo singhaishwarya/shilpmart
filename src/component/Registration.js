@@ -16,7 +16,6 @@ const required = (value) => {
 
 const mobile = (value) => {
   // var pattern = new RegExp(/(\+*)((0[ -]+)*|(91 )*)(\d{12}+|\d{10}+))|\d{5}([- ]*)\d{6}/);
-  // console.log('====', value, pattern.test(value), '=====', 10 > value.length > 10)
   if (value.length !== 10) {
     // if (!validator.isMobilePhone(value, 'en-IN')) {
     return <div className="alert alert-danger" role="alert">
@@ -96,7 +95,6 @@ export default class Registration extends React.Component {
 
   render() {
     const { fields } = this.state
-    console.log("=====", this.form?.validateAll())
     return (
 
       <div className="container-fluid">

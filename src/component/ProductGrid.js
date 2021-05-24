@@ -10,7 +10,7 @@ import ProductTile from './ProductTile';
 class ProductGrid extends Component {
   constructor(props) {
     super(props);
-    console.log("Demoprops===", props)
+
     this.state = {
       pathname: props?.location?.pathname,
       offset: 0,
@@ -149,7 +149,6 @@ class ProductGrid extends Component {
 
     const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, per_page, } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
-    console.log("DemohistoryProps", pathname)
     return (
       <>
         {(pathname !== "/wishlist" && productListData?.length > 0) &&

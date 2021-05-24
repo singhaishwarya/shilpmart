@@ -39,9 +39,9 @@ class Wishlist extends Component {
 
   deleteWishlist(e, item) {
     e.preventDefault();
-    Object.keys(this.props.userData).length > 0 ? this.deleteWishlist() : this.props.deleteWishlist(item.id);
+    Object.keys(this.props.userData).length > 0 ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id);
   }
-  deleteWishlist(item) {
+  deleteWishlistApi(item) {
     WishlistService.deleteWishlist({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
       this.getWishlist()
     });

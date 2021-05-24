@@ -169,7 +169,6 @@ class Header extends Component {
   };
 
   logout = () => {
-    console.log("Demo logout")
     AuthService.logout()
       .then((result) => {
 
