@@ -85,20 +85,17 @@ export default class AddAddress extends React.Component {
     return (
 
       <div className="container-fluid">
-        <div className="row py-5">
-
-          <div className="col-md-6 ">
+        <div className="row">
+          <div className="col-lg-6 col-12 login-card">
             <h4 className="mb-4">Add New Address</h4>
-            <Form
-              onSubmit={this.handleAddAddress}
-              ref={(c) => { this.form = c; }}
-            > <div className="row">
-                <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="fname">Country<span>*</span></label>
+            <Form onSubmit={this.handleAddAddress} ref={(c) => { this.form = c; }} > 
+              <div className="row">
+                <div className="col-12">
+                  <div className="form-group">
+                    <label htmlFor="fname">Country<span>*</span></label>
                     <Select name='country' value={fields.country}
                       onChange={this.handleChange.bind(this, "country")}
-                      validations={[required]}
-                    >
+                      validations={[required]} className="form-control">
                       <option value=''>Choose your city</option>
                       <option value='1'>London</option>
                       <option value='2'>Kyiv</option>
@@ -107,32 +104,24 @@ export default class AddAddress extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="form-group">
+              <div className="form-row">
+                <div className="form-group col-lg-6 col-12">
                   <label htmlFor="fname">First Name<span>*</span></label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="full_name"
-                    value={fields.full_name}
+                  <Input type="text" className="form-control" name="full_name" value={fields.full_name}
                     onChange={this.handleChange.bind(this, "full_name")}
                     validations={[required]}
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group col-lg-6 col-12">
                   <label htmlFor="fname">Mobile<span>*</span></label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="mobile"
-                    value={fields.mobile}
+                  <Input type="text" className="form-control" name="mobile" value={fields.mobile}
                     onChange={this.handleChange.bind(this, "mobile")}
                     validations={[required, mobile]}
                   />
                 </div>
               </div>
-              <div className="row">
-                <div className="form-group"><label htmlFor="fname">Pin Code<span>*</span></label>
+              <div className="form-row">
+                <div className="form-group col"><label htmlFor="fname">Pin Code<span>*</span></label>
                   <Input
                     type="text"
                     className="form-control"
@@ -143,18 +132,16 @@ export default class AddAddress extends React.Component {
                   />
                   {/* <input type="text" className="form-control" value={fields.full_name || ''} onChange={this.handleChange.bind(this, "full_name")} /> */}
                 </div>
-                <div className="form-group"><label htmlFor="fname">Flat, House no., Building, Company, Apartment<span>*</span></label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="houseNo"
-                    value={fields.houseNo}
+                </div>
+                <div className="form-row">
+                <div className="form-group col"><label htmlFor="fname">Flat, House no., Building, Company, Apartment<span>*</span></label>
+                  <Input type="text" className="form-control" name="houseNo" value={fields.houseNo}
                     onChange={this.handleChange.bind(this, "houseNo")}
                     validations={[required]}
                   /></div>
               </div>
-              <div className="row">
-                <div className="form-group"><label htmlFor="fname">Area, Colony, Street, Sector, Village<span>*</span></label>
+              <div className="form-row">
+                <div className="form-group col"><label htmlFor="fname">Area, Colony, Street, Sector, Village<span>*</span></label>
                   <Input
                     type="text"
                     className="form-control"
@@ -165,9 +152,9 @@ export default class AddAddress extends React.Component {
                   />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="fname">Landmark</label>
+              <div className="form-row">
+                <div className="form-group col-lg-6 col-12">
+                  <label htmlFor="fname">Landmark</label>
                     <Input
                       type="text"
                       className="form-control"
@@ -175,12 +162,10 @@ export default class AddAddress extends React.Component {
                       value={fields.landmark}
                       onChange={this.handleChange.bind(this, "landmark")}
                     />
-                  </div>
+                  
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="fname">Town/City<span>*</span></label>
+                <div className="form-group col-lg-6 col-12">
+                <label htmlFor="fname">Town/City<span>*</span></label>
                     <Input
                       type="text"
                       className="form-control"
@@ -189,43 +174,41 @@ export default class AddAddress extends React.Component {
                       onChange={this.handleChange.bind(this, "city")}
                       validations={[required]}
                     />
-                  </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="fname">State<span>*</span></label>
+             
+              <div className="form-row">
+                <div className="form-group col">
+                  <label htmlFor="fname">State<span>*</span></label>
                     <Select name='state' value={fields.state}
                       onChange={this.handleChange.bind(this, "state")}
-                      validations={[required]}
-                    >
+                      validations={[required]} className="form-control">
                       <option value=''>Choose your city</option>
                       <option value='1'>London</option>
                       <option value='2'>Kyiv</option>
                       <option value='3'>New York</option>
                     </Select>
-                  </div>
+                  
                 </div>
               </div>
-              <div className="row">
-                <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="fname">District<span>*</span></label>
+              <div className="form-row">
+                <div className="form-group col">
+                  <label htmlFor="fname">District<span>*</span></label>
                     <Select name='district' value={fields.district}
                       onChange={this.handleChange.bind(this, "district")}
-                      validations={[required]}
-                    >
+                      validations={[required]} className="form-control">
                       <option value=''>Choose your city</option>
                       <option value='1'>London</option>
                       <option value='2'>Kyiv</option>
                       <option value='3'>New York</option>
                     </Select>
-                  </div>
+                  
                 </div>
               </div>
 
-              <fieldset>
-                <button className="btn login-btn" value="Submit"  >Add Address</button>
-              </fieldset>
+              
+                <button className="btn login-btn" value="Submit">Add Address</button>
+              
             </Form>
           </div>
         </div>

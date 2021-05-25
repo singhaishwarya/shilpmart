@@ -163,7 +163,7 @@ export default class ProductDetail extends React.Component {
                     </nav>
                   </div>
                   <h1>{productDetailData?.content?.title}</h1>
-                  <p className="product-price"> <FontAwesomeIcon icon={faRupeeSign} /><span> {productDetailData?.price ? productDetailData?.price[0]?.price : 0}</span></p>
+                  <p className="product-price"> <span> {productDetailData?.price ? productDetailData?.price[0]?.price : 0}</span></p>
                   <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div>
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
@@ -185,7 +185,7 @@ export default class ProductDetail extends React.Component {
                   </div>
 
                   <div className="add-question my-3 py-2">
-                    <a href="#" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</a>
+                    <span href="#" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</span>
                   </div>
                   <Modal className='custom-modal-width login-card'
                     isOpen={showModal}
@@ -247,25 +247,25 @@ export default class ProductDetail extends React.Component {
 
                   <div className="social-share">
                     <span>Share:</span>
-                    <a href="#">
+                    <span>
                       <FacebookShareButton url={shareUrl} quote={title}>
                         <FontAwesomeIcon icon={faFacebook} />
                       </FacebookShareButton>
-                    </a>
-                    <a href="#">
+                    </span>
+                    <span>
                       <TwitterShareButton url={shareUrl} quote={title}>
                         <FontAwesomeIcon icon={faTwitter} />
-                      </TwitterShareButton></a>
-                    <a href="#"><PinterestShareButton url={shareUrl} quote={title}>
+                      </TwitterShareButton></span>
+                      <span><PinterestShareButton url={shareUrl} quote={title}>
                       <FontAwesomeIcon icon={faPinterest} />
-                    </PinterestShareButton></a>
-                    <a href="#"><LinkedinShareButton url={shareUrl} quote={title}>
+                    </PinterestShareButton></span>
+                    <span><LinkedinShareButton url={shareUrl} quote={title}>
                       <FontAwesomeIcon icon={faLinkedin} />
-                    </LinkedinShareButton></a>
-                    <a href="#">
+                    </LinkedinShareButton></span>
+                    <span>
                       <TelegramShareButton url={shareUrl} quote={title}>
                         <FontAwesomeIcon icon={faTelegram} />
-                      </TelegramShareButton></a>
+                      </TelegramShareButton></span>
                   </div>
                 </div>
 

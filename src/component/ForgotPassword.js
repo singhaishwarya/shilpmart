@@ -65,21 +65,15 @@ export default class ForgotPassword extends Component {
   render() {
     const { errorMsg } = this.state
     return (
-      <div className="">
-        <h4 className="modal-title">Lost your password? Please enter your email address. You will receive a link to create a new password via email.</h4>
-        <Form
-          onSubmit={this.handleForgotPassword}
-          ref={(c) => {
-            this.form = c;
-          }}
-        >
+      <section id="maincontent">
+        <div className="container-fluid">
+        <div className="col">
+          <div className="forget-pass my-5 login-card">
+        <p>Lost your password? Please enter your email address. You will receive a link to create a new password via email.</p>
+        <Form onSubmit={this.handleForgotPassword} ref={(c) => {this.form = c;}}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
-            <Input
-              type="text"
-              className="form-control"
-              name="username"
-              value={this.state.username}
+            <Input type="text" className="form-control" name="username" value={this.state.username}
               onChange={this.onChangeUsername}
               validations={[required, email]}
             />
@@ -87,7 +81,7 @@ export default class ForgotPassword extends Component {
           <div>{errorMsg}</div>
           <div className="form-group">
             <button
-              className="btn btn-primary btn-block"
+              className="btn login-btn btn-block"
               disabled={this.state.loading}
             >
               {this.state.loading && (
@@ -95,11 +89,15 @@ export default class ForgotPassword extends Component {
               )}
               <span>Reset Password</span>
             </button>
-          </div>
+            </div>
+          
 
         </Form>
-
+        </div>
       </div>
+        </div>
+      </section>
+      
     )
   };
 }

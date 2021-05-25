@@ -170,7 +170,7 @@ class Header extends Component {
 
     return (
       <>
-        <div style={{ transition: 'all 5.3s ease-in-out' }}>
+        <div>
           <Modal
             isOpen={showModal}
             onRequestClose={() => this.setState({ showModal: false })}
@@ -253,20 +253,20 @@ class Header extends Component {
             </div>
           </div>
           <ul className="navbar-nav flex-row">
-            {this.props.userData.token ? <ui className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
+            {this.props.userData.token ? <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
               onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
               {isMenuShown &&
-                <>
-                  <Link to='/my-account/order'> <li>Orders</li></Link>
-                  <Link to='/my-account/settings'><li>Settings</li></Link>
-                  <Link to="" onClick={() => this.logout()}>Log-Out</Link>
-                </>
+                <div className="myAccout-dropdown">
+                  <Link to='/my-account/order'> Orders</Link>
+                  <Link to='/my-account/settings'>Settings</Link>
+                  <Link to="" onClick={() => this.logout()}>Logout</Link>
+                </div>
                 // <ReactMegaMenu
                 //   tolerance={50}
                 //   direction={"DOWN"}
                 //   data={menuOptions}
                 // />
-              } </ui> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
+              } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
             <li className="nav-item">
               <Link to={'/wishlist'}><div className="nav-link">
                 <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link></li>

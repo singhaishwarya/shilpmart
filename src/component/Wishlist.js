@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as wishlistAction from '../actions/wishlist';
 import * as cartAction from '../actions/cart';
@@ -78,10 +79,11 @@ class Wishlist extends Component {
               )
             })}
           </div></>
-        ) : <span>Wishlist is empty.
-
-        You don't have any products in the wishlist yet.
-You will find a lot of interesting products on our "Shop" page.</span>
+        ) : <div className="empty-wishlist">
+          <h2>Wishlist is empty.</h2>
+              <span>Wishlist is empty. You don't have any products in the wishlist yet. You will find a lot of interesting products on our "Shop" page.</span>
+              <Link to='/product-list'>Return to shop</Link>
+                </div>
         }
       </div >
 

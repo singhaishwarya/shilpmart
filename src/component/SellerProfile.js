@@ -111,18 +111,18 @@ export default class SellerProfile extends React.Component {
           <div className="col-lg-9 col-md-9 col-12 p-5">
             <ul className="nav nav-tabs mb-4" role="tablist">
               <li className="nav-item">
-                <a className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
+                <span className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
                   data-toggle="tab" href="#des" role="tab" aria-controls="home" aria-selected="true"
-                  onClick={() => this.setState({ isActiveTab: 0 })} >PRODUCTS</a>
+                  onClick={() => this.setState({ isActiveTab: 0 })} >PRODUCTS</span>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} data-toggle="tab" href="#del" role="tab" aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })} >ABOUT</a>
+                <span className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} data-toggle="tab" href="#del" role="tab" aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })} >ABOUT</span>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${((isActiveTab === 2) ? 'active' : '')}`} data-toggle="tab" href="#store" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 2 })} >STORE POLICIES</a>
+                <span className={`nav-link ${((isActiveTab === 2) ? 'active' : '')}`} data-toggle="tab" href="#store" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 2 })} >STORE POLICIES</span>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>REVIEWS</a>
+                <span className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>REVIEWS</span>
               </li>
             </ul>
 

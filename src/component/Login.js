@@ -105,7 +105,7 @@ class Login extends Component {
           <div>{errorMsg}</div>
           <div className="form-group">
             <button
-              className="btn btn-primary btn-block"
+              className="btn login-btn btn-block"
               disabled={this.state.loading}
             >
               {this.state.loading && (
