@@ -4,11 +4,12 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import validator from 'validator';
+import MasterService from '../../../services/MasterService';
+import AddressService from '../../../services/AddressService';
 
 const required = (value) => {
   if (!value) {
     return (
-      // alert("This field is required!")
       <div className="alert alert-danger" role="alert">
         This field is required!
       </div>
@@ -40,48 +41,80 @@ export default class AddAddress extends React.Component {
 
     this.state = {
       fields: {
-        full_name: '',
+        name: '',
         mobile: '',
         city: '',
         landmark: '',
         pincode: '',
-        houseNo: '',
-        colony: '',
-        country: '',
+        address1: '',
+        address2: '',
         district: '',
-        state: ''
-      }
+        country: 1,
+        state: '',
+        sub_district: '',
+        type: ''
+      },
+      statesOptions: [],
+      statesOptions: [],
+      districtOptions: [],
+      subDistrictOptions: []
     }
   }
+  componentDidMount() {
+    this.getStates();
+  }
 
-  handleAddAddress(e) {
-    e.preventDefault();
-    // AuthService.register(this.state.fields)
-    //   .then((result) => {
+  getStates = () => {
 
-    //     if (!result) return
-
-    //     if (result.success) {
-    //       this.props.history.push({
-    //         pathname: '/'
-    //       });
-    //     }
-    //     else {
-    //       alert(Object.values(result.data)[0])
-    //     }
-    //   })
-    //   .catch(() => {
-    //   });
+    MasterService.getStates().then((result) => {
+      this.setState({ statesOptions: result.data })
+    })
   }
 
   handleChange(field, e) {
     let fields = this.state.fields;
     fields[field] = e.target.value;
     this.setState({ fields });
+    if (field === 'state') {
+      this.getDistrict(e.target.value)
+      this.setState({ sub_district: '', district: '' });
+    }
+    if (field === 'district') {
+      this.getSubDistrict(this.state.fields.state, e.target.value)
+      this.setState({ sub_district: '' });
+    }
+  }
+
+  getDistrict = (stateCode) => {
+    MasterService.getDistrict({ state_id: stateCode }).then((result) => {
+      this.setState({ districtOptions: result.data })
+    })
+  }
+  getSubDistrict = (stateCode, districtCode) => {
+    MasterService.getSubDistrict({ state_id: stateCode, district_id: districtCode }).then((result) => {
+      this.setState({ subDistrictOptions: result.data })
+    })
+  }
+  handleAddAddress(e) {
+    e.preventDefault();
+    AddressService.add(this.state.fields)
+      .then((result) => {
+
+        if (!result) return
+
+        if (result.success) {
+          this.props.history.push({
+            pathname: '/my-account/address'
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
-    const { fields } = this.state
+    const { fields, statesOptions, districtOptions, subDistrictOptions } = this.state
     return (
 
       <div className="container-fluid">
@@ -92,30 +125,16 @@ export default class AddAddress extends React.Component {
             <Form
               onSubmit={this.handleAddAddress}
               ref={(c) => { this.form = c; }}
-            > <div className="row">
-                <div className="col-lg-6 col-12">
-                  <div className="form-group"><label htmlFor="fname">Country<span>*</span></label>
-                    <Select name='country' value={fields.country}
-                      onChange={this.handleChange.bind(this, "country")}
-                      validations={[required]}
-                    >
-                      <option value=''>Choose your city</option>
-                      <option value='1'>London</option>
-                      <option value='2'>Kyiv</option>
-                      <option value='3'>New York</option>
-                    </Select>
-                  </div>
-                </div>
-              </div>
+            >
               <div className="row">
                 <div className="form-group">
                   <label htmlFor="fname">First Name<span>*</span></label>
                   <Input
                     type="text"
                     className="form-control"
-                    name="full_name"
-                    value={fields.full_name}
-                    onChange={this.handleChange.bind(this, "full_name")}
+                    name="name"
+                    value={fields.name}
+                    onChange={this.handleChange.bind(this, "name")}
                     validations={[required]}
                   />
                 </div>
@@ -141,15 +160,14 @@ export default class AddAddress extends React.Component {
                     onChange={this.handleChange.bind(this, "pincode")}
                     validations={[required, pincode]}
                   />
-                  {/* <input type="text" className="form-control" value={fields.full_name || ''} onChange={this.handleChange.bind(this, "full_name")} /> */}
                 </div>
                 <div className="form-group"><label htmlFor="fname">Flat, House no., Building, Company, Apartment<span>*</span></label>
                   <Input
                     type="text"
                     className="form-control"
-                    name="houseNo"
-                    value={fields.houseNo}
-                    onChange={this.handleChange.bind(this, "houseNo")}
+                    name="address1"
+                    value={fields.address1}
+                    onChange={this.handleChange.bind(this, "address1")}
                     validations={[required]}
                   /></div>
               </div>
@@ -158,9 +176,9 @@ export default class AddAddress extends React.Component {
                   <Input
                     type="text"
                     className="form-control"
-                    name="colony"
-                    value={fields.colony}
-                    onChange={this.handleChange.bind(this, "colony")}
+                    name="address2"
+                    value={fields.address2}
+                    onChange={this.handleChange.bind(this, "address2")}
                     validations={[required]}
                   />
                 </div>
@@ -198,11 +216,13 @@ export default class AddAddress extends React.Component {
                     <Select name='state' value={fields.state}
                       onChange={this.handleChange.bind(this, "state")}
                       validations={[required]}
-                    >
-                      <option value=''>Choose your city</option>
-                      <option value='1'>London</option>
-                      <option value='2'>Kyiv</option>
-                      <option value='3'>New York</option>
+                      option={statesOptions}
+                    >{statesOptions.length > 0
+                      && statesOptions.map((item, i) => {
+                        return (
+                          <option key={i} value={item.state_id}>{item.state_name}</option>
+                        )
+                      })}
                     </Select>
                   </div>
                 </div>
@@ -213,11 +233,40 @@ export default class AddAddress extends React.Component {
                     <Select name='district' value={fields.district}
                       onChange={this.handleChange.bind(this, "district")}
                       validations={[required]}
-                    >
-                      <option value=''>Choose your city</option>
-                      <option value='1'>London</option>
-                      <option value='2'>Kyiv</option>
-                      <option value='3'>New York</option>
+                    >{districtOptions.length > 0
+                      && districtOptions.map((item, i) => {
+                        return (
+                          <option key={i} value={item.district_id}>{item.district_name}</option>
+                        )
+                      })}
+                    </Select>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-6 col-12">
+                  <div className="form-group"><label htmlFor="fname">Sub-District<span>*</span></label>
+                    <Select name='sub_district' value={fields.sub_district}
+                      onChange={this.handleChange.bind(this, "sub_district")}
+                      validations={[required]}
+                    >{subDistrictOptions.length > 0
+                      && subDistrictOptions.map((item, i) => {
+                        return (
+                          <option key={i} value={item.sub_district_id}>{item.sub_district_name}</option>
+                        )
+                      })}
+                    </Select>
+                  </div>
+                </div>
+              </div><div className="row">
+                <div className="col-lg-6 col-12">
+                  <div className="form-group"><label htmlFor="fname">Type<span>*</span></label>
+                    <Select name='type' value={fields.type}
+                      onChange={this.handleChange.bind(this, "type")}
+                      validations={[required]}>
+                      <option value='' defaultValue='selected'>Select Type</option>
+                      <option value='1'>Home</option>
+                      <option value='2'>Office</option>
                     </Select>
                   </div>
                 </div>

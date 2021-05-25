@@ -58,10 +58,9 @@ class Login extends Component {
         }
         result && this.props.userDetail(result.data);
 
-        this.props.showModal ? this.props.dismissModal('login') : this.props.history.push({
-          pathname: '/'
-        })
+        this.props.showModal ? this.props.dismissModal('login') : window.location.href = '/';
 
+        window.location.href = '/';
 
       })
       .catch((err) => {

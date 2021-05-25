@@ -61,6 +61,7 @@ class Header extends Component {
 
   componentDidMount = () => {
     document.addEventListener('mousedown', this.handleClickOutside, false)
+
   }
 
   getCategoryTitles = (id) => {
@@ -261,11 +262,6 @@ class Header extends Component {
                   <Link to='/my-account/settings'><li>Settings</li></Link>
                   <Link to="" onClick={() => this.logout()}>Log-Out</Link>
                 </>
-                // <ReactMegaMenu
-                //   tolerance={50}
-                //   direction={"DOWN"}
-                //   data={menuOptions}
-                // />
               } </ui> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
             <li className="nav-item">
               <Link to={'/wishlist'}><div className="nav-link">
@@ -299,9 +295,7 @@ const mapDispatchToProps = (dispatch) => {
     logout: user => dispatch(authAction.logout(user)),
     emptyWishlist: index => dispatch(wishlistAction.emptyWishlist(index)),
     emptyCart: index => dispatch(cartAction.emptyCart(index)),
-    emptyCompare: index => dispatch(compareAction.emptyCompare(index)),
-
-
+    emptyCompare: index => dispatch(compareAction.emptyCompare(index))
   }
 };
 

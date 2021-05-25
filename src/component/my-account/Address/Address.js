@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-
+import AddressService from '../../../services/AddressService';
 export default class Address extends React.Component {
 
   constructor() {
@@ -8,6 +8,27 @@ export default class Address extends React.Component {
     this.state = {
 
     };
+  }
+
+  componentDidMount() {
+    this.getAddress();
+  }
+  getAddress = () => {
+    AddressService.list().then((result) => {
+
+      if (!result) return
+
+      // if (result.success) {
+      //   this.props.history.push({
+      //     pathname: '/'
+      //   });
+      // }
+      // else {
+      //   alert(Object.values(result.data)[0])
+      // }
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   render() {

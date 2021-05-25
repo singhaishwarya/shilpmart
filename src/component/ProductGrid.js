@@ -179,7 +179,8 @@ class ProductGrid extends Component {
                 <button onClick={() => this.onLayoutChange('4X4')} ></button>
               </div>
               <form method='get' className='shorting-wrapper'>
-                <select name='orderby' className='form-control' aria-label='Shop order' value={this.state.sortBy} onChange={(e) => this.handleOnSort(e)}>
+                <select name='orderby' className='form-control' aria-label='Shop order' value={this.state.sortBy}
+                  onChange={(e) => this.handleOnSort(e)}>
                   <option value='menu_order' defaultValue='selected'>Default sorting</option>
                   <option value='popularity'>Sort by popularity</option>
                   <option value='rating'>Sort by average rating</option>

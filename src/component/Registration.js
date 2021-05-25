@@ -83,7 +83,8 @@ export default class Registration extends React.Component {
           alert(Object.values(result.data)[0])
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
       });
   }
 
