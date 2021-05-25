@@ -43,7 +43,7 @@ export default class CartService extends Component {
       config.method = 'post';
       config.data = data;
       const response = await axios(config);
-      return response.data ? response.data.data : [];
+      return response.data ? response.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;
