@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import AuthService from '../services/AuthService';
-import * as authAction from '../actions/auth';
+import validator from 'validator';
 
 const required = (value) => {
   if (!value) {
@@ -15,17 +13,24 @@ const required = (value) => {
     );
   }
 };
-class Login extends Component {
+
+const email = (value) => {
+  if (!validator.isEmail(value)) {
+    return <div className="alert alert-danger" role="alert">
+      Enter a valid email sould be contain maximum length 50 (example@domainname)
+         </div>
+  }
+};
+
+export default class ForgotPassword extends Component {
   constructor(props) {
     super(props);
 
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleForgotPassword = this.handleForgotPassword.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
 
     this.state = {
       username: "",
-      password: "",
       errorMsg: ''
     };
   }
@@ -37,32 +42,20 @@ class Login extends Component {
     });
   }
 
-  onChangePassword = (e) => {
-    this.setState({
-      password: e.target.value,
-    });
-  }
-
-
-  handleLogin = (e) => {
+  handleForgotPassword = (e) => {
     e.preventDefault();
 
     this.form.validateAll();
 
-    const { username, password } = this.state;
-    AuthService.login({ username: username, password: password })
+    const { username } = this.state;
+    AuthService.forgotPassword({ username: username })
       .then((result) => {
         if (!result) {
           this.setState({ errorMsg: "The password you entered for the username " + username + " is incorrect" });
           return;
         }
-        result && this.props.userDetail(result.data);
-
-        this.props.showModal ? this.props.dismissModal('login') : this.props.history.push({
-          pathname: '/'
-        })
-
-
+        result && alert('A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset.')
+        // this.props.dismissModal('login');
       })
       .catch((err) => {
         console.error(err);
@@ -72,10 +65,10 @@ class Login extends Component {
   render() {
     const { errorMsg } = this.state
     return (
-      <div className="login-card">
-        <h4 className="modal-title">Sign in</h4>
+      <div className="">
+        <h4 className="modal-title">Lost your password? Please enter your email address. You will receive a link to create a new password via email.</h4>
         <Form
-          onSubmit={this.handleLogin}
+          onSubmit={this.handleForgotPassword}
           ref={(c) => {
             this.form = c;
           }}
@@ -88,18 +81,7 @@ class Login extends Component {
               name="username"
               value={this.state.username}
               onChange={this.onChangeUsername}
-              validations={[required]}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <Input
-              type="password"
-              className="form-control"
-              name="password"
-              value={this.state.password}
-              onChange={this.onChangePassword}
-              validations={[required]}
+              validations={[required, email]}
             />
           </div>
           <div>{errorMsg}</div>
@@ -111,23 +93,15 @@ class Login extends Component {
               {this.state.loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
-              <span>Login</span>
+              <span>Reset Password</span>
             </button>
           </div>
 
         </Form>
-        <Link to='/forgot-password' onClick={() => this.props?.dismissModal('login')}>Forgot password?</Link>
-        <p className="login-card-footer-text">Don't have an account? <Link to={'/buyer-registration'} onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
-      </div >
+
+      </div>
     )
   };
 }
 
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    userDetail: user => dispatch(authAction.userDetail(user))
-  }
-};
-
-export default connect(null, mapDispatchToProps)(Login);
+// export default connect(null, mapDispatchToProps)(ForgotPassword);

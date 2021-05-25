@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as compareAction from '../actions/compare';
 class Compare extends Component {
-  constructor(props) {
-    super(props);
-
-  }
 
   render() {
     const { compare } = this.props

@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
     "gh-pages": "^2.0.1",
     "prettier": "^1.17.1",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "webpack": "^4.42.0"
   },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.14.2",
@@ -17,6 +21,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "axios": "^0.21.1",
     "big.js": "^5.2.2",
+    "connected-react-router": "^6.9.1",
     "customize-cra": "^1.0.0",
     "pagination": "github:react-bootstrap/Pagination",
     "rc-slider": "^9.7.2",
@@ -25,6 +30,7 @@
     "react-app-rewired": "^2.1.8",
     "react-dom": "^16.8.6",
     "react-image-gallery": "^1.0.9",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-mega-menu": "^1.0.1",
     "react-modal": "^3.13.1",
     "react-multi-select-component": "^4.0.1",

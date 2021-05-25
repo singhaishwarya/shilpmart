@@ -73,7 +73,7 @@ class ShopByType extends Component {
   getProductsList = () => {
     ProductService.fetchAllProducts().then((result) => {
       this.setState({
-        shopByProductItems: result?.map((item) =>
+        shopByProductItems: result?.data?.map((item) =>
           (<ProductTile data={item} {...this.props} />))
       })
     })

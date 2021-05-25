@@ -4,14 +4,27 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRupeeSign, faTimes } from '@fortawesome/free-solid-svg-icons'
 import * as cartAction from '../actions/cart';
-
+import CartService from '../services/CartService';
+import ProductService from '../services/ProductService';
 class CartOverlay extends Component {
 
-  constructor(props) {
-    super(props);
-
+  componentDidMount() {
+    this.getCart()
   }
-  dismissCart = (event) => {
+  getCart = () => {
+    let productids = [];
+    CartService.list().then((result) => {
+      result && result.map((item) => (
+        productids?.push(item.product_id)
+      ))
+      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+        this.props.addToCart(result1.data);
+      })
+    })
+  }
+
+  dismissCart = (e) => {
+    e.preventDefault();
     this.props.dismissModal('cart');
   }
   render() {
@@ -31,14 +44,21 @@ class CartOverlay extends Component {
                 {this.props.cart?.map((item, index) => (
                   <li key={index}>
                     <a href="#">
-                      <img src={item.images[0]?.image_url} className="img-fluid" alt="saree"
+                      <img src={(item.images?.length > 0 && item?.images[0]?.image_url) || "false"}
+                        className="img-fluid"
+                        // onClick={() => this.productDetail(item.id)}
+                        alt={(item.images?.length > 0 && item.images[0]?.caption) || "false"}
                         onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
-                      /></a>
+                      />
+                      {/* <img src={item.images?.length > 0 && item.images[0]?.image_url} className="img-fluid" alt="saree"
+                        onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
+                      /> */}
+                    </a>
                     <div className="cart-info">
                       <span className="product-title">{item.content?.title}</span>
                       <div className="pro-store"><span>Store: <span>{item.store_name}</span></span></div>
                       <span className="qty">1 x <span>
-                        <FontAwesomeIcon icon={faRupeeSign} />{item.price[0]?.price}</span></span>
+                        <FontAwesomeIcon icon={faRupeeSign} />{item.price?.length > 0 && item.price[0]?.price}</span></span>
                     </div>
                     <a href="#"><FontAwesomeIcon icon={faTimes} onClick={() => this.props.deleteCart(item.id)} /></a>
                   </li>
@@ -78,7 +98,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteCart: index => dispatch(cartAction.deleteCart(index))
+    deleteCart: index => dispatch(cartAction.deleteCart(index)),
+    addToCart: cart => dispatch(cartAction.addToCart(cart)),
+
   }
 };
 

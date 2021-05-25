@@ -1,9 +1,9 @@
 import { ADD_TO_WISHLIST, REMOVE_WISHLIST, EMPTY_WISHLIST } from './types';
 
-export const addToWishlist = (product) => {
+export const addToWishlist = (wishlist) => {
   return {
     type: ADD_TO_WISHLIST,
-    product: product
+    wishlist: wishlist
   }
 };
 

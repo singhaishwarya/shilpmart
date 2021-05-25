@@ -7,6 +7,8 @@ import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
 import ProductTile from './ProductTile';
+import InfiniteScroll from "react-infinite-scroll-component";
+
 class ProductGrid extends Component {
   constructor(props) {
     super(props);
@@ -15,13 +17,15 @@ class ProductGrid extends Component {
       pathname: props?.location?.pathname,
       offset: 0,
       productsData: [],
-      currentPage: 0,
+      currentPage: 1,
       per_page: 12,
       layout: 'col-lg-3 col-sm-6 col-6', //default 4X4
       productListData: [],
       filterParams: {},
       categoryBreadcrumbs: props.categoryBreadcrumbs,
       sortBy: "",
+      items: Array.from({ length: 20 }),
+      nextPage: null
     };
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
@@ -35,6 +39,19 @@ class ProductGrid extends Component {
 
     this.getProductList(this.getSetQueryParams());
   }
+
+  fetchMoreData = () => {
+    this.setState({ currentPage: this.state.currentPage + 1 });
+    setTimeout(() => {
+      ProductService.fetchAllProducts({ page: this.state.currentPage }).then((result) => {
+        this.setState({
+          productListData: this.state.productListData.concat(result.data),
+          nextPage: result.next_page_url
+        });
+      });
+    }, 1000);
+  };
+
 
   getSetQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -75,13 +92,7 @@ class ProductGrid extends Component {
   getProductList = (queryParams) => {
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
-        this.setState({ productListData: result })
-      });
-
-      const { productListData } = this.state;
-      this.setState({
-        //   pageCount: Math.ceil(productListData.length / perPage),
-        productsData: productListData//.slice(offset, offset + perPage)
+        this.setState({ productListData: result.data, nextPage: result.next_page_url })
       });
     } catch (err) {
       console.log(err);
@@ -96,36 +107,13 @@ class ProductGrid extends Component {
     });
   }
 
-  toggleHover = (val, index) => {
-    this.setState({ hoverIcon: val, hoveredItem: index });
-  }
-  wishlistToggle = (index, product) => {
-    this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
-    this.props.addToWishlist(product);
-
-  }
-  deleteWishlist = (index, product) => {
-
-    this.setState({ wishlistStatus: !this.state.wishlistStatus, hoveredItem: index });
-    this.props.deleteWishlist(product.id);
-
-  }
-  handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    const offset = selectedPage * this.state.perPage;
-    this.setState({
-      currentPage: selectedPage,
-      offset: offset
-    }, () => {
-      this.getProductList()
-    });
-  }
   onLayoutChange = (value) => {
     this.setState({
       layout: (value === '2X2') ? 'col-lg-6 col-sm-6 col-6' : (value === '3X3')
         ? 'col-lg-4 col-sm-6 col-6' : 'col-lg-3 col-sm-6 col-6'
     });
   }
+
   onItemPerPage = (value) => {
     this.state.filterParams.per_page = value;
     this.setState({ per_page: value })
@@ -135,6 +123,7 @@ class ProductGrid extends Component {
       search: "&" + this.currentUrlParams.toString()
     });
   }
+
   handleOnSort(e) {
     this.setState({ sortBy: e.target.value });
     this.currentUrlParams.set('order_by', e.target.value === 'price-asc' ? 'asc' : 'desc');
@@ -145,9 +134,9 @@ class ProductGrid extends Component {
       search: "&" + this.currentUrlParams.toString()
     })
   }
-  render() {
 
-    const { productListData, wishlistStatus, hoveredItem, pageCount, layout, pathname, per_page, } = this.state
+  render() {
+    const { productListData, layout, pathname, per_page, nextPage } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
     return (
       <>
@@ -201,27 +190,33 @@ class ProductGrid extends Component {
               </form>
             </div>
           </section>}
-        <div className='row py-2'>
-          {productListData?.length > 0 ? productListData?.map((item, index) => {
-            return (
-              <div key={index} className={layout} >
 
-                <ProductTile data={item} {...this.props} /></div>
-            )
-          }) : <span>No products were found matching your selection.</span>}
-        </div>
-        {/* <ReactPaginate
-          previousLabel={''}
-          nextLabel={''}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages paginationItem'}
-          activeClassName={'active'} /> */}
+        <InfiniteScroll
+          dataLength={productListData.length}
+          next={this.fetchMoreData}
+          {...nextPage !== null && ({
+            loader: <h4>Loading...</h4>,
+            hasMore: true
+          })}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        >
+          <div className='row py-2'>
+
+            {productListData?.length > 0 ? productListData?.map((item, index) => {
+              return (
+                <div key={index} className={layout} >
+
+                  <ProductTile data={item} {...this.props} />
+
+                </div>
+              )
+            }) : <span>No products were found matching your selection.</span>}
+
+          </div> </InfiniteScroll>
       </>
 
     );

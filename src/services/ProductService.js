@@ -10,7 +10,7 @@ export default class ProductService extends Component {
       config.params = data;
 
       const response = await axios(config);
-      return response.data.data ? response.data.data.data : [];
+      return response.data ? response.data.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;
@@ -18,4 +18,21 @@ export default class ProductService extends Component {
 
     }
   }
+  // https://admin.digitalindiacorporation.in/api/products?page=2
+  static fetchNextPage = async (data) => {
+    try {
+      config.url = baseUrl + 'products';
+      config.method = 'get';
+      config.params = data;
+
+      const response = await axios(config);
+      return response.data ? response.data : [];
+    } catch (error) {
+      const { response } = error;
+      if (!response) return;
+      console.log(`FETCH GET ERROR`, response);
+
+    }
+  }
+
 }

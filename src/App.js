@@ -21,6 +21,7 @@ import AccountDetails from './component/my-account/AccountDetails';
 import Support from './component/my-account/Support';
 import Inquiry from './component/my-account/Inquiry';
 import MyDashboard from './component/my-account/Dashboard';
+import ForgotPassword from './component/ForgotPassword';
 import "./public/bootstrap.min.css";
 import "./public/jbility.css";
 import "./index.css";
@@ -32,9 +33,7 @@ import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
+
   render() {
 
     const { userData } = this.props;
@@ -51,6 +50,7 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/wishlist' component={Wishlist} exact />
           <Route isAuthenticated={userData} path='/compare' component={Compare} exact />
           <Route isAuthenticated={userData} path='/cart' component={Cart} exact />
+          <Route isAuthenticated={userData} path='/forgot-password' component={ForgotPassword} exact />
           <MyAccount>
             <Route component={({ match }) =>
               <>

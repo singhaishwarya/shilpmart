@@ -56,7 +56,6 @@ export default class AddAddress extends React.Component {
 
   handleAddAddress(e) {
     e.preventDefault();
-    console.log("Demo===", e)
     // AuthService.register(this.state.fields)
     //   .then((result) => {
 

@@ -75,8 +75,8 @@ export default class ProductDetail extends React.Component {
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({
-          productDetailData: result[0],
-          productDetailDataImages: result[0]?.images?.map((item, index) => (
+          productDetailData: result.data[0],
+          productDetailDataImages: result.data[0]?.images?.map((item, index) => (
             {
               'original': item.image_url,
               'thumbnail': item.image_url
@@ -163,7 +163,7 @@ export default class ProductDetail extends React.Component {
                     </nav>
                   </div>
                   <h1>{productDetailData?.content?.title}</h1>
-                  <p className="product-price"><span> {productDetailData?.price ? productDetailData?.price[0]?.price : '0'}</span></p>
+                  <p className="product-price"> <FontAwesomeIcon icon={faRupeeSign} /><span> {productDetailData?.price ? productDetailData?.price[0]?.price : 0}</span></p>
                   <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div>
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">

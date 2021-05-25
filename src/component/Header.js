@@ -52,17 +52,10 @@ class Header extends Component {
       seachResults: [],
       searchQuery: '',
       showModal: false,
-      setIsOpen: false,
       shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/'],
       title: 'eShilpmart',
       isLoggedIn: this.props.userData,
-      menuOptions: [
-        {
-          label:
-            <span><Link to='/my-account/orders'>Order</Link></span>,
-          key: "1"
-        }
-      ], isMenuShown: false
+      isMenuShown: false
     }
   }
 
@@ -83,19 +76,7 @@ class Header extends Component {
   setIsMenuShown = (status) => {
     this.setState({ isMenuShown: status })
   }
-  // openModal = () => {
-  //   // setIsOpen(true);
-  //   this.setState({
-  //     subtitle: '',
-  //     showModal: true, setIsOpen: true
-  //   })
-  // };
 
-  closeModal = () => {
-    // setIsOpen(false);
-    this.setState({ showModal: false, setIsOpen: false })
-
-  };
   dismissModal = (type) => {
     this.setState({
       showModal: !this.state.showModal, overlayType: type
@@ -109,7 +90,7 @@ class Header extends Component {
       // let categoryData = [];
       ProductService.fetchAllProducts({ q: searchString }).then((result) => {
 
-        this.setState({ seachResults: result });
+        this.setState({ seachResults: result.data });
         // categoryData = result.map((item) => (
         //   item?.category.map((item) => (
         //     this.getCategoryTitles(item.category_id)
@@ -150,8 +131,8 @@ class Header extends Component {
               <img onError={e => {
                 e.currentTarget.src = require('../public/No_Image_Available.jpeg')
               }}
-                src={item?.images[0]?.image_url}
-                alt={item?.content?.title} />
+                src={item?.images[0]?.image_url || "false"}
+                alt={item?.content?.title || "false"} />
             </span>
             <span>
               <span className="top-head">
@@ -185,20 +166,20 @@ class Header extends Component {
   }
 
   render() {
-    const { searchQuery, showModal, shareUrl, title, isLoggedIn, menuOptions, isMenuShown, overlayType } = this.state;
+    const { searchQuery, showModal, shareUrl, title, isMenuShown, overlayType } = this.state;
 
     return (
       <>
         <div style={{ transition: 'all 5.3s ease-in-out' }}>
           <Modal
             isOpen={showModal}
-            onRequestClose={this.closeModal}
+            onRequestClose={() => this.setState({ showModal: false })}
             style={overlayType === 'login' ? customLoginStyles : customCartStyles}
             shouldCloseOnOverlayClick={true}
             contentLabel={overlayType === 'login' ? "SIGN IN" : "Shopping Cart"}
             ariaHideApp={false}
           >
-            {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} /> :
+            {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
               <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
           </Modal>
         </div>

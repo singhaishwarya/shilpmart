@@ -6,20 +6,19 @@ import * as compareAction from '../actions/compare';
 import WishlistService from '../services/WishlistService';
 import ProductService from '../services/ProductService';
 import ProductTile from './ProductTile';
-class Wishlist extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+class Wishlist extends Component {
 
   componentDidMount() {
     const { userData, wishlist } = this.props;
+
     if (Object.keys(userData).length > 0) {
-      if (wishlist[0].length > 0) {
+
+      if (wishlist?.length > 0) {
         let productids = [];
 
-        wishlist[0].map((item) => {
-          productids.push(item.id)
+        wishlist.map((item) => {
+          return productids.push(item.id)
         })
         this.addToWishlist(productids);
       }
@@ -35,11 +34,11 @@ class Wishlist extends Component {
     });
   }
 
-  deleteWishlist(item) {
+  deleteWishlist = (item) => {
     Object.keys(this.props.userData).length > 0 ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id)
   }
 
-  deleteWishlistApi(item) {
+  deleteWishlistApi = (item) => {
     this.props.deleteWishlist(item.id)
     // WishlistService.deleteWishlist({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
     this.getWishlist()
@@ -52,12 +51,12 @@ class Wishlist extends Component {
       result && result.map((item) => (
         productids?.push(item.product_id)
       ))
-      //   ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-      //     // this.setState({
-      //     //   wishlistData: result1
-      //     // })
-      //     this.props.addToWishlist(result1);
-      //   })
+      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+        // this.setState({
+        //   wishlistData: result1
+        // })
+        result1.data.map((item) => this.props.addToWishlist(item))
+      })
     })
   }
 

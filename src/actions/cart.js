@@ -1,9 +1,9 @@
 import { ADD_TO_CART, REMOVE_CART, EMPTY_CART } from './types';
 
-export const addToCart = (product) => {
+export const addToCart = (cart) => {
   return {
     type: ADD_TO_CART,
-    product: product
+    cart: cart
   }
 };
 

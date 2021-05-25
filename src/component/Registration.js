@@ -28,13 +28,13 @@ const mobile = (value) => {
 const email = (value) => {
   if (!validator.isEmail(value)) {
     return <div className="alert alert-danger" role="alert">
-      Enter a valide email sould be contain maximum length 50 (example@domainname)
+      Enter a valid email sould be contain maximum length 50 (example@domainname)
          </div>
   }
 };
 
 const lt50 = (value) => {
-  if (0 < value.length >= 50) {
+  if (value.length >= 50) {
     return <div className="alert alert-danger" role="alert"> It must be string & contain maximum length 50 char.</div>
   }
 };
