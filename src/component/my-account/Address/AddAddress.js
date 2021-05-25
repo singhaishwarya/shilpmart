@@ -115,7 +115,6 @@ export default class AddAddress extends React.Component {
 
   render() {
     const { fields, statesOptions, districtOptions, subDistrictOptions } = this.state
-    console.log("demo==", fields)
     return (
 
       <div className="container-fluid">

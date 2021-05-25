@@ -6,7 +6,7 @@ export default class Address extends React.Component {
   constructor() {
     super();
     this.state = {
-
+      addressList: []
     };
   }
 
@@ -15,23 +15,25 @@ export default class Address extends React.Component {
   }
   getAddress = () => {
     AddressService.list().then((result) => {
-
       if (!result) return
-
-      // if (result.success) {
-      //   this.props.history.push({
-      //     pathname: '/'
-      //   });
-      // }
-      // else {
-      //   alert(Object.values(result.data)[0])
-      // }
+      this.setState({ addressList: result.data })
     }).catch((err) => {
       console.log(err);
     });
   }
+  setDefaultOrDeleteAddress = (id, type) => {
 
+    AddressService.delete({ address_id: id, action: type }).then((result) => {
+
+      if (!result) return
+      this.getAddress();
+    }).catch((err) => {
+      console.log(err);
+    });
+
+  }
   render() {
+    const { addressList } = this.state;
 
     return (
       <>
@@ -44,21 +46,25 @@ export default class Address extends React.Component {
           </div>
           <div className="coloumn-2">
             <h2> Shipping Address</h2>
-            <address>B 17, Nandkishore Indl.estate, <br/>Mahakali Caves Road, Chakala, <br/> Andheri(e)
-            <br/> Mumbai,  Maharashtra - 400093<br/>
-            <strong>Mobile No.</strong>: 9811148709<br/>
-            <strong>Email</strong> : ref@gmail.com <br/><br/>
-            <p className="d-flex justify-content-between">
-            <span>Edit</span><span>|</span><span>Remove</span>
-            </p>
-            
-            </address>
-
+            {addressList?.map((item) => (
+              <address>{item.name}
+                <strong >{item.is_default === 1 ? ' Default' : ''}</strong>
+                <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
+                <br /> {item.district},  {item.state} - {item.pincode}<br />
+                <strong>Mobile No.</strong>: {item.mobile}<br />
+                <strong>Email</strong> : {item?.email} <br /><br />
+                <p className="d-flex justify-content-between">
+                  {item.is_default !== 1 && <><span onClick={() => {
+                    this.setDefaultOrDeleteAddress(item.id, 'def')
+                  }}>Set As Default</span><span>|</span></>}
+                  <span>Edit</span>
+                  <span>|</span><span onClick={() => {
+                    this.setDefaultOrDeleteAddress(item.id, 'del')
+                  }}>Remove</span>
+                </p>
+              </address>
+            ))}
           </div>
-          {/* <div className="coloumn-2">
-        <h2>Shipping Address <small><a href="#"> Edit</a></small></h2>
-        <address>Shipping Address comes here...</address>
-        </div> */}
         </div>
 
 
