@@ -177,7 +177,7 @@ export default class ProductCategory extends React.Component {
                       </div>
                     </div>
                   </article>
-                  <article className='filter-group'>
+                  {/* <article className='filter-group'>
                     <header className='card-header'>
                       <h6 className='title'>Rating </h6>
                     </header>
@@ -192,7 +192,7 @@ export default class ProductCategory extends React.Component {
                         </div>
                       </div>
                     </div>
-                  </article>
+                  </article> */}
                   <article className='filter-group'>
                     {/* <header className='card-header'>
                       <h6 className='title'>Categories </h6>

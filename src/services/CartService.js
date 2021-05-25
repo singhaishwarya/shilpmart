@@ -34,4 +34,21 @@ export default class CartService extends Component {
 
     }
   }
+
+  static delete = async (data) => {
+
+    try {
+
+      config.url = baseUrl + 'cart-item-add-remove';
+      config.method = 'post';
+      config.data = data;
+      const response = await axios(config);
+      return response.data ? response.data.data : [];
+    } catch (error) {
+      const { response } = error;
+      if (!response) return;
+      console.log(`FETCH GET ERROR`, response);
+
+    }
+  }
 }

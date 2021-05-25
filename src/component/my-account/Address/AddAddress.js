@@ -28,31 +28,33 @@ const mobile = (value) => {
 
 const pincode = (value) => {
 
-  if (!validator.isInt(value, 6, 6)) { }
+  // if (!validator.isInt(value, 6, 6)) { }
 }
 
-export default class AddAddress extends React.Component {
+export default class AddEditAddress extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.handleAddAddress = this.handleAddAddress.bind(this);
+    this.handleAddEditAddress = this.handleAddEditAddress.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    const savedAddress = props.history.location.state?.address;
 
     this.state = {
       fields: {
-        name: '',
-        mobile: '',
-        city: '',
-        landmark: '',
-        pincode: '',
-        address1: '',
-        address2: '',
-        district: '',
+        id: savedAddress.id || '',
+        name: savedAddress.name || '',
+        mobile: savedAddress.mobile || '',
+        city: savedAddress.city || '',
+        landmark: savedAddress.landmark || '',
+        pincode: savedAddress.pincode || '',
+        address1: savedAddress.address1 || '',
+        address2: savedAddress.address2 || '',
         country: 1,
-        state: '',
-        sub_district: '',
-        type: ''
+        state: savedAddress.state || '',
+        district: savedAddress.district || '',
+        sub_district: savedAddress.sub_district || '',
+        type: savedAddress.type || ''
       },
       statesOptions: [],
       statesOptions: [],
@@ -62,6 +64,11 @@ export default class AddAddress extends React.Component {
   }
   componentDidMount() {
     this.getStates();
+    if (this.props.history.location.state?.address) {
+
+      this.getDistrict(this.state.fields.state);
+      this.getSubDistrict(this.state.fields.state, this.state.fields.district)
+    }
   }
 
   getStates = () => {
@@ -95,7 +102,7 @@ export default class AddAddress extends React.Component {
       this.setState({ subDistrictOptions: result.data })
     })
   }
-  handleAddAddress(e) {
+  handleAddEditAddress(e) {
     e.preventDefault();
     AddressService.add(this.state.fields)
       .then((result) => {
@@ -121,7 +128,7 @@ export default class AddAddress extends React.Component {
         <div className="row">
           <div className="col-lg-6 col-12 login-card">
             <h4 className="mb-4">Add New Address</h4>
-            <Form onSubmit={this.handleAddAddress} ref={(c) => { this.form = c; }} >
+            <Form onSubmit={this.handleAddEditAddress} ref={(c) => { this.form = c; }} >
 
               <div className="form-row">
                 <div className="form-group col-lg-6 col-12">
@@ -167,7 +174,6 @@ export default class AddAddress extends React.Component {
                     name="address2"
                     value={fields.address2}
                     onChange={this.handleChange.bind(this, "address2")}
-                    validations={[required]}
                   />
                 </div>
               </div>

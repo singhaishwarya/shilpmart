@@ -17,6 +17,7 @@ import Orders from './component/my-account/Orders';
 import Settings from './component/my-account/Settings';
 import Address from './component/my-account/Address/Address';
 import AddAddress from './component/my-account/Address/AddAddress';
+import EditAddress from './component/my-account/Address/AddAddress';
 import AccountDetails from './component/my-account/AccountDetails';
 import Support from './component/my-account/Support';
 import Inquiry from './component/my-account/Inquiry';
@@ -59,6 +60,7 @@ class App extends Component {
                 <PrivateRoute isAuthenticated={userData} path='/my-account/settings' component={Settings} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/address' component={Address} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/add-address' component={AddAddress} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/edit-address' component={EditAddress} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/details' component={AccountDetails} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/support-tickets' component={Support} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/inquiry' component={Inquiry} />

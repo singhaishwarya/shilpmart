@@ -46,8 +46,8 @@ export default class Address extends React.Component {
           </div>
           <div className="coloumn-2">
             <h2> Shipping Address</h2>
-            {addressList?.map((item) => (
-              <address>{item.name}
+            {addressList?.map((item, index) => (
+              <address key={index}>{item.name}
                 <strong >{item.is_default === 1 ? ' Default' : ''}</strong>
                 <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
                 <br /> {item.district},  {item.state} - {item.pincode}<br />
@@ -57,7 +57,12 @@ export default class Address extends React.Component {
                   {item.is_default !== 1 && <><span onClick={() => {
                     this.setDefaultOrDeleteAddress(item.id, 'def')
                   }}>Set As Default</span><span>|</span></>}
-                  <span>Edit</span>
+                  <Link to={
+                    {
+                      pathname: '/my-account/edit-address',
+                      state: { address: item }
+                    }
+                  } ><span>Edit</span></Link>
                   <span>|</span><span onClick={() => {
                     this.setDefaultOrDeleteAddress(item.id, 'del')
                   }}>Remove</span>

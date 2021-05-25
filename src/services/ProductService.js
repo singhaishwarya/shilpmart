@@ -18,7 +18,7 @@ export default class ProductService extends Component {
 
     }
   }
-  // https://admin.digitalindiacorporation.in/api/products?page=2
+
   static fetchNextPage = async (data) => {
     try {
       config.url = baseUrl + 'products';

@@ -55,7 +55,8 @@ export default class Navbar extends React.Component {
                           search: "?cat_ids=" + subitem2.id,
                           state: {
                             category_id: subitem2.id,
-                            category_breadcrumbs: [{ id: item.id, title: item.title }, { id: subitem1.id, title: subitem1.title }, { id: subitem2.id, title: subitem2.title }]
+                            category_breadcrumbs: [{ id: item.id, title: item.title }, { id: subitem1.id, title: subitem1.title },
+                            { id: subitem2.id, title: subitem2.title }]
                           }
                         }} onClick={() => this.setIsMenuShown(false)}>
                           <span>

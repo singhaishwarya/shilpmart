@@ -31,12 +31,10 @@ class ProductGrid extends Component {
 
   }
   componentWillReceiveProps() {
-    // this.setState(this.state)
     this.getProductList(this.getSetQueryParams())
   }
 
   componentDidMount() {
-
     this.getProductList(this.getSetQueryParams());
   }
 
@@ -47,6 +45,11 @@ class ProductGrid extends Component {
         this.setState({
           productListData: this.state.productListData.concat(result.data),
           nextPage: result.next_page_url
+        });
+        this.currentUrlParams.set('page', this.state.currentPage)
+        this.props.history.push({
+          pathname: this.props.location.pathname,
+          search: "&" + this.currentUrlParams.toString()
         });
       });
     }, 1000);
@@ -81,6 +84,9 @@ class ProductGrid extends Component {
           break
         case 'q':
           queryParams.q = urlParams.get('q');
+          break
+        case 'page':
+          queryParams.page = urlParams.get('page');
           break
         default:
           return;

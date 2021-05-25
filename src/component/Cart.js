@@ -1,5 +1,11 @@
-import React from "react";
-export default class Cart extends React.Component {
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as cartAction from '../actions/cart';
+import CartService from '../services/CartService';
+import ProductService from '../services/ProductService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRupeeSign, faTimes } from '@fortawesome/free-solid-svg-icons'
+class Cart extends Component {
 
   constructor() {
     super();
@@ -9,11 +15,36 @@ export default class Cart extends React.Component {
   }
 
   componentDidMount() {
-
-
+    this.getCart()
+  }
+  getCart = () => {
+    let productids = [];
+    CartService.list().then((result) => {
+      result && result.map((item) => (
+        productids?.push(item.product_id)
+      ))
+      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+        this.props.addToCart(result1.data);
+      })
+    })
   }
 
+  deleteCart = (product_id) => {
+    let data = { quantity: 1, product_id: product_id, variation_index: 0 }
+    let productids = [];
+    CartService.delete(data).then((result) => {
+      result && result.map((item) => (
+        productids?.push(item.product_id)
+      ))
+      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+        this.props.addToCart(result1.data);
+      })
+    })
+  }
+
+
   render() {
+    const { cart } = this.props;
     return (
       <div className="container-fluid">
         <div className="row py-5">
@@ -31,25 +62,27 @@ export default class Cart extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="product-remove"><a href=""></a></td>
-                    <td className="product-thumbnail"><a href="#"><img src="images/top-300x300.jpeg" alt="img" className="img-fluid" /></a></td>
-                    <td className="product-name"><a href="#">tussar silk printed saree</a>
-                      <p>Store : <span><a href="#">Sumit Handloom</a></span></p></td>
-                    <td className="product-subtotal"><span>2,899.00</span></td>
-                    <td className="product-quantity" data-title="Quantity"><div className="product-qty">
-                      <div className="input-group">
-                        <input type="button" value="-" className="quantity-left-minus" />
-                        <input type="number" id="quantity" value="1" min="1" max="100" />
-                        <input type="button" value="+" className="quantity-right-plus" />
+                  {cart.map((item, index) => (
+                    <tr key={index}>
+                      <td className="product-remove"><span onClick={() => this.deleteCart(item.id)}>X</span></td>
+                      <td className="product-thumbnail"><a href="#"><img src="images/top-300x300.jpeg" alt="img" className="img-fluid" /></a></td>
+                      <td className="product-name"><a href="#">{item.content?.title}</a>
+                        <p>Store : <span><a href="#">{item.store_name}</a></span></p></td>
+                      <td className="product-subtotal"><span> <FontAwesomeIcon icon={faRupeeSign} />{item.price?.length > 0 && item.price[0]?.price}
+                      </span></td>
+                      <td className="product-quantity" data-title="Quantity"><div className="product-qty">
+                        <div className="input-group">
+                          <input type="button" value="-" className="quantity-left-minus" />
+                          <input type="number" id="quantity" value="1" min="1" max="100" />
+                          <input type="button" value="+" className="quantity-right-plus" />
+                        </div>
                       </div>
-                    </div>
-                    </td>
-                    <td className="product-price"><span><span>₹</span> 2,899.00</span></td>
-                  </tr>
+                      </td>
+                      <td className="product-price"><span><span>₹</span> 2,899.00</span></td>
+                    </tr>))}
                 </tbody>
               </table>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col">
                   <div className="cart-coupon-wrapper mb-3">
                     <label className="d-none">Coupon</label>
@@ -57,7 +90,7 @@ export default class Cart extends React.Component {
                     <button>Apply Coupon</button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </form>
           <div className="col-lg-4 col-sm-6 col-12">
@@ -84,3 +117,17 @@ export default class Cart extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    cart: state.cart
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteCart: index => dispatch(cartAction.deleteCart(index)),
+    addToCart: cart => dispatch(cartAction.addToCart(cart)),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
