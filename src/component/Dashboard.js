@@ -37,15 +37,13 @@ export default class Dashboard extends React.Component {
                   <p>Choose from authentic handmade product categories</p>
                 </div>
                 <ul className="nav nav-tabs d-flex justify-content-center border-0 mb-4" role="tablist">
-                  <li className="nav-item"
-                  //  
-                  >
-                    <a className={`nav-link ${((isActiveTab === 0) ? 'active' : '')}`} id="home-tab" data-toggle="tab" href="#home" role="tab"
-                      aria-controls="home" aria-selected="true" onClick={() => this.setState({ isActiveTab: 0 })}>Featured Products</a>
+                  <li className="nav-item">
+                    <span className={`nav-link ${((isActiveTab === 0) ? 'active' : '')}`} id="home-tab" data-toggle="tab" href="#home" role="tab"
+                      aria-controls="home" aria-selected="true" onClick={() => this.setState({ isActiveTab: 0 })}>Featured Products</span>
                   </li>
                   <li className="nav-item">
-                    <a className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                      aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })}>Latest Products</a>
+                    <span className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                      aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })}>Latest Products</span>
                   </li>
 
                 </ul>

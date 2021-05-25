@@ -38,11 +38,22 @@ export default class Address extends React.Component {
         <p> The following addresses will be used on the checkout page by default.</p>
         <div className="flexi">
           <div className="coloumn-2">
-            <h2>   <Link to={'/my-account/add-address'} > +</Link> </h2>
+            <div className="ad-address-wrapper">
+              <Link to={'/my-account/add-address'} > Add Address</Link>
+            </div>
           </div>
           <div className="coloumn-2">
-            <h2> Address<small><a href="#">Edit</a></small></h2>
-            <address>Billing Address comes here...</address>
+            <h2> Shipping Address</h2>
+            <address>B 17, Nandkishore Indl.estate, <br/>Mahakali Caves Road, Chakala, <br/> Andheri(e)
+            <br/> Mumbai,  Maharashtra - 400093<br/>
+            <strong>Mobile No.</strong>: 9811148709<br/>
+            <strong>Email</strong> : ref@gmail.com <br/><br/>
+            <p className="d-flex justify-content-between">
+            <span>Edit</span><span>|</span><span>Remove</span>
+            </p>
+            
+            </address>
+
           </div>
           {/* <div className="coloumn-2">
         <h2>Shipping Address <small><a href="#"> Edit</a></small></h2>
