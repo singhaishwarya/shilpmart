@@ -11,6 +11,7 @@ class CartOverlay extends Component {
   componentDidMount() {
     this.getCart()
   }
+
   getCart = () => {
     let productids = [];
     CartService.list().then((result) => {
@@ -23,17 +24,17 @@ class CartOverlay extends Component {
     })
   }
 
-  dismissCart = (e) => {
-    e.preventDefault();
+  dismissCart = () => {
     this.props.dismissModal('cart');
   }
+
   render() {
     return (
       <>
         <div className="cart-side-head">
           <h3>SHOPPING CART</h3>
           <a href="" >
-            <span onClick={this.dismissCart}>Close</span>
+            <span onClick={() => this.dismissCart()}>Close</span>
           </a>
         </div>
 
@@ -73,7 +74,7 @@ class CartOverlay extends Component {
               </div>
 
               <div className="cart-action">
-                <Link to={'/cart'} >
+                <Link to={'/cart'} onClick={() => this.dismissCart()}>
                   <a href="#">View Cart</a></Link>
                 <a href="#">Checkout</a>
               </div>

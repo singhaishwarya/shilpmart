@@ -22,7 +22,7 @@ class Cart extends Component {
     CartService.list().then((result) => {
       result && result.map((item) => (
         productids?.push(item.product_id)
-      ))
+      ));
       ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
         this.props.addToCart(result1.data);
       })
@@ -35,16 +35,20 @@ class Cart extends Component {
       result.success ? this.getCart() : null
     ))
   }
+
   countInc = () => {
     this.setState({ productCount: this.state.productCount + 1 });
   }
+
   countDec = () => {
     this.setState({ productCount: this.state.productCount - 1 });
   }
+
   productCountManual = (event) => {
 
     this.setState({ productCount: event.target.value });
   }
+
   render() {
     const { cart } = this.props;
     const { productCount } = this.state;
@@ -68,7 +72,15 @@ class Cart extends Component {
                   {cart.map((item, index) => (
                     <tr key={index}>
                       <td className="product-remove"><span onClick={() => this.deleteCart(item.id)}>X</span></td>
-                      <td className="product-thumbnail"><a href="#"><img src="images/top-300x300.jpeg" alt="img" className="img-fluid" /></a></td>
+                      <td className="product-thumbnail"><a href="#">
+                        {/* <img src="images/top-300x300.jpeg" alt="img" className="img-fluid" /> */}
+                        <img src={(item.images?.length > 0 && item?.images[0]?.image_url) || "false"}
+                          className="img-fluid"
+                          // onClick={() => this.productDetail(item.id)}
+                          alt={(item.images?.length > 0 && item.images[0]?.caption) || "false"}
+                          onError={e => { e.currentTarget.src = require('../public/bag1.jpeg') }}
+                        />
+                      </a></td>
                       <td className="product-name"><a href="#">{item.content?.title}</a>
                         <p>Store : <span><a href="#">{item.store_name}</a></span></p></td>
                       <td className="product-subtotal"><span> <FontAwesomeIcon icon={faRupeeSign} />{item.price?.length > 0 && item.price[0]?.price}
