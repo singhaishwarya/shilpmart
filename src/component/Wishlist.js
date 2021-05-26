@@ -9,41 +9,28 @@ import ProductService from '../services/ProductService';
 import ProductTile from './ProductTile';
 
 class Wishlist extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      wishlist: []
+    }
+  }
 
   componentDidMount() {
-    const { userData, wishlist } = this.props;
-
-    if (Object.keys(userData).length > 0) {
-
-      if (wishlist?.length > 0) {
-        let productids = [];
-
-        wishlist.map((item) => {
-          return productids.push(item.id)
-        })
-        this.addToWishlist(productids);
-      }
-      else {
-        this.getWishlist()
-      }
-    }
-
+    this.getWishlist()
   }
-  addToWishlist = (productids) => {
-    WishlistService.add({ product_id: productids }).then((result) => {
-      this.getWishlist()
-    });
-  }
+
 
   deleteWishlist = (item) => {
+
     Object.keys(this.props.userData).length > 0 ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id)
   }
 
   deleteWishlistApi = (item) => {
     this.props.deleteWishlist(item.id)
-    // WishlistService.deleteWishlist({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
-    this.getWishlist()
-    // });
+    WishlistService.delete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
+      result.success && this.getWishlist();
+    });
   }
 
   getWishlist = () => {
@@ -53,16 +40,14 @@ class Wishlist extends Component {
         productids?.push(item.product_id)
       ))
       ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        // this.setState({
-        //   wishlistData: result1
-        // })
-        result1.data.map((item) => this.props.addToWishlist(item))
+        this.setState({ wishlist: result1.data });
+        result1.data.map((item) => this.props.addToWishlist(item.id))
       })
     })
   }
 
   render() {
-    const { wishlist } = this.props
+    const { wishlist } = this.state
     return (
       <div className="container" >
         { (wishlist?.length > 0) ? (<>
@@ -81,12 +66,11 @@ class Wishlist extends Component {
           </div></>
         ) : <div className="empty-wishlist">
           <h2>Wishlist is empty.</h2>
-              <span>Wishlist is empty. You don't have any products in the wishlist yet. You will find a lot of interesting products on our "Shop" page.</span>
-              <Link to='/product-list'>Return to shop</Link>
-                </div>
+          <span>Wishlist is empty. You don't have any products in the wishlist yet. You will find a lot of interesting products on our "Shop" page.</span>
+          <Link to='/product-list'>Return to shop</Link>
+        </div>
         }
       </div >
-
     )
   }
 }
@@ -103,6 +87,7 @@ const mapDispatchToProps = (dispatch) => {
     addToCart: cart => dispatch(cartAction.addToCart(cart)),
     addToCompare: compare => dispatch(compareAction.addToCompare(compare)),
     deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index)),
+    emptyWishlist: index => dispatch(wishlistAction.emptyWishlist(index)),
     addToWishlist: wishist => dispatch(wishlistAction.addToWishlist(wishist)),
   }
 };

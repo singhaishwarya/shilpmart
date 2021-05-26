@@ -15,7 +15,7 @@ export default class ProductTile extends React.Component {
       ))
       ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
         result1.data.map((item, index) => {
-          this.props.addToWishlist(item);
+          this.props.addToWishlist(item.id);
         })
 
       })
@@ -27,26 +27,23 @@ export default class ProductTile extends React.Component {
   }
 
   deleteWishlistApi(item) {
-    WishlistService.deleteWishlist({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
-      this.getWishlist()
+    this.props.deleteWishlist(item.id)
+    WishlistService.delete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
+      result.success && this.getWishlist()
     });
   }
 
   addToWishlist = (product) => {
 
-    if (Object.keys(this.props.userData).length > 0) { (this.addToWishlistApi(product)) }
-    else {
-      this.props.addToWishlist(product)
-    }
-
+    (Object.keys(this.props.userData).length > 0) ? this.addToWishlistApi(product) :
+      this.props.addToWishlist(product.id)
 
   }
 
   addToWishlistApi = (product) => {
-    console.log("Demo===3", product)
-    this.props.addToWishlist(product)
+    this.props.addToWishlist(product.id)
     WishlistService.add({ product_id: [product.id] }).then((result) => {
-      this.getWishlist()
+      result.success && this.getWishlist()
     });
   }
 
@@ -92,7 +89,8 @@ export default class ProductTile extends React.Component {
 
   render() {
 
-    const { data, userData } = this.props
+    const { data, userData, wishlist, cart } = this.props
+
     return (
       <div className="product-wrapper" key={data.id} >
         <div className="prodcut-img" onClick={() => this.productDetail(data.id)}>
@@ -109,13 +107,12 @@ export default class ProductTile extends React.Component {
           <div className="shopBtn">
             <div className="shop-btn"><span>
               <FontAwesomeIcon
-                icon={this.props?.cart?.find(element => element.id === data.id) ? faCheck : faCartPlus}
+                icon={cart?.find(element => element.id === data.id) ? faCheck : faCartPlus}
                 onClick={
                   () => {
                     Object.keys(userData).length > 0 ? (data.cart ? this.deleteCart(data) : this.addToCart(data)) :
-                      (this.props?.cart?.find(element => element.id === data.id) ? this.deleteCart(data) : this.addToCart(data))
+                      (cart?.find(element => element.id === data.id) ? this.deleteCart(data) : this.addToCart(data))
                   }
-                  // () => { Object.keys(userData).length > 0 ? this.addCartApi(data.id) : this.props.addToCart(data) }
                 }
               /></span></div>
             <div className="shop-btn"><span>
@@ -124,10 +121,9 @@ export default class ProductTile extends React.Component {
             </span></div>
             <div className="shop-btn"><span>
               <FontAwesomeIcon
-                icon={this.props.wishlist.find(element => element.id === data.id) ? faHeart : farHeart}
+                icon={(wishlist?.includes(data.id) || (Object.keys(userData).length > 0 && data?.wishlist?.id)) ? faHeart : farHeart}
                 onClick={() => {
-                  Object.keys(userData).length > 0 ? (data.wishlist ? this.deleteWishlist(data) : this.addToWishlist(data)) :
-                    (this.props.wishlist.find(element => element.id === data.id) ? this.deleteWishlist(data) : this.addToWishlist(data))
+                  ((Object.keys(userData).length > 0 && data?.wishlist?.id) || wishlist?.includes(data.id)) ? this.deleteWishlist(data) : this.addToWishlist(data)
                 }}
               />
             </span>

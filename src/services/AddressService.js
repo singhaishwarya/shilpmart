@@ -9,6 +9,7 @@ export default class Address extends Component {
       config.url = baseUrl + 'address-add-edit';
       config.method = 'post';
       config.data = data;
+      config.params = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {
@@ -21,7 +22,8 @@ export default class Address extends Component {
     try {
       config.url = baseUrl + 'address-list';
       config.method = 'get';
-
+      config.params = '';
+      config.data = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {
@@ -35,6 +37,7 @@ export default class Address extends Component {
       config.url = baseUrl + 'address-delete-default';
       config.method = 'post';
       config.params = data;
+      config.data = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {

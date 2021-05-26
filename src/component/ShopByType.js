@@ -28,9 +28,6 @@ class ShopByType extends Component {
     this.state.type === 'product' ? this.getProductsList() : this.getCateroryList();
   }
 
-  componentWillReceiveProps() {
-    this.state.type === 'product' ? this.getProductsList() : this.getCateroryList();
-  }
 
   getCateroryList = () => {
     CategoryService.fetchAllCategory({ parent_id: 0 }).then((result) => {

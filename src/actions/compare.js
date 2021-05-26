@@ -1,4 +1,4 @@
-import { ADD_TO_COMPARE, REMOVE_COMPARE, EMPTY_COMPARE } from './types';
+import { ADD_TO_COMPARE, DELETE_COMPARE, EMPTY_COMPARE } from './types';
 
 export const addToCompare = (compare) => {
   return {
@@ -10,7 +10,7 @@ export const addToCompare = (compare) => {
 
 export const deleteCompare = (id) => {
   return {
-    type: REMOVE_COMPARE,
+    type: DELETE_COMPARE,
     id: id
   }
 }

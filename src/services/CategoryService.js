@@ -9,7 +9,7 @@ export default class CategoryService extends Component {
       config.url = baseUrl + 'categories';
       config.method = 'get';
       config.params = data;
-
+      config.data = '';
       const response = await axios(config);
       return response.data ? response.data.data : [];
     } catch (error) {

@@ -1,4 +1,4 @@
-import { ADD_TO_WISHLIST, REMOVE_WISHLIST, EMPTY_WISHLIST } from './types';
+import { ADD_TO_WISHLIST, DELETE_WISHLIST, EMPTY_WISHLIST } from './types';
 
 export const addToWishlist = (wishlist) => {
   return {
@@ -9,7 +9,7 @@ export const addToWishlist = (wishlist) => {
 
 export const deleteWishlist = (id) => {
   return {
-    type: REMOVE_WISHLIST,
+    type: DELETE_WISHLIST,
     id: id
   }
 }

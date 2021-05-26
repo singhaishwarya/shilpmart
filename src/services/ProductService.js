@@ -8,7 +8,7 @@ export default class ProductService extends Component {
       config.url = baseUrl + 'products';
       config.method = 'get';
       config.params = data;
-
+      config.data = '';
       const response = await axios(config);
       return response.data ? response.data.data : [];
     } catch (error) {
@@ -24,7 +24,7 @@ export default class ProductService extends Component {
       config.url = baseUrl + 'products';
       config.method = 'get';
       config.params = data;
-
+      config.data = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {

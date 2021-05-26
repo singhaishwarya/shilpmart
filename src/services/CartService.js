@@ -10,6 +10,7 @@ export default class CartService extends Component {
       config.url = baseUrl + 'cart-item-add-remove';
       config.method = 'post';
       config.data = data;
+      config.params = '';
       const response = await axios(config);
       return response.data ? response.data.data : [];
     } catch (error) {
@@ -25,6 +26,8 @@ export default class CartService extends Component {
 
       config.url = baseUrl + 'cart';
       config.method = 'get';
+      config.data = '';
+      config.params = '';
       const response = await axios(config);
       return response.data ? response.data.data : [];
     } catch (error) {
@@ -42,6 +45,7 @@ export default class CartService extends Component {
       config.url = baseUrl + 'cart-item-add-remove';
       config.method = 'post';
       config.data = data;
+      config.params = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {

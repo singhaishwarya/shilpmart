@@ -22,6 +22,8 @@ import * as authAction from '../actions/auth';
 import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
+import WishlistService from '../services/WishlistService';
+
 const customLoginStyles = {
   content: {
     top: '50%',
@@ -54,7 +56,7 @@ class Header extends Component {
       showModal: false,
       shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/'],
       title: 'eShilpmart',
-      isLoggedIn: this.props.userData,
+      isLoggedIn: this.props.userData.token,
       isMenuShown: false
     }
   }
@@ -62,16 +64,55 @@ class Header extends Component {
   componentDidMount = () => {
     document.addEventListener('mousedown', this.handleClickOutside, false)
 
+    if (this.state.isLoggedIn) {
+      this.syncWishlist();
+    }
+  }
+
+  syncWishlist = () => {
+    const { wishlist } = this.props;
+    if (wishlist?.length > 0) {
+
+      let productids = [];
+      wishlist.map((item) => {
+        return productids.push(item)
+      })
+      this.addToWishlist(productids);
+    }
+    else {
+
+      this.getWishlist()
+    }
+
+  }
+  addToWishlist = (productids) => {
+    WishlistService.add({ product_id: productids }).then((result) => {
+
+      result.success && this.getWishlist()
+    });
+  }
+  getWishlist = () => {
+    let productids = [];
+    WishlistService.list().then((result) => {
+
+      result && result.map((item) => (
+        productids?.push(item.product_id)
+      ))
+      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+
+        result1.data.map((item) => this.props.addToWishlist(item.id));
+      })
+    })
   }
 
   getCategoryTitles = (id) => {
-    try {
-      CategoryService.fetchAllCategory({ parent_id: id }).then((result) => {
-        return result;
-      })
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   CategoryService.fetchAllCategory({ parent_id: id }).then((result) => {
+    //     return result;
+    //   })
+    // } catch (err) {
+    //   console.log(err);
+    // }
   }
 
   setIsMenuShown = (status) => {
@@ -263,17 +304,24 @@ class Header extends Component {
                   <Link to="" onClick={() => this.logout()}>Logout</Link>
                 </div>
               } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
+
             <li className="nav-item">
               <Link to={'/wishlist'}><div className="nav-link">
-                <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link></li>
+                <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link>
+            </li>
+
             <li className="nav-item">
               <Link to={'/compare'}>
                 <div className="nav-link">
-                  <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></div></Link></li>
+                  <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></div></Link>
+            </li>
+
+
             <li className="nav-item" onClick={() => this.dismissModal('cart')}>
               <a href="#"> <div className="nav-link">
                 <FontAwesomeIcon icon={faShoppingBasket} /><span>{this.props?.cart?.length}</span>
-              </div></a></li>
+              </div></a>
+            </li>
           </ul>
         </div >
         <Navbar />
@@ -294,6 +342,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: user => dispatch(authAction.logout(user)),
     emptyWishlist: index => dispatch(wishlistAction.emptyWishlist(index)),
+    addToWishlist: index => dispatch(wishlistAction.addToWishlist(index)),
     emptyCart: index => dispatch(cartAction.emptyCart(index)),
     emptyCompare: index => dispatch(compareAction.emptyCompare(index))
   }
