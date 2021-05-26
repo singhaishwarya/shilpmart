@@ -40,7 +40,7 @@ const lt50 = (value) => {
 };
 
 const isValidpassword = (value) => {
-  var pattern = new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$/);
+  let pattern = new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$/);
   if (!pattern.test(value)) {
     return <div className="alert alert-danger" role="alert">  Password must contain at leaset eight alpha numaric and one special char and contain one special char</div>
 
