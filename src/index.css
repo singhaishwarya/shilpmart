@@ -2093,6 +2093,9 @@ padding-right: 5px;
 .addtocart {
 	margin-bottom: 15px;
 }
+.addtocart button{
+	margin-right: 15px;
+}
 .product-qty {
 	margin: 0px 15px 0 0;
 }
@@ -2148,6 +2151,8 @@ padding-right: 5px;
 	background-color: #e05206;
 	cursor: pointer;
 }
+.addtocart .buy-btn{
+	background-color:#ff9f00}
 .action-links {
 	margin-bottom: 30px;
 }
@@ -2919,6 +2924,8 @@ margin: 30px 0;}
     font-weight: inherit;
 	vertical-align:middle
 		}
+	
+		td.product-thumbnail{width: 80px; height: 80px;}
 
 td.product-remove a:hover::after, 	td.product-remove a:hover::before{
 		color:red}
