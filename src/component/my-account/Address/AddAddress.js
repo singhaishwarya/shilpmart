@@ -42,19 +42,19 @@ export default class AddEditAddress extends React.Component {
 
     this.state = {
       fields: {
-        id: savedAddress.id || '',
-        name: savedAddress.name || '',
-        mobile: savedAddress.mobile || '',
-        city: savedAddress.city || '',
-        landmark: savedAddress.landmark || '',
-        pincode: savedAddress.pincode || '',
-        address1: savedAddress.address1 || '',
-        address2: savedAddress.address2 || '',
+        id: savedAddress?.id || '',
+        name: savedAddress?.name || '',
+        mobile: savedAddress?.mobile || '',
+        city: savedAddress?.city || '',
+        landmark: savedAddress?.landmark || '',
+        pincode: savedAddress?.pincode || '',
+        address1: savedAddress?.address1 || '',
+        address2: savedAddress?.address2 || '',
         country: 1,
-        state: savedAddress.state || '',
-        district: savedAddress.district || '',
-        sub_district: savedAddress.sub_district || '',
-        type: savedAddress.type || ''
+        state: savedAddress?.state || '',
+        district: savedAddress?.district || '',
+        sub_district: savedAddress?.sub_district || '',
+        type: savedAddress?.type || ''
       },
       statesOptions: [],
       statesOptions: [],
