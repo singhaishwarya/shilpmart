@@ -23,7 +23,7 @@ class Cart extends Component {
       result && result.map((item) => (
         productids?.push(item.product_id)
       ));
-      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+      ProductService.fetchAllProducts({ product_ids: [productids] }).then((result1) => {
         this.props.addToCart(result1.data);
       })
     })
@@ -71,19 +71,19 @@ class Cart extends Component {
                 <tbody>
                   {cart.map((item, index) => (
                     <tr key={index}>
-                      <td className="product-remove"><span onClick={() => this.deleteCart(item.id)}>X</span></td>
+                      <td className="product-remove"><span onClick={() => this.deleteCart(item?.id)}>X</span></td>
                       <td className="product-thumbnail"><a href="#">
                         {/* <img src="images/top-300x300.jpeg" alt="img" className="img-fluid" /> */}
-                        <img src={(item.images?.length > 0 && item?.images[0]?.image_url) || "false"}
+                        <img src={(item?.images?.length > 0 && item?.images[0]?.image_url) || "false"}
                           className="img-fluid"
                           // onClick={() => this.productDetail(item.id)}
-                          alt={(item.images?.length > 0 && item.images[0]?.caption) || "false"}
+                          alt={(item?.images?.length > 0 && item?.images[0]?.caption) || "false"}
                           onError={e => { e.currentTarget.src = require('../public/bag1.jpeg') }}
                         />
                       </a></td>
-                      <td className="product-name"><a href="#">{item.content?.title}</a>
-                        <p>Store : <span><a href="#">{item.store_name}</a></span></p></td>
-                      <td className="product-subtotal"><span> <FontAwesomeIcon icon={faRupeeSign} />{item.price?.length > 0 && item.price[0]?.price}
+                      <td className="product-name"><a href="#">{item?.content?.title}</a>
+                        <p>Store : <span><a href="#">{item?.store_name}</a></span></p></td>
+                      <td className="product-subtotal"><span> <FontAwesomeIcon icon={faRupeeSign} />{item?.price?.length > 0 && item?.price[0]?.price}
                       </span></td>
                       <td className="product-quantity" data-title="Quantity"><div className="product-qty">
                         <div className="input-group">
