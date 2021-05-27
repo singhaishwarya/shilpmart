@@ -208,6 +208,8 @@ export default class AddEditAddress extends React.Component {
                   <Select name='state' value={fields.state}
                     onChange={this.handleChange.bind(this, "state")}
                     validations={[required]} className="form-control">
+                    <option  >Select States</option>
+
                     {statesOptions.length > 0
                       && statesOptions.map((item, i) => {
                         return (
@@ -224,6 +226,8 @@ export default class AddEditAddress extends React.Component {
                   <Select name='district' value={fields.district}
                     onChange={this.handleChange.bind(this, "district")}
                     validations={[required]} className="form-control">
+                    <option  >Select District</option>
+
                     {districtOptions.length > 0
                       && districtOptions.map((item, i) => {
                         return (
@@ -239,6 +243,8 @@ export default class AddEditAddress extends React.Component {
                   <Select name='subDistrict' value={fields.sub_district}
                     onChange={this.handleChange.bind(this, "sub_district")}
                     validations={[required]} className="form-control">
+                    <option  >Select Sub-District</option>
+
                     {subDistrictOptions.length > 0
                       && subDistrictOptions.map((item, i) => {
                         return (
