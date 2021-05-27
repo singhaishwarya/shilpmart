@@ -12,7 +12,7 @@ class Cart extends Component {
   constructor() {
     super();
     this.state = {
-      productCount: 1
+      productCount: 1, cartProduct: []
     };
   }
 
@@ -25,17 +25,19 @@ class Cart extends Component {
       result && result.map((item) => (
         productids?.push(item.product_id)
       ));
-      ProductService.fetchAllProducts({ product_ids: [productids] }).then((result1) => {
-        result1.data.map((item, index) => {
-          this.props.addToCart(item.id);
-        })
+      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+        result1.data.map((item) => {
+          this.props.addToCart(item.id)
+        });
+        this.setState({ cartProduct: result1.data })
       })
     })
   }
 
   deleteCart = (productid) => {
+    this.props.deleteCart(productid);
     CartService.delete({ product_id: productid }).then((result) => {
-      result.success && this.deleteCart(productid);
+      if (result.success) { this.getCart() }
     })
   }
 
@@ -53,8 +55,7 @@ class Cart extends Component {
   }
 
   render() {
-    const { cart } = this.props;
-    const { productCount } = this.state;
+    const { productCount, cartProduct } = this.state;
     return (
       <div className="container-fluid">
         <div className="row py-5">
@@ -72,7 +73,7 @@ class Cart extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {cart.map((item, index) => (
+                  {cartProduct.map((item, index) => (
                     <tr key={index}>
                       <td className="product-remove"><span onClick={() => this.deleteCart(item?.id)}>X</span></td>
                       <td className="product-thumbnail"><a href="#">

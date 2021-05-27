@@ -12,9 +12,11 @@ export default function cartReducer(state = [], action) {
       return final;
 
     case actionTypes.DELETE_CART:
-      return state.filter((data, i) =>
+
+      let fin = state.filter((data, i) =>
         data !== action.id
       );
+      return fin;
 
     case actionTypes.EMPTY_CART:
       return action.cart = [];

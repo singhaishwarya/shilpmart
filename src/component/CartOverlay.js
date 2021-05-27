@@ -7,6 +7,12 @@ import * as cartAction from '../actions/cart';
 import CartService from '../services/CartService';
 import ProductService from '../services/ProductService';
 class CartOverlay extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      cartData: []
+    }
+  }
 
   componentDidMount() {
     this.getCart()
@@ -17,17 +23,22 @@ class CartOverlay extends Component {
     CartService.list().then((result) => {
       result && result.map((item) => (
         productids?.push(item.product_id)
-      ))
+      ));
+
       ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        result1.data.map((item) => {
-          this.props.addToCart(item.id);
-        })
+        this.setState({ cartData: result1.data })
+        result1.data.map((item) => (
+          this.props.addToCart(item.id)
+        ))
       })
-    })
+    });
   }
   deleteCart = (productid) => {
     CartService.delete({ product_id: productid }).then((result) => {
-      result.success && this.props.deleteCart(productid);
+      if (result.success) {
+        this.props.deleteCart(productid);
+        this.getCart();
+      }
     })
   }
 
@@ -36,6 +47,7 @@ class CartOverlay extends Component {
   }
 
   render() {
+    const { cartData } = this.state;
 
     return (
       <>
@@ -50,7 +62,7 @@ class CartOverlay extends Component {
           <div className="cart-shop-body">
             <div className="cartshop-items">
               <ul>
-                {this.props.cart?.map((item, index) => (
+                {cartData?.map((item, index) => (
                   <li key={index}>
                     <a href="#">
                       <img src={(item?.images?.length > 0 && item?.images[0]?.image_url) || "false"}

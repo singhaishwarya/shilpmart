@@ -9,7 +9,7 @@ export default class WishlistService extends Component {
       config.url = baseUrl + 'wish-list-item-add-remove';
       config.method = 'post';
       config.data = data;
-      config.params = data;
+      config.params = '';
       const response = await axios(config);
       return response ? response.data : [];
     } catch (error) {
@@ -38,8 +38,8 @@ export default class WishlistService extends Component {
     try {
       config.url = baseUrl + 'wish-list-item-add-remove';
       config.method = 'post';
-      config.params = data;
       config.data = data;
+      config.params = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {

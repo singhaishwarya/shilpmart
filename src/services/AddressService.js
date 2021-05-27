@@ -36,8 +36,8 @@ export default class Address extends Component {
     try {
       config.url = baseUrl + 'address-delete-default';
       config.method = 'post';
-      config.params = data;
-      config.data = '';
+      config.data = data;
+      config.params = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {

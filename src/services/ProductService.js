@@ -23,8 +23,8 @@ export default class ProductService extends Component {
     try {
       config.url = baseUrl + 'products';
       config.method = 'get';
-      config.params = data;
-      config.data = '';
+      config.data = data;
+      config.params = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {
