@@ -8,17 +8,11 @@ import ProductService from '../services/ProductService';
 export default class ProductTile extends React.Component {
 
   getWishlist = () => {
-    let productids = [];
+
     WishlistService.list().then((result) => {
       result && result.map((item) => (
-        productids?.push(item.product_id)
+        this.props.addToWishlist(item.product_id)
       ))
-      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        result1.data.map((item, index) => {
-          this.props.addToWishlist(item.id);
-        })
-
-      })
     })
   }
 
@@ -29,8 +23,12 @@ export default class ProductTile extends React.Component {
   deleteWishlistApi(item) {
     this.props.deleteWishlist(item.id)
     WishlistService.delete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
-      result.success && this.getWishlist()
-    });
+      if (result?.success) {
+        this.getWishlist();
+        this.props.onWishlistChange();
+      }
+    }
+    )
   }
 
   addToWishlist = (product) => {
@@ -43,29 +41,46 @@ export default class ProductTile extends React.Component {
   addToWishlistApi = (product) => {
     this.props.addToWishlist(product.id)
     WishlistService.add({ product_id: [product.id] }).then((result) => {
-      result.success && this.getWishlist()
+      if (result?.success) {
+        this.getWishlist();
+        this.props.onWishlistChange();
+      }
     });
-  }
-
-  deleteCart(item) {
-    (Object.keys(this.props.userData).length > 0) ? this.deleteCartApi(item) : this.props.deleteCart(item.id);
-  }
-
-  deleteCartApi(item) {
-    // CartService.deleteCart({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
-    //   this.getCart()
-    // });
   }
 
   addToCart = (product) => {
-    Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product.id)
+
+    if (this.props.cart?.includes(product.id)) {
+      alert(product?.content?.title + " is already in cart")
+    }
+    else {
+      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product.id)
+
+    }
   }
 
   addToCartApi = (product) => {
-    this.props.addToCart(product.id)
-    CartService.add({ product_id: product.id, quantity: 1, variation_index: 0 }).then((result) => {
-      this.getCart()
-    });
+
+    let cartToSync = [{
+      "product_id": product.id,
+      "quantity": 1,
+      "variation_index": 0
+    }], cartProductids = [];
+    try {
+      CartService.add({ products: cartToSync }).then((result) => {
+        if (result?.success) {
+          result.data.map((item) => (
+            cartProductids?.push(item.product_id)
+          ))
+          ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
+            result1.data.map((item) => this.props.addToCart(item.id));
+          })
+        }
+        else { return }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   getCart = () => {
@@ -75,7 +90,9 @@ export default class ProductTile extends React.Component {
         productids?.push(item.product_id)
       ))
       ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        this.props.addToCart(result1.data.id);
+        result1.data.map((item) => {
+          this.props.addToCart(item.id);
+        })
       })
     })
   }
@@ -90,7 +107,6 @@ export default class ProductTile extends React.Component {
   render() {
 
     const { data, userData, wishlist, cart } = this.props
-
     return (
       <div className="product-wrapper" key={data.id} >
         <div className="prodcut-img" onClick={() => this.productDetail(data.id)}>

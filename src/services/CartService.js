@@ -7,12 +7,12 @@ export default class CartService extends Component {
   static add = async (data) => {
     try {
 
-      config.url = baseUrl + 'cart-item-add-remove';
+      config.url = baseUrl + 'cart-sync';
       config.method = 'post';
       config.data = data;
       config.params = '';
       const response = await axios(config);
-      return response.data ? response.data.data : [];
+      return response ? response.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;
@@ -42,7 +42,7 @@ export default class CartService extends Component {
 
     try {
 
-      config.url = baseUrl + 'cart-item-add-remove';
+      config.url = baseUrl + 'cart-item-remove';
       config.method = 'post';
       config.data = data;
       config.params = '';

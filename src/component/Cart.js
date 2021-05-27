@@ -5,6 +5,8 @@ import CartService from '../services/CartService';
 import ProductService from '../services/ProductService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRupeeSign, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { Link } from "react-router-dom";
+
 class Cart extends Component {
 
   constructor() {
@@ -24,16 +26,17 @@ class Cart extends Component {
         productids?.push(item.product_id)
       ));
       ProductService.fetchAllProducts({ product_ids: [productids] }).then((result1) => {
-        this.props.addToCart(result1.data);
+        result1.data.map((item, index) => {
+          this.props.addToCart(item.id);
+        })
       })
     })
   }
 
-  deleteCart = (product_id) => {
-    let data = { quantity: 1, product_id: product_id, variation_index: 0 }
-    CartService.delete(data).then((result) => (
-      result.success ? this.getCart() : null
-    ))
+  deleteCart = (productid) => {
+    CartService.delete({ product_id: productid }).then((result) => {
+      result.success && this.deleteCart(productid);
+    })
   }
 
   countInc = () => {
@@ -123,7 +126,7 @@ class Cart extends Component {
                 <h5>Total</h5>
                 <p><span>00.00</span></p>
               </div>
-              <div className="cart-action cart-action2"> <a href="#"> Proceed to checkout</a> </div>
+              <div className="cart-action cart-action2"> <Link to={'/checkout'} > Proceed to checkout</Link> </div>
             </div>
           </div>
         </div>

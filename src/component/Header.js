@@ -17,6 +17,7 @@ import {
 import ProductService from '../services/ProductService';
 import CategoryService from '../services/CategoryService';
 import { connect } from 'react-redux';
+import CartService from '../services/CartService';
 import AuthService from '../services/AuthService';
 import * as authAction from '../actions/auth';
 import * as wishlistAction from '../actions/wishlist';
@@ -66,6 +67,53 @@ class Header extends Component {
 
     if (this.state.isLoggedIn) {
       this.syncWishlist();
+      this.syncCart();
+    }
+  }
+  syncCart = () => {
+    const { cart } = this.props;
+    if (cart?.length > 0) {
+
+      let cartToSync = [];
+      cart.map((item) => {
+        cartToSync.push(item)
+      })
+      this.addToCart(cartToSync);
+    }
+    else {
+      CartService.list().then((result) => {
+        result && result.map((item) => (
+          this.props.addToCart(item.product_id)
+        ))
+      })
+    }
+
+  }
+
+  addToCart = (product) => {
+    let cartToSync = [], cartProductids = [];
+    product.map((item) => {
+      cartToSync.push({
+        "product_id": item,
+        "quantity": 1,
+        "variation_index": 0
+      })
+    })
+    try {
+      CartService.add({ products: cartToSync }).then((result) => {
+
+        if (result?.success) {
+          result.data.map((item) => (
+            cartProductids?.push(item.product_id)
+          ))
+          ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
+            result1.data.map((item) => this.props.addToCart(item.id));
+          })
+        }
+        else { return }
+      });
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -73,36 +121,39 @@ class Header extends Component {
     const { wishlist } = this.props;
     if (wishlist?.length > 0) {
 
-      let productids = [];
+      let wishlistToSync = [];
       wishlist.map((item) => {
-        return productids.push(item)
+        return wishlistToSync.push(item)
       })
-      this.addToWishlist(productids);
+      this.addToWishlist(wishlistToSync);
     }
     else {
-
-      this.getWishlist()
+      WishlistService.list().then((result) => {
+        result && result.map((item) => (
+          this.props.addToWishlist(item.product_id)
+        ))
+      })
     }
 
   }
-  addToWishlist = (productids) => {
-    WishlistService.add({ product_id: productids }).then((result) => {
 
-      result.success && this.getWishlist()
-    });
-  }
-  getWishlist = () => {
-    let productids = [];
-    WishlistService.list().then((result) => {
-
-      result && result.map((item) => (
-        productids?.push(item.product_id)
-      ))
-      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-
-        result1.data.map((item) => this.props.addToWishlist(item.id));
-      })
-    })
+  addToWishlist = (wishlistToSync) => {
+    let wishlistProductids = [];
+    try {
+      WishlistService.add({ product_id: wishlistToSync }).then((result) => {
+        if (result?.success) {
+          result.data.map((item) => (
+            wishlistProductids?.push(item.product_id)
+          ))
+          ProductService.fetchAllProducts({ product_ids: wishlistProductids }).then((result1) => {
+            result1.data.map((item) => this.props.addToWishlist(item.id));
+          })
+        } else { return }
+      });
+    }
+    catch (err) {
+      console.log(err);
+    }
   }
 
   getCategoryTitles = (id) => {
@@ -343,6 +394,7 @@ const mapDispatchToProps = (dispatch) => {
     logout: user => dispatch(authAction.logout(user)),
     emptyWishlist: index => dispatch(wishlistAction.emptyWishlist(index)),
     addToWishlist: index => dispatch(wishlistAction.addToWishlist(index)),
+    addToCart: index => dispatch(cartAction.addToCart(index)),
     emptyCart: index => dispatch(cartAction.emptyCart(index)),
     emptyCompare: index => dispatch(compareAction.emptyCompare(index))
   }

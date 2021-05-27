@@ -52,26 +52,11 @@ class ShopByType extends Component {
     });
   }
 
-  // addWishlistApi = (id) => {
-  //   WishlistService.add({ product_id: id }).then((result) => {
-  //   })
-  // }
-  // deleteWishlistApi = (id) => {
-
-  // }
-  // addCartApi = (id) => {
-  //   CartService.add({ product_id: id, quantity: 1, variation_index: 0 }).then((result) => {
-  //   })
-  // }
-  // addCompareApi = (id) => {
-  //   CompareService.add({ product_id: id }).then((result) => {
-  //   })
-  // }
   getProductsList = () => {
     ProductService.fetchAllProducts().then((result) => {
       this.setState({
         shopByProductItems: result?.data?.map((item) =>
-          (<ProductTile data={item} {...this.props} />))
+          (<ProductTile data={item} {...this.props} onWishlistChange={() => this.getProductsList()} />))
       })
     })
   }
@@ -94,7 +79,6 @@ class ShopByType extends Component {
 
   render() {
     const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
-
     return (
       <AliceCarousel
         autoPlayInterval={3000}
@@ -118,7 +102,8 @@ class ShopByType extends Component {
 const mapStateToProps = state => {
   return {
     wishlist: state.wishlist,
-    userData: state.userData
+    userData: state.userData,
+    cart: state.cart
   }
 };
 

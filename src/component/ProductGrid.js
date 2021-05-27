@@ -98,7 +98,7 @@ class ProductGrid extends Component {
   getProductList = (queryParams) => {
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
-        this.setState({ productListData: result.data, nextPage: result.next_page_url })
+        this.setState({ productListData: result?.data, nextPage: result.next_page_url })
       });
     } catch (err) {
       console.log(err);
@@ -234,7 +234,8 @@ class ProductGrid extends Component {
 const mapStateToProps = state => {
   return {
     wishlist: state.wishlist,
-    userData: state.userData
+    userData: state.userData,
+    cart: state.cart
   }
 };
 

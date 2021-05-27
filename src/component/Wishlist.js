@@ -27,9 +27,8 @@ class Wishlist extends Component {
   }
 
   deleteWishlistApi = (item) => {
-    this.props.deleteWishlist(item.id)
     WishlistService.delete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
-      result.success && this.getWishlist();
+      if (result.success) { this.props.deleteWishlist(item.id); this.getWishlist() }
     });
   }
 
@@ -40,7 +39,7 @@ class Wishlist extends Component {
         productids?.push(item.product_id)
       ))
       ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        this.setState({ wishlist: result1.data });
+        this.setState({ wishlist: result1?.data });
         result1.data.map((item) => this.props.addToWishlist(item.id))
       })
     })

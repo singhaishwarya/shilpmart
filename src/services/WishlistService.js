@@ -11,7 +11,7 @@ export default class WishlistService extends Component {
       config.data = data;
       config.params = data;
       const response = await axios(config);
-      return response.data ? response.data : [];
+      return response ? response.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;

@@ -19,8 +19,15 @@ class CartOverlay extends Component {
         productids?.push(item.product_id)
       ))
       ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        this.props.addToCart(result1.data);
+        result1.data.map((item) => {
+          this.props.addToCart(item.id);
+        })
       })
+    })
+  }
+  deleteCart = (productid) => {
+    CartService.delete({ product_id: productid }).then((result) => {
+      result.success && this.props.deleteCart(productid);
     })
   }
 
@@ -29,6 +36,7 @@ class CartOverlay extends Component {
   }
 
   render() {
+
     return (
       <>
         <div className="cart-side-head">
@@ -47,7 +55,7 @@ class CartOverlay extends Component {
                     <a href="#">
                       <img src={(item?.images?.length > 0 && item?.images[0]?.image_url) || "false"}
                         className="img-fluid"
-                        // onClick={() => this.productDetail(item.id)}
+                        onClick={() => this.productDetail(item.id)}
                         alt={(item?.images?.length > 0 && item?.images[0]?.caption) || "false"}
                         onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                       />
@@ -61,7 +69,7 @@ class CartOverlay extends Component {
                       <span className="qty">1 x <span>
                         <FontAwesomeIcon icon={faRupeeSign} />{item?.price?.length > 0 && item?.price[0]?.price}</span></span>
                     </div>
-                    <a href="#"><FontAwesomeIcon icon={faTimes} onClick={() => this.props.deleteCart(item?.id)} /></a>
+                    <a href="#"><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></a>
                   </li>
                 ))}
               </ul>
