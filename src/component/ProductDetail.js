@@ -173,7 +173,9 @@ export default class ProductDetail extends React.Component {
                         <input type="button" value="+" onClick={() => this.countInc()} className="quantity-right-plus" />
                       </div>
                     </div>
+                    <button type="submit" className="cart-btn buy-btn">Buy Now</button>
                     <button type="submit" className="cart-btn">Add to cart</button>
+                    
                   </div>
                   <div className="action-links">
                     <a href="#"  >
