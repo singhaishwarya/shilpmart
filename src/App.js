@@ -10,6 +10,7 @@ import Dashboard from './component/Dashboard';
 import ProductDetail from './component/ProductDetail';
 import SellerProfile from './component/SellerProfile';
 import Wishlist from './component/Wishlist';
+import MyWishlist from './component/Wishlist';
 import Compare from './component/Compare';
 import Cart from './component/Cart';
 import MyAccount from './component/my-account/MyAccount';
@@ -22,6 +23,7 @@ import AccountDetails from './component/my-account/AccountDetails';
 import Support from './component/my-account/Support';
 import Inquiry from './component/my-account/Inquiry';
 import MyDashboard from './component/my-account/Dashboard';
+import Checkout from './component/Checkout';
 import ForgotPassword from './component/ForgotPassword';
 import "./public/bootstrap.min.css";
 import "./public/jbility.css";
@@ -34,6 +36,7 @@ import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 
 class App extends Component {
+
 
   render() {
 
@@ -52,6 +55,8 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/compare' component={Compare} exact />
           <Route isAuthenticated={userData} path='/cart' component={Cart} exact />
           <Route isAuthenticated={userData} path='/forgot-password' component={ForgotPassword} exact />
+          <Route isAuthenticated={userData} path='/checkout' component={Checkout} exact />
+
           <MyAccount>
             <Route component={({ match }) =>
               <>
@@ -64,7 +69,8 @@ class App extends Component {
                 <PrivateRoute isAuthenticated={userData} path='/my-account/details' component={AccountDetails} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/support-tickets' component={Support} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/inquiry' component={Inquiry} />
-                <PrivateRoute isAuthenticated={userData} path='/my-account/wishlist' component={Wishlist} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/wishlist' component={MyWishlist} />
+
               </>
             } />
           </MyAccount>

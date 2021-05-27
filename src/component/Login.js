@@ -46,9 +46,8 @@ class Login extends Component {
 
   handleLogin = (e) => {
     e.preventDefault();
-
     this.form.validateAll();
-
+    let oldPath = window.location.href
     const { username, password } = this.state;
     AuthService.login({ username: username, password: password })
       .then((result) => {
@@ -58,9 +57,9 @@ class Login extends Component {
         }
         result && this.props.userDetail(result.data);
 
-        this.props.showModal ? this.props.dismissModal('login') : window.location.href = '/';
+        this.props.showModal ? this.props.dismissModal('login') : window.location.href = oldPath;
 
-        window.location.href = '/';
+        window.location.href = oldPath;
 
       })
       .catch((err) => {

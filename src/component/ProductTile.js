@@ -58,11 +58,11 @@ export default class ProductTile extends React.Component {
   }
 
   addToCart = (product) => {
-    Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product)
+    Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product.id)
   }
 
   addToCartApi = (product) => {
-    this.props.addToCart(product)
+    this.props.addToCart(product.id)
     CartService.add({ product_id: product.id, quantity: 1, variation_index: 0 }).then((result) => {
       this.getCart()
     });
@@ -75,7 +75,7 @@ export default class ProductTile extends React.Component {
         productids?.push(item.product_id)
       ))
       ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        this.props.addToCart(result1.data);
+        this.props.addToCart(result1.data.id);
       })
     })
   }
@@ -107,7 +107,7 @@ export default class ProductTile extends React.Component {
           <div className="shopBtn">
             <div className="shop-btn"><span>
               <FontAwesomeIcon
-                icon={cart?.find(element => element.id === data.id) ? faCheck : faCartPlus}
+                icon={cart?.includes(data.id) ? faCheck : faCartPlus}
                 onClick={
                   () => {
                     Object.keys(userData).length > 0 ? (data.cart ? this.deleteCart(data) : this.addToCart(data)) :
