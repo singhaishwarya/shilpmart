@@ -80,13 +80,19 @@ class ProductTile extends React.Component {
     }], cartProductids = [];
     try {
       CartService.add({ products: cartToSync }).then((result) => {
+
         if (result?.success) {
-          result.data.map((item) => (
-            cartProductids?.push(item.product_id)
-          ))
-          ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-            result1.data.map((item) => this.props.addToCart(item.id));
-          })
+          if (typeof result.data !== 'string') {
+            result.data.length && result.data.map((item) => (
+              cartProductids?.push(item.product_id)
+            ));
+            ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
+              result1.data.map((item) => this.props.addToCart(item.id));
+            })
+          }
+          else {
+            this.props.errorAlert(product);
+          }
         }
         else { return }
       });
@@ -170,9 +176,6 @@ class ProductTile extends React.Component {
         <span className="product-price">
           <span>₹</span> {data?.price?.length > 0 && data?.price[0]?.price}
         </span>
-        {/* </div> */}
-
-        {/* // </div> */}
 
       </>
     );

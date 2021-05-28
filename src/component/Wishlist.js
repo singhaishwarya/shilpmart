@@ -5,7 +5,6 @@ import * as wishlistAction from '../actions/wishlist';
 import * as cartAction from '../actions/cart';
 import * as compareAction from '../actions/compare';
 import WishlistService from '../services/WishlistService';
-import ProductService from '../services/ProductService';
 import ProductTile from './ProductTile';
 import { ToastContainer, toast } from 'react-toastify';
 class Wishlist extends Component {
@@ -60,7 +59,7 @@ class Wishlist extends Component {
     return (
       <section id="maincontent">
         <div className="container-fluid">
-
+          <ToastContainer />
           {(wishlist?.length > 0) ? (<>
 
 
