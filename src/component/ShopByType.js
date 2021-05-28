@@ -7,7 +7,7 @@ import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
 import ProductTile from './ProductTile';
-
+import { ToastContainer, toast } from 'react-toastify';
 class ShopByType extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +56,7 @@ class ShopByType extends Component {
     ProductService.fetchAllProducts().then((result) => {
       this.setState({
         shopByProductItems: result?.data?.map((item) =>
-          (<ProductTile data={item} {...this.props} onWishlistChange={() => this.getProductsList()} />))
+          (<ProductTile data={item} {...this.props} errorAlert={this.errorAlert} />))
       })
     })
   }
@@ -75,25 +75,39 @@ class ShopByType extends Component {
     });
   }
 
-
+  errorAlert = (product) => {
+    return toast.error(
+      product?.content?.title + " is already in cart",
+      {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
+  }
 
   render() {
     const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
     return (
-      <AliceCarousel
-        autoPlayInterval={3000}
-        autoPlay={type === 'product' ? true : false}
-        autoPlayStrategy="all"
-        // controlsStrategy="responsive"
-        disableDotsControls
-        // disableAutoPlayOnAction={true}
-        items={type === 'product' ? shopByProductItems : shopByCategoryItems}
-        responsive={responsive}
-        mouseTracking
-        infinite
-        disableButtonsControls //can be enabled if arrows are needed
-        touchTracking
-      />
+      <>
+        <ToastContainer />
+        <AliceCarousel
+          autoPlayInterval={3000}
+          autoPlay={type === 'product' ? true : false}
+          autoPlayStrategy="all"
+          disableDotsControls
+          items={type === 'product' ? shopByProductItems : shopByCategoryItems}
+          responsive={responsive}
+          mouseTracking
+          infinite
+          disableButtonsControls
+          touchTracking
+        />
+      </>
 
     )
   };

@@ -12,7 +12,8 @@ class Cart extends Component {
   constructor() {
     super();
     this.state = {
-      productCount: 1, cartProduct: []
+      productCount: 1,
+      cartProduct: []
     };
   }
 
@@ -41,17 +42,31 @@ class Cart extends Component {
     })
   }
 
-  countInc = () => {
+  countInc = (product) => {
     this.setState({ productCount: this.state.productCount + 1 });
+    this.setState({ productCount: this.state.productCount });
+    this.changeQuantity(product, this.state.productCount)
+
   }
 
-  countDec = () => {
+  countDec = (product) => {
     this.setState({ productCount: this.state.productCount - 1 });
+    this.setState({ productCount: this.state.productCount });
+    this.changeQuantity(product, this.state.productCount)
+
   }
 
-  productCountManual = (event) => {
+  productCountManual = (event, product) => {
 
     this.setState({ productCount: event.target.value });
+    this.changeQuantity(product, event.target.value)
+
+  }
+
+  changeQuantity = (product, quantity) => {
+    CartService.changeQuantity({ quantity: quantity, product_id: product }).then((result) => {
+      if (result.success) { this.getCart() }
+    })
   }
 
   render() {
@@ -91,13 +106,13 @@ class Cart extends Component {
                       </span></td>
                       <td className="product-quantity" data-title="Quantity"><div className="product-qty">
                         <div className="input-group">
-                          <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()} />
-                          <input type="number" value={productCount} onChange={this.productCountManual} />
-                          <input type="button" value="+" onClick={() => this.countInc()} className="quantity-right-plus" />
+                          <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec(item.id)} />
+                          <input type="number" value={productCount} onChange={(e) => this.productCountManual(e, item.id)} />
+                          <input type="button" value="+" onClick={() => this.countInc(item.id)} className="quantity-right-plus" />
                         </div>
                       </div>
                       </td>
-                      <td className="product-price"><span><span>₹</span> 2,899.00</span></td>
+                      <td className="product-price"><span><span>₹</span> {item?.price[0]?.price}</span></td>
                     </tr>))}
                 </tbody>
               </table>

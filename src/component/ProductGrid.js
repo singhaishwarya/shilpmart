@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 // import ReactPaginate from 'react-paginate';
 import ProductService from '../services/ProductService';
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
-import * as wishlistAction from '../actions/wishlist';
-import * as compareAction from '../actions/compare';
-import * as cartAction from '../actions/cart';
 import ProductTile from './ProductTile';
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import { ToastContainer, toast } from 'react-toastify';
 class ProductGrid extends Component {
   constructor(props) {
     super(props);
@@ -55,7 +51,20 @@ class ProductGrid extends Component {
     }, 1000);
   };
 
-
+  errorAlert = (product) => {
+    return toast.error(
+      product?.content?.title + " is already in cart",
+      {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
+  }
   getSetQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);
     let entries = urlParams.entries(),
@@ -146,6 +155,8 @@ class ProductGrid extends Component {
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
     return (
       <>
+
+        <ToastContainer />
         {(pathname !== "/wishlist" && productListData?.length > 0) &&
           <section className='topsection d-flex justify-content-between'>
             {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>
@@ -217,7 +228,7 @@ class ProductGrid extends Component {
               return (
                 <div key={index} className={layout} >
 
-                  <ProductTile data={item} {...this.props} />
+                  <ProductTile data={item} {...this.props} errorAlert={this.errorAlert} />
 
                 </div>
               )
@@ -231,21 +242,5 @@ class ProductGrid extends Component {
 }
 
 
-const mapStateToProps = state => {
-  return {
-    wishlist: state.wishlist,
-    userData: state.userData,
-    cart: state.cart
-  }
-};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addToWishlist: wishlist => dispatch(wishlistAction.addToWishlist(wishlist)),
-    deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index)),
-    addToCompare: compare => dispatch(compareAction.addToCompare(compare)),
-    addToCart: cart => dispatch(cartAction.addToCart(cart))
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductGrid);
+export default (ProductGrid);

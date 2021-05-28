@@ -7,7 +7,7 @@ import * as compareAction from '../actions/compare';
 import WishlistService from '../services/WishlistService';
 import ProductService from '../services/ProductService';
 import ProductTile from './ProductTile';
-
+import { ToastContainer, toast } from 'react-toastify';
 class Wishlist extends Component {
   constructor(props) {
     super(props)
@@ -22,29 +22,39 @@ class Wishlist extends Component {
 
 
   deleteWishlist = (item) => {
-
-    Object.keys(this.props.userData).length > 0 ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id)
+    Object.keys(this.props.userData).length > 0 ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.product_id)
   }
 
   deleteWishlistApi = (item) => {
-    WishlistService.delete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
+
+    WishlistService.delete({ wishlist_id: item.product_details.wishlist.id, product_id: [item.product_id] }).then((result) => {
       if (result.success) { this.props.deleteWishlist(item.id); this.getWishlist() }
     });
   }
 
   getWishlist = () => {
-    let productids = [];
+
     WishlistService.list().then((result) => {
-      result && result.map((item) => (
-        productids?.push(item.product_id)
-      ))
-      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        this.setState({ wishlist: result1?.data });
-        result1.data.map((item) => this.props.addToWishlist(item.id))
-      })
+      result.map((item) => this.props.addToWishlist(item.product_id)
+      )
+
+      this.setState({ wishlist: result });
     })
   }
-
+  errorAlert = (product) => {
+    return toast.error(
+      product?.content?.title + " is already in cart",
+      {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
+  }
   render() {
     const { wishlist } = this.state
     return (
@@ -52,13 +62,14 @@ class Wishlist extends Component {
         { (wishlist?.length > 0) ? (<>
           <span>YOUR PRODUCTS WISHLIST</span>
           <div className='row py-2'>
+            <ToastContainer />
             {wishlist?.map((item, index) => {
               return (
-                <div key={index} className='col-lg-3 col-sm-6 col-6' >
+                item.product_details && <div key={index} className='col-lg-3 col-sm-6 col-6' >
                   <a href="#" className="remove-item" onClick={() => {
                     this.deleteWishlist(item)
                   }}>Remove</a>
-                  <ProductTile data={item} {...this.props} />
+                  <ProductTile data={item.product_details} {...this.props} errorAlert={this.errorAlert} />
                 </div>
               )
             })}

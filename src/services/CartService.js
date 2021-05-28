@@ -55,4 +55,21 @@ export default class CartService extends Component {
 
     }
   }
+
+  static changeQuantity = async (data) => {
+    try {
+
+      config.url = baseUrl + 'cart-item-change-quantity';
+      config.method = 'post';
+      config.data = data;
+      config.params = '';
+      const response = await axios(config);
+      return response.data ? response.data : [];
+    } catch (error) {
+      const { response } = error;
+      if (!response) return;
+      console.log(`FETCH GET ERROR`, response);
+
+    }
+  }
 }

@@ -115,7 +115,7 @@ class Login extends Component {
 
         </Form>
         <Link to='/forgot-password' onClick={() => this.props?.dismissModal('login')}>Forgot password?</Link>
-        <p className="login-card-footer-text">Don't have an account? <Link to={'/buyer-registration'} onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
+        <p className="login-card-footer-text">Don't have an account? <Link to={'/registration'} onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
       </div >
     )
   };

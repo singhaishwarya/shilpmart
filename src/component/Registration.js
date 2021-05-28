@@ -3,6 +3,7 @@ import AuthService from '../services/AuthService';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import validator from 'validator';
+import { ToastContainer, toast } from 'react-toastify';
 
 const required = (value) => {
   if (!value) {
@@ -40,9 +41,10 @@ const lt50 = (value) => {
 };
 
 const isValidpassword = (value) => {
-  let pattern = new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$/);
+  let pattern = new RegExp("^[a-zA-Z0-9]+$");
+  // /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$/);
   if (!pattern.test(value)) {
-    return <div className="alert alert-danger" role="alert">  Password must contain at leaset eight alpha numaric and one special char and contain one special char</div>
+    return <div className="alert alert-danger" role="alert">  Password must contain at least eight alpha numeric  </div>
 
   }
 }
@@ -80,7 +82,18 @@ export default class Registration extends React.Component {
           });
         }
         else {
-          alert(Object.values(result.data)[0])
+          return toast.error(
+            Object.values(result.data)[0][0],
+            {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
         }
       })
       .catch((err) => {
@@ -99,6 +112,7 @@ export default class Registration extends React.Component {
     return (
 
       <div className="container-fluid">
+        <ToastContainer />
         <div className="row py-5">
           <div className="col-md-6 col-12 mb-5">
             <h4 className="text-center">How It Works</h4>

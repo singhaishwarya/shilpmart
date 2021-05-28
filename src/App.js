@@ -47,7 +47,7 @@ class App extends Component {
         <Switch>
           <Route isAuthenticated={userData} path='/' component={Dashboard} exact />
           <Route isAuthenticated={userData} path='/login' component={Login} exact />
-          <Route isAuthenticated={userData} path='/buyer-registration' component={Registration} exact />
+          <Route isAuthenticated={userData} path='/registration' component={Registration} exact />
           <Route isAuthenticated={userData} path='/product-list' component={ProductCategory} />
           <Route isAuthenticated={userData} path='/product-detail' component={ProductDetail} />
           <Route isAuthenticated={userData} path='/seller-profile' component={SellerProfile} exact />
