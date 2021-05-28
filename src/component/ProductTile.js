@@ -162,15 +162,17 @@ class ProductTile extends React.Component {
               </div>}
             </div>
           </div>
-          <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>
-          <h5 className="product-title"><a href="#">
-            {data.content ? data.content.title : '__'}
-          </a></h5>
-          <span className="product-price">
-            <FontAwesomeIcon icon={faRupeeSign} /> {data?.price?.length > 0 && data?.price[0]?.price}
-          </span>
-
         </div>
+        <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>
+        <h5 className="product-title"><a href="#">
+          {data.content ? data.content.title : '__'}
+        </a></h5>
+        <span className="product-price">
+          <span>₹</span> {data?.price?.length > 0 && data?.price[0]?.price}
+        </span>
+        {/* </div> */}
+
+        {/* // </div> */}
 
       </>
     );

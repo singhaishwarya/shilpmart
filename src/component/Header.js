@@ -39,7 +39,7 @@ const customLoginStyles = {
 const customCartStyles = {
   content: {
     width: '30%',
-    transition: 'all 5.3s ease-in-out',
+    transition: 'all 0.3s ease-in-out',
     top: '0%',
     left: '100%',
     right: '0%',
@@ -214,7 +214,7 @@ class Header extends Component {
     return (
       seachResults?.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
-          < Link to={{
+          <Link to={{
             pathname: `/product-detail`,
             search: "?pid=" + item?.id
           }}
@@ -350,9 +350,19 @@ class Header extends Component {
               onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
               {isMenuShown &&
                 <div className="myAccout-dropdown">
-                  <Link to='/my-account/order'> Orders</Link>
-                  <Link to='/my-account/settings'>Settings</Link>
+                  
+
+                  <Link to='/my-account/dashboard'> Dashboard</Link>    
+                  <Link to='/my-account/order'>Orders</Link>
+                  <Link to='/my-account/address'>Addresses</Link>
+                  <Link to='/my-account/details'>Account details</Link>    
+                  <Link to='/my-account/support-tickets'>Support Tickets</Link>    
+                  <Link to='my-account/wishlist'>Wishlist</Link>
                   <Link to="" onClick={() => this.logout()}>Logout</Link>
+
+
+                  
+                  
                 </div>
               } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
 

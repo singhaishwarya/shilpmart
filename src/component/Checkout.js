@@ -17,48 +17,49 @@ export default class Checkout extends React.Component {
         <div className="row py-5">
         <div className="col-md-4 order-md-2 mb-4">
           <h4 className="d-flex justify-content-between align-items-center mb-3">
-            <span className="text-muted">Your cart</span>
-            <span className="badge badge-secondary badge-pill">3</span>
+            <span className="text-muted text-center">Your order</span>
+            {/* <span className="badge badge-secondary badge-pill">3</span> */}
           </h4>
-          <ul className="list-group mb-3 sticky-top shadow">
+          <ul className="list-group mb-3 shadow">
             <li className="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 className="my-0">Product name 1</h6>
+                <h6 className="my-0">cottan darri 4×6 100 % cottan</h6>
                 <span>Store: <small className="text-muted">Store Name</small></span>
               </div>
-              <span className="text-muted"><FontAwesomeIcon icon={faRupeeSign} />2500</span>
+              <span className="text-muted"><span>₹</span> 2500</span>
             </li>
             <li className="list-group-item d-flex justify-content-between lh-condensed">
               <div>
                 <h6 className="my-0">product name 2</h6>
                 <span>Store: <small className="text-muted">Store Name</small></span>
               </div>
-              <span className="text-muted"><FontAwesomeIcon icon={faRupeeSign} /> 1500</span>
+              <span className="text-muted"><span>₹</span> 1500</span>
             </li>
             <li className="list-group-item d-flex justify-content-between lh-condensed">
               <div>
                 <h6 className="my-0">product name 3</h6>
                 <span>Store: <small className="text-muted">Store Name</small></span>
               </div>
-              <span className="text-muted"><FontAwesomeIcon icon={faRupeeSign} /> 1999</span>
+              <span className="text-muted"><span>₹</span> 1999</span>
             </li>
             <li className="list-group-item d-flex justify-content-between bg-light">
               <div className="text-success">
                 <h6 className="my-0">Promo code</h6>
                 <small>EXAMPLECODE</small>
               </div>
-              <span className="text-success"><FontAwesomeIcon icon={faRupeeSign} /> -150</span>
+              <span className="text-success"><span>₹</span> -150</span>
             </li>
             <li className="list-group-item d-flex justify-content-between">
               <h5><span>Total Payable</span></h5>
-              <strong><FontAwesomeIcon icon={faRupeeSign} /> 5849</strong>
+              <strong><span>₹</span> 5849</strong>
             </li>
           </ul>
-          <form className="card p-2">
+          <p>Have a coupon? Enter your code here...</p>
+          <form className="card p-2">         
             <div className="input-group">
-              <input type="text" className="form-control" placeholder="Promo code" />
+              <input type="text" className="form-control" placeholder="Coupon code" />
               <div className="input-group-append">
-                <button type="submit" className="btn btn-dark">Redeem</button>
+                <button type="submit" className="btn btn-dark btn-theme">Apply Coupon</button>
               </div>
             </div>
           </form>
@@ -91,6 +92,21 @@ export default class Checkout extends React.Component {
               <label htmlFor="address2">Address 2 <span className="text-muted">(Optional)</span></label>
               <input type="text" className="form-control" id="address2" placeholder="Apartment or suite" />
             </div>
+
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <label htmlFor="mobileNO">Mobile No.</label>
+                <input type="text" className="form-control" id="mobileNO" placeholder="Enter mobile no" required />
+                
+              </div>
+              <div className="col-md-6 mb-3">
+                <label htmlFor="emailId">Email ID</label>
+                <input type="text" className="form-control" id="emailId" placeholder="Enter email id here.." required />
+                
+              </div>
+            </div>
+
+
             <div className="row">
               <div className="col-md-5 mb-3">
                 <label htmlFor="country">Country</label>

@@ -58,29 +58,36 @@ class Wishlist extends Component {
   render() {
     const { wishlist } = this.state
     return (
-      <div className="container" >
-        { (wishlist?.length > 0) ? (<>
-          <span>YOUR PRODUCTS WISHLIST</span>
-          <div className='row py-2'>
-            <ToastContainer />
-            {wishlist?.map((item, index) => {
-              return (
-                item.product_details && <div key={index} className='col-lg-3 col-sm-6 col-6' >
-                  <a href="#" className="remove-item" onClick={() => {
-                    this.deleteWishlist(item)
-                  }}>Remove</a>
-                  <ProductTile data={item.product_details} {...this.props} errorAlert={this.errorAlert} />
-                </div>
-              )
-            })}
-          </div></>
-        ) : <div className="empty-wishlist">
-          <h2>Wishlist is empty.</h2>
-          <span>Wishlist is empty. You don't have any products in the wishlist yet. You will find a lot of interesting products on our "Shop" page.</span>
-          <Link to='/product-list'>Return to shop</Link>
-        </div>
-        }
-      </div >
+      <section id="maincontent">
+        <div className="container-fluid">
+
+          {(wishlist?.length > 0) ? (<>
+
+
+            <div className='row py-5'>
+              <div className="col-12"><h4>Your Products Wishlist </h4><hr /></div>
+
+              {wishlist?.map((item, index) => {
+                return (
+                  item.product_details && <div key={index} className='col-lg-3 col-sm-6 col-6' >
+                    <span className="remove-item" onClick={() => {
+                      this.deleteWishlist(item)
+                    }}>Remove</span>
+                    <ProductTile data={item.product_details} {...this.props} errorAlert={this.errorAlert} />
+                  </div>
+                )
+              })}
+            </div>
+          </>
+
+          ) : <div className="empty-wishlist">
+            <h2>Wishlist is empty.</h2>
+            <span>Wishlist is empty. You don't have any products in the wishlist yet. You will find a lot of interesting products on our "Shop" page.</span>
+            <Link to='/product-list'>Return to shop</Link>
+          </div>
+          }
+        </div >
+      </section>
     )
   }
 }
