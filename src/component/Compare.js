@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as compareAction from '../actions/compare';
 class Compare extends Component {
@@ -15,7 +16,12 @@ class Compare extends Component {
                   <div className="compare-col-row">&nbsp;</div>
                   <div className="compare-col-row compare-title">Description</div>
                   <div className="compare-col-row compare-title">Variation Available</div>
-                </div> : <span>Compare list is empty.</span>}
+                </div> : <div className="empty-wishlist empty-compare">
+          <h2>Compare list is empty.</h2>
+          <span>No products added in the compare list. You must add some products to compare them.
+You will find a lot of interesting products on our "Shop" page.</span>
+          <Link to='/product-list'>Return to shop</Link>
+        </div>}
                 {compare?.map((item, index) => {
                   return (
                     <div className="compare-col" key={index}>

@@ -26,14 +26,14 @@ export default class MyAccount extends React.Component {
             <div className='row py-5'>
               <div className='col-lg-3 col-12 border-right'>
                 <div className='myaccout-sidebar'>
-                  <div className="user-profile">
-                    <div className="user-img">Img</div>
+                  {/* <div className="user-profile">
+                    <div className="user-img">User Pic</div>
                     <div className="user-info">
                       <p>User Name</p>
                       <a href="#">Logout</a>
 
                     </div>
-                  </div>
+                  </div> */}
                   <ul>
                     {accountSidebar?.map((item, index) => (
                       // <article className='filter-group' key={index}>

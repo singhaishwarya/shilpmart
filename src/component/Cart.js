@@ -58,8 +58,10 @@ class Cart extends Component {
     const { productCount, cartProduct } = this.state;
     return (
       <div className="container-fluid">
+        
         <div className="row py-5">
           <form className="col-lg-8 col-sm-6 col-12">
+          
             <div className="cart-table-wrapper">
               <table className="table">
                 <thead>
@@ -87,7 +89,7 @@ class Cart extends Component {
                       </a></td>
                       <td className="product-name"><a href="#">{item?.content?.title}</a>
                         <p>Store : <span><a href="#">{item?.store_name}</a></span></p></td>
-                      <td className="product-subtotal"><span> <FontAwesomeIcon icon={faRupeeSign} />{item?.price?.length > 0 && item?.price[0]?.price}
+                      <td className="product-subtotal"><span> <span>₹</span> {item?.price?.length > 0 && item?.price[0]?.price}
                       </span></td>
                       <td className="product-quantity" data-title="Quantity"><div className="product-qty">
                         <div className="input-group">
@@ -113,7 +115,7 @@ class Cart extends Component {
             </div>
           </form>
           <div className="col-lg-4 col-sm-6 col-12">
-            <div className="cart-shop-footer position-relative border">
+            <div className="cart-shop-footer position-relative border p-4">
               <h4>CART TOTALS</h4>
               <div className="cart-footer-head py-3">
                 <h6>Subtotal :</h6>
@@ -130,6 +132,7 @@ class Cart extends Component {
               <div className="cart-action cart-action2"> <Link to={'/checkout'} > Proceed to checkout</Link> </div>
             </div>
           </div>
+        
         </div>
       </div>
 

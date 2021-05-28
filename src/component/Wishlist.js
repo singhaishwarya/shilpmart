@@ -48,21 +48,28 @@ class Wishlist extends Component {
   render() {
     const { wishlist } = this.state
     return (
-      <div className="container" >
+      <section id="maincontent">
+          <div className="container-fluid">
+          
         { (wishlist?.length > 0) ? (<>
-          <span>YOUR PRODUCTS WISHLIST</span>
-          <div className='row py-2'>
+          
+          
+          <div className='row py-5'>
+            <div className="col-12"><h4>Your Products Wishlist </h4><hr/></div>
+          
             {wishlist?.map((item, index) => {
               return (
                 <div key={index} className='col-lg-3 col-sm-6 col-6' >
-                  <a href="#" className="remove-item" onClick={() => {
+                  <span className="remove-item" onClick={() => {
                     this.deleteWishlist(item)
-                  }}>Remove</a>
+                  }}>Remove</span>
                   <ProductTile data={item} {...this.props} />
                 </div>
               )
             })}
-          </div></>
+          </div>          
+          </>
+
         ) : <div className="empty-wishlist">
           <h2>Wishlist is empty.</h2>
           <span>Wishlist is empty. You don't have any products in the wishlist yet. You will find a lot of interesting products on our "Shop" page.</span>
@@ -70,6 +77,7 @@ class Wishlist extends Component {
         </div>
         }
       </div >
+      </section>
     )
   }
 }

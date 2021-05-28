@@ -50,7 +50,7 @@ class CartOverlay extends Component {
     const { cartData } = this.state;
 
     return (
-      <>
+      <div className="cart-side">
         <div className="cart-side-head">
           <h3>SHOPPING CART</h3>
           <a href="" >
@@ -79,7 +79,7 @@ class CartOverlay extends Component {
                       <span className="product-title">{item?.content?.title}</span>
                       <div className="pro-store"><span>Store: <span>{item?.store_name}</span></span></div>
                       <span className="qty">1 x <span>
-                        <FontAwesomeIcon icon={faRupeeSign} />{item?.price?.length > 0 && item?.price[0]?.price}</span></span>
+                        {item?.price?.length > 0 && item?.price[0]?.price}</span></span>
                     </div>
                     <a href="#"><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></a>
                   </li>
@@ -87,10 +87,17 @@ class CartOverlay extends Component {
               </ul>
             </div>
 
-            <div className="cart-shop-footer">
+            
+          </div>
+          :
+          <div className="">
+            <span>No products in the cart.</span>
+            <a href="#">Return to shop</a>
+          </div>}
+          <div className="cart-shop-footer">
               <div className="cart-footer-head">
                 <h3>Subtotal:</h3>
-                <p><span> <FontAwesomeIcon icon={faRupeeSign} />00.00</span></p>
+                <p><span> 00.00</span></p>
               </div>
 
               <div className="cart-action">
@@ -100,13 +107,7 @@ class CartOverlay extends Component {
               </div>
 
             </div>
-          </div>
-          :
-          <div className="">
-            <span>No products in the cart.</span>
-            <a href="#">Return to shop</a>
-          </div>}
-      </>
+      </div>
     )
   };
 }
