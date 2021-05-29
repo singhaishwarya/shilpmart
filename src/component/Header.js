@@ -103,12 +103,17 @@ class Header extends Component {
       CartService.add({ products: cartToSync }).then((result) => {
 
         if (result?.success) {
-          result.data.map((item) => (
-            cartProductids?.push(item.product_id)
-          ))
-          ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-            result1.data.map((item) => this.props.addToCart(item.id));
-          })
+          if (typeof result.data !== 'string') {
+            result.data.map((item) => (
+              cartProductids?.push(item.product_id)
+            ))
+            ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
+              result1.data.map((item) => this.props.addToCart(item.id));
+            })
+          }
+          else {
+            return
+          }
         }
         else { return }
       });
