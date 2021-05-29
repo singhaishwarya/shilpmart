@@ -25,18 +25,20 @@ class CartOverlay extends Component {
         productids?.push(item.product_id)
       ));
 
-      ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        this.setState({ cartData: result1.data })
-        result1.data.map((item) => (
-          this.props.addToCart(item.id)
-        ))
-      })
+      {
+        productids.length > 0 && ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+          this.setState({ cartData: result1.data })
+          result1.data.map((item) => (
+            this.props.addToCart(item.id)
+          ))
+        })
+      }
     });
   }
   deleteCart = (productid) => {
-    CartService.delete({ product_id: productid }).then((result) => {
+    CartService.delete({ product_id: productid.id }).then((result) => {
       if (result.success) {
-        this.props.deleteCart(productid);
+        this.props.deleteCart(productid.id);
         this.getCart();
       }
     })
@@ -101,9 +103,17 @@ class CartOverlay extends Component {
           </div>
 
           <div className="cart-action">
-            <Link to={'/cart'} onClick={() => this.dismissCart()}>
+            <Link to='/cart' onClick={() => this.props.dismissModal()}>
               View Cart</Link>
-            <Link to={'/checkout'} onClick={() => this.dismissCart()}>Checkout</Link>
+
+            <Link to={
+              {
+                pathname: '/checkout',
+                state: { checkout: cartData }
+              }
+            }
+              onClick={() => this.props.dismissModal()}
+            >Checkout</Link>
           </div>
 
         </div>

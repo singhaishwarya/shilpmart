@@ -11,7 +11,10 @@ import {
   FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
 } from "react-share";
 import ProductService from '../services/ProductService';
-
+import CartService from '../services/CartService';
+import * as cartAction from '../actions/cart';
+import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 // const askForm = {
 //   content : {
 //     top         : '50%',
@@ -22,7 +25,7 @@ import ProductService from '../services/ProductService';
 //     transform   : 'translate(-50%, -50%)'
 //   }
 // };
-export default class ProductDetail extends React.Component {
+class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,8 +46,9 @@ export default class ProductDetail extends React.Component {
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
   }
+
   componentWillReceiveProps() {
-    this.getProductDetails(this.getQueryParams());
+    // this.getProductDetails(this.getQueryParams());
   }
 
   componentDidMount() {
@@ -75,8 +79,8 @@ export default class ProductDetail extends React.Component {
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({
-          productDetailData: result.data[0],
-          productDetailDataImages: result.data[0]?.images?.map((item, index) => (
+          productDetailData: result?.data[0],
+          productDetailDataImages: result?.data[0]?.images?.map((item, index) => (
             {
               'original': item.image_url,
               'thumbnail': item.image_url
@@ -117,6 +121,61 @@ export default class ProductDetail extends React.Component {
     this.setState({ productCount: event.target.value });
   }
 
+  addToCart = (product) => {
+    console.log("demo====", product)
+    if (this.props.cart?.includes(product.id)) {
+      this.errorAlert(product);
+    }
+    else {
+      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product.id)
+
+    }
+  }
+
+  errorAlert = (product) => {
+    return toast.error(
+      product?.content?.title + " is already in cart",
+      {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
+  }
+
+  addToCartApi = (product) => {
+
+    let cartToSync = [{
+      "product_id": product.id,
+      "quantity": 1,
+      "variation_index": 0
+    }], cartProductids = [];
+    try {
+      CartService.add({ products: cartToSync }).then((result) => {
+
+        if (result?.success) {
+          if (typeof result.data !== 'string') {
+            result.data.length && result.data.map((item) => (
+              cartProductids?.push(item.product_id)
+            ));
+            ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
+              result1.data.map((item) => this.props.addToCart(item.id));
+            })
+          }
+          else {
+            this.errorAlert(product);
+          }
+        }
+        else { return }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
   renderRightNav = (onClick, disabled) => {
     return (
       <button
@@ -133,6 +192,21 @@ export default class ProductDetail extends React.Component {
         onClick={onClick} />
     )
   }
+
+
+
+  addToCheckout = (product) => {
+    this.props.history.push({
+      pathname: '/checkout',
+      state: { checkout: [product] }
+    })
+  }
+  //   to = {
+  //               {
+  //   pathname: '/checkout',
+  //     state: { cart: cartData }
+  // }
+  //             }
   render() {
     const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal, notFountImage, shareUrl, title, productDetailDataImages } = this.state;
     return (
@@ -173,9 +247,9 @@ export default class ProductDetail extends React.Component {
                         <input type="button" value="+" onClick={() => this.countInc()} className="quantity-right-plus" />
                       </div>
                     </div>
-                    <button type="submit" className="cart-btn buy-btn">Buy Now</button>
-                    <button type="submit" className="cart-btn">Add to cart</button>
-
+                    <button type="submit" className="cart-btn buy-btn" onClick={() => this.addToCheckout(productDetailData)}>Buy Now</button>
+                    <button type="submit" className="cart-btn" onClick={() => this.addToCart(productDetailData)} >Add to cart</button>
+                    <ToastContainer />
                   </div>
                   <div className="action-links">
                     <a href="#"  >
@@ -320,4 +394,18 @@ export default class ProductDetail extends React.Component {
   }
 }
 
+
+const mapStateToProps = state => {
+  return {
+    cart: state.cart,
+    userData: state.userData
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: cart => dispatch(cartAction.addToCart(cart))
+  }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
 

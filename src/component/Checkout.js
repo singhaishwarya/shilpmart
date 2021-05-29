@@ -1,14 +1,15 @@
 import React from 'react';
 export default class Checkout extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-
+      checkOutData: props?.location?.state?.checkout || []
     };
   }
 
   render() {
+    const { checkOutData } = this.state;
     return (
       <section>
         <div className="container-fluid">
@@ -19,27 +20,15 @@ export default class Checkout extends React.Component {
                 {/* <span className="badge badge-secondary badge-pill">3</span> */}
               </h4>
               <ul className="list-group mb-3 shadow">
-                <li className="list-group-item d-flex justify-content-between lh-condensed">
+                {checkOutData.map((item, index) => <li className="list-group-item d-flex justify-content-between lh-condensed">
                   <div>
-                    <h6 className="my-0">cottan darri 4×6 100 % cottan</h6>
-                    <span>Store: <small className="text-muted">Store Name</small></span>
+                    <h6 className="my-0">{item?.content?.title}</h6>
+                    <span>Store: <small className="text-muted">{item?.store_name}</small></span>
                   </div>
-                  <span className="text-muted"><span>₹</span> 2500</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h6 className="my-0">product name 2</h6>
-                    <span>Store: <small className="text-muted">Store Name</small></span>
-                  </div>
-                  <span className="text-muted"><span>₹</span> 1500</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h6 className="my-0">product name 3</h6>
-                    <span>Store: <small className="text-muted">Store Name</small></span>
-                  </div>
-                  <span className="text-muted"><span>₹</span> 1999</span>
-                </li>
+                  <span className="text-muted"><span>₹</span> {item?.price[0]?.price || 0}</span>
+                </li>)}
+
+
                 <li className="list-group-item d-flex justify-content-between bg-light">
                   <div className="text-success">
                     <h6 className="my-0">Promo code</h6>

@@ -126,7 +126,7 @@ class Cart extends Component {
                 <h5>Total</h5>
                 <p><span>00.00</span></p>
               </div>
-              <div className="cart-action cart-action2"> <Link to={'/checkout'} > Proceed to checkout</Link> </div>
+              <div className="cart-action cart-action2"> <Link to='/checkout' > Proceed to checkout</Link> </div>
             </div>
           </div>
 

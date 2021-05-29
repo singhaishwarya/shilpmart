@@ -41,7 +41,7 @@ export default class Address extends React.Component {
         <div className="flexi">
           <div className="coloumn-2">
             <div className="ad-address-wrapper">
-              <Link to={'/my-account/add-address'} > Add Address</Link>
+              <Link to='/my-account/add-address' > Add Address</Link>
             </div>
           </div>
           <div className="coloumn-2">

@@ -164,9 +164,9 @@ class ProductGrid extends Component {
           <section className='topsection d-flex justify-content-between'>
             {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>
               <ol className='breadcrumb bg-transparent'>
-                <li className='breadcrumb-item'> <Link to={'/'}>Home</Link></li>
+                <li className='breadcrumb-item'> <Link to='/'>Home</Link></li>
                 <li className='breadcrumb-item'
-                  aria-current={true}> <Link to={'/product-list'}>Shop</Link></li>
+                  aria-current={true}> <Link to='/product-list'>Shop</Link></li>
                 {categoryBreadcrumbs?.map((item, index) => {
                   return (<li key={index}
                     className={`breadcrumb-item ${(index === categoryBreadcrumbs?.length - 1 ? 'active' : '')}`} aria-current={true}>

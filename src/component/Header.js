@@ -325,7 +325,7 @@ class Header extends Component {
           </div>
         </div>
         < div className="header-middle d-flex justify-content-between align-items-center px-3" >
-          <Link to={'/'}>
+          <Link to='/'>
             <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
           </Link>
           <div className="search-container mx-5 w-100 position-relative"
@@ -367,12 +367,12 @@ class Header extends Component {
               } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
 
             <li className="nav-item">
-              <Link to={'/wishlist'}><div className="nav-link">
+              <Link to='/wishlist'><div className="nav-link">
                 <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link>
             </li>
 
             <li className="nav-item">
-              <Link to={'/compare'}>
+              <Link to='/compare'>
                 <div className="nav-link">
                   <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></div></Link>
             </li>
