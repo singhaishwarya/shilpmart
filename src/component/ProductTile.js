@@ -107,13 +107,13 @@ class ProductTile extends React.Component {
       result && result.map((item) => (
         productids?.push(item.product_id)
       ))
-      {
-        productids.length > 0 && ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-          result1.data.map((item) => {
-            this.props.addToCart(item.id);
-          })
-        })
-      }
+
+      productids.length > 0 && ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
+        result1.data.map((item) =>
+          this.props.addToCart(item.id)
+        )
+      })
+
     })
 
   }

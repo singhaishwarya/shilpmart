@@ -7,7 +7,8 @@ import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
 import ProductTile from './ProductTile';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import ToastService from '../services/ToastService';
 class ShopByType extends Component {
   constructor(props) {
     super(props);
@@ -76,18 +77,8 @@ class ShopByType extends Component {
   }
 
   errorAlert = (product) => {
-    return toast.error(
-      product?.content?.title + " is already in cart",
-      {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      }
-    );
+    return ToastService.error(product?.content?.title + " is already in cart")
+
   }
 
   render() {

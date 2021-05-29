@@ -3,7 +3,8 @@ import ProductService from '../services/ProductService';
 import { Link } from "react-router-dom";
 import ProductTile from './ProductTile';
 import Loader from "react-loader-spinner";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import ToastService from '../services/ToastService';
 class ProductGrid extends Component {
   constructor(props) {
     super(props);
@@ -53,18 +54,19 @@ class ProductGrid extends Component {
   };
 
   errorAlert = (product) => {
-    return toast.error(
-      product?.content?.title + " is already in cart",
-      {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      }
-    );
+    return ToastService.error(product?.content?.title + " is already in cart")
+    //  toast.error(
+    //   product?.content?.title + " is already in cart",
+    //   {
+    //     position: "bottom-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //   }
+    // );
   }
   getSetQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);

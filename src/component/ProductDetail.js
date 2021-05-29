@@ -11,6 +11,7 @@ import {
   FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
 } from "react-share";
 import ProductService from '../services/ProductService';
+import ToastService from '../services/ToastService';
 import CartService from '../services/CartService';
 import * as cartAction from '../actions/cart';
 import { connect } from 'react-redux';
@@ -133,18 +134,9 @@ class ProductDetail extends React.Component {
   }
 
   errorAlert = (product) => {
-    return toast.error(
-      product?.content?.title + " is already in cart",
-      {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      }
-    );
+    return ToastService.error(product?.content?.title + " is already in cart")
+
+
   }
 
   addToCartApi = (product) => {

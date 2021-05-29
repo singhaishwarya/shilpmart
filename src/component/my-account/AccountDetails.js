@@ -2,7 +2,8 @@ import React from 'react';
 import AuthService from '../../services/AuthService';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import ToastService from '../../services/ToastService';
 
 const required = (value) => {
   if (!value) {
@@ -46,51 +47,19 @@ export default class AccountDetails extends React.Component {
     const { new_password, confirm_password } = this.state.fields;
 
     if (new_password !== confirm_password) {
-      return toast.error(
-        "New Password & Confirm Password did not match",
-        {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        }
-      );
+      return ToastService.error("New Password & Confirm Password did not match")
+
     } else {
 
       AuthService.changePassword({ new_password: new_password })
         .then((result) => {
 
           if (result.success) {
-
-            return toast.success(
-              result.message,
-              {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              }
-            );
+            return ToastService.success(result.message)
           }
           else {
-            return toast.error(
-              result.message,
-              {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              }
-            );
+            return ToastService.error(result.message)
+
           }
         })
         .catch((err) => {

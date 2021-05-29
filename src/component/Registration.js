@@ -3,8 +3,8 @@ import AuthService from '../services/AuthService';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import validator from 'validator';
-import { ToastContainer, toast } from 'react-toastify';
-
+import { ToastContainer } from 'react-toastify';
+import ToastService from '../services/ToastService';
 const required = (value) => {
   if (!value) {
     return (
@@ -82,18 +82,8 @@ export default class Registration extends React.Component {
           });
         }
         else {
-          return toast.error(
-            Object.values(result.data)[0][0],
-            {
-              position: "bottom-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            }
-          );
+          return ToastService.error(Object.values(result.data)[0][0])
+
         }
       })
       .catch((err) => {
