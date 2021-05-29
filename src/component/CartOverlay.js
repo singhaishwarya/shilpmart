@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRupeeSign, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import * as cartAction from '../actions/cart';
 import CartService from '../services/CartService';
 import ProductService from '../services/ProductService';
@@ -70,7 +70,7 @@ class CartOverlay extends Component {
                         <img src={(item?.images?.length > 0 && item?.images[0]?.image_url) || "false"}
                           className="img-fluid"
                           // onClick={() => this.productDetail(item.id)}
-                          alt={(item?.images?.length > 0 && item?.images[0]?.caption) || "false"}
+                          alt={(item?.images?.length > 0 && item?.images[0]?.caption) || ""}
                           onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                         />
                       </Link>

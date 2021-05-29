@@ -75,9 +75,9 @@ class Header extends Component {
     if (cart?.length > 0) {
 
       let cartToSync = [];
-      cart.map((item) => {
+      cart.map((item) => (
         cartToSync.push(item)
-      })
+      ))
       this.addToCart(cartToSync);
     }
     else {
@@ -92,13 +92,13 @@ class Header extends Component {
 
   addToCart = (product) => {
     let cartToSync = [], cartProductids = [];
-    product.map((item) => {
+    product.map((item) => (
       cartToSync.push({
         "product_id": item,
         "quantity": 1,
         "variation_index": 0
       })
-    })
+    ))
     try {
       CartService.add({ products: cartToSync }).then((result) => {
 
@@ -350,19 +350,19 @@ class Header extends Component {
               onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
               {isMenuShown &&
                 <div className="myAccout-dropdown">
-                  
 
-                  <Link to='/my-account/dashboard'> Dashboard</Link>    
+
+                  <Link to='/my-account/dashboard'> Dashboard</Link>
                   <Link to='/my-account/order'>Orders</Link>
                   <Link to='/my-account/address'>Addresses</Link>
-                  <Link to='/my-account/details'>Account details</Link>    
-                  <Link to='/my-account/support-tickets'>Support Tickets</Link>    
+                  <Link to='/my-account/details'>Account details</Link>
+                  <Link to='/my-account/support-tickets'>Support Tickets</Link>
                   <Link to='my-account/wishlist'>Wishlist</Link>
                   <Link to="" onClick={() => this.logout()}>Logout</Link>
 
 
-                  
-                  
+
+
                 </div>
               } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
 

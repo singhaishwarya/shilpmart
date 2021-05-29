@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-// import ReactPaginate from 'react-paginate';
 import ProductService from '../services/ProductService';
 import { Link } from "react-router-dom";
 import ProductTile from './ProductTile';
-import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "react-loader-spinner";
 import { ToastContainer, toast } from 'react-toastify';
 class ProductGrid extends Component {
   constructor(props) {
@@ -21,7 +20,8 @@ class ProductGrid extends Component {
       categoryBreadcrumbs: props.categoryBreadcrumbs,
       sortBy: "",
       items: Array.from({ length: 20 }),
-      nextPage: null
+      nextPage: null,
+      isLoader: true
     };
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
@@ -31,24 +31,25 @@ class ProductGrid extends Component {
   }
 
   componentDidMount() {
+
     this.getProductList(this.getSetQueryParams());
+    this.handleScrollPosition();
   }
 
   fetchMoreData = () => {
-    this.setState({ currentPage: this.state.currentPage + 1 });
-    setTimeout(() => {
-      ProductService.fetchAllProducts({ page: this.state.currentPage }).then((result) => {
-        this.setState({
-          productListData: this.state.productListData.concat(result.data),
-          nextPage: result.next_page_url
-        });
-        this.currentUrlParams.set('page', this.state.currentPage)
-        this.props.history.push({
-          pathname: this.props.location.pathname,
-          search: "&" + this.currentUrlParams.toString()
-        });
+    this.setState({ currentPage: this.state.currentPage + 1, isLoader: true });
+    ProductService.fetchAllProducts({ page: this.state.currentPage }).then((result) => {
+      this.setState({
+        productListData: this.state.productListData.concat(result.data),
+        nextPage: result.next_page_url,
+        isLoader: false
       });
-    }, 1000);
+      this.currentUrlParams.set('page', this.state.currentPage)
+      this.props.history.push({
+        pathname: this.props.location.pathname,
+        search: "&" + this.currentUrlParams.toString()
+      });
+    });
   };
 
   errorAlert = (product) => {
@@ -95,7 +96,7 @@ class ProductGrid extends Component {
           queryParams.q = urlParams.get('q');
           break
         case 'page':
-          queryParams.page = urlParams.get('page');
+          queryParams.per_page = urlParams.get('page') * (queryParams.per_page ? queryParams.per_page : 12);
           break
         default:
           return;
@@ -108,19 +109,21 @@ class ProductGrid extends Component {
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({ productListData: result?.data, nextPage: result.next_page_url })
+        this.setState({ isLoader: false })
       });
     } catch (err) {
       console.log(err);
     }
 
   }
+  handleScrollPosition = () => {
+    const scrollPosition = sessionStorage.getItem("scrollPosition") - 400;
+    if (scrollPosition) {
+      window.scrollTo(0, parseInt(scrollPosition));
+      sessionStorage.removeItem("scrollPosition");
+    }
+  };
 
-  handlePostDetail = (value) => {
-    this.props.history.push({
-      pathname: '/product-detail',
-      search: "?pid=" + value
-    });
-  }
 
   onLayoutChange = (value) => {
     this.setState({
@@ -151,7 +154,7 @@ class ProductGrid extends Component {
   }
 
   render() {
-    const { productListData, layout, pathname, per_page, nextPage } = this.state
+    const { productListData, layout, pathname, per_page, isLoader } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
     return (
       <>
@@ -209,22 +212,16 @@ class ProductGrid extends Component {
             </div>
           </section>}
 
-        <InfiniteScroll
-          dataLength={productListData.length}
-          next={this.fetchMoreData}
-          {...nextPage !== null && ({
-            loader: <h4>Loading...</h4>,
-            hasMore: true
-          })}
-          endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-        >
-          <div className='row py-2'>
-
-            {productListData?.length > 0 ? productListData?.map((item, index) => {
+        <div className='row py-2'>
+          {isLoader && <Loader
+            type="Puff"
+            color="#00BFFF"
+            height={1000}
+            width={1000}
+            timeout={3000} //3 secs
+          />}
+          {productListData?.length > 0 ?
+            (<>{productListData?.map((item, index) => {
               return (
                 <div key={index} className={layout} >
 
@@ -232,9 +229,11 @@ class ProductGrid extends Component {
 
                 </div>
               )
-            }) : <span>No products were found matching your selection.</span>}
 
-          </div> </InfiniteScroll>
+            })} < button onClick={() => this.fetchMoreData()} > Load more</button></>)
+            : <span>No products were found matching your selection.</span>}
+
+        </div>
       </>
 
     );

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as cartAction from '../actions/cart';
 import CartService from '../services/CartService';
-import ProductService from '../services/ProductService';
 import { Link } from "react-router-dom";
 
 class Cart extends Component {
@@ -19,7 +18,6 @@ class Cart extends Component {
     this.getCart()
   }
   getCart = () => {
-    let productids = [];
     CartService.list().then((result) => {
       this.setState({ cartProduct: result });
     })

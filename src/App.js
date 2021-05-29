@@ -25,13 +25,6 @@ import Inquiry from './component/my-account/Inquiry';
 import MyDashboard from './component/my-account/Dashboard';
 import Checkout from './component/Checkout';
 import ForgotPassword from './component/ForgotPassword';
-import "./public/bootstrap.min.css";
-import "./public/jbility.css";
-import "./index.css";
-import "./public/swiper-bundle.min.css"
-import 'react-alice-carousel/lib/alice-carousel.css';
-import 'rc-slider/assets/index.css';
-import 'react-image-gallery/styles/css/image-gallery.css';
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 

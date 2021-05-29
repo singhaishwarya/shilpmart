@@ -1,9 +1,7 @@
 import React from "react";
-// import AuthService from '../services/AuthService';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
-import validator from 'validator';
 import MasterService from '../../../services/MasterService';
 import AddressService from '../../../services/AddressService';
 
@@ -56,7 +54,6 @@ export default class AddEditAddress extends React.Component {
         sub_district: savedAddress?.sub_district || '',
         type: savedAddress?.type || ''
       },
-      statesOptions: [],
       statesOptions: [],
       districtOptions: [],
       subDistrictOptions: []

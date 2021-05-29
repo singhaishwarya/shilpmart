@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRupeeSign, faCartPlus, faRandom, faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus, faRandom, faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import WishlistService from '../services/WishlistService';
 import CartService from '../services/CartService';
@@ -116,6 +116,8 @@ class ProductTile extends React.Component {
   }
 
   productDetail = (value) => {
+    sessionStorage.setItem("scrollPosition", window.pageYOffset);
+
     this.props.history.push({
       pathname: '/product-detail',
       search: "?pid=" + value

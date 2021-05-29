@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faPhone, faQuestion, faEnvelope, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faPhone, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
 import {
@@ -175,7 +175,7 @@ export default class ProductDetail extends React.Component {
                     </div>
                     <button type="submit" className="cart-btn buy-btn">Buy Now</button>
                     <button type="submit" className="cart-btn">Add to cart</button>
-                    
+
                   </div>
                   <div className="action-links">
                     <a href="#"  >
@@ -258,7 +258,7 @@ export default class ProductDetail extends React.Component {
                       <TwitterShareButton url={shareUrl} quote={title}>
                         <FontAwesomeIcon icon={faTwitter} />
                       </TwitterShareButton></span>
-                      <span><PinterestShareButton url={shareUrl} quote={title}>
+                    <span><PinterestShareButton url={shareUrl} quote={title}>
                       <FontAwesomeIcon icon={faPinterest} />
                     </PinterestShareButton></span>
                     <span><LinkedinShareButton url={shareUrl} quote={title}>
