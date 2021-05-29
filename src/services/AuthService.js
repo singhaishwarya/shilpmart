@@ -52,6 +52,16 @@ export default class AuthService extends Component {
     }
   }
 
+  static changePassword = async (data) => {
+    try {
+      const response = await axios.post(baseUrl + `mobile-change-password`, data, config);
+      return response.data ? response.data : [];
+    } catch (error) {
+      const { response } = error;
+      if (!response) return;
+      console.log(`FETCH GET ERROR`, response);
+    }
+  }
 }
 
 

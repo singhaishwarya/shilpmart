@@ -10,8 +10,8 @@ export default class Inquiry extends React.Component {
 
   render() {
     return (
-      <>      
-        <table class="table table-striped">
+      <>
+        <table className="table table-striped">
           <thead>
             <th scope="col">Query</th>
             <th scope="col">Product</th>
@@ -30,13 +30,13 @@ export default class Inquiry extends React.Component {
             <tr>
               <td><p>You do not have any enquiry yet! </p></td>
               <td></td>
-              
+
             </tr>
-            
-           
-         </tbody>
+
+
+          </tbody>
         </table>
-     
+
       </>
     );
   }

@@ -10,8 +10,8 @@ export default class Support extends React.Component {
 
   render() {
     return (
-      <div class="table-responsive">  
-        <table class="table table-hover">
+      <div className="table-responsive">
+        <table className="table table-hover">
           <thead>
             <th scope="col">Status</th>
             <th scope="col">Ticket(s)</th>
@@ -30,13 +30,13 @@ export default class Support extends React.Component {
             <tr>
               <td><p>You do not have any support ticket yet! </p></td>
               <td></td>
-              
+
             </tr>
-            
-           
-         </tbody>
+
+
+          </tbody>
         </table>
-     
+
       </div>
     );
   }
