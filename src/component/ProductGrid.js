@@ -21,7 +21,7 @@ class ProductGrid extends Component {
       categoryBreadcrumbs: props.categoryBreadcrumbs,
       sortBy: "",
       items: Array.from({ length: 20 }),
-      nextPage: null,
+      // nextPage: null,
       isLoader: true
     };
     this.currentUrlParams = new URLSearchParams(window.location.search);
@@ -42,7 +42,7 @@ class ProductGrid extends Component {
     ProductService.fetchAllProducts({ page: this.state.currentPage }).then((result) => {
       this.setState({
         productListData: this.state.productListData.concat(result.data),
-        nextPage: result.next_page_url,
+        // nextPage: result.next_page_url,
         isLoader: false
       });
       this.currentUrlParams.set('page', this.state.currentPage)
@@ -55,19 +55,8 @@ class ProductGrid extends Component {
 
   errorAlert = (product) => {
     return ToastService.error(product?.content?.title + " is already in cart")
-    //  toast.error(
-    //   product?.content?.title + " is already in cart",
-    //   {
-    //     position: "bottom-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //   }
-    // );
   }
+
   getSetQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);
     let entries = urlParams.entries(),
@@ -110,7 +99,10 @@ class ProductGrid extends Component {
   getProductList = (queryParams) => {
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
-        this.setState({ productListData: result?.data, nextPage: result.next_page_url })
+        this.setState({
+          productListData: result?.data,
+          // nextPage: result.next_page_url
+        })
         this.setState({ isLoader: false })
       });
     } catch (err) {

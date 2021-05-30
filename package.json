@@ -38,6 +38,7 @@
     "react-share": "^4.4.0",
     "react-stars": "^2.2.5",
     "react-toastify": "^7.0.4",
+    "react-treebeard": "^3.2.4",
     "react-validation": "^3.0.7",
     "redux": "^4.1.0",
     "redux-persist": "^6.0.0",

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 export default class Orders extends React.Component {
 
   constructor() {
@@ -28,13 +29,13 @@ export default class Orders extends React.Component {
               <td className="text-success">Complete</td>
               <td>2530</td>
               <td className="text-right act-btn">
-                <button type="button" className="btn btn-success btn-sm">View</button>
+                <Link to='/my-account/order-detail'><button type="button" className="btn btn-success btn-sm">View</button></Link>
                 <button type="button" className="btn btn-danger btn-sm">Cancel</button>
                 <button type="button" className="btn btn-warning btn-sm">Support</button>
               </td>
             </tr>
 
-            <tr>
+            {/* <tr>
               <td>#3536</td>
               <td>28 May 2021</td>
               <td className="text-warning">Process</td>
@@ -44,9 +45,9 @@ export default class Orders extends React.Component {
                 <button type="button" className="btn btn-danger btn-sm">Cancel</button>
                 <button type="button" className="btn btn-warning btn-sm">Support</button>
               </td>
-            </tr>
+            </tr> */}
 
-            <tr>
+            {/* <tr>
               <td>#3536</td>
               <td>23 May 2021</td>
               <td className="text-danger">Cancel</td>
@@ -56,7 +57,7 @@ export default class Orders extends React.Component {
                 <button type="button" className="btn btn-danger btn-sm">Cancel</button>
                 <button type="button" className="btn btn-warning btn-sm">Support</button>
               </td>
-            </tr>
+            </tr> */}
 
 
 

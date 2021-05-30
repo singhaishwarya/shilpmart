@@ -14,7 +14,8 @@ import MyWishlist from './component/Wishlist';
 import Compare from './component/Compare';
 import Cart from './component/Cart';
 import MyAccount from './component/my-account/MyAccount';
-import Orders from './component/my-account/Orders';
+import Orders from './component/my-account/Order/Orders';
+import OrderDetail from './component/my-account/Order/OrderDetail';
 import Settings from './component/my-account/Settings';
 import Address from './component/my-account/Address/Address';
 import AddAddress from './component/my-account/Address/AddAddress';
@@ -55,6 +56,8 @@ class App extends Component {
               <>
                 <PrivateRoute isAuthenticated={userData} path='/my-account/dashboard' component={MyDashboard} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/order' component={Orders} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/order-detail' component={OrderDetail} />
+
                 <PrivateRoute isAuthenticated={userData} path='/my-account/settings' component={Settings} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/address' component={Address} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/add-address' component={AddAddress} />

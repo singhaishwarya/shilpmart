@@ -30,7 +30,9 @@ export default class Navbar extends React.Component {
               pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
               search: "?cat_ids=" + item.id,
               state: {
-                category_id: item.id, category_breadcrumbs: [{ id: item.id, title: item.title }]
+                category_id: item.id,
+                category_breadcrumbs: [{ id: item.id, title: item.title }],
+                parent_id: item.parent_id
               }
             }} onClick={() => this.setIsMenuShown(false)}>
               <span key={index}>{item.title}</span>
@@ -43,11 +45,17 @@ export default class Navbar extends React.Component {
                   <Link to={{
                     pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
                     search: "?cat_ids=" + subitem1.id,
-                    state: { category_id: subitem1.id, category_breadcrumbs: [{ id: item.id, title: item.title }, { id: subitem1.id, title: subitem1.title }] }
+                    state: {
+                      category_id: subitem1.id,
+                      category_breadcrumbs: [{ id: item.id, title: item.title },
+                      { id: subitem1.id, title: subitem1.title }],
+                      parent_id: subitem1.parent_id
+                    }
                   }} onClick={() => this.setIsMenuShown(false)}>
                     {subitem1.title}
                   </Link>
                   {subitem1.child?.map((subitem2, index) => {
+
                     return (
                       <div className="super-sub-categories" key={index}>
                         <Link to={{
@@ -55,8 +63,10 @@ export default class Navbar extends React.Component {
                           search: "?cat_ids=" + subitem2.id,
                           state: {
                             category_id: subitem2.id,
-                            category_breadcrumbs: [{ id: item.id, title: item.title }, { id: subitem1.id, title: subitem1.title },
-                            { id: subitem2.id, title: subitem2.title }]
+                            category_breadcrumbs: [{ id: item.id, title: item.title },
+                            { id: subitem1.id, title: subitem1.title },
+                            { id: subitem2.id, title: subitem2.title }],
+                            parent_id: subitem2.parent_id
                           }
                         }} onClick={() => this.setIsMenuShown(false)}>
                           <span>

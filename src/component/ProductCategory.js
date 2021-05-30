@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactStars from 'react-stars'
+import React, { Fragment } from "react";
+import { Treebeard } from 'react-treebeard';
+// import ReactStars from 'react-stars'
 import { Range } from 'rc-slider';
 import ProductGrid from './ProductGrid'
-import { MultilevelMenu } from 'react-multilevel-menu';
 import CategoryService from '../services/CategoryService';
 
 export default class ProductCategory extends React.Component {
@@ -10,6 +10,7 @@ export default class ProductCategory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      menuOptions: [],
       product_category: this.props.category,
       offers: [
         { label: 'Buy More, Save More', value: 'bmsm' },
@@ -29,18 +30,25 @@ export default class ProductCategory extends React.Component {
       },
       categories: [],
       priceRange: [200, 500],
-      category_breadcrumbs: props.history.location.state?.category_breadcrumbs
+      parent_id: props.history.location.state?.parent_id,
+      category_id: props.history.location.state?.category_id,
+      category_breadcrumbs: props.history.location.state?.category_breadcrumbs,
+      selectedOption: null
     };
+    this.onToggle = this.onToggle.bind(this);
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
   }
   componentWillReceiveProps() {
+    this.getCategoryFilter(this.state.parent_id);
     this.getSetQueryParams()
   }
-  componentDidMount() {
 
+  componentDidMount() {
+    this.getCategoryFilter(this.state.parent_id);
     this.getSetQueryParams();
   }
+
   getSetQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);
     let entries = urlParams.entries(),
@@ -60,6 +68,9 @@ export default class ProductCategory extends React.Component {
           this.setState({ priceRange: [...priceRange] }, () => {
             this.setState({ priceRange: [...priceRange] })
           })
+          break
+        case 'cat_ids':
+          this.setState({ cat_ids: entry[1] })
           break
 
         default:
@@ -107,31 +118,57 @@ export default class ProductCategory extends React.Component {
     console.log(event);
   }
 
-  getCategoryFilter = () => {
-    CategoryService.fetchAllCategory(this.state.filterParams).then((result) => {
-      this.setState({
-        categories:
-          [{
-            label: this.state.categogy_title,
-            items: result?.map((item) => {
-              return ({
-                label: item.title,
-                onSelected: function () { }
-              })
+  getCategoryFilter = (parent_id) => {
+    let MegaMenu = [];
+    try {
+      CategoryService.fetchAllCategory({ parent_id: parent_id }).then((result) => {
+        MegaMenu = result?.map((item) => {
+          return {
+            name: item.title,
+            key: item.id,
+            toggled: item.id === this.state.category_id,
+            children: item.child?.map((subitem1) => {
+              return {
+                name: subitem1.title,
+                key: subitem1.id,
+                toggled: subitem1.id === this.state.category_id,
+              }
             })
-          }]
-      })
-    })
+
+          }
+        });
+        this.setState({ menuOptions: result?.length > 0 ? MegaMenu : [] });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  onToggle(node, toggled) {
+    const { cursor, menuOptions } = this.state;
+    if (cursor) {
+      this.setState(() => ({ cursor, active: false }));
+    }
+    node.active = true;
+    if (node.children) {
+      node.toggled = toggled;
+    }
+    this.setState(() => ({ cursor: node, menuOptions: Object.assign({}, menuOptions), category_id: node.key }));
+    this.currentUrlParams.set('cat_ids', node.key)
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
+
+
   }
   render() {
 
     const {
-      // categories,
-      // multilevelMenuConfig,
+      menuOptions,
       priceRange,
       category_breadcrumbs,
-      // filterParams
     } = this.state;
+
     return (
       <>
         <section id="maincontent">
@@ -167,46 +204,20 @@ export default class ProductCategory extends React.Component {
                             <input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
                               onChange={(e) => this.onManualPriceChange(1, e)}
                               className='price-range-field' /></span>
-                          <span><button onClick={() => {
-                            this.filterByPriceRange()
-
-                          }} className='price-range-search'
-                            id='price-range-submit'>Filter</button></span>
+                          <span>
+                            <button onClick={() => { this.filterByPriceRange() }} className='price-range-search'
+                              id='price-range-submit'>Filter</button>
+                          </span>
                         </div>
                         <div id='searchResults' className='search-results-block'></div>
                       </div>
                     </div>
                   </article>
-                  {/* <article className='filter-group'>
-                    <header className='card-header'>
-                      <h6 className='title'>Rating </h6>
-                    </header>
-                    <div className='filter-content'>
-                      <div className='filter-rateings'>
-                        <div className='testimonial-ratings justify-content-start'>
-                          <ReactStars
-                            count={5}
-                            onChange={this.ratingChanged}
-                            size={24}
-                            color2={'#ffd700'} />
-                        </div>
-                      </div>
-                    </div>
-                  </article> */}
                   <article className='filter-group'>
-                    {/* <header className='card-header'>
-                      <h6 className='title'>Categories </h6>
-                    </header> */}
-                    {/* <div className='filter-content'> */}
-                    {/* <div className='categories-list'>
-                        <MultilevelMenu
-                          list={categories}
-                          configuration={multilevelMenuConfig}
-                          selectedListItem={this.selectedItem}
-                          selectedLabel={this.selectedItem}
-                        />
-                      </div> */}
-                    {/* </div> */}
+                    <Treebeard
+                      data={menuOptions}
+                      onToggle={this.onToggle}
+                    />
                   </article>
                 </div>
               </div>
