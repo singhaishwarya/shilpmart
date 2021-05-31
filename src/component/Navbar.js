@@ -4,7 +4,6 @@ import ReactMegaMenu from "react-mega-menu"
 import CategoryService from '../services/CategoryService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faAngleRight, faHome } from '@fortawesome/free-solid-svg-icons'
-
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
@@ -18,19 +17,20 @@ export default class Navbar extends React.Component {
       isActiveTab: 0, filterParams: { parent_id: 0 }
     };
   }
+
   componentDidMount() {
     this.getSubmenuOptions();
   }
+
   getSubmenuOptions = () => {
     try {
       CategoryService.fetchAllCategory(this.state.filterParams).then((result) => {
         let MegaMenu = result?.map((item, index) => {
+
           return {
             label: <Link to={{
               pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
-              search: "?cat_ids=" + item.id
-              // + "&parent_id=" + item.parent_id,
-              ,
+              search: "?cat_ids=" + item.id,
               state: {
                 category_id: item.id,
                 category_breadcrumbs: [{ id: item.id, title: item.title }],
@@ -39,16 +39,15 @@ export default class Navbar extends React.Component {
             }} onClick={() => this.setIsMenuShown(false)}>
               <span key={index}>{item.title}</span>
               <FontAwesomeIcon icon={faAngleRight} />
-            </Link>,
+            </Link >,
             key: item.id,
             items: item.child?.map((subitem1, index) => {
+
               return (
                 <div className="sub-categories" key={index}>
                   <Link to={{
                     pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
-                    search: "?cat_ids=" + subitem1.id
-                    // + "&parent_id=" + subitem1.parent_id
-                    ,
+                    search: "?cat_ids=" + subitem1.id,
                     state: {
                       category_id: subitem1.id,
                       category_breadcrumbs: [{ id: item.id, title: item.title },
@@ -59,14 +58,11 @@ export default class Navbar extends React.Component {
                     {subitem1.title}
                   </Link>
                   {subitem1.child?.map((subitem2, index) => {
-
                     return (
                       <div className="super-sub-categories" key={index}>
                         <Link to={{
                           pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
-                          search: "?cat_ids=" + subitem2.id
-                          // + "&parent_id=" + subitem2.parent_id
-                          ,
+                          search: "?cat_ids=" + subitem2.id,
                           state: {
                             category_id: subitem2.id,
                             category_breadcrumbs: [{ id: item.id, title: item.title },

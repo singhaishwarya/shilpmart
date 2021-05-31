@@ -42,7 +42,6 @@ class ProductGrid extends Component {
     ProductService.fetchAllProducts({ page: this.state.currentPage }).then((result) => {
       this.setState({
         productListData: this.state.productListData.concat(result.data),
-        // nextPage: result.next_page_url,
         isLoader: false
       });
       this.currentUrlParams.set('page', this.state.currentPage)
@@ -62,6 +61,7 @@ class ProductGrid extends Component {
     let entries = urlParams.entries(),
       queryParams = {};
     for (const entry of entries) {
+
       switch (entry[0]) {
         case 'cat_ids':
           queryParams.cat_ids = [urlParams.get('cat_ids')];
@@ -93,7 +93,6 @@ class ProductGrid extends Component {
           return;
       }
     }
-    // console.log("demonext_page_url", queryParams)
     return queryParams;
   }
 
@@ -155,7 +154,7 @@ class ProductGrid extends Component {
       <>
 
         <ToastContainer />
-        {(pathname !== "/wishlist" && productListData.data?.length > 0) &&
+        {(pathname !== "/wishlist" && productListData?.data?.length > 0) &&
           <section className='topsection d-flex justify-content-between'>
             {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>
               <ol className='breadcrumb bg-transparent'>

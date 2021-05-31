@@ -24,54 +24,19 @@ export default class ProductCategory extends React.Component {
       selectedOffer: [],
       categories: [],
       priceRange: [200, 500],
-      parent_id: props.history.location.state?.parent_id || this.currentUrlParams.get('parent_id') || 0,
+      parent_id: props.history.location.state?.parent_id || 0,
       category_id: props.history.location.state?.category_id,
       category_breadcrumbs: props.history.location.state?.category_breadcrumbs,
-      selectedOption: null
+      selectedOption: null, queryParams: {}
     };
+
   }
-  componentWillReceiveProps() {
-    this.getCategoryFilter(this.state.parent_id);
-    this.getSetQueryParams();
-  }
+
 
   componentDidMount() {
     this.getCategoryFilter(this.state.parent_id);
-    this.getSetQueryParams();
   }
 
-  getSetQueryParams() {
-
-    let entries = this.currentUrlParams.entries(),
-      queryParams = {};
-    const { priceRange } = this.state;
-
-    for (const entry of entries) {
-
-      switch (entry[0]) {
-        case 'min_price':
-          priceRange.splice(0, 1, entry[1] * 1)
-          this.setState({ priceRange: [...priceRange] }, () => {
-            this.setState({ priceRange: [...priceRange] })
-          })
-          break
-        case 'max_price':
-          priceRange.splice(1, 1, entry[1] * 1)
-          this.setState({ priceRange: [...priceRange] }, () => {
-            this.setState({ priceRange: [...priceRange] })
-          })
-          break
-        case 'parent_id':
-          this.setState({ parent_id: entry[1] })
-          break
-
-        default:
-          return;
-      }
-    }
-
-    return queryParams;
-  }
   onSliderPriceChange = (value) => {
     this.setState({ priceRange: value });
     this.currentUrlParams.set('min_price', value[0])
@@ -92,6 +57,7 @@ export default class ProductCategory extends React.Component {
     });
 
   }
+
   filterByPriceRange = () => {
     this.currentUrlParams.set('min_price', this.state.priceRange[0])
     this.currentUrlParams.set('max_price', this.state.priceRange[1])
@@ -100,12 +66,15 @@ export default class ProductCategory extends React.Component {
       search: "&" + this.currentUrlParams.toString()
     });
   }
+
   ratingChanged = (value) => {
     console.log(value);
   }
+
   setSelected = (value) => {
     this.setState({ selectedOffer: value });
   }
+
   selectedItem = (event) => {
     console.log(event);
   }
@@ -139,21 +108,15 @@ export default class ProductCategory extends React.Component {
       console.log(err);
     }
   }
+
   onCategoryFilter(node, toggled) {
-    console.log("democategory_id", node, toggled)
-    // const { cursor, menuOptions } = this.state;
-    // if (cursor) {
-    //   this.setState(() => ({ cursor, active: false }));
-    // }
-    // node.active = true;
-    // if (node.children) {
-    //   node.toggled = toggled;
-    // }
-    // this.setState(() => ({ cursor: node, menuOptions: Object.assign({}, menuOptions), category_id: node.key }));
-
-
     if (this.state.cursor) { this.state.cursor.active = false; }
     node.active = true;
+    this.currentUrlParams.set('cat_ids', [node.key])
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
     if (node.children) { node.toggled = toggled; }
     this.setState({ cursor: node });
 
@@ -166,7 +129,7 @@ export default class ProductCategory extends React.Component {
       priceRange,
       category_breadcrumbs,
     } = this.state;
-    // console.log("demo===", this.state)
+
     return (
       <>
         <section id="maincontent">
@@ -212,10 +175,10 @@ export default class ProductCategory extends React.Component {
                     </div>
                   </article>
                   <article className='filter-group'>
-                    {/* <Treebeard
+                    <Treebeard
                       data={menuOptions}
                       onToggle={this.onCategoryFilter}
-                    /> */}
+                    />
                   </article>
                 </div>
               </div>
