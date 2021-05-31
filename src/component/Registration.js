@@ -29,7 +29,7 @@ const mobile = (value) => {
 const email = (value) => {
   if (!validator.isEmail(value)) {
     return <div className="alert alert-danger" role="alert">
-      Enter a valid email sould be contain maximum length 50 (example@domainname)
+      Enter a valid email, should contain maximum 50 characters (example@domainname)
          </div>
   }
 };
@@ -41,10 +41,10 @@ const lt50 = (value) => {
 };
 
 const isValidpassword = (value) => {
-  let pattern = new RegExp("^[a-zA-Z0-9]+$");
-  // /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$/);
-  if (!pattern.test(value)) {
-    return <div className="alert alert-danger" role="alert">  Password must contain at least eight alpha numeric  </div>
+  let pattern = new RegExp(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/);
+  if (!pattern.test(value) || (value.length < 8)
+  ) {
+    return <div className="alert alert-danger" role="alert">  Password must contain atleast eight alpha numeric  </div>
 
   }
 }
