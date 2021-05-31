@@ -64,7 +64,7 @@ class ProductGrid extends Component {
     for (const entry of entries) {
       switch (entry[0]) {
         case 'cat_ids':
-          queryParams.cat_ids = [entry[1]];
+          queryParams.cat_ids = [urlParams.get('cat_ids')];
           break
         case 'order_by':
           queryParams.order_by = urlParams.get('order_by');
@@ -93,15 +93,16 @@ class ProductGrid extends Component {
           return;
       }
     }
+    // console.log("demonext_page_url", queryParams)
     return queryParams;
   }
 
   getProductList = (queryParams) => {
+    // console.log("queryParams===", queryParams)
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({
-          productListData: result?.data,
-          // nextPage: result.next_page_url
+          productListData: result
         })
         this.setState({ isLoader: false })
       });
@@ -154,7 +155,7 @@ class ProductGrid extends Component {
       <>
 
         <ToastContainer />
-        {(pathname !== "/wishlist" && productListData?.length > 0) &&
+        {(pathname !== "/wishlist" && productListData.data?.length > 0) &&
           <section className='topsection d-flex justify-content-between'>
             {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>
               <ol className='breadcrumb bg-transparent'>
@@ -195,9 +196,9 @@ class ProductGrid extends Component {
               <form method='get' className='shorting-wrapper'>
                 <select name='orderby' className='form-control' aria-label='Shop order' value={this.state.sortBy}
                   onChange={(e) => this.handleOnSort(e)}>
-                  <option value='menu_order' defaultValue='selected'>Default sorting</option>
-                  <option value='popularity'>Sort by popularity</option>
-                  <option value='rating'>Sort by average rating</option>
+                  <option value='menu_order' defaultValue='selected'>Select sorting</option>
+                  {/* <option value='popularity'>Sort by popularity</option>
+                  <option value='rating'>Sort by average rating</option> */}
                   <option value='created_at'>Sort by latest</option>
                   <option value='price-asc'>Sort by price: low to high</option>
                   <option value='price-desc'>Sort by price: high to low</option>
@@ -214,8 +215,8 @@ class ProductGrid extends Component {
             width={1000}
             timeout={3000} //3 secs
           />}
-          {productListData?.length > 0 ?
-            (<>{productListData?.map((item, index) => {
+          {productListData.data?.length > 0 ?
+            (<>{productListData.data?.map((item, index) => {
               return (
                 <div key={index} className={layout} >
 
@@ -224,7 +225,7 @@ class ProductGrid extends Component {
                 </div>
               )
 
-            })} < button onClick={() => this.fetchMoreData()} > Load more</button></>)
+            })} {productListData.next_page_url && < span onClick={() => this.fetchMoreData()} > Load more</span>}</>)
             : <span>No products were found matching your selection.</span>}
 
         </div>

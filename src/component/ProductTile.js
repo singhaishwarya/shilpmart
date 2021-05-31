@@ -174,7 +174,7 @@ class ProductTile extends React.Component {
             </div>
           </div>
         </div>
-        <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>
+        {data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
         <h5 className="product-title"><a href="#">
           {data.content ? data.content.title : '__'}
         </a></h5>

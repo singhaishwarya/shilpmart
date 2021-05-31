@@ -125,24 +125,13 @@ export default class Registration extends React.Component {
                 <div className="timeline">
                   <div className="icon"></div>
                   <div className="date-content">
-                    <div className="timeline-img"><img src={require('../public/store.svg')} className="img-fluid" alt="registration" /></div>
-                  </div>
-                  <div className="timeline-content">
-                    <h5 className="title">Store Setup &amp; Product Cataloging</h5>
-                    <p className="description"> Setup your shop and create product catalog in easy steps. </p>
-                  </div>
-                  <div className="numbers pt-0"><span className="numbers_tp">3</span></div>
-                </div>
-                <div className="timeline">
-                  <div className="icon"></div>
-                  <div className="date-content">
                     <div className="timeline-img"><img src={require('../public/shipping.svg')} className="img-fluid" alt="registration" /></div>
                   </div>
                   <div className="timeline-content">
                     <h5 className="title">Hassle Free Shipping</h5>
                     <p className="description"> Product pickup from your store and fast delivery to customer </p>
                   </div>
-                  <div className="numbers pt-0"><span className="numbers_tp">4</span></div>
+                  <div className="numbers pt-0"><span className="numbers_tp">3</span></div>
                 </div>
                 <div className="timeline">
                   <div className="icon"></div>

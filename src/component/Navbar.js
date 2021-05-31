@@ -28,7 +28,9 @@ export default class Navbar extends React.Component {
           return {
             label: <Link to={{
               pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}`,
-              search: "?cat_ids=" + item.id + "&parent_id=" + item.parent_id,
+              search: "?cat_ids=" + item.id
+              // + "&parent_id=" + item.parent_id,
+              ,
               state: {
                 category_id: item.id,
                 category_breadcrumbs: [{ id: item.id, title: item.title }],
@@ -44,7 +46,9 @@ export default class Navbar extends React.Component {
                 <div className="sub-categories" key={index}>
                   <Link to={{
                     pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
-                    search: "?cat_ids=" + subitem1.id + "&parent_id=" + subitem1.parent_id,
+                    search: "?cat_ids=" + subitem1.id
+                    // + "&parent_id=" + subitem1.parent_id
+                    ,
                     state: {
                       category_id: subitem1.id,
                       category_breadcrumbs: [{ id: item.id, title: item.title },
@@ -60,7 +64,9 @@ export default class Navbar extends React.Component {
                       <div className="super-sub-categories" key={index}>
                         <Link to={{
                           pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
-                          search: "?cat_ids=" + subitem2.id + "&parent_id=" + subitem2.parent_id,
+                          search: "?cat_ids=" + subitem2.id
+                          // + "&parent_id=" + subitem2.parent_id
+                          ,
                           state: {
                             category_id: subitem2.id,
                             category_breadcrumbs: [{ id: item.id, title: item.title },

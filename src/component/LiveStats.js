@@ -5,7 +5,7 @@ export default class LiveStats extends React.Component {
 
 
     return (
-      //   < !--Why choose eShilpMart-- >
+
       <div className="row  why-eshipmart-bg py-5">
 
         <div className="section-title whyeship-title w-100">

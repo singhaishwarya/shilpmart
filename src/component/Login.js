@@ -5,6 +5,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import AuthService from '../services/AuthService';
 import * as authAction from '../actions/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const required = (value) => {
   if (!value) {
@@ -71,6 +73,7 @@ class Login extends Component {
     const { errorMsg } = this.state
     return (
       <div className="login-card">
+        <FontAwesomeIcon icon={faTimes} onClick={() => this.props?.dismissModal('login')} />
         <h4 className="modal-title">Sign in</h4>
         <Form
           onSubmit={this.handleLogin}
@@ -114,7 +117,7 @@ class Login extends Component {
           </div>
 
         </Form>
-        <Link to='/forgot-password' onClick={() => this.props?.dismissModal('login')}>Forgot password?</Link>
+        {/* <Link to='/forgot-password' onClick={() => this.props?.dismissModal('login')}>Forgot password?</Link> */}
         <p className="login-card-footer-text">Don't have an account? <Link to='/registration' onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
       </div >
     )

@@ -9,6 +9,9 @@ export default class ProductCategory extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.onCategoryFilter = this.onCategoryFilter.bind(this);
+    this.currentUrlParams = new URLSearchParams(window.location.search);
     this.state = {
       menuOptions: [],
       product_category: this.props.category,
@@ -19,29 +22,17 @@ export default class ProductCategory extends React.Component {
         { label: 'Special Price', value: 'sp' }
       ],
       selectedOffer: [],
-      multilevelMenuConfig: {
-        paddingAtStart: true,
-        listBackgroundColor: ``,
-        fontColor: `rgb(8, 54, 71)`,
-        backgroundColor: ``,
-        selectedListFontColor: ``,
-        highlightOnSelect: true,
-        useDividers: false
-      },
       categories: [],
       priceRange: [200, 500],
-      parent_id: props.history.location.state?.parent_id,
+      parent_id: props.history.location.state?.parent_id || this.currentUrlParams.get('parent_id') || 0,
       category_id: props.history.location.state?.category_id,
       category_breadcrumbs: props.history.location.state?.category_breadcrumbs,
       selectedOption: null
     };
-    this.onToggle = this.onToggle.bind(this);
-    this.currentUrlParams = new URLSearchParams(window.location.search);
-
   }
   componentWillReceiveProps() {
     this.getCategoryFilter(this.state.parent_id);
-    this.getSetQueryParams()
+    this.getSetQueryParams();
   }
 
   componentDidMount() {
@@ -50,12 +41,13 @@ export default class ProductCategory extends React.Component {
   }
 
   getSetQueryParams() {
-    const urlParams = new URLSearchParams(window.location.search);
-    let entries = urlParams.entries(),
+
+    let entries = this.currentUrlParams.entries(),
       queryParams = {};
     const { priceRange } = this.state;
 
     for (const entry of entries) {
+
       switch (entry[0]) {
         case 'min_price':
           priceRange.splice(0, 1, entry[1] * 1)
@@ -69,8 +61,8 @@ export default class ProductCategory extends React.Component {
             this.setState({ priceRange: [...priceRange] })
           })
           break
-        case 'cat_ids':
-          this.setState({ cat_ids: entry[1] })
+        case 'parent_id':
+          this.setState({ parent_id: entry[1] })
           break
 
         default:
@@ -126,12 +118,16 @@ export default class ProductCategory extends React.Component {
           return {
             name: item.title,
             key: item.id,
-            toggled: item.id === this.state.category_id,
             children: item.child?.map((subitem1) => {
               return {
                 name: subitem1.title,
                 key: subitem1.id,
-                toggled: subitem1.id === this.state.category_id,
+                children: subitem1?.child?.length > 0 && subitem1?.child?.map((subitem2) => {
+                  return {
+                    name: subitem2.title,
+                    key: subitem2.id
+                  }
+                })
               }
             })
 
@@ -143,24 +139,26 @@ export default class ProductCategory extends React.Component {
       console.log(err);
     }
   }
-  onToggle(node, toggled) {
-    const { cursor, menuOptions } = this.state;
-    if (cursor) {
-      this.setState(() => ({ cursor, active: false }));
-    }
-    node.active = true;
-    if (node.children) {
-      node.toggled = toggled;
-    }
-    this.setState(() => ({ cursor: node, menuOptions: Object.assign({}, menuOptions), category_id: node.key }));
-    this.currentUrlParams.set('cat_ids', node.key)
-    this.props.history.push({
-      pathname: this.props.location.pathname,
-      search: "&" + this.currentUrlParams.toString()
-    });
+  onCategoryFilter(node, toggled) {
+    console.log("democategory_id", node, toggled)
+    // const { cursor, menuOptions } = this.state;
+    // if (cursor) {
+    //   this.setState(() => ({ cursor, active: false }));
+    // }
+    // node.active = true;
+    // if (node.children) {
+    //   node.toggled = toggled;
+    // }
+    // this.setState(() => ({ cursor: node, menuOptions: Object.assign({}, menuOptions), category_id: node.key }));
 
+
+    if (this.state.cursor) { this.state.cursor.active = false; }
+    node.active = true;
+    if (node.children) { node.toggled = toggled; }
+    this.setState({ cursor: node });
 
   }
+
   render() {
 
     const {
@@ -168,7 +166,7 @@ export default class ProductCategory extends React.Component {
       priceRange,
       category_breadcrumbs,
     } = this.state;
-
+    // console.log("demo===", this.state)
     return (
       <>
         <section id="maincontent">
@@ -214,10 +212,10 @@ export default class ProductCategory extends React.Component {
                     </div>
                   </article>
                   <article className='filter-group'>
-                    <Treebeard
+                    {/* <Treebeard
                       data={menuOptions}
-                      onToggle={this.onToggle}
-                    />
+                      onToggle={this.onCategoryFilter}
+                    /> */}
                   </article>
                 </div>
               </div>
