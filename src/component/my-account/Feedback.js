@@ -1,5 +1,5 @@
 import React from 'react';
-export default class Support extends React.Component {
+export default class Feedback extends React.Component {
 
   constructor() {
     super();

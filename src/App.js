@@ -21,7 +21,7 @@ import Address from './component/my-account/Address/Address';
 import AddAddress from './component/my-account/Address/AddAddress';
 import EditAddress from './component/my-account/Address/AddAddress';
 import AccountDetails from './component/my-account/AccountDetails';
-import Support from './component/my-account/Support';
+import Feedback from './component/my-account/Feedback';
 import Inquiry from './component/my-account/Inquiry';
 import MyDashboard from './component/my-account/Dashboard';
 import Checkout from './component/Checkout';
@@ -63,7 +63,7 @@ class App extends Component {
                 <PrivateRoute isAuthenticated={userData} path='/my-account/add-address' component={AddAddress} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/edit-address' component={EditAddress} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/details' component={AccountDetails} />
-                <PrivateRoute isAuthenticated={userData} path='/my-account/support-tickets' component={Support} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/feedback' component={Feedback} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/inquiry' component={Inquiry} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/wishlist' component={MyWishlist} />
 

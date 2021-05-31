@@ -10,7 +10,7 @@ export default class MyAccount extends React.Component {
       { title: 'Orders', class: 'order', route: '/my-account/order' },
       { title: 'Address', class: 'address', route: '/my-account/address' },
       { title: 'Account Details', class: 'account-details', route: '/my-account/details' },
-      { title: 'Support Tickets', class: 'support', route: '/my-account/support-tickets' },
+      { title: 'Feedback', class: 'feedback', route: '/my-account/feedback' },
       { title: 'Inquiries', class: 'inquire', route: '/my-account/inquiry' },
       { title: 'Wishlist', class: 'wishlist', route: '/my-account/wishlist' },
       { title: 'Logout', class: 'logout', route: '/my-account/logout' }]

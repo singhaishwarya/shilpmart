@@ -123,7 +123,6 @@ class ProductDetail extends React.Component {
   }
 
   addToCart = (product) => {
-    console.log("demo====", product)
     if (this.props.cart?.includes(product.id)) {
       this.errorAlert(product);
     }

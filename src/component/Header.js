@@ -361,7 +361,7 @@ class Header extends Component {
                   <Link to='/my-account/order'>Orders</Link>
                   <Link to='/my-account/address'>Addresses</Link>
                   <Link to='/my-account/details'>Account details</Link>
-                  <Link to='/my-account/support-tickets'>Support Tickets</Link>
+                  <Link to='/my-account/feedback'>Feedback</Link>
                   <Link to='my-account/wishlist'>Wishlist</Link>
                   <Link to="" onClick={() => this.logout()}>Logout</Link>
 
