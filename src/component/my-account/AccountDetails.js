@@ -4,6 +4,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../../services/ToastService';
+import Button from "react-validation/build/button";
 
 const required = (value) => {
   if (!value) {
@@ -134,7 +135,7 @@ export default class AccountDetails extends React.Component {
 
             </fieldset>
             <ToastContainer />
-            <button type="submit" className="btn login-btn">Save Changes</button>
+            <Button type="submit" className="btn login-btn">Save Changes</Button>
           </Form>
         </div>
 

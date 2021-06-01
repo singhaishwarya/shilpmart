@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
+import Button from "react-validation/build/button";
 import AuthService from '../services/AuthService';
 
 const required = (value) => {
@@ -70,15 +71,15 @@ export default class ForgotPassword extends Component {
                 </div>
                 <div>{errorMsg}</div>
                 <div className="form-group">
-                  <button
+                  <Button
                     className="btn login-btn btn-block"
-                    disabled={this.state.loading}
+                  // disabled={this.state.loading}
                   >
                     {this.state.loading && (
                       <span className="spinner-border spinner-border-sm"></span>
                     )}
                     <span>Reset Password</span>
-                  </button>
+                  </Button>
                 </div>
 
 

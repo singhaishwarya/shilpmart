@@ -9,9 +9,7 @@ export default class ProductCategory extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.onCategoryFilter = this.onCategoryFilter.bind(this);
-    this.currentUrlParams = new URLSearchParams(window.location.search);
     this.state = {
       menuOptions: [],
       product_category: this.props.category,
@@ -34,7 +32,12 @@ export default class ProductCategory extends React.Component {
 
 
   componentDidMount() {
+    this.currentUrlParams = new URLSearchParams(window.location.search);
     this.getCategoryFilter(this.state.parent_id);
+  }
+
+  componentWillReceiveProps() {
+    this.currentUrlParams = new URLSearchParams(window.location.search);
   }
 
   onSliderPriceChange = (value) => {
@@ -180,6 +183,7 @@ export default class ProductCategory extends React.Component {
                     </header>
                     <Treebeard
                       data={menuOptions}
+                      style={treeStyle}
                       onToggle={this.onCategoryFilter}
                     />
 
@@ -204,13 +208,8 @@ export default class ProductCategory extends React.Component {
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="officeSup" value="officeSup" />
                         <label className="form-check-label" htmlFor="officeSup">Office Supplies</label></div>
-
-
                     </div>
-
-
                   </article >
-
                 </div >
               </div >
               <div className='col-lg-9'>
@@ -221,6 +220,83 @@ export default class ProductCategory extends React.Component {
         </section >
       </>
     );
+  }
+}
+const treeStyle = {
+  tree: {
+    base: {
+      listStyle: 'none',
+      backgroundColor: 'white',
+      margin: 0,
+      padding: 0,
+      color: 'rgb(35,31,32)',
+      fontFamily: '"Helvetica Neue", "Open Sans", Arial, sans-serif',
+      fontSize: '1.3rem'
+    },
+    node: {
+      base: {
+        position: 'relative'
+      },
+      link: {
+        cursor: 'pointer',
+        position: 'relative',
+        padding: '0px 5px',
+        display: 'block'
+      },
+      activeLink: {
+        background: 'rgba(0, 0, 0, 0.04)'
+      },
+      toggle: {
+        base: {
+          position: 'relative',
+          display: 'inline-block',
+          verticalAlign: 'top',
+          marginLeft: '-5px',
+          height: '24px',
+          width: '24px'
+        },
+        wrapper: {
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          margin: '-7px 0 0 -7px',
+          height: '14px'
+        },
+        height: 14,
+        width: 14,
+        arrow: {
+          fill: 'rgb(35,31,32)',
+          strokeWidth: 0
+        }
+      },
+      header: {
+        base: {
+          display: 'inline-block',
+          verticalAlign: 'top',
+          color: 'rgb(35,31,32)'
+        },
+        connector: {
+          width: '2px',
+          height: '12px',
+          borderLeft: 'solid 2px black',
+          borderBottom: 'solid 2px black',
+          position: 'absolute',
+          top: '0px',
+          left: '-21px'
+        },
+        title: {
+          lineHeight: '24px',
+          verticalAlign: 'middle'
+        }
+      },
+      subtree: {
+        listStyle: 'none',
+        paddingLeft: '19px'
+      },
+      loading: {
+        color: '#E2C089'
+      }
+    }
   }
 }
 

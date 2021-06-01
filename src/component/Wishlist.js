@@ -45,7 +45,7 @@ class Wishlist extends Component {
   getWishlistApi = () => {
 
     WishlistService.list().then((result) => {
-      result.map((item) => this.props.addToWishlist(item.product_id)
+      result && result.map((item) => this.props.addToWishlist(item.product_id)
       )
 
       this.setState({ wishlist: result });

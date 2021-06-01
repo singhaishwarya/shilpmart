@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
+import Button from "react-validation/build/button";
 import AuthService from '../services/AuthService';
 import * as authAction from '../actions/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -49,7 +50,6 @@ class Login extends Component {
   handleLogin = (e) => {
     e.preventDefault();
     this.form.validateAll();
-    let oldPath = window.location.href
     const { username, password } = this.state;
     AuthService.login({ username: username, password: password })
       .then((result) => {
@@ -59,9 +59,8 @@ class Login extends Component {
         }
         result && this.props.userDetail(result.data);
 
-        this.props.showModal ? this.props.dismissModal('login') : window.location.href = oldPath;
-
-        window.location.href = oldPath;
+        this.props.showModal ? this.props.dismissModal('login') : window.location.reload();
+        window.location.reload();
 
       })
       .catch((err) => {
@@ -105,15 +104,15 @@ class Login extends Component {
           </div>
           <div>{errorMsg}</div>
           <div className="form-group">
-            <button
+            <Button
               className="btn login-btn btn-block"
-              disabled={this.state.loading}
+            // disabled={this.state.loading}
             >
-              {this.state.loading && (
+              {/* {this.state.loading && (
                 <span className="spinner-border spinner-border-sm"></span>
-              )}
+              )} */}
               <span>Login</span>
-            </button>
+            </Button>
           </div>
 
         </Form>

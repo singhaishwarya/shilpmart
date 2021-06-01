@@ -11,7 +11,6 @@ class ProductGrid extends Component {
 
     this.state = {
       pathname: props?.location?.pathname,
-      offset: 0,
       productsData: [],
       currentPage: 1,
       per_page: 12,
@@ -20,19 +19,18 @@ class ProductGrid extends Component {
       filterParams: {},
       categoryBreadcrumbs: props.categoryBreadcrumbs,
       sortBy: "",
-      items: Array.from({ length: 20 }),
-      // nextPage: null,
       isLoader: true
     };
-    this.currentUrlParams = new URLSearchParams(window.location.search);
+
 
   }
   componentWillReceiveProps() {
+    this.currentUrlParams = new URLSearchParams(window.location.search);
     this.getProductList(this.getSetQueryParams())
   }
 
   componentDidMount() {
-
+    this.currentUrlParams = new URLSearchParams(window.location.search);
     this.getProductList(this.getSetQueryParams());
     this.handleScrollPosition();
   }
@@ -108,6 +106,7 @@ class ProductGrid extends Component {
     }
 
   }
+
   handleScrollPosition = () => {
     const scrollPosition = sessionStorage.getItem("scrollPosition") - 400;
     if (scrollPosition) {
@@ -115,7 +114,6 @@ class ProductGrid extends Component {
       sessionStorage.removeItem("scrollPosition");
     }
   };
-
 
   onLayoutChange = (value) => {
     this.setState({
@@ -148,9 +146,9 @@ class ProductGrid extends Component {
   render() {
     const { productListData, layout, pathname, per_page, isLoader } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
+
     return (
       <>
-
         <ToastContainer />
         {(pathname !== "/wishlist" && productListData?.data?.length > 0) &&
           <section className='topsection d-flex justify-content-between'>

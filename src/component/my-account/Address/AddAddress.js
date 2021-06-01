@@ -4,6 +4,7 @@ import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import MasterService from '../../../services/MasterService';
 import AddressService from '../../../services/AddressService';
+import Button from "react-validation/build/button";
 
 const required = (value) => {
   if (!value) {
@@ -263,7 +264,7 @@ export default class AddEditAddress extends React.Component {
                   </Select>
                 </div>
               </div>
-              <button className="btn login-btn" value="Submit">Add Address</button>
+              <Button className="btn login-btn" value="Submit">Add Address</Button>
             </Form>
           </div>
         </div >
