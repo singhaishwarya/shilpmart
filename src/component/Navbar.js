@@ -111,20 +111,20 @@ export default class Navbar extends React.Component {
                 onMouseLeave={() => this.setIsMenuShown(false)} className="categories-nav dropdown">
                 <span className="brows-menu dropdown-toggle" data-toggle="dropdown">
                   <span className="brows-menu-icon"></span>
-                  <span >Browse Categories</span>
+                  <span>Browse Categories</span>
                   <FontAwesomeIcon icon={isMenuShown ? faAngleUp : faAngleDown} />
                 </span>
                 {isMenuShown && (
-                  <div>
+                  
                     <ReactMegaMenu
                       tolerance={50}
                       direction={"RIGHT"}
                       data={menuOptions}
                       styleConfig={"mega-menu"}
                     />
-                  </div>)}
+                 )}
               </div>
-              <ul className="navbar-nav mr-auto">
+              <ul className="navbar-nav mr-auto ml-2">
                 {navbarTabs?.map((item, index) => {
                   return (
                     <li key={index}>

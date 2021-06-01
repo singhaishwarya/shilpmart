@@ -26,17 +26,17 @@ You will find a lot of interesting products on our "Shop" page.</span>
                   return (
                     <div className="compare-col" key={index}>
                       <div className="compare-col-row">
-                        <a href="#" className="remove-item" onClick={() => {
+                        <span className="remove-item" onClick={() => {
                           this.props.deleteCompare(item.id)
-                        }}>Remove</a>
-                        <a href="#" className="item-img mb-2">
+                        }}>Remove</span>
+                        <span className="item-img mb-2">
                           <img src={item?.images[0]?.image_url || require('../public/No_Image_Available.jpeg')} alt="product img" className="img-fluid"
                             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                           />
-                        </a>
-                        <a href="#" className="product-name mb-2">{item?.content?.title}</a>
+                        </span>
+                        <span className="product-name mb-2">{item?.content?.title}</span>
                         <div className="proPrice mb-2">{item?.price[0]?.price || 0}</div>
-                        <span><a href="#" className="add-cart">Add to Cart</a> </span>
+                        <span className="add-cart">Add to Cart</span>
                       </div>
                       <div className="compare-col-row"><p>{item.content?.product_description}</p></div>
                       <div className="compare-col-row"><p>{item.variation_available ? 'Yes' : 'No'}</p></div>

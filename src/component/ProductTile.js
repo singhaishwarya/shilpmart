@@ -116,56 +116,57 @@ class ProductTile extends React.Component {
     const { currentLocation } = this.state
 
     return (
-      <>
-        <div className="product-wrapper" key={data.id} >
 
-          <div className="prodcut-img" onClick={() => this.productDetail(data.id)}>
-            <a href="#">
-              <img src={(data.images?.length > 0 && data?.images[0]?.image_url) || "false"}
-                className="img-fluid"
-                onClick={() => this.productDetail(data.id)}
-                alt={(data.images?.length > 0 && data.images[0]?.caption) || "false"}
-                onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
-              />
-            </a>
-          </div>
-          <div className="shop-wrapper">
-            <div className="shopBtn">
-              <div className="shop-btn"><span>
-                <FontAwesomeIcon
-                  icon={cart?.includes(data.id) ? faCheck : faCartPlus}
-                  onClick={
-                    () => {
-                      Object.keys(userData).length > 0 ? (data.cart ? this.deleteCart(data) : this.addToCart(data)) :
-                        (cart?.find(element => element.id === data.id) ? this.deleteCart(data) : this.addToCart(data))
-                    }
+      <div className="product-wrapper" key={data.id} >
+
+        <div className="prodcut-img" onClick={() => this.productDetail(data.id)}>
+
+          <img src={(data.images?.length > 0 && data?.images[0]?.image_url) || ""}
+            className="img-fluid"
+            onClick={() => this.productDetail(data.id)}
+            alt={(data.images?.length > 0 && data.images[0]?.caption) || ""}
+            onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
+          />
+
+        </div>
+        <div className="shop-wrapper">
+          <div className="shopBtn">
+            <div className="shop-btn"><span>
+              <FontAwesomeIcon
+                icon={cart?.includes(data.id) ? faCheck : faCartPlus}
+                onClick={
+                  () => {
+                    Object.keys(userData).length > 0 ? (data.cart ? this.deleteCart(data) : this.addToCart(data)) :
+                      (cart?.find(element => element.id === data.id) ? this.deleteCart(data) : this.addToCart(data))
                   }
-                /></span></div>
-              <div className="shop-btn"><span>
-                <FontAwesomeIcon icon={faRandom} onClick={() => this.props.addToCompare(data)}
-                />
-              </span></div>
-              {currentLocation !== '/wishlist' && <div className="shop-btn"><span>
-                <FontAwesomeIcon
-                  icon={(wishlist?.includes(data.id) || (Object.keys(userData).length > 0 && data?.wishlist?.id)) ? faHeart : farHeart}
-                  onClick={() => {
-                    ((Object.keys(userData).length > 0 && data?.wishlist?.id) || wishlist?.includes(data.id)) ? this.deleteWishlist(data) : this.addToWishlist(data)
-                  }}
-                />
-              </span>
-              </div>}
-            </div>
+                }
+              /></span></div>
+            <div className="shop-btn"><span>
+              <FontAwesomeIcon icon={faRandom} onClick={() => this.props.addToCompare(data)}
+              />
+            </span></div>
+            {currentLocation !== '/wishlist' && <div className="shop-btn"><span>
+              <FontAwesomeIcon
+                icon={(wishlist?.includes(data.id) || (Object.keys(userData).length > 0 && data?.wishlist?.id)) ? faHeart : farHeart}
+                onClick={() => {
+                  ((Object.keys(userData).length > 0 && data?.wishlist?.id) || wishlist?.includes(data.id)) ? this.deleteWishlist(data) : this.addToWishlist(data)
+                }}
+              />
+            </span>
+            </div>}
           </div>
         </div>
         {data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
-        <h5 className="product-title"><a href="#">
+        <h5 className="product-title">
           {data.content ? data.content.title : '__'}
-        </a></h5>
+        </h5>
         <span className="product-price">
-          <span>₹</span> {data?.price?.length > 0 && data?.price[0]?.price}
+          <strike><span>₹</span> 1000</strike> <span>₹</span> {data?.price?.length > 0 && data?.price[0]?.price}
         </span>
+      </div>
 
-      </>
+
+
     );
   }
 }

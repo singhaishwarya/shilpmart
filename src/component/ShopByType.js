@@ -36,12 +36,12 @@ class ShopByType extends Component {
         shopByCategoryItems: result?.map((item, index) =>
         (<div key={index} >
           <div className="categorie-img" onClick={() => this.productList(item.id)}>
-            <a href="#" className="cate-img">
+            <span className="cate-img">
               <img src={item.image_url ? item.image_url : require('../public/No_Image_Available.jpeg')} className="img-fluid"
                 alt={item.title}
                 onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
               />
-            </a>
+            </span>
           </div>
           <div className="categorie-img-title">
             <h3>{item.title}</h3>

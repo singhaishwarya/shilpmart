@@ -22,16 +22,17 @@ export default class Checkout extends React.Component {
                 <span className="text-muted text-center">Your order</span>
                 {/* <span className="badge badge-secondary badge-pill">3</span> */}
               </h4>
-              <ul className="list-group mb-3 shadow">
+              <ul className="list-group mb-3 shadow(">
                 {checkOutData.map((item, index) => (
-                  finItem = item.product_details ? item.product_details : item,
-                  <li className="list-group-item d-flex justify-content-between lh-condensed">
+                  finItem = item.product_details || item,
+                  <li key={index} className="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
                       <h6 className="my-0">{finItem?.content?.title}</h6>
                       <span>Store: <small className="text-muted">{finItem?.store_name}</small></span>
                     </div>
                     <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0)}</span>
-                  </li>))}
+                  </li>
+                ))}
                 <li className="list-group-item d-flex justify-content-between bg-light">
                   <div className="text-success">
                     <h6 className="my-0">Promo code</h6>

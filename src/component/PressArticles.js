@@ -25,7 +25,7 @@ export default class PressArticles extends React.Component {
 
               <div className="news-info-box">
                 <div className="news-details">
-                  <div className="news-categories"><a href="#">the new indian express</a></div>
+                  <div className="news-categories"><span>the new indian express</span></div>
                   <h3 className="news-title">News Title</h3>
                   <div className="news-meta d-flex justify-content-center">
                     <div className="meta">Admin meta</div>
@@ -55,7 +55,7 @@ export default class PressArticles extends React.Component {
 
               <div className="news-info-box">
                 <div className="news-details">
-                  <div className="news-categories"><a href="#">the new indian express</a></div>
+                  <div className="news-categories"><span>the new indian express</span></div>
                   <h3 className="news-title">News Title</h3>
                   <div className="news-meta d-flex justify-content-center">
                     <div className="meta">Admin meta</div>

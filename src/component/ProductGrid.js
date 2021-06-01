@@ -209,9 +209,10 @@ class ProductGrid extends Component {
         <div className='row py-2'>
           {isLoader && <Loader
             type="Puff"
-            color="#00BFFF"
-            height={1000}
-            width={1000}
+            color="#e05206"
+            class="loader"
+            height={100}
+            width={100}            
             timeout={3000} //3 secs
           />}
           {productListData.data?.length > 0 ?
@@ -224,7 +225,7 @@ class ProductGrid extends Component {
                 </div>
               )
 
-            })} {productListData.next_page_url && < span onClick={() => this.fetchMoreData()} > Load more</span>}</>)
+            })} {productListData.next_page_url && <span className="loadMore" onClick={() => this.fetchMoreData()}><span>Load More</span></span>}</>)
             : <span>No products were found matching your selection.</span>}
 
         </div>

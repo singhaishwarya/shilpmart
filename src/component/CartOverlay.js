@@ -22,10 +22,10 @@ class CartOverlay extends Component {
     let totalCost1 = 0, productids = [];
     CartService.list().then((result) => {
       this.setState({ cartData: result });
-      result && result.map((item) => (
-        productids?.push(item.product_id),
-        totalCost1 += (item?.product_details?.price[0]?.price * 1 || 0) * (item.quantity * 1)
-      ))
+      result && result.forEach((item) => {
+        productids.push(item.product_id);
+        totalCost1 += (item?.product_details?.price[0]?.price * 1 || 0) * (item.quantity * 1);
+      });
 
       this.setState({
         totalCost: totalCost1
@@ -58,9 +58,7 @@ class CartOverlay extends Component {
       <div className="cart-side">
         <div className="cart-side-head">
           <h3>SHOPPING CART</h3>
-          <a href="" >
-            <span onClick={(e) => (e.preventDefault(), this.props.dismissModal('cart'))}>Close</span>
-          </a>
+          <span onClick={(e) => { e.preventDefault(); this.props.dismissModal('cart') }}>Close</span>
         </div>
 
         {
@@ -69,7 +67,7 @@ class CartOverlay extends Component {
               <div className="cartshop-items">
                 <ul>
                   {cartData?.map((item, index) => (
-                    finItem = item.product_details ? item.product_details : item,
+                    finItem = item.product_details || item,
 
                     <li key={index}>
                       <Link to={{
@@ -91,7 +89,7 @@ class CartOverlay extends Component {
                         <span className="qty">{item.quantity} x <span>
                           {finItem.price?.length > 0 && finItem.price[0]?.price}</span></span>
                       </div>
-                      <a href="#"><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></a>
+                      <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
                     </li>
                   ))}
                 </ul>
@@ -101,8 +99,8 @@ class CartOverlay extends Component {
             </div>
             :
             <div className="">
-              <span>No products in the cart.</span>
-              <a href="#">Return to shop</a>
+              <span>Your cart is currently empty.</span>
+              <span>Return to shop</span>
             </div>
         }
         <div className="cart-shop-footer">

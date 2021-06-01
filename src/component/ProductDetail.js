@@ -15,7 +15,7 @@ import ToastService from '../services/ToastService';
 import CartService from '../services/CartService';
 import * as cartAction from '../actions/cart';
 import { connect } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 // const askForm = {
 //   content : {
 //     top         : '50%',
@@ -204,8 +204,8 @@ class ProductDetail extends React.Component {
       <>
         <section id="maincontent">
           <div className="container-fluid">
-            <div className="row py-5">
-              <div className="col-lg-6 col-md-6 col-12 mb-4">
+            <div className="row py-lg-5 py-2 ">
+              <div className="col-lg-6 col-md-6 col-12 mb-2">
                 <div className="product-img-wrapper">
                   <ImageGallery
                     items={productDetailData?.images?.length > 0 ? productDetailDataImages : notFountImage}
@@ -220,10 +220,10 @@ class ProductDetail extends React.Component {
                   <div className="breadcrumb-section d-flex justify-content-between">
                     <nav aria-label="breadcrumb">
                       <ol className="breadcrumb bg-transparent">
-                        <li className="breadcrumb-item"><a href="#">Home</a></li>
-                        <li className="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li className="breadcrumb-item"><a href="#">Product category</a></li>
-                        <li className="breadcrumb-item active" aria-current="page">{productDetailData?.content?.title}</li>
+                        <li className="breadcrumb-item"><span>Home</span></li>
+                        <li className="breadcrumb-item"><span>Shop</span></li>
+                        <li className="breadcrumb-item"><span>Product category</span></li>
+                        {/* <li className="breadcrumb-item active" aria-current="page">{productDetailData?.content?.title}</li> */}
                       </ol>
                     </nav>
                   </div>
@@ -243,16 +243,16 @@ class ProductDetail extends React.Component {
                     <ToastContainer />
                   </div>
                   <div className="action-links">
-                    <a href="#"  >
-                      <FontAwesomeIcon icon={faRandom} /> Compare</a>
-                    <a href="#">
+                    <span>
+                      <FontAwesomeIcon icon={faRandom} /> Compare</span>
+                    <span>
                       <FontAwesomeIcon icon={wishlistStatus ? faCheck : farHeart}
                         onClick={() => this.wishlistToggle(wishlistStatus)} /> {wishlistStatus ? "Browse Wishlist" : "Add to Wishlist"}
-                    </a>
+                    </span>
                   </div>
 
                   <div className="add-question my-3 py-2">
-                    <span href="#" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</span>
+                    <span onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</span>
                   </div>
                   <Modal className='custom-modal-width login-card'
                     isOpen={showModal}
@@ -343,18 +343,18 @@ class ProductDetail extends React.Component {
             <div className="row product-description pb-5">
               <ul className="nav nav-tabs" role="tablist">
                 <li className="nav-item">
-                  <a className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
+                  <span className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
                     data-toggle="tab" href="#des" role="tab" aria-controls="home" aria-selected="true"
-                    onClick={() => this.setState({ isActiveTab: 0 })} >DESCRIPTION</a>
+                    onClick={() => this.setState({ isActiveTab: 0 })} >DESCRIPTION</span>
                 </li>
                 <li className="nav-item">
-                  <a className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} data-toggle="tab" href="#del" role="tab" aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })} >REVIEWS</a>
+                  <span className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} data-toggle="tab" href="#del" role="tab" aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })} >REVIEWS</span>
                 </li>
                 <li className="nav-item">
-                  <a className={`nav-link ${((isActiveTab === 2) ? 'active' : '')}`} data-toggle="tab" href="#store" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 2 })} >STORE POLICIES</a>
+                  <span className={`nav-link ${((isActiveTab === 2) ? 'active' : '')}`} data-toggle="tab" href="#store" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 2 })} >STORE POLICIES</span>
                 </li>
                 <li className="nav-item">
-                  <a className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>INQUIRIES</a>
+                  <span className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>INQUIRIES</span>
                 </li>
               </ul>
               <div className="clearfix"></div>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as cartAction from '../actions/cart';
 import CartService from '../services/CartService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import ProductService from '../services/ProductService';
 class Cart extends Component {
@@ -22,9 +24,9 @@ class Cart extends Component {
     let totalCost1 = 0;
     CartService.list().then((result) => {
       this.setState({ cartProduct: result });
-      result.map((item) => {
-        totalCost1 += (item?.product_details?.price[0]?.price * 1 || 0) * (item.quantity * 1);
-      })
+      result.map((item) => (
+        totalCost1 += (item?.product_details?.price[0]?.price * 1 || 0) * (item.quantity * 1)
+      ))
       this.setState({
         totalCost: totalCost1
       })
@@ -95,9 +97,9 @@ class Cart extends Component {
                 </thead>
                 <tbody>
                   {cartProduct.map((item, index) => (
-                    finItem = item.product_details ? item.product_details : item,
+                    finItem = item.product_details || item,
                     <tr key={index}>
-                      <td className="product-remove"><span onClick={() => this.deleteCart(item?.product_id)}>X</span></td>
+                      <td className="product-remove"><span onClick={() => this.deleteCart(item?.product_id)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
                       <td className="product-thumbnail"><a href="#">
                         <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
                           className="img-fluid"
@@ -120,7 +122,8 @@ class Cart extends Component {
                       </div>
                       </td>
                       <td className="product-price"><span><span>₹</span> {(finItem?.price?.length > 0 && finItem?.price[0]?.price * item.quantity) || 0}</span></td>
-                    </tr>))}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
               {/* <div className="row">

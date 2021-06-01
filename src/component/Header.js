@@ -15,7 +15,7 @@ import {
   LinkedinShareButton
 } from "react-share";
 import ProductService from '../services/ProductService';
-import CategoryService from '../services/CategoryService';
+//import CategoryService from '../services/CategoryService';
 import { connect } from 'react-redux';
 import CartService from '../services/CartService';
 import AuthService from '../services/AuthService';
@@ -286,25 +286,26 @@ class Header extends Component {
             <div className="row">
               <div className="col-md-6 col-6">
                 <div className="s-icons">
-                  <a href="#">
-                    <FacebookShareButton url={shareUrl} quote={title}>
-                      <FontAwesomeIcon icon={faFacebookF} />
-                    </FacebookShareButton>
-                  </a>
-                  <a href="#">
-                    <TwitterShareButton url={shareUrl[0]} quote={title}>
-                      <FontAwesomeIcon icon={faTwitter} />
-                    </TwitterShareButton></a>
-                  <a href="#"><PinterestShareButton url={shareUrl[0]} quote={title}>
+
+
+                  <FacebookShareButton url={shareUrl} quote={title}>
+                    <FontAwesomeIcon icon={faFacebookF} />
+                  </FacebookShareButton>
+
+
+                  <TwitterShareButton url={shareUrl[0]} quote={title}>
+                    <FontAwesomeIcon icon={faTwitter} />
+                  </TwitterShareButton>
+                  <PinterestShareButton url={shareUrl[0]} quote={title}>
                     <FontAwesomeIcon icon={faPinterest} />
-                  </PinterestShareButton></a>
-                  <a href="#"><LinkedinShareButton url={shareUrl[0]} quote={title}>
+                  </PinterestShareButton>
+                  <LinkedinShareButton url={shareUrl[0]} quote={title}>
                     <FontAwesomeIcon icon={faLinkedinIn} />
-                  </LinkedinShareButton></a>
-                  <a href="#">
-                    <TelegramShareButton url={shareUrl[0]} quote={title}>
-                      <FontAwesomeIcon icon={faTelegram} />
-                    </TelegramShareButton></a>
+                  </LinkedinShareButton>
+
+                  <TelegramShareButton url={shareUrl[0]} quote={title}>
+                    <FontAwesomeIcon icon={faTelegram} />
+                  </TelegramShareButton>
                 </div>
               </div>
               <div className="col-md-6 col-6">
@@ -355,8 +356,6 @@ class Header extends Component {
               onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
               {isMenuShown &&
                 <div className="myAccout-dropdown">
-
-
                   <Link to='/my-account/dashboard'> Dashboard</Link>
                   <Link to='/my-account/order'>Orders</Link>
                   <Link to='/my-account/address'>Addresses</Link>
@@ -364,29 +363,24 @@ class Header extends Component {
                   <Link to='/my-account/feedback'>Feedback</Link>
                   <Link to='my-account/wishlist'>Wishlist</Link>
                   <Link to="" onClick={() => this.logout()}>Logout</Link>
-
-
-
-
                 </div>
               } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
 
             <li className="nav-item">
-              <Link to='/wishlist'><div className="nav-link">
-                <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></div></Link>
+              <Link to='/wishlist' className="nav-link">
+                <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></Link>
             </li>
 
             <li className="nav-item">
-              <Link to='/compare'>
-                <div className="nav-link">
-                  <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></div></Link>
+              <Link to='/compare' className="nav-link">
+                <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></Link>
             </li>
 
 
             <li className="nav-item" onClick={() => this.dismissModal('cart')}>
-              <a href="#"> <div className="nav-link">
-                <FontAwesomeIcon icon={faShoppingBasket} /><span>{this.props?.cart?.length}</span>
-              </div></a>
+
+              <FontAwesomeIcon icon={faShoppingBasket} /><span>{this.props?.cart?.length}</span>
+
             </li>
           </ul>
         </div >
