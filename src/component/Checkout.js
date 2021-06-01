@@ -4,12 +4,15 @@ export default class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkOutData: props?.location?.state?.checkout || []
+      checkOutData: props?.location?.state?.checkout || [],
+      totalCartCost: props?.location?.state?.totalCartCost || 0,
     };
   }
 
+
   render() {
-    const { checkOutData } = this.state;
+    const { checkOutData, totalCartCost } = this.state;
+    let finItem;
     return (
       <section>
         <div className="container-fluid">
@@ -20,25 +23,25 @@ export default class Checkout extends React.Component {
                 {/* <span className="badge badge-secondary badge-pill">3</span> */}
               </h4>
               <ul className="list-group mb-3 shadow">
-                {checkOutData.map((item, index) => <li className="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h6 className="my-0">{item?.content?.title}</h6>
-                    <span>Store: <small className="text-muted">{item?.store_name}</small></span>
-                  </div>
-                  <span className="text-muted"><span>₹</span> {item?.price[0]?.price || 0}</span>
-                </li>)}
-
-
+                {checkOutData.map((item, index) => (
+                  finItem = item.product_details ? item.product_details : item,
+                  <li className="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                      <h6 className="my-0">{finItem?.content?.title}</h6>
+                      <span>Store: <small className="text-muted">{finItem?.store_name}</small></span>
+                    </div>
+                    <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0)}</span>
+                  </li>))}
                 <li className="list-group-item d-flex justify-content-between bg-light">
                   <div className="text-success">
                     <h6 className="my-0">Promo code</h6>
                     <small>EXAMPLECODE</small>
                   </div>
-                  <span className="text-success"><span>₹</span> -150</span>
+                  <span className="text-success"><span>₹</span> -0.0</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                   <h5><span>Total Payable</span></h5>
-                  <strong><span>₹</span> 5849</strong>
+                  <strong><span>₹</span> {totalCartCost}</strong>
                 </li>
               </ul>
               <p>Have a coupon? Enter your code here...</p>

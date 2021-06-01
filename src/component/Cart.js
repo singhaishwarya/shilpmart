@@ -3,30 +3,51 @@ import { connect } from 'react-redux';
 import * as cartAction from '../actions/cart';
 import CartService from '../services/CartService';
 import { Link } from "react-router-dom";
-
+import ProductService from '../services/ProductService';
 class Cart extends Component {
 
   constructor() {
     super();
     this.state = {
       productCount: 1,
-      cartProduct: []
+      cartProduct: [], totalCost: 0
     };
   }
 
   componentDidMount() {
-    this.getCart()
+    this.props.userData?.token ? this.getCartApi() : this.getCart()
+
   }
-  getCart = () => {
+  getCartApi = () => {
+    let totalCost1 = 0;
     CartService.list().then((result) => {
       this.setState({ cartProduct: result });
+      result.map((item) => {
+        totalCost1 += (item?.product_details?.price[0]?.price * 1 || 0) * (item.quantity * 1);
+      })
+      this.setState({
+        totalCost: totalCost1
+      })
     })
+  }
+
+  getCart = () => {
+
+    this.props.cart.length > 0 && ProductService.fetchAllProducts({ product_ids: this.props.cart }).then((result1) => {
+      this.setState({ cartProduct: result1.data })
+      result1.data.map((item) => (
+        this.props.addToCart(item.id)
+      ))
+    })
+
   }
 
   deleteCart = (productid) => {
     this.props.deleteCart(productid);
     CartService.delete({ product_id: productid }).then((result) => {
-      if (result.success) { this.getCart() }
+      if (result.success) {
+        this.props.userData?.token ? this.getCartApi() : this.getCart()
+      }
     })
   }
 
@@ -39,8 +60,8 @@ class Cart extends Component {
 
   changeQuantity = (product, quantity) => {
     this.setState({ productCount: quantity });
-    CartService.changeQuantity({ quantity: quantity, product_id: product }).then((result) => {
-      if (result.success) { this.getCart() }
+    CartService.changeQuantity({ quantity: quantity, product_id: product.id }).then((result) => {
+      if (result?.success) { this.props.userData?.token ? this.getCartApi() : this.getCart() }
     })
   }
 
@@ -52,7 +73,8 @@ class Cart extends Component {
   }
 
   render() {
-    const { productCount, cartProduct } = this.state;
+    const { cartProduct, totalCost } = this.state;
+    let finItem;
     return (
       <div className="container-fluid">
 
@@ -73,30 +95,31 @@ class Cart extends Component {
                 </thead>
                 <tbody>
                   {cartProduct.map((item, index) => (
+                    finItem = item.product_details ? item.product_details : item,
                     <tr key={index}>
-                      <td className="product-remove"><span onClick={() => this.deleteCart(item?.id)}>X</span></td>
+                      <td className="product-remove"><span onClick={() => this.deleteCart(item?.product_id)}>X</span></td>
                       <td className="product-thumbnail"><a href="#">
-                        <img src={(item?.product_details.images?.length > 0 && item?.product_details.images[0]?.image_url) || "false"}
+                        <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
                           className="img-fluid"
                           onClick={() => this.productDetail(item.product_details.id)}
-                          alt={(item?.product_details.images?.length > 0 && item?.product_details.images[0]?.caption) || "false"}
+                          alt={(finItem?.images?.length > 0 && finItem?.images[0]?.caption) || "false"}
                           onError={e => { e.currentTarget.src = require('../public/bag1.jpeg') }}
                         />
                       </a></td>
-                      <td className="product-name"><a href="#">{item?.product_details.content?.title}</a>
-                        <p>Store : <span><a href="#">{item?.product_details.store_name}</a></span></p></td>
-                      <td className="product-subtotal"><span> <span>₹</span> {item?.product_details.price?.length > 0 && item?.product_details.price[0]?.price}
+                      <td className="product-name"><a href="#">{finItem?.content?.title}</a>
+                        <p>Store : <span><a href="#">{finItem?.store_name}</a></span></p></td>
+                      <td className="product-subtotal"><span> <span>₹</span> {(finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0}
                       </span></td>
                       <td className="product-quantity" data-title="Quantity"><div className="product-qty">
                         <div className="input-group">
-                          <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.changeQuantity(item, item.quantity - 1)} />
-                          <input type="number" value={productCount} onChange={(e) => this.changeQuantity(item, e.target.value)} />
-                          <input type="button" value="+" onClick={() => this.changeQuantity(item, item.quantity + 1)
-                          } className="quantity-right-plus" />
+                          <input type="button" value="-" className="quantity-left-minus" onClick={() => this.changeQuantity(item.product_details, item.quantity - 1)} disabled={this.props.userData.token ? false : true} />
+                          <input type="number" value={item.quantity || 1} onChange={(e) => this.changeQuantity(item.product_details, e.target.value)} disabled={this.props.userData.token ? false : true} />
+                          <input type="button" value="+" onClick={() => this.changeQuantity(item.product_details, item.quantity + 1)
+                          } className="quantity-right-plus" disabled={this.props.userData.token ? false : true} />
                         </div>
                       </div>
                       </td>
-                      <td className="product-price"><span><span>₹</span> {item?.product_details.price[0]?.price}</span></td>
+                      <td className="product-price"><span><span>₹</span> {(finItem?.price?.length > 0 && finItem?.price[0]?.price * item.quantity) || 0}</span></td>
                     </tr>))}
                 </tbody>
               </table>
@@ -116,17 +139,22 @@ class Cart extends Component {
               <h4>CART TOTALS</h4>
               <div className="cart-footer-head py-3">
                 <h6>Subtotal :</h6>
-                <p><span>00.00</span></p>
+                <p><span>₹{totalCost} </span></p>
               </div>
               <div className="cart-footer-head border-top py-3">
                 <h6>Shipping :</h6>
-                <p><span>00.00</span></p>
+                <p><span>₹00.00</span></p>
               </div>
               <div className="cart-footer-head border-top py-3">
                 <h5>Total</h5>
-                <p><span>00.00</span></p>
+                <p><span>₹{totalCost}</span></p>
               </div>
-              <div className="cart-action cart-action2"> <Link to='/checkout' > Proceed to checkout</Link> </div>
+              <div className="cart-action cart-action2"> <Link to={
+                {
+                  pathname: '/checkout',
+                  state: { checkout: cartProduct, totalCartCost: totalCost }
+                }
+              }> Proceed to checkout</Link> </div>
             </div>
           </div>
 
@@ -138,7 +166,8 @@ class Cart extends Component {
 }
 const mapStateToProps = state => {
   return {
-    cart: state.cart
+    cart: state.cart,
+    userData: state.userData
   }
 };
 

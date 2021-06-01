@@ -664,14 +664,14 @@ height: 250px;
 	color: #e87f13;
 	position: relative
 }
-.cart-footer-head p::before {
+/* .cart-footer-head p::before {
 	content: '\f156';
 	font-family: fontawesome;
 	position: absolute;
 	left: -14px;
 	font-size: 14px;
 	line-height: 29px;
-}
+} */
 .cart-action a {
 	padding: 10px 15px;
 	display: block;

@@ -15,38 +15,45 @@ class CartOverlay extends Component {
   }
 
   componentDidMount() {
-    this.getCart()
+    this.props.userData?.token ? this.getCartApi() : this.getCart()
   }
 
-  getCart = () => {
-    let productids = [];
+  getCartApi = () => {
+    let totalCost1 = 0, productids = [];
     CartService.list().then((result) => {
+      this.setState({ cartData: result });
       result && result.map((item) => (
-        productids?.push(item.product_id)
-      ));
+        productids?.push(item.product_id),
+        totalCost1 += (item?.product_details?.price[0]?.price * 1 || 0) * (item.quantity * 1)
+      ))
 
-      {
-        productids.length > 0 && ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-          this.setState({ cartData: result1.data })
-          result1.data.map((item) => (
-            this.props.addToCart(item.id)
-          ))
-        })
-      }
-    });
+      this.setState({
+        totalCost: totalCost1
+      })
+    })
+  }
+  getCart = () => {
+
+    this.props.cart.length > 0 && ProductService.fetchAllProducts({ product_ids: this.props.cart }).then((result1) => {
+      this.setState({ cartData: result1.data })
+      result1.data.map((item) => (
+        this.props.addToCart(item.id)
+      ))
+    })
+
   }
   deleteCart = (productid) => {
-    CartService.delete({ product_id: productid.id }).then((result) => {
+    CartService.delete({ product_id: productid.product_id }).then((result) => {
       if (result.success) {
-        this.props.deleteCart(productid.id);
-        this.getCart();
+        this.props.deleteCart(productid.product_id);
+        this.props.userData ? this.getCartApi() : this.getCart()
       }
     })
   }
 
   render() {
-    const { cartData } = this.state;
-
+    const { cartData, totalCost } = this.state;
+    let finItem;
     return (
       <div className="cart-side">
         <div className="cart-side-head">
@@ -62,25 +69,27 @@ class CartOverlay extends Component {
               <div className="cartshop-items">
                 <ul>
                   {cartData?.map((item, index) => (
+                    finItem = item.product_details ? item.product_details : item,
+
                     <li key={index}>
                       <Link to={{
                         pathname: `/product-detail`,
-                        search: "?pid=" + item?.id
+                        search: "?pid=" + finItem.id
                       }}
                         onClick={(e) => (this.props.dismissModal('cart'))
                         } >
-                        <img src={(item?.images?.length > 0 && item?.images[0]?.image_url) || "false"}
+                        <img src={(finItem.images?.length > 0 && finItem.images[0]?.image_url) || "false"}
                           className="img-fluid"
-                          // onClick={() => this.productDetail(item.id)}
-                          alt={(item?.images?.length > 0 && item?.images[0]?.caption) || ""}
+                          // onClick={() => this.productDetail(item.product_details.id)}
+                          alt={(finItem.images?.length > 0 && finItem.images[0]?.caption) || ""}
                           onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                         />
                       </Link>
                       <div className="cart-info">
-                        <span className="product-title">{item?.content?.title}</span>
-                        <div className="pro-store"><span>Store: <span>{item?.store_name}</span></span></div>
-                        <span className="qty">1 x <span>
-                          {item?.price?.length > 0 && item?.price[0]?.price}</span></span>
+                        <span className="product-title">{finItem.content?.title}</span>
+                        <div className="pro-store"><span>Store: <span>{finItem.store_name}</span></span></div>
+                        <span className="qty">{item.quantity} x <span>
+                          {finItem.price?.length > 0 && finItem.price[0]?.price}</span></span>
                       </div>
                       <a href="#"><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></a>
                     </li>
@@ -99,7 +108,7 @@ class CartOverlay extends Component {
         <div className="cart-shop-footer">
           <div className="cart-footer-head">
             <h3>Subtotal:</h3>
-            <p><span> 00.00</span></p>
+            <p><span> {totalCost}</span></p>
           </div>
 
           <div className="cart-action">
@@ -109,7 +118,7 @@ class CartOverlay extends Component {
             <Link to={
               {
                 pathname: '/checkout',
-                state: { checkout: cartData }
+                state: { checkout: cartData, totalCartCost: totalCost }
               }
             }
               onClick={() => this.props.dismissModal()}
@@ -124,7 +133,8 @@ class CartOverlay extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart
+    cart: state.cart,
+    userData: state.userData
   }
 };
 

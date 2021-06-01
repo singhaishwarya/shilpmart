@@ -101,23 +101,6 @@ class ProductTile extends React.Component {
     }
   }
 
-  getCart = () => {
-    let productids = [];
-    CartService.list().then((result) => {
-      result && result.map((item) => (
-        productids?.push(item.product_id)
-      ))
-
-      productids.length > 0 && ProductService.fetchAllProducts({ product_ids: productids }).then((result1) => {
-        result1.data.map((item) =>
-          this.props.addToCart(item.id)
-        )
-      })
-
-    })
-
-  }
-
   productDetail = (value) => {
     sessionStorage.setItem("scrollPosition", window.pageYOffset);
 

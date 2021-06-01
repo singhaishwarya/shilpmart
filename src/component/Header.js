@@ -206,7 +206,7 @@ class Header extends Component {
   };
 
   handleClickOutside = (e) => {
-    if (e?.target && this.node.contains(e?.target)) {
+    if (e?.target && this.node?.contains(e?.target)) {
       return
     } else {
       this.setState({ seachResults: [] });

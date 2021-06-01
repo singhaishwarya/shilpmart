@@ -8,6 +8,7 @@ import WishlistService from '../services/WishlistService';
 import ProductTile from './ProductTile';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
+import ProductService from '../services/ProductService';
 class Wishlist extends Component {
   constructor(props) {
     super(props)
@@ -17,9 +18,18 @@ class Wishlist extends Component {
   }
 
   componentDidMount() {
-    this.getWishlist()
+    this.props.userData?.token ? this.getWishlistApi() : this.getWishlist();
   }
+  getWishlist = () => {
 
+    this.props.wishlist.length > 0 && ProductService.fetchAllProducts({ product_ids: this.props.wishlist }).then((result1) => {
+      this.setState({ wishlist: result1.data })
+      result1.data.map((item) => (
+        this.props.addToWishlist(item.id)
+      ))
+    })
+
+  }
 
   deleteWishlist = (item) => {
     Object.keys(this.props.userData).length > 0 ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.product_id)
@@ -28,11 +38,11 @@ class Wishlist extends Component {
   deleteWishlistApi = (item) => {
 
     WishlistService.delete({ wishlist_id: item.product_details.wishlist.id, product_id: [item.product_id] }).then((result) => {
-      if (result.success) { this.props.deleteWishlist(item.id); this.getWishlist() }
+      if (result.success) { this.props.deleteWishlist(item.id); this.getWishlistApi() }
     });
   }
 
-  getWishlist = () => {
+  getWishlistApi = () => {
 
     WishlistService.list().then((result) => {
       result.map((item) => this.props.addToWishlist(item.product_id)
