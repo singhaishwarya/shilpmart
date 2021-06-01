@@ -39,16 +39,15 @@ class ProductGrid extends Component {
 
   fetchMoreData = () => {
     this.setState({ currentPage: this.state.currentPage + 1, isLoader: true });
-    ProductService.fetchAllProducts({ page: this.state.currentPage }).then((result) => {
-      this.setState({
-        productListData: this.state.productListData.concat(result.data),
-        isLoader: false
-      });
-      this.currentUrlParams.set('page', this.state.currentPage)
-      this.props.history.push({
-        pathname: this.props.location.pathname,
-        search: "&" + this.currentUrlParams.toString()
-      });
+    ProductService.fetchNextPage({ page: this.state.currentPage + 1 }).then((result) => (
+      this.state.productListData.data?.concat(result.data)
+    ));
+
+    this.setState({ isLoader: false });
+    this.currentUrlParams.set('page', this.state.currentPage + 1)
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
     });
   };
 
@@ -97,7 +96,6 @@ class ProductGrid extends Component {
   }
 
   getProductList = (queryParams) => {
-    // console.log("queryParams===", queryParams)
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({
@@ -207,14 +205,15 @@ class ProductGrid extends Component {
           </section>}
 
         <div className='row py-2'>
-          {isLoader && <Loader
+          <Loader
+            visible={isLoader}
             type="Puff"
             color="#e05206"
-            class="loader"
+            className="loader"
             height={100}
-            width={100}            
-            timeout={3000} //3 secs
-          />}
+            width={100}
+            timeout={1000} //3 secs
+          />
           {productListData.data?.length > 0 ?
             (<>{productListData.data?.map((item, index) => {
               return (

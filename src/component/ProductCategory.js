@@ -184,41 +184,41 @@ export default class ProductCategory extends React.Component {
                     />
 
                     <div className="filter-box">
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="menswear" value="menswear" />
-                        <label class="form-check-label" for="menswear">Men's Wear</label></div>
+                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="menswear" value="menswear" />
+                        <label className="form-check-label" htmlFor="menswear">Men's Wear</label></div>
 
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="womenswear" value="womenswear" />
-                        <label class="form-check-label" for="womenswear">Women's Wear</label></div>
+                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="womenswear" value="womenswear" />
+                        <label className="form-check-label" htmlFor="womenswear">Women's Wear</label></div>
 
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="homeTextile" value="homeTextile" />
-                        <label class="form-check-label" for="homeTextile">Home Textiles</label></div>
+                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="homeTextile" value="homeTextile" />
+                        <label className="form-check-label" htmlFor="homeTextile">Home Textiles</label></div>
 
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="homeDecore" value="homeDecore" />
-                        <label class="form-check-label" for="homeDecore">Home Decor & Utility</label></div>
+                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="homeDecore" value="homeDecore" />
+                        <label className="form-check-label" htmlFor="homeDecore">Home Decor & Utility</label></div>
 
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="floorCoverings" value="floorCoverings" />
-                        <label class="form-check-label" for="floorCoverings">Floor Coverings</label></div>
+                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="floorCoverings" value="floorCoverings" />
+                        <label className="form-check-label" htmlFor="floorCoverings">Floor Coverings</label></div>
 
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="clothing" value="clothing" />
-                        <label class="form-check-label" for="clothing">Clothing Accessories</label></div>
+                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="clothing" value="clothing" />
+                        <label className="form-check-label" htmlFor="clothing">Clothing Accessories</label></div>
 
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="officeSup" value="officeSup" />
-                        <label class="form-check-label" for="officeSup">Office Supplies</label></div>
+                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="officeSup" value="officeSup" />
+                        <label className="form-check-label" htmlFor="officeSup">Office Supplies</label></div>
 
 
                     </div>
 
 
-                  </article>
+                  </article >
 
-                </div>
-              </div>
+                </div >
+              </div >
               <div className='col-lg-9'>
                 <ProductGrid categoryBreadcrumbs={category_breadcrumbs} {...this.props} />
               </div>
-            </div>
-          </div>
-        </section>
+            </div >
+          </div >
+        </section >
       </>
     );
   }

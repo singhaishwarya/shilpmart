@@ -23,10 +23,10 @@ export default class ProductService extends Component {
     try {
       config.url = baseUrl + 'products';
       config.method = 'get';
-      config.data = data;
-      config.params = '';
+      config.data = '';
+      config.params = data;
       const response = await axios(config);
-      return response.data ? response.data : [];
+      return response.data ? response.data.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;
