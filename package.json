@@ -26,6 +26,7 @@
     "react": "^16.8.6",
     "react-alice-carousel": "^2.5.1",
     "react-app-rewired": "^2.1.8",
+    "react-device-detect": "^1.17.0",
     "react-dom": "^16.8.6",
     "react-image-gallery": "^1.0.9",
     "react-loader-spinner": "^4.0.0",

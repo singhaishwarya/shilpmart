@@ -24,6 +24,7 @@ import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
 import WishlistService from '../services/WishlistService';
+import { isMobile } from 'react-device-detect';
 
 const customLoginStyles = {
   content: {
@@ -40,7 +41,7 @@ const customCartStyles = {
   content: {
     width: '30%',
     transition: 'all 0.3s ease-in-out',
-    top: '0%',
+    top: isMobile ? '50%' : '0%',
     left: '100%',
     right: '0%',
     bottom: '0%',
