@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as cartAction from '../actions/cart';
 import CartService from '../services/CartService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 
 class Cart extends Component {
@@ -74,7 +76,7 @@ class Cart extends Component {
                 <tbody>
                   {cartProduct.map((item, index) => (
                     <tr key={index}>
-                      <td className="product-remove"><span onClick={() => this.deleteCart(item?.id)}>X</span></td>
+                      <td className="product-remove"><span onClick={() => this.deleteCart(item?.id)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
                       <td className="product-thumbnail"><a href="#">
                         <img src={(item?.product_details.images?.length > 0 && item?.product_details.images[0]?.image_url) || "false"}
                           className="img-fluid"

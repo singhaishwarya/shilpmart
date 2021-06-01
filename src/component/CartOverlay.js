@@ -50,10 +50,8 @@ class CartOverlay extends Component {
     return (
       <div className="cart-side">
         <div className="cart-side-head">
-          <h3>SHOPPING CART</h3>
-          <a href="" >
-            <span onClick={(e) => (e.preventDefault(), this.props.dismissModal('cart'))}>Close</span>
-          </a>
+          <h3>SHOPPING CART</h3>          
+          <span onClick={(e) => (e.preventDefault(), this.props.dismissModal('cart'))}>Close</span>          
         </div>
 
         {
@@ -82,7 +80,7 @@ class CartOverlay extends Component {
                         <span className="qty">1 x <span>
                           {item?.price?.length > 0 && item?.price[0]?.price}</span></span>
                       </div>
-                      <a href="#"><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></a>
+                      <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
                     </li>
                   ))}
                 </ul>
@@ -92,8 +90,8 @@ class CartOverlay extends Component {
             </div>
             :
             <div className="">
-              <span>No products in the cart.</span>
-              <a href="#">Return to shop</a>
+              <span>Your cart is currently empty.</span>
+              <span>Return to shop</span>
             </div>
         }
         <div className="cart-shop-footer">

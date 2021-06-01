@@ -133,18 +133,18 @@ class ProductTile extends React.Component {
     const { currentLocation } = this.state
 
     return (
-      <>
+      
         <div className="product-wrapper" key={data.id} >
 
           <div className="prodcut-img" onClick={() => this.productDetail(data.id)}>
-            <a href="#">
+            
               <img src={(data.images?.length > 0 && data?.images[0]?.image_url) || "false"}
                 className="img-fluid"
                 onClick={() => this.productDetail(data.id)}
-                alt={(data.images?.length > 0 && data.images[0]?.caption) || "false"}
-                onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
+                alt={(data.images?.length > 0 && data.images[0]?.caption)}
+                onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg')}}
               />
-            </a>
+            
           </div>
           <div className="shop-wrapper">
             <div className="shopBtn">
@@ -173,16 +173,17 @@ class ProductTile extends React.Component {
               </div>}
             </div>
           </div>
-        </div>
-        {data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
-        <h5 className="product-title"><a href="#">
+          {data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
+        <h5 className="product-title">
           {data.content ? data.content.title : '__'}
-        </a></h5>
+        </h5>
         <span className="product-price">
-          <span>₹</span> {data?.price?.length > 0 && data?.price[0]?.price}
+        <strike><span>₹</span> 1000</strike> <span>₹</span> {data?.price?.length > 0 && data?.price[0]?.price}
         </span>
+        </div>
+       
 
-      </>
+      
     );
   }
 }

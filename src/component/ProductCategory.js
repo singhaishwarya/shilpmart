@@ -175,11 +175,42 @@ export default class ProductCategory extends React.Component {
                     </div>
                   </article>
                   <article className='filter-group'>
+                  <header className='card-header'>
+                      <h6 className='title'>Filter by Categories </h6>
+                    </header>
                     <Treebeard
                       data={menuOptions}
                       onToggle={this.onCategoryFilter}
                     />
+
+                    <div className="filter-box">
+                    <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="menswear" value="menswear"/>
+                    <label class="form-check-label" for="menswear">Men's Wear</label></div>
+
+                    <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="womenswear" value="womenswear"/>
+                    <label class="form-check-label" for="womenswear">Women's Wear</label></div>
+
+                    <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="homeTextile" value="homeTextile"/>
+                    <label class="form-check-label" for="homeTextile">Home Textiles</label></div>
+
+                    <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="homeDecore" value="homeDecore"/>
+                    <label class="form-check-label" for="homeDecore">Home Decor & Utility</label></div>
+
+                    <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="floorCoverings" value="floorCoverings"/>
+                    <label class="form-check-label" for="floorCoverings">Floor Coverings</label></div>
+
+                    <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="clothing" value="clothing"/>
+                    <label class="form-check-label" for="clothing">Clothing Accessories</label></div>
+
+                    <div className="form-check shm-filter-checkbox"><input type="checkbox" class="form-check-input" id="officeSup" value="officeSup"/>
+                    <label class="form-check-label" for="officeSup">Office Supplies</label></div>
+
+
+                    </div>   
+
+
                   </article>
+                 
                 </div>
               </div>
               <div className='col-lg-9'>

@@ -15,14 +15,14 @@ export default class Dashboard extends React.Component {
   render() {
     const { isActiveTab } = this.state
     return (
-      <>
+      
         <section id="maincontent">
           <div className="container-fluid">
             <Swiper />
-            <div className="row py-5">
+            <div className="row py-4">
               <div className="col">
                 <div className="section-title">
-                  <span><a href="#">Shop by Categories</a></span>
+                  <span>Shop by Categories</span>
                   <p>Choose from authentic handmade product categories</p>
                 </div>
                 <div className="shop-categories">
@@ -30,10 +30,10 @@ export default class Dashboard extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="row py-5 section-bg">
+            <div className="row py-4 section-bg">
               <div className="col shopby-product">
                 <div className="section-title">
-                  <span><a href="#">Shop by Product</a></span>
+                  <span>Shop by Product</span>
                   <p>Choose from authentic handmade product categories</p>
                 </div>
                 <ul className="nav nav-tabs d-flex justify-content-center border-0 mb-4" role="tablist">
@@ -55,7 +55,7 @@ export default class Dashboard extends React.Component {
             <PressArticles />
           </div>
         </section>
-      </>
+      
     );
   }
 }
