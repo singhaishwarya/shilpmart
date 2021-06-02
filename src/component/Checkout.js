@@ -8,7 +8,32 @@ export default class Checkout extends React.Component {
       totalCartCost: props?.location?.state?.totalCartCost || 0,
     };
   }
-
+  // handleCheckout = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     var amount = "100.00";
+  //     var phone_number = "9026892671";
+  //     var email = "aishsinghniit@gmail.com";
+  //     var orderId = "ORDER_ID" + (new Date().getTime());
+  //     let params = {
+  //       amount: amount,
+  //       phone_number: phone_number,
+  //       email: email,
+  //       orderId: orderId
+  //     }
+  //     var url = "http://localhost:3000/api/v1/public/checkout";
+  //     var request = {
+  //       url: url,
+  //       params: params,
+  //       method: 'get'
+  //     }
+  //     const response = await axios(request);
+  //     const processParams = await response.json;
+  //     console.log("demo==", processParams)
+  //   } catch {
+  //     console.log("demo error")
+  //   }
+  // }
 
   render() {
     const { checkOutData, totalCartCost } = this.state;
@@ -59,7 +84,7 @@ export default class Checkout extends React.Component {
               <div className="card shadow pr-5">
                 <div className="card-body">
                   <h4 className="mb-3">Billing address</h4>
-                  <form className="needs-validation login-card" noValidate>
+                  <form className="needs-validation login-card" noValidate >
                     <div className="row">
                       <div className="col-md-6 mb-3">
                         <label htmlFor="firstName">First Name</label>
@@ -159,15 +184,18 @@ export default class Checkout extends React.Component {
 
                       </div>
                     </div>
+                  </form>
+                  <form className="needs-validation login-card" noValidate onSubmit={() => this.handleCheckout()}>
+
                     <div className="row">
                       <div className="col-md-3 mb-3">
                         <label htmlFor="cc-expiration">Expiration</label>
-                        <input type="text" className="form-control" id="cc-expiration" placeholder required />
+                        <input type="text" className="form-control" id="cc-expiration" placeholder />
 
                       </div>
                       <div className="col-md-3 mb-3">
                         <label htmlFor="cc-cvv">CVV</label>
-                        <input type="text" className="form-control" id="cc-cvv" placeholder required />
+                        <input type="text" className="form-control" id="cc-cvv" placeholder />
 
                       </div>
                     </div>

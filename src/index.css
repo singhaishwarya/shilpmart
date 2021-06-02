@@ -902,7 +902,7 @@ box-sizing: border-box;
 }
 
 .product-wrapper .prodcut-img {
-	height: auto;
+	/* height: auto; */
 	overflow: hidden;
 	background-color: #eee;
 	/* min-height: 200px; */

@@ -13,7 +13,8 @@ class Wishlist extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      wishlist: []
+      wishlist: [],
+      layoutValue: '4X4'
     }
   }
 
@@ -56,7 +57,7 @@ class Wishlist extends Component {
 
   }
   render() {
-    const { wishlist } = this.state
+    const { wishlist, layoutValue } = this.state
     return (
       <section id="maincontent">
         <div className="container-fluid">
@@ -73,7 +74,7 @@ class Wishlist extends Component {
                     <span className="remove-item" onClick={() => {
                       this.deleteWishlist(item)
                     }}>Remove</span>
-                    <ProductTile data={item.product_details} {...this.props} errorAlert={this.errorAlert} />
+                    <ProductTile data={item.product_details} {...this.props} errorAlert={this.errorAlert} gridLayout={layoutValue} />
                   </div>
                 )
               })}
