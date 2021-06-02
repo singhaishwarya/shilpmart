@@ -39,9 +39,9 @@ const customLoginStyles = {
 
 const customCartStyles = {
   content: {
-    width: '30%',
+    width: isMobile ? '80%' : '30%',
     transition: 'all 0.3s ease-in-out',
-    top: isMobile ? '50%' : '0%',
+    top: '0%',
     left: '100%',
     right: '0%',
     bottom: '0%',

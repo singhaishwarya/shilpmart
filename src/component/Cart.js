@@ -100,16 +100,16 @@ class Cart extends Component {
                     finItem = item.product_details || item,
                     <tr key={index}>
                       <td className="product-remove"><span onClick={() => this.deleteCart(item?.product_id)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
-                      <td className="product-thumbnail"><a href="#">
+                      <td className="product-thumbnail">
                         <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
                           className="img-fluid"
                           onClick={() => this.productDetail(item.product_details.id)}
                           alt={(finItem?.images?.length > 0 && finItem?.images[0]?.caption) || "false"}
                           onError={e => { e.currentTarget.src = require('../public/bag1.jpeg') }}
                         />
-                      </a></td>
-                      <td className="product-name"><a href="#">{finItem?.content?.title}</a>
-                        <p>Store : <span><a href="#">{finItem?.store_name}</a></span></p></td>
+                      </td>
+                      <td className="product-name">{finItem?.content?.title}
+                        <p>Store : <span><span>{finItem?.store_name}</span></span></p></td>
                       <td className="product-subtotal"><span> <span>₹</span> {(finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0}
                       </span></td>
                       <td className="product-quantity" data-title="Quantity"><div className="product-qty">

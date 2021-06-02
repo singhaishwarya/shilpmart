@@ -299,15 +299,16 @@ span.result-addtocart {
 	background-color: #f5f5f5;
 }
 
-.s-icons a {
-	color: #fff;
+.s-icons button {
+	color: #fff !important;
 	transition: 0.3s ease-in-out;
 	-moz-transition: 0.3s ease-in-out;
 	-webkit-transition: 0.3s ease-in-out;
-	padding: 0 5px;
+	padding: 0 5px !important;
 }
-.s-icons a:hover {
+.s-icons button:hover {
 	color: rgba(255,255,255,0.5);
+	opacity: 0.8;
 }
 .acess-icon img {
 	width: 18px
@@ -893,8 +894,8 @@ background-color: #e87f13;
 	border-bottom: 3px solid #e87f13
 }
 .product-wrapper {
-	background-color: #fff;
-padding: 0;
+background-color: #fff;
+padding-bottom: 7px;
 position: relative;
 text-align: center;
 border: 5px solid #fff;
@@ -902,11 +903,14 @@ box-sizing: border-box;
 }
 
 .product-wrapper .prodcut-img {
-	height: auto;
+	height: 212px;
 	overflow: hidden;
 	background-color: #eee;
 	/* min-height: 200px; */
 }
+
+.height-change-grid3{	height: 297px !important;}
+.height-change-grid2{	height: 465px !important;}
 
 .product-wrapper .prodcut-img a{transition: all 0.5s ease-in-out;
 	-webkit-transition: all 0.5s ease-in-out;
@@ -918,6 +922,7 @@ box-sizing: border-box;
 }
 .product-wrapper .prodcut-img img {
 	width: 100%;
+	height: 100%;
 }
 .product-wrapper .product-title {
 	font-size: 0.92rem;
@@ -3046,9 +3051,10 @@ margin: 30px 0;}
 	vertical-align:middle
 		}
 	
-		td.product-thumbnail{width: 80px; height: 80px;}
+		td.product-thumbnail{width: 80px; height: 100px;}
+		td.product-thumbnail img{width: 100%; height: 100%;}
 
-td.product-remove a:hover::after, 	td.product-remove a:hover::before{
+/* td.product-remove span:hover::after, 	td.product-remove span:hover::before{
 		color:red}
 td.product-remove a::after, td.product-remove a::before{
 	content: '';
@@ -3061,8 +3067,10 @@ td.product-remove a::after, td.product-remove a::before{
 td.product-remove a::after{
 	transform:rotate(45deg)}
 td.product-remove a::before{
-		transform:rotate(-45deg)}		
+		transform:rotate(-45deg)}		 */
 
+		td.product-remove{text-align: center; color: #444;}
+		td.product-remove:hover{color: red; cursor: pointer;}
 		
 td.product-name a{
 	font-size:14px;
