@@ -19,7 +19,8 @@ class ProductGrid extends Component {
       filterParams: {},
       categoryBreadcrumbs: props.categoryBreadcrumbs,
       sortBy: "",
-      isLoader: true
+      isLoader: true,
+      layoutValue: '4X4'
     };
 
 
@@ -117,6 +118,7 @@ class ProductGrid extends Component {
 
   onLayoutChange = (value) => {
     this.setState({
+      layoutValue: value,
       layout: (value === '2X2') ? 'col-lg-6 col-sm-6 col-6' : (value === '3X3')
         ? 'col-lg-4 col-sm-6 col-6' : 'col-lg-3 col-sm-6 col-6'
     });
@@ -144,7 +146,7 @@ class ProductGrid extends Component {
   }
 
   render() {
-    const { productListData, layout, pathname, per_page, isLoader } = this.state
+    const { productListData, layout, pathname, per_page, isLoader, layoutValue } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
 
     return (
@@ -217,7 +219,7 @@ class ProductGrid extends Component {
               return (
                 <div key={index} className={layout} >
 
-                  <ProductTile data={item} {...this.props} errorAlert={this.errorAlert} />
+                  <ProductTile data={item} {...this.props} errorAlert={this.errorAlert} gridLayout={layoutValue} />
 
                 </div>
               )

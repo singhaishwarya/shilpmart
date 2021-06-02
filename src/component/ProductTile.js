@@ -112,15 +112,15 @@ class ProductTile extends React.Component {
 
   render() {
 
-    const { data, userData, wishlist, cart } = this.props
+    const { data, userData, wishlist, cart, gridLayout } = this.props
     const { currentLocation } = this.state
-
+    const cellSize = { height: gridLayout === '2X2' ? '465px' : gridLayout === '3X3' ? '297px' : 'auto' };
     return (
 
       <div className="product-wrapper" key={data.id} >
 
-        <div className="prodcut-img" onClick={() => this.productDetail(data.id)}>
-
+        <div className="prodcut-img" onClick={() => this.productDetail(data.id)}
+          style={cellSize}>
           <img src={(data.images?.length > 0 && data?.images[0]?.image_url) || ""}
             className="img-fluid"
             onClick={() => this.productDetail(data.id)}
@@ -156,14 +156,14 @@ class ProductTile extends React.Component {
             </div>}
           </div>
         </div>
-        {data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
+        { data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
         <h5 className="product-title">
           {data.content ? data.content.title : '__'}
         </h5>
         <span className="product-price">
           <strike><span>₹</span> 1000</strike> <span>₹</span> {data?.price?.length > 0 && data?.price[0]?.price}
         </span>
-      </div>
+      </div >
 
 
 
