@@ -12,7 +12,8 @@ class Cart extends Component {
     super();
     this.state = {
       productCount: 1,
-      cartProduct: [], totalCost: 0
+      cartProduct: [],
+      totalCost: 0
     };
   }
 
@@ -43,11 +44,13 @@ class Cart extends Component {
     })
 
   }
-
   deleteCart = (productid) => {
-    this.props.deleteCart(productid);
+    this.props.userData?.token ? this.deleteCartApi(productid) : this.props.deleteCart(productid);
+
+  }
+  deleteCartApi = (productid) => {
     CartService.delete({ product_id: productid }).then((result) => {
-      if (result.success) {
+      if (result?.success) {
         this.props.userData?.token ? this.getCartApi() : this.getCart()
       }
     })
@@ -80,7 +83,7 @@ class Cart extends Component {
     return (
       <div className="container-fluid">
 
-        <div className="row py-5">
+        {this.props?.cart?.length > 0 ? <div className="row py-5">
           <form className="col-lg-8 col-sm-6 col-12">
 
             <div className="cart-table-wrapper">
@@ -99,7 +102,7 @@ class Cart extends Component {
                   {cartProduct.map((item, index) => (
                     finItem = item.product_details || item,
                     <tr key={index}>
-                      <td className="product-remove"><span onClick={() => this.deleteCart(item?.product_id)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
+                      <td className="product-remove"><span onClick={() => this.deleteCart(finItem?.id)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
                       <td className="product-thumbnail">
                         <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
                           className="img-fluid"
@@ -161,7 +164,10 @@ class Cart extends Component {
             </div>
           </div>
 
-        </div>
+        </div> : <div className="">
+          <span>Your cart is currently empty.</span>
+          <span>Return to shop</span>
+        </div>}
       </div>
 
     );
