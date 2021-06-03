@@ -164,7 +164,7 @@ class Cart extends Component {
             </div>
           </div>
 
-        </div> : <div className="">
+        </div> : <div className="cart-shop-body">
           <span>Your cart is currently empty.</span>
           <span>Return to shop</span>
         </div>}

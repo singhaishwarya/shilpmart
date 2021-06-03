@@ -188,7 +188,7 @@ class ProductGrid extends Component {
               <div className='grid-view'>
                 <button onClick={() => this.onLayoutChange('2X2')} ></button>
                 <button onClick={() => this.onLayoutChange('3X3')} ></button>
-                <button onClick={() => this.onLayoutChange('4X4')} ></button>
+                <button onClick={() => this.onLayoutChange('4X4')} className="grid-active" ></button>
               </div>
               <form method='get' className='shorting-wrapper'>
                 <select name='orderby' className='form-control' aria-label='Shop order' value={this.state.sortBy}
