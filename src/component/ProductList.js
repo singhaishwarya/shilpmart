@@ -187,29 +187,41 @@ export default class ProductList extends React.Component {
                       onToggle={this.onCategoryFilter}
                     />
 
+                   
+                  </article >
+
+                  <article>
+                  <header class="card-header"><h6 class="title">Filter by Material </h6></header>
                     <div className="filter-box">
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="menswear" value="menswear" />
-                        <label className="form-check-label" htmlFor="menswear">Men's Wear</label></div>
+                        <label className="form-check-label" htmlFor="menswear">Art Silk
+</label></div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="womenswear" value="womenswear" />
-                        <label className="form-check-label" htmlFor="womenswear">Women's Wear</label></div>
+                        <label className="form-check-label" htmlFor="womenswear">Bamboo
+</label></div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="homeTextile" value="homeTextile" />
-                        <label className="form-check-label" htmlFor="homeTextile">Home Textiles</label></div>
+                        <label className="form-check-label" htmlFor="homeTextile">Banana Fiber
+</label></div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="homeDecore" value="homeDecore" />
-                        <label className="form-check-label" htmlFor="homeDecore">Home Decor & Utility</label></div>
+                        <label className="form-check-label" htmlFor="homeDecore">Cotton
+</label></div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="floorCoverings" value="floorCoverings" />
-                        <label className="form-check-label" htmlFor="floorCoverings">Floor Coverings</label></div>
+                        <label className="form-check-label" htmlFor="floorCoverings">Cotton-Silk
+</label></div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="clothing" value="clothing" />
-                        <label className="form-check-label" htmlFor="clothing">Clothing Accessories</label></div>
+                        <label className="form-check-label" htmlFor="clothing">Eri Silk
+</label></div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="officeSup" value="officeSup" />
-                        <label className="form-check-label" htmlFor="officeSup">Office Supplies</label></div>
+                        <label className="form-check-label" htmlFor="officeSup">Georgette
+</label></div>
                     </div>
-                  </article >
+                  </article>
                 </div >
               </div >
               <div className='col-lg-9'>
@@ -228,19 +240,19 @@ const treeStyle = {
       listStyle: 'none',
       backgroundColor: 'white',
       margin: 0,
-      padding: 0,
+      paddingBottom:30,
       color: 'rgb(35,31,32)',
       //fontFamily: '"Helvetica Neue", "Open Sans", Arial, sans-serif',
-      fontSize: '1.3rem'
+      fontSize: '1rem'
     },
     node: {
       base: {
-        position: 'relative'
+        position: 'relative'        
       },
       link: {
         cursor: 'pointer',
         position: 'relative',
-        padding: '0px 5px',
+        padding: '5px 5px',
         display: 'block'
       },
       activeLink: {
@@ -252,7 +264,7 @@ const treeStyle = {
           display: 'inline-block',
           verticalAlign: 'top',
           marginLeft: '-5px',
-          height: '24px',
+          height: '12px',
           width: '24px'
         },
         wrapper: {
@@ -262,10 +274,10 @@ const treeStyle = {
           margin: '-7px 0 0 -7px',
           height: '14px'
         },
-        height: 14,
-        width: 14,
+        height: 8,
+        width: 8,
         arrow: {
-          fill: 'rgb(35,31,32)',
+          fill: 'rgb(232,127,19)',
           strokeWidth: 0
         }
       },

@@ -723,7 +723,7 @@ height: 250px;
 	border-bottom: 1px solid #eee;
 }
 .cartshop-items ul li a img {
-	max-width: 100px;
+	max-width: 80px;
 	min-width: 65px;
 }
 .cartshop-items ul li:hover .cart-info .product-title {
@@ -2391,12 +2391,12 @@ padding-right: 5px;
 
 /* product description css */
 
-.product-description-wrapper{}
+
 .product-description header{
 	font-size: 24px;
 text-align: left;
 display: flex;
-font-weight: 600;
+font-weight: normal;
 text-transform: capitalize;
 padding: 15px 0;
 position: relative;
@@ -2443,6 +2443,7 @@ color: #333;
 	display: inline-flex;
 	margin-right: 25px;
 }
+
 .per-pge-view span {
 	padding: 0 5px;
 	color: #8e8e8e;

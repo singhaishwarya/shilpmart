@@ -155,11 +155,44 @@ export default class Registration extends React.Component {
             {/* <form action="#" className="login-card shadow p-4 border rounded" onSubmit={(e) => this.handleSignUp(e)}>
               <div className="row"> */}
 
-            <Form
-              onSubmit={this.handleSignUp}
-              ref={(c) => { this.form = c; }}
-            > <div className="row">
-                <div className="col-lg-6 col-12">
+            <Form onSubmit={this.handleSignUp} ref={(c) => { this.form = c; }}>
+            <div className="form-group row">
+    <label for="staticEmail" className="col-sm-3 col-form-label">First Name<span>*</span></label>
+    <div className="col-sm-9">
+    <Input type="text" className="form-control" name="first_name" value={fields.first_name} onChange={this.handleChange.bind(this, "first_name")} validations={[required, lt50]}/>
+    </div>
+  </div>
+
+  <div className="form-group row">
+    <label for="staticEmail" className="col-sm-3 col-form-label">Last Name<span>*</span></label>
+    <div className="col-sm-9">
+    <Input
+                      type="text"
+                      className="form-control"
+                      name="last_name"
+                      value={fields.last_name}
+                      onChange={this.handleChange.bind(this, "last_name")}
+                      validations={[required, lt50]}
+                    />
+    </div>
+  </div>
+
+
+  <div className="form-group row">
+    <label for="staticEmail" className="col-sm-3 col-form-label">Email<span>*</span></label>
+    <div className="col-sm-9">
+    <Input
+                      type="text"
+                      className="form-control"
+                      name="last_name"
+                      value={fields.last_name}
+                      onChange={this.handleChange.bind(this, "last_name")}
+                      validations={[required, lt50]}
+                    />
+    </div>
+  </div>
+               <div className="row">
+                {/* <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="fname">First Name<span>*</span></label>
                     <Input
                       type="text"
@@ -169,9 +202,9 @@ export default class Registration extends React.Component {
                       onChange={this.handleChange.bind(this, "first_name")}
                       validations={[required, lt50]}
                     />
-                    {/* <input type="text" className="form-control" value={fields.first_name || ''} onChange={this.handleChange.bind(this, "first_name")} /> */}
+                    {/* <input type="text" className="form-control" value={fields.first_name || ''} onChange={this.handleChange.bind(this, "first_name")} /> 
                   </div>
-                </div>
+                </div> */}
                 <div className="col-lg-6 col-12">
                   <div className="form-group"><label htmlFor="lname">Last Name<span>*</span></label>
                     <Input
