@@ -1,10 +1,10 @@
 import React from "react";
 import { Treebeard } from 'react-treebeard';
 // import ReactStars from 'react-stars'
-import { Range } from 'rc-slider';
+import { Range, createSliderWithTooltip } from 'rc-slider';
 import ProductGrid from './ProductGrid'
 import CategoryService from '../services/CategoryService';
-
+const Ranger = createSliderWithTooltip(Range);
 export default class ProductList extends React.Component {
 
   constructor(props) {
@@ -147,7 +147,7 @@ export default class ProductList extends React.Component {
                     <div className='filter-content'>
                       <div className='price-range-wrapper'>
                         <div id='slider-range' className='price-filter-range' name='rangeInput'>
-                          <Range
+                          <Ranger
                             defaultValue={priceRange}
                             min={0}
                             max={5000}
@@ -187,41 +187,48 @@ export default class ProductList extends React.Component {
                       onToggle={this.onCategoryFilter}
                     />
 
-                   
+
                   </article >
 
-                  <article>
-                  <header class="card-header"><h6 class="title">Filter by Material </h6></header>
+                  {/* <article>
+                    <header class="card-header"><h6 class="title">Filter by Material </h6></header>
                     <div className="filter-box">
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="menswear" value="menswear" />
                         <label className="form-check-label" htmlFor="menswear">Art Silk
-</label></div>
+</label>
+                      </div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="womenswear" value="womenswear" />
                         <label className="form-check-label" htmlFor="womenswear">Bamboo
-</label></div>
+</label>
+                      </div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="homeTextile" value="homeTextile" />
                         <label className="form-check-label" htmlFor="homeTextile">Banana Fiber
-</label></div>
+</label>
+                      </div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="homeDecore" value="homeDecore" />
                         <label className="form-check-label" htmlFor="homeDecore">Cotton
-</label></div>
+</label>
+                      </div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="floorCoverings" value="floorCoverings" />
                         <label className="form-check-label" htmlFor="floorCoverings">Cotton-Silk
-</label></div>
+</label>
+                      </div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="clothing" value="clothing" />
                         <label className="form-check-label" htmlFor="clothing">Eri Silk
-</label></div>
+</label>
+                      </div>
 
                       <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="officeSup" value="officeSup" />
                         <label className="form-check-label" htmlFor="officeSup">Georgette
-</label></div>
+</label>
+                      </div>
                     </div>
-                  </article>
+                  </article> */}
                 </div >
               </div >
               <div className='col-lg-9'>
@@ -240,14 +247,14 @@ const treeStyle = {
       listStyle: 'none',
       backgroundColor: 'white',
       margin: 0,
-      paddingBottom:30,
+      paddingBottom: 30,
       color: 'rgb(35,31,32)',
       //fontFamily: '"Helvetica Neue", "Open Sans", Arial, sans-serif',
       fontSize: '1rem'
     },
     node: {
       base: {
-        position: 'relative'        
+        position: 'relative'
       },
       link: {
         cursor: 'pointer',

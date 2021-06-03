@@ -44,14 +44,22 @@ class Cart extends Component {
     })
 
   }
-  deleteCart = (productid) => {
-    this.props.userData?.token ? this.deleteCartApi(productid) : this.props.deleteCart(productid);
+  deleteCart = (product) => {
+
+    if (this.props.userData?.token) { (this.deleteCartApi(product.product_id)) }
+    else {
+      this.props.deleteCart(product.id);
+      let cartProduct = this.state.cartProduct.filter(item => item.id !== product.id);
+      this.setState({ cartProduct: cartProduct });
+    }
 
   }
+
   deleteCartApi = (productid) => {
-    CartService.delete({ product_id: productid }).then((result) => {
-      if (result?.success) {
-        this.props.userData?.token ? this.getCartApi() : this.getCart()
+    CartService.delete({ product_id: productid.product_id || productid }).then((result) => {
+      if (result.success) {
+        this.props.deleteCart(productid.product_id || productid);
+        this.props.userData ? this.getCartApi() : this.getCart()
       }
     })
   }
@@ -79,11 +87,12 @@ class Cart extends Component {
 
   render() {
     const { cartProduct, totalCost } = this.state;
+    const { cart } = this.props;
     let finItem;
     return (
       <div className="container-fluid">
 
-        {this.props?.cart?.length > 0 ? <div className="row py-5">
+        {cart?.length > 0 ? <div className="row py-5">
           <form className="col-lg-8 col-sm-6 col-12">
 
             <div className="cart-table-wrapper">
@@ -102,7 +111,7 @@ class Cart extends Component {
                   {cartProduct.map((item, index) => (
                     finItem = item.product_details || item,
                     <tr key={index}>
-                      <td className="product-remove"><span onClick={() => this.deleteCart(finItem?.id)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
+                      <td className="product-remove"><span onClick={() => this.deleteCart(item)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
                       <td className="product-thumbnail">
                         <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
                           className="img-fluid"

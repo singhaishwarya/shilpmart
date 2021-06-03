@@ -186,9 +186,9 @@ class ProductGrid extends Component {
                 <span className={(per_page === 36 ? 'active-view' : '')} onClick={() => this.onItemPerPage(36)}>36</span>
               </div>
               <div className='grid-view'>
-                <button onClick={() => this.onLayoutChange('2X2')} ></button>
-                <button onClick={() => this.onLayoutChange('3X3')} ></button>
-                <button onClick={() => this.onLayoutChange('4X4')} className="grid-active" ></button>
+                <button onClick={() => this.onLayoutChange('2X2')} className={layoutValue === '2X2' ? "grid-active" : ''}></button>
+                <button onClick={() => this.onLayoutChange('3X3')} className={layoutValue === '3X3' ? "grid-active" : ''} ></button>
+                <button onClick={() => this.onLayoutChange('4X4')} className={layoutValue === '4X4' ? "grid-active" : ''} ></button>
               </div>
               <form method='get' className='shorting-wrapper'>
                 <select name='orderby' className='form-control' aria-label='Shop order' value={this.state.sortBy}

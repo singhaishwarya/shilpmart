@@ -42,16 +42,21 @@ class CartOverlay extends Component {
     })
 
   }
-  deleteCart = (productid) => {
-    this.props.userData?.token ? this.deleteCartApi(productid) : this.props.deleteCart(productid);
+  deleteCart = (product) => {
+    // this.props.userData?.token ? this.deleteCartApi(productid) : this.props.deleteCart(productid);
+    if (this.props.userData?.token) { (this.deleteCartApi(product.product_id)) }
+    else {
+      this.props.deleteCart(product.id);
+      let cartData = this.state.cartData.filter(item => item.id !== product.id);
+      this.setState({ cartData: cartData });
+    }
 
   }
 
   deleteCartApi = (productid) => {
-
-    CartService.delete({ product_id: productid.product_id }).then((result) => {
+    CartService.delete({ product_id: productid.product_id || productid }).then((result) => {
       if (result.success) {
-        this.props.deleteCart(productid.product_id);
+        this.props.deleteCart(productid.product_id || productid);
         this.props.userData ? this.getCartApi() : this.getCart()
       }
     })
@@ -95,7 +100,7 @@ class CartOverlay extends Component {
                         <span className="qty">{item.quantity} x <span>
                           {finItem.price?.length > 0 && finItem.price[0]?.price}</span></span>
                       </div>
-                      <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(finItem.id)} /></span>
+                      <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
                     </li>
                   ))}
                 </ul>

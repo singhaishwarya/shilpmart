@@ -31,7 +31,6 @@ export default class Checkout extends React.Component {
       }
       const response = await axios(request);
       // const processParams = await response.json;
-      // console.log("demo==", processParams)
     } catch {
       console.log("demo error")
     }

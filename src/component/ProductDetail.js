@@ -16,16 +16,7 @@ import CartService from '../services/CartService';
 import * as cartAction from '../actions/cart';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-// const askForm = {
-//   content : {
-//     top         : '50%',
-//     left        : '50%',
-//     right       : 'auto',
-//     bottom      : 'auto',   
-//     marginRight : '-50%',   
-//     transform   : 'translate(-50%, -50%)'
-//   }
-// };
+import Bars from 'react-bars';
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -43,13 +34,17 @@ class ProductDetail extends React.Component {
         original: require('../public/No_Image_Available.jpeg'),
         thumbnail: require('../public/No_Image_Available.jpeg'),
       }],
+      testData: [
+
+        { label: '5', value: 82, showValue: true, suffix: '%' },
+        { label: '4', value: 82, showValue: true, suffix: '%' },
+        { label: '3', value: 80, showValue: true, suffix: '%' },
+        { label: '2', value: 75, showValue: true, suffix: '%' },
+        { label: '1', value: 25, showValue: true, suffix: '%' }
+      ]
     }
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
-  }
-
-  componentWillReceiveProps() {
-    // this.getProductDetails(this.getQueryParams());
   }
 
   componentDidMount() {
@@ -102,7 +97,6 @@ class ProductDetail extends React.Component {
     console.log('A name was submitted: ' + event);
     event.preventDefault();
     this.toggleModal();
-    // this.setState({ showModal: !this.state.showModal });
   }
   wishlistToggle = () => {
     this.setState({ wishlistStatus: !this.state.wishlistStatus });
@@ -112,9 +106,6 @@ class ProductDetail extends React.Component {
     this.props.history.push({
       pathname: '/seller-profile'
     })
-
-    // this.props.historyProps.history.push({ pathname: "/seller-profile", state: {  } } );
-
 
   }
   productCountManual = (event) => {
@@ -134,8 +125,6 @@ class ProductDetail extends React.Component {
 
   errorAlert = (product) => {
     return ToastService.error(product?.content?.title + " is already in cart")
-
-
   }
 
   addToCartApi = (product) => {
@@ -222,8 +211,8 @@ class ProductDetail extends React.Component {
                     </nav>
                   </div>
                   <h1>{productDetailData?.content?.title}</h1>
-                  <p className="product-price"> 
-                  <span>₹</span> {productDetailData?.price ? productDetailData?.price[0]?.price : 0}</p>
+                  <p className="product-price">
+                    <span>₹</span> {productDetailData?.price ? productDetailData?.price[0]?.price : 0}</p>
                   <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div>
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
@@ -340,51 +329,11 @@ class ProductDetail extends React.Component {
 
                   <div className="product-description">
                     <header>Review</header>
-                    <p>There are no reviews yet.</p>
+                    <Bars data={this.state.testData} makeUppercase={true} />
                   </div>
-
-                  <div className="product-description">
-                    <header>Inquiries</header>
-                    <p>There are no inquiries yet.</p>
-                  </div>
-              {/* <ul className="nav nav-tabs" role="tablist">
-                <li className="nav-item">
-                  <span className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
-                    data-toggle="tab" href="#des" role="tab" aria-controls="home" aria-selected="true"
-                    onClick={() => this.setState({ isActiveTab: 0 })} >DESCRIPTION</span>
-                </li>
-                <li className="nav-item">
-                  <span className={`nav-link ${((isActiveTab === 1) ? 'active' : '')}`} data-toggle="tab" href="#del" role="tab" aria-controls="profile" aria-selected="false" onClick={() => this.setState({ isActiveTab: 1 })} >REVIEWS</span>
-                </li>
-                <li className="nav-item">
-                  <span className={`nav-link ${((isActiveTab === 2) ? 'active' : '')}`} data-toggle="tab" href="#store" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 2 })} >STORE POLICIES</span>
-                </li>
-                <li className="nav-item">
-                  <span className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>INQUIRIES</span>
-                </li>
-              </ul> */}
-              
-              {/* <div className="tab-content" >
-                <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
-                  role="tabpanel" aria-labelledby="home-tab">{productDetailData?.content?.product_description} </div>
-                <div className={`tab-pane fade ${((isActiveTab === 1) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="profile-tab">
-                  There are no reviews yet. </div>
-                <div className={`tab-pane fade ${((isActiveTab === 2) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab">Lorem Ipsum  printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </div>
-                <div className={`tab-pane fade ${((isActiveTab === 3) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab"> GENERAL INQUIRIES
-                            There are no inquiries yet. </div>
-              </div> */}
-            </div>
-
-
+                </div>
               </div>
-
-
-              
-
             </div>
-
-            
-
             <div className="row py-5">
               <div className="col shopby-product">
                 <div className="related-title">

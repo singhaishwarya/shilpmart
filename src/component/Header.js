@@ -25,6 +25,8 @@ import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
 import WishlistService from '../services/WishlistService';
 import { isMobile } from 'react-device-detect';
+import { ToastContainer } from 'react-toastify';
+import ToastService from '../services/ToastService';
 
 const customLoginStyles = {
   content: {
@@ -91,38 +93,6 @@ class Header extends Component {
 
   }
 
-  addToCart = (product) => {
-    let cartToSync = [], cartProductids = [];
-    product.map((item) => (
-      cartToSync.push({
-        "product_id": item,
-        "quantity": 1,
-        "variation_index": 0
-      })
-    ))
-    try {
-      CartService.add({ products: cartToSync }).then((result) => {
-
-        if (result?.success) {
-          if (typeof result.data !== 'string') {
-            result.data.map((item) => (
-              cartProductids?.push(item.product_id)
-            ))
-            ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart(item.id));
-            })
-          }
-          else {
-            return
-          }
-        }
-        else { return }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   syncWishlist = () => {
     const { wishlist } = this.props;
     if (wishlist?.length > 0) {
@@ -186,18 +156,8 @@ class Header extends Component {
     this.setState({ searchQuery: e.target.value })
     const searchString = e.target.value.toLowerCase();
     if (searchString?.length >= 3) {
-      // let categoryData = [];
       ProductService.fetchAllProducts({ q: searchString }).then((result) => {
-
         this.setState({ seachResults: result.data });
-        // categoryData = result.map((item) => (
-        //   item?.category.map((item) => (
-        //     this.getCategoryTitles(item.category_id)
-        //   ))
-
-        //   // categoryData.push 
-        // ))
-        // console.log("democategoryData", categoryData)
       });
     }
     else {
@@ -206,6 +166,46 @@ class Header extends Component {
     }
   };
 
+  addToCart = (product) => {
+    if (this.props.cart?.includes(product.id)) {
+      this.errorAlert(product);
+    }
+    else {
+      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product?.id)
+
+    }
+  }
+  errorAlert = (product) => {
+    return ToastService.error(product?.content?.title + " is already in cart")
+  }
+  addToCartApi = (product) => {
+    let cartToSync = [{
+      "product_id": product.id || product[0],
+      "quantity": 1,
+      "variation_index": 0
+    }], cartProductids = [];
+    try {
+      CartService.add({ products: cartToSync }).then((result) => {
+
+        if (result?.success) {
+          if (typeof result.data !== 'string') {
+            result.data.length && result.data.map((item) => (
+              cartProductids?.push(item.product_id)
+            ));
+            ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
+              result1.data.map((item) => this.props.addToCart(item.id));
+            })
+          }
+          else {
+            // this.props.errorAlert(product);
+          }
+        }
+        else { return }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
   handleClickOutside = (e) => {
     if (e?.target && this.node?.contains(e?.target)) {
       return
@@ -217,6 +217,7 @@ class Header extends Component {
 
   renderSearchOptions = () => {
     let { seachResults } = this.state;
+    const { userData, cart } = this.props;
     return (
       seachResults?.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
@@ -233,18 +234,23 @@ class Header extends Component {
                 src={item?.images[0]?.image_url || "false"}
                 alt={item?.content?.title || "false"} />
             </span>
-            <span>
-              <span className="top-head">
-                <span className="pro-tile">{item?.content?.title}</span>
-                <span className="pro-price"><del>1999</del> &nbsp; <span>{item?.price[0] ? item?.price[0].price : 0} </span></span>
-              </span>
-              <span className="footer-head">
-                <span className="result-cat"><small>Saree, Women's Wear</small></span>
-                <span className="result-addtocart"> Add to Cart</span>
-              </span>
-            </span>
-            <span className="sale-sticker">sale!</span>
           </Link>
+          <span>
+            <span className="top-head">
+              <span className="pro-tile">{item?.content?.title}</span>
+              <span className="pro-price"><del>1999</del> &nbsp; <span>{item?.price[0] ? item?.price[0].price : 0} </span></span>
+            </span>
+            <span className="footer-head">
+              <span className="result-cat"><small>Saree, Women's Wear</small></span>
+              <span className="result-addtocart" onClick={
+                () => (
+                  cart?.includes(item.id) ? '' : this.addToCart(item)
+                )
+              }> Add to Cart</span>
+            </span>
+          </span>
+          <span className="sale-sticker">sale!</span>
+
         </div>
       )
       ));
@@ -282,18 +288,15 @@ class Header extends Component {
               <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
           </Modal>
         </div>
+        <ToastContainer />
         <div className="header-top py-1  ">
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-6 col-6">
                 <div className="s-icons">
-
-
                   <FacebookShareButton url={shareUrl} quote={title}>
                     <FontAwesomeIcon icon={faFacebookF} />
                   </FacebookShareButton>
-
-
                   <TwitterShareButton url={shareUrl[0]} quote={title}>
                     <FontAwesomeIcon icon={faTwitter} />
                   </TwitterShareButton>

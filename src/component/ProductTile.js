@@ -135,10 +135,9 @@ class ProductTile extends React.Component {
               <FontAwesomeIcon
                 icon={cart?.includes(data.id) ? faCheck : faCartPlus}
                 onClick={
-                  () => {
-                    Object.keys(userData).length > 0 ? (data.cart ? this.deleteCart(data) : this.addToCart(data)) :
-                      (cart?.find(element => element.id === data.id) ? this.deleteCart(data) : this.addToCart(data))
-                  }
+                  () => (
+                    cart?.includes(data.id) ? '' : this.addToCart(data)
+                  )
                 }
               /></span></div>
             <div className="shop-btn"><span>
