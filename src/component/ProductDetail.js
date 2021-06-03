@@ -3,8 +3,8 @@ import Modal from "react-modal";
 import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
-import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faPhone, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram, faIntercom } from '@fortawesome/free-brands-svg-icons'
+import { faRandom, faCheck, faPhone, faQuestion, faEnvelope, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
 import {
@@ -169,18 +169,12 @@ class ProductDetail extends React.Component {
   }
   renderRightNav = (onClick, disabled) => {
     return (
-      <button
-        className='image-gallery-custom-right-nav'
-        disabled={disabled}
-        onClick={onClick} />
+      <button className='image-gallery-custom-right-nav' disabled={disabled} onClick={onClick} />
     )
   }
   renderLeftNav = (onClick, disabled) => {
     return (
-      <button
-        className='image-gallery-custom-left-nav'
-        disabled={disabled}
-        onClick={onClick} />
+      <button className='image-gallery-custom-left-nav' disabled={disabled} onClick={onClick} />
     )
   }
 
@@ -228,7 +222,8 @@ class ProductDetail extends React.Component {
                     </nav>
                   </div>
                   <h1>{productDetailData?.content?.title}</h1>
-                  <p className="product-price"> <span> {productDetailData?.price ? productDetailData?.price[0]?.price : 0}</span></p>
+                  <p className="product-price"> 
+                  <span>₹</span> {productDetailData?.price ? productDetailData?.price[0]?.price : 0}</p>
                   <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div>
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
@@ -336,12 +331,23 @@ class ProductDetail extends React.Component {
                   </div>
                 </div>
 
-              </div>
 
-            </div>
+                <div className="product-description-wrapper pb-5">
+                  <div className="product-description">
+                    <header>Description</header>
+                    <p>{productDetailData?.content?.product_description}</p>
+                  </div>
 
-            <div className="row product-description pb-5">
-              <ul className="nav nav-tabs" role="tablist">
+                  <div className="product-description">
+                    <header>Review</header>
+                    <p>There are no reviews yet.</p>
+                  </div>
+
+                  <div className="product-description">
+                    <header>Inquiries</header>
+                    <p>There are no inquiries yet.</p>
+                  </div>
+              {/* <ul className="nav nav-tabs" role="tablist">
                 <li className="nav-item">
                   <span className={`nav-link  ${((isActiveTab === 0) ? 'active' : '')}`}
                     data-toggle="tab" href="#des" role="tab" aria-controls="home" aria-selected="true"
@@ -356,9 +362,9 @@ class ProductDetail extends React.Component {
                 <li className="nav-item">
                   <span className={`nav-link ${((isActiveTab === 3) ? 'active' : '')}`} data-toggle="tab" href="#inq" role="tab" aria-controls="contact" aria-selected="false" onClick={() => this.setState({ isActiveTab: 3 })}>INQUIRIES</span>
                 </li>
-              </ul>
-              <div className="clearfix"></div>
-              <div className="tab-content" >
+              </ul> */}
+              
+              {/* <div className="tab-content" >
                 <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
                   role="tabpanel" aria-labelledby="home-tab">{productDetailData?.content?.product_description} </div>
                 <div className={`tab-pane fade ${((isActiveTab === 1) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="profile-tab">
@@ -366,8 +372,18 @@ class ProductDetail extends React.Component {
                 <div className={`tab-pane fade ${((isActiveTab === 2) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab">Lorem Ipsum  printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </div>
                 <div className={`tab-pane fade ${((isActiveTab === 3) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab"> GENERAL INQUIRIES
                             There are no inquiries yet. </div>
-              </div>
+              </div> */}
             </div>
+
+
+              </div>
+
+
+              
+
+            </div>
+
+            
 
             <div className="row py-5">
               <div className="col shopby-product">

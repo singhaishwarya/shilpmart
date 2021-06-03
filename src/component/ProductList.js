@@ -230,7 +230,7 @@ const treeStyle = {
       margin: 0,
       padding: 0,
       color: 'rgb(35,31,32)',
-      fontFamily: '"Helvetica Neue", "Open Sans", Arial, sans-serif',
+      //fontFamily: '"Helvetica Neue", "Open Sans", Arial, sans-serif',
       fontSize: '1.3rem'
     },
     node: {
