@@ -43,6 +43,12 @@ class CartOverlay extends Component {
 
   }
   deleteCart = (productid) => {
+    this.props.userData?.token ? this.deleteCartApi(productid) : this.props.deleteCart(productid);
+
+  }
+
+  deleteCartApi = (productid) => {
+
     CartService.delete({ product_id: productid.product_id }).then((result) => {
       if (result.success) {
         this.props.deleteCart(productid.product_id);
@@ -63,7 +69,7 @@ class CartOverlay extends Component {
 
         {
           this.props?.cart?.length > 0 ?
-            <div className="cart-shop-body">
+            <>  <div className="cart-shop-body">
               <div className="cartshop-items">
                 <ul>
                   {cartData?.map((item, index) => (
@@ -89,7 +95,7 @@ class CartOverlay extends Component {
                         <span className="qty">{item.quantity} x <span>
                           {finItem.price?.length > 0 && finItem.price[0]?.price}</span></span>
                       </div>
-                      <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
+                      <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(finItem.id)} /></span>
                     </li>
                   ))}
                 </ul>
@@ -97,34 +103,35 @@ class CartOverlay extends Component {
 
 
             </div>
+              <div className="cart-shop-footer">
+                <div className="cart-footer-head">
+                  <h3>Subtotal:</h3>
+                  <p><span> {totalCost}</span></p>
+                </div> <div className="cart-action">
+                  <Link to='/cart' onClick={() => this.props.dismissModal()}>
+                    View Cart</Link>
+
+                  <Link to={
+                    {
+                      pathname: '/checkout',
+                      state: { checkout: cartData, totalCartCost: totalCost }
+                    }
+                  }
+                    onClick={() => this.props.dismissModal()}
+                  >Checkout</Link>
+                </div>
+
+              </div>
+            </>
             :
             <div className="">
               <span>Your cart is currently empty.</span>
               <span>Return to shop</span>
             </div>
         }
-        <div className="cart-shop-footer">
-          <div className="cart-footer-head">
-            <h3>Subtotal:</h3>
-            <p><span> {totalCost}</span></p>
-          </div>
 
-          <div className="cart-action">
-            <Link to='/cart' onClick={() => this.props.dismissModal()}>
-              View Cart</Link>
-
-            <Link to={
-              {
-                pathname: '/checkout',
-                state: { checkout: cartData, totalCartCost: totalCost }
-              }
-            }
-              onClick={() => this.props.dismissModal()}
-            >Checkout</Link>
-          </div>
-
-        </div>
       </div >
+
     )
   };
 }
