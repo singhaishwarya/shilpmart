@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 export default class Checkout extends React.Component {
 
   constructor(props) {
@@ -8,32 +9,33 @@ export default class Checkout extends React.Component {
       totalCartCost: props?.location?.state?.totalCartCost || 0,
     };
   }
-  // handleCheckout = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     var amount = "100.00";
-  //     var phone_number = "9026892671";
-  //     var email = "aishsinghniit@gmail.com";
-  //     var orderId = "ORDER_ID" + (new Date().getTime());
-  //     let params = {
-  //       amount: amount,
-  //       phone_number: phone_number,
-  //       email: email,
-  //       orderId: orderId
-  //     }
-  //     var url = "http://localhost:3000/api/v1/public/checkout";
-  //     var request = {
-  //       url: url,
-  //       params: params,
-  //       method: 'get'
-  //     }
-  //     const response = await axios(request);
-  //     const processParams = await response.json;
-  //     console.log("demo==", processParams)
-  //   } catch {
-  //     console.log("demo error")
-  //   }
-  // }
+  handleCheckout = async () => {
+    try {
+      var amount = "100.00";
+      var phone_number = "9026892671";
+      var email = "aishsinghniit@gmail.com";
+      var orderId = "ORDER_ID" + (new Date().getTime());
+      let params = {
+        amount: amount,
+        phone_number: phone_number,
+        email: email,
+        orderId: orderId,
+        txnAmount: 100,
+        userInfo: { custId: 12345 }
+      }
+      var url = "http://localhost:3003/paynow";
+      var request = {
+        url: url,
+        data: params,
+        method: 'get'
+      }
+      const response = await axios(request);
+      // const processParams = await response.json;
+      // console.log("demo==", processParams)
+    } catch {
+      console.log("demo error")
+    }
+  }
 
   render() {
     const { checkOutData, totalCartCost } = this.state;
