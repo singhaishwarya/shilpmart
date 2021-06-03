@@ -716,12 +716,11 @@ height: 250px;
 }
 .cartshop-items ul li {
 	display: flex;
-	justify-content: space-between;
-}
-.cartshop-items ul li {
+	justify-content: flex-start;
 	padding: 10px 0;
 	border-bottom: 1px solid #eee;
 }
+
 .cartshop-items ul li a img {
 	max-width: 80px;
 	min-width: 65px;
@@ -736,6 +735,7 @@ height: 250px;
 	justify-content: space-between;
 	font-size: 14px;
 	padding: 0 10px;
+	flex: 1;
 }
 .cart-info .product-title {
 	font-weight: bold;
