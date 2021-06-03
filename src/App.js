@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from "./component/Login";
 import Registration from "./component/Registration";
 import Header from "./component/Header";
-import ProductCategory from "./component/ProductCategory";
+import ProductList from "./component/ProductList";
 import Footer from "./component/Footer";
 import Dashboard from './component/Dashboard';
 import ProductDetail from './component/ProductDetail';
@@ -42,7 +42,7 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/' component={Dashboard} exact />
           <Route isAuthenticated={userData} path='/login' component={Login} exact />
           <Route isAuthenticated={userData} path='/registration' component={Registration} exact />
-          <Route isAuthenticated={userData} path='/product-list' component={ProductCategory} />
+          <Route isAuthenticated={userData} path='/product-list' component={ProductList} />
           <Route isAuthenticated={userData} path='/product-detail' component={ProductDetail} />
           <Route isAuthenticated={userData} path='/seller-profile' component={SellerProfile} exact />
           <Route isAuthenticated={userData} path='/wishlist' component={Wishlist} exact />

@@ -5,7 +5,7 @@ import { Range } from 'rc-slider';
 import ProductGrid from './ProductGrid'
 import CategoryService from '../services/CategoryService';
 
-export default class ProductCategory extends React.Component {
+export default class ProductList extends React.Component {
 
   constructor(props) {
     super(props);
