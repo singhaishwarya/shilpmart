@@ -143,14 +143,16 @@ class ProductGrid extends Component {
       search: "&" + this.currentUrlParams.toString()
     })
   }
-
+  successAlert = (product, type) => {
+    return ToastService.success(product?.content?.title + " is successfully added to " + type)
+  }
   render() {
     const { productListData, layout, pathname, per_page, isLoader, layoutValue } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
 
     return (
       <>
-      
+
         <ToastContainer />
         {(pathname !== "/wishlist" && productListData?.data?.length > 0) &&
           <section className='topsection d-flex justify-content-between'>
@@ -205,13 +207,13 @@ class ProductGrid extends Component {
           </section>}
 
         <div className='row py-2'>
-          
+
           {productListData.data?.length > 0 ?
             (<>{productListData.data?.map((item, index) => {
               return (
                 <div key={index} className={layout} >
 
-                  <ProductTile data={item} {...this.props} errorAlert={this.errorAlert} gridLayout={layoutValue} />
+                  <ProductTile data={item} {...this.props} errorAlert={this.errorAlert} successAlert={this.successAlert} gridLayout={layoutValue} />
 
                 </div>
               )

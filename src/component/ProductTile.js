@@ -28,7 +28,7 @@ class ProductTile extends React.Component {
 
   }
 
-  deleteWishlist(item) {
+  deleteWishlist = (item) => {
     (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id);
   }
 
@@ -37,16 +37,16 @@ class ProductTile extends React.Component {
     WishlistService.delete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
       if (result?.success) {
         this.getWishlist();
-
       }
-    }
-    )
+    })
   }
 
   addToWishlist = (product) => {
 
-    (Object.keys(this.props.userData).length > 0) ? this.addToWishlistApi(product) :
-      this.props.addToWishlist(product.id)
+    if (Object.keys(this.props.userData).length > 0) { this.addToWishlistApi(product) } else {
+      this.props.addToWishlist(product.id);
+      this.props.successAlert(product, 'wishlist');
+    }
 
   }
 
@@ -54,6 +54,7 @@ class ProductTile extends React.Component {
     this.props.addToWishlist(product.id)
     WishlistService.add({ product_id: [product.id] }).then((result) => {
       if (result?.success) {
+        this.props.successAlert(product, 'wishlist');
         this.getWishlist();
 
       }
@@ -61,13 +62,12 @@ class ProductTile extends React.Component {
   }
 
   addToCart = (product) => {
-
-    if (this.props.cart?.includes(product.id)) {
-      this.props.errorAlert(product);
+    if (Object.keys(this.props.userData).length > 0) {
+      this.addToCartApi(product)
     }
     else {
-      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product.id)
-
+      this.props.addToCart(product.id);
+      this.props.successAlert(product, 'cart');
     }
   }
 
@@ -89,6 +89,7 @@ class ProductTile extends React.Component {
             ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
               result1.data.map((item) => this.props.addToCart(item.id));
             })
+            this.props.successAlert(product, 'cart');
           }
           else {
             this.props.errorAlert(product);
@@ -135,13 +136,11 @@ class ProductTile extends React.Component {
               <FontAwesomeIcon
                 icon={cart?.includes(data.id) ? faCheck : faCartPlus}
                 onClick={
-                  () => (
-                    cart?.includes(data.id) ? '' : this.addToCart(data)
-                  )
+                  () => cart?.includes(data.id) ? this.props.errorAlert(data) : this.addToCart(data)
                 }
               /></span></div>
             <div className="shop-btn"><span>
-              <FontAwesomeIcon icon={faRandom} onClick={() => this.props.addToCompare(data)}
+              <FontAwesomeIcon icon={faRandom} onClick={() => { this.props.addToCompare(data); this.props.successAlert(data, 'compare') }}
               />
             </span></div>
             {currentLocation !== '/wishlist' && <div className="shop-btn"><span>

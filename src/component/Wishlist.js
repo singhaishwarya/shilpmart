@@ -32,8 +32,13 @@ class Wishlist extends Component {
 
   }
 
-  deleteWishlist = (item) => {
-    Object.keys(this.props.userData).length > 0 ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.product_id)
+  deleteWishlist = (product) => {
+    if (this.props.userData?.token) { (this.deleteWishlistApi(product.product_id)) }
+    else {
+      this.props.deleteWishlist(product.id);
+      let wishlist = this.state.wishlist.filter(item => item.id !== product.id);
+      this.setState({ wishlist: wishlist });
+    }
   }
 
   deleteWishlistApi = (item) => {
@@ -54,27 +59,30 @@ class Wishlist extends Component {
   }
   errorAlert = (product) => {
     return ToastService.error(product?.content?.title + " is already in cart")
-
+  }
+  successAlert = (product, type) => {
+    return ToastService.error(product?.content?.title + " is already in " + type)
   }
   render() {
-    const { wishlist, layoutValue } = this.state
+    const { wishlist, layoutValue } = this.state;
+    let finItem;
+
     return (
       <section id="maincontent">
         <div className="container-fluid">
           <ToastContainer />
           {(wishlist?.length > 0) ? (<>
-
-
             <div className='row py-5'>
               <div className="col-12"><h4>Your Products Wishlist </h4><hr /></div>
 
-              {wishlist?.map((item, index) => {
+              {wishlist?.length > 0 && wishlist?.map((item, index) => {
+                finItem = item.product_details || item;
                 return (
-                  item.product_details && <div key={index} className='col-lg-3 col-sm-6 col-6' >
+                  finItem && <div key={index} className='col-lg-3 col-sm-6 col-6' >
                     <span className="remove-item" onClick={() => {
                       this.deleteWishlist(item)
                     }}>Remove</span>
-                    <ProductTile data={item.product_details} {...this.props} errorAlert={this.errorAlert} gridLayout={layoutValue} />
+                    <ProductTile data={finItem} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} />
                   </div>
                 )
               })}

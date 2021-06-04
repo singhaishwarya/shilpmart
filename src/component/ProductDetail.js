@@ -175,12 +175,7 @@ class ProductDetail extends React.Component {
       state: { checkout: [product] }
     })
   }
-  //   to = {
-  //               {
-  //   pathname: '/checkout',
-  //     state: { cart: cartData }
-  // }
-  //             }
+
   render() {
     const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal, notFountImage, shareUrl, title, productDetailDataImages } = this.state;
     return (

@@ -57,7 +57,7 @@ class ShopByType extends Component {
     ProductService.fetchAllProducts().then((result) => {
       this.setState({
         shopByProductItems: result?.data?.map((item) =>
-          (<ProductTile data={item} {...this.props} errorAlert={this.errorAlert} />))
+          (<ProductTile data={item} {...this.props} errorAlert={this.errorAlert} successAlert={this.successAlert} />))
       })
     })
   }
@@ -79,6 +79,9 @@ class ShopByType extends Component {
   errorAlert = (product) => {
     return ToastService.error(product?.content?.title + " is already in cart")
 
+  }
+  successAlert = (product, type) => {
+    return ToastService.success(product?.content?.title + " is successfully added to " + type)
   }
 
   render() {

@@ -217,7 +217,7 @@ class Header extends Component {
 
   renderSearchOptions = () => {
     let { seachResults } = this.state;
-    const { userData, cart } = this.props;
+    const { cart } = this.props;
     return (
       seachResults?.map((item, index) => (
         <div className="result-product-wrapper" key={index}>
@@ -378,13 +378,13 @@ class Header extends Component {
             <li className="nav-item">
               <Link to='/compare' className="nav-link">
                 <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span>
-                </Link>
+              </Link>
             </li>
 
 
             <li className="nav-item" onClick={() => this.dismissModal('cart')}>
               <span className="nav-link">
-              <FontAwesomeIcon icon={faShoppingBasket} /> <span>{this.props?.cart?.length}</span>
+                <FontAwesomeIcon icon={faShoppingBasket} /> <span>{this.props?.cart?.length}</span>
               </span>
 
             </li>
