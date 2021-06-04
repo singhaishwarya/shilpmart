@@ -129,10 +129,10 @@ class CartOverlay extends Component {
               </div>
             </>
             :
-            <div className="cart-shop-body">
-              <span>Your cart is currently empty.</span>
-              <span>Return to shop</span>
-            </div>
+            <div class="cart-empty">
+		<p>No products in the cart.</p>
+		<Link to="/product-list">Return to shop</Link>
+	  </div>
         }
 
       </div >

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ProductService from '../services/ProductService';
 import { Link } from "react-router-dom";
 import ProductTile from './ProductTile';
-import Loader from "react-loader-spinner";
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 class ProductGrid extends Component {
@@ -151,6 +150,7 @@ class ProductGrid extends Component {
 
     return (
       <>
+      
         <ToastContainer />
         {(pathname !== "/wishlist" && productListData?.data?.length > 0) &&
           <section className='topsection d-flex justify-content-between'>
@@ -205,15 +205,7 @@ class ProductGrid extends Component {
           </section>}
 
         <div className='row py-2'>
-          <Loader
-            visible={isLoader}
-            type="Puff"
-            color="#e05206"
-            className="loader"
-            height={100}
-            width={100}
-            timeout={1000} //3 secs
-          />
+          
           {productListData.data?.length > 0 ?
             (<>{productListData.data?.map((item, index) => {
               return (

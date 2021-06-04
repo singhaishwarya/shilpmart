@@ -377,13 +377,15 @@ class Header extends Component {
 
             <li className="nav-item">
               <Link to='/compare' className="nav-link">
-                <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span></Link>
+                <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span>
+                </Link>
             </li>
 
 
             <li className="nav-item" onClick={() => this.dismissModal('cart')}>
-
-              <FontAwesomeIcon icon={faShoppingBasket} /><span>{this.props?.cart?.length}</span>
+              <span className="nav-link">
+              <FontAwesomeIcon icon={faShoppingBasket} /> <span>{this.props?.cart?.length}</span>
+              </span>
 
             </li>
           </ul>

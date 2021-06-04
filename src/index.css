@@ -10,6 +10,18 @@ a {
 .header-top {
 	background: url('https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/t_bg.webp') repeat-x #e87f13;
 }
+.loader{
+	position: absolute;
+	background-color: rgba(0,0,0,0.5);
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 999;
+	height: 100vh;
+	width: 100%;
+}
 #maincontent{
 	min-height: 380px;
 }
@@ -67,7 +79,7 @@ a {
 .header-middle ul > li a i {
 	font-size: 18px
 }
-.header-middle ul > li a span, .header-middle ul > li span {
+.header-middle ul > li .nav-link > span, .header-middle ul > li .nav-link > span {
 	width: 14px;
 	height: 14px;
 	color: #fff;
@@ -614,7 +626,7 @@ font-style: italic;
 	display: none;
 }
 .cart-empty {
-	display: none;
+	display: block;
 	padding: 25% 0;
 	/* display:flex; */
 	flex-direction: column;
@@ -1643,7 +1655,8 @@ ul.sub-items li a:hover {
 	color: #999;
 	text-decoration: none
 }
-
+.corss{position: absolute;
+right: 15px;}
 .forget-pass{
 	width: 30%;
 display: flex;
@@ -1657,6 +1670,18 @@ align-content: center;
 /* login-modal */
 .login-card {
 	min-width: 450px;
+	position: relative;
+}
+.login-card > span{
+	position: absolute;
+right: 0;
+border: 1px solid #ccc;
+border-radius: 50%;
+width: 25px;
+height: 23px;
+padding: 0px 6px;
+line-height: 1.3;
+cursor: pointer;
 }
 .login-card label{
 	font-weight: 600;

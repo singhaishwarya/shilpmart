@@ -12,8 +12,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
+      <div className="alert alert-danger mt-2 position-relative" role="alert">
+        This field is required! <span className="corss"><FontAwesomeIcon icon={faTimes}/></span>
       </div>
     );
   }
@@ -72,7 +72,7 @@ class Login extends Component {
     const { errorMsg } = this.state
     return (
       <div className="login-card">
-        <FontAwesomeIcon icon={faTimes} onClick={() => this.props?.dismissModal('login')} />
+        <span><FontAwesomeIcon className="text-right" icon={faTimes} onClick={() => this.props?.dismissModal('login')} /></span>
         <h4 className="modal-title">Sign in</h4>
         <Form
           onSubmit={this.handleLogin}

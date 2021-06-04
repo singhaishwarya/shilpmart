@@ -154,14 +154,14 @@ export default class Registration extends React.Component {
             <h4 className="mb-4">Registration</h4>
              <Form className="login-card" onSubmit={this.handleSignUp} ref={(c) => { this.form = c; }}>
               <div className="form-group row">
-    <label for="staticEmail" className="col-sm-3 col-form-label">First Name<span>*</span></label>
+    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">First Name<span>*</span></label>
     <div className="col-sm-9">
     <Input type="text" className="form-control" name="first_name" value={fields.first_name} onChange={this.handleChange.bind(this, "first_name")} validations={[required, lt50]}/>
     </div>
   </div>
 
   <div className="form-group row">
-    <label for="staticEmail" className="col-sm-3 col-form-label">Last Name<span>*</span></label>
+    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Last Name<span>*</span></label>
     <div className="col-sm-9">
     <Input type="text"
                       className="form-control"
@@ -175,7 +175,7 @@ export default class Registration extends React.Component {
 
 
   <div className="form-group row">
-    <label for="staticEmail" className="col-sm-3 col-form-label">Email<span>*</span></label>
+    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Email<span>*</span></label>
     <div className="col-sm-9">
     <Input
                       type="text"
@@ -189,7 +189,7 @@ export default class Registration extends React.Component {
   </div>
 
   <div className="form-group row">
-    <label for="staticEmail" className="col-sm-3 col-form-label">Mobile No.<span>*</span></label>
+    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Mobile No.<span>*</span></label>
     <div className="col-sm-9">
     <Input
                       type="tel"
@@ -204,7 +204,7 @@ export default class Registration extends React.Component {
 
 
   <div className="form-group row">
-    <label for="staticEmail" className="col-sm-3 col-form-label">Password<span>*</span></label>
+    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Password<span>*</span></label>
     <div className="col-sm-9">
     <Input
                       type="password"
@@ -219,7 +219,7 @@ export default class Registration extends React.Component {
 
 
   <div className="form-group row">
-    <label for="staticEmail" className="col-sm-3 col-form-label">Confirm Password<span>*</span></label>
+    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Confirm Password<span>*</span></label>
     <div className="col-sm-9">
     <Input
                       type="password"
