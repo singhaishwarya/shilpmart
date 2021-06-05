@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Login from "./component/Login";
 import Registration from "./component/Registration";
 import Header from "./component/Header";
 import ProductList from "./component/ProductList";
@@ -40,7 +39,6 @@ class App extends Component {
         <header><Header /></header>
         <Switch>
           <Route isAuthenticated={userData} path='/' component={Dashboard} exact />
-          <Route isAuthenticated={userData} path='/login' component={Login} exact />
           <Route isAuthenticated={userData} path='/registration' component={Registration} exact />
           <Route isAuthenticated={userData} path='/product-list' component={ProductList} />
           <Route isAuthenticated={userData} path='/product-detail' component={ProductDetail} />
@@ -57,7 +55,6 @@ class App extends Component {
                 <PrivateRoute isAuthenticated={userData} path='/my-account/dashboard' component={MyDashboard} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/order' component={Orders} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/order-detail' component={OrderDetail} />
-
                 <PrivateRoute isAuthenticated={userData} path='/my-account/settings' component={Settings} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/address' component={Address} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/add-address' component={AddAddress} />
@@ -66,7 +63,6 @@ class App extends Component {
                 <PrivateRoute isAuthenticated={userData} path='/my-account/feedback' component={Feedback} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/inquiry' component={Inquiry} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/wishlist' component={MyWishlist} />
-
               </>
             } />
           </MyAccount>
