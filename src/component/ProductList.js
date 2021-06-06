@@ -6,11 +6,14 @@ import ProductGrid from './ProductGrid'
 import Loader from "react-loader-spinner";
 import CategoryService from '../services/CategoryService';
 const Ranger = createSliderWithTooltip(Range);
+
 export default class ProductList extends React.Component {
 
   constructor(props) {
     super(props);
     this.onCategoryFilter = this.onCategoryFilter.bind(this);
+    this.currentUrlParams = new URLSearchParams(window.location.search);
+
     this.state = {
       menuOptions: [],
       product_category: this.props.category,
@@ -23,22 +26,52 @@ export default class ProductList extends React.Component {
       selectedOffer: [],
       categories: [],
       priceRange: [200, 500],
-      parent_id: props.history.location.state?.parent_id || 0,
-      category_id: props.history.location.state?.category_id,
+      category_id: props.history.location.state?.category_id || (this.currentUrlParams.get('cat_ids') || 0),
       category_breadcrumbs: props.history.location.state?.category_breadcrumbs,
-      selectedOption: null, queryParams: {}
+      selectedOption: null, queryParams: {},
+      parentCategory: localStorage.getItem('parentCategory') && JSON.parse(localStorage.getItem('parentCategory')) || []
     };
 
   }
 
 
   componentDidMount() {
+
+    if (localStorage.getItem('parentCategory') !== null) {
+      if (JSON.parse(localStorage.getItem('parentCategory')).find(({ id }) => id * 1 === this.currentUrlParams.get('cat_ids') * 1)) {
+        return;
+      }
+      else {
+
+        this.setState({ parentCategory: [] });
+        localStorage.removeItem("parentCategory");
+      }
+    }
     this.currentUrlParams = new URLSearchParams(window.location.search);
-    this.getCategoryFilter(this.state.parent_id);
+    this.getCategoryFilter(this.state.category_id);
   }
 
-  componentWillReceiveProps() {
+  componentWillUnmount() {
+    if (localStorage.getItem('parentCategory') !== null) {
+      if (JSON.parse(localStorage.getItem('parentCategory')).find(({ id }) => id * 1 === this.currentUrlParams.get('cat_ids') * 1)) {
+        return;
+      }
+      else {
+        this.setState({ parentCategory: [] });
+        localStorage.removeItem("parentCategory");
+      }
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    // if (localStorage.getItem('parentCategory') !== null) {
+    //   if (this.state.category_id !== JSON.parse(localStorage.getItem('parentCategory'))?.id) {
+    //     localStorage.removeItem("parentCategory");
+    //     this.setState({ parentCategory: '' })
+    //   }
+    // }
     this.currentUrlParams = new URLSearchParams(window.location.search);
+    this.getCategoryFilter((this.currentUrlParams.get('cat_ids') || 0));
   }
 
   onSliderPriceChange = (value) => {
@@ -83,22 +116,28 @@ export default class ProductList extends React.Component {
     console.log(event);
   }
 
-  getCategoryFilter = (parent_id) => {
+  getCategoryFilter = (category_id) => {
+
     let MegaMenu = [];
     try {
-      CategoryService.fetchAllCategory({ parent_id: parent_id }).then((result) => {
+      CategoryService.fetchAllCategory({ parent_id: category_id }).then((result) => {
         MegaMenu = result?.map((item) => {
           return {
+            name: 'root',
+            toggled: false,
             name: item.title,
             key: item.id,
-            children: item.child?.map((subitem1) => {
+            parent_id: item.parent_id,
+            children: item.child.length > 0 && item.child?.map((subitem1) => {
               return {
                 name: subitem1.title,
                 key: subitem1.id,
+                parent_id: subitem1.parent_id,
                 children: subitem1?.child?.length > 0 && subitem1?.child?.map((subitem2) => {
                   return {
                     name: subitem2.title,
-                    key: subitem2.id
+                    key: subitem2.id,
+                    parent_id: subitem2.parent_id,
                   }
                 })
               }
@@ -114,15 +153,29 @@ export default class ProductList extends React.Component {
   }
 
   onCategoryFilter(node, toggled) {
-    if (this.state.cursor) { this.state.cursor.active = false; }
-    node.active = true;
-    this.currentUrlParams.set('cat_ids', [node.key])
+    var a = [];
+    a = JSON.parse(localStorage.getItem('parentCategory')) || [];
+    a.push({ name: node.name, id: node.key, parent_id: node.parent_id });
+    localStorage.setItem('parentCategory', JSON.stringify(a));
+    this.getCategoryFilter(node.key)
+    this.setState({ parentCategory: JSON.parse(localStorage.getItem('parentCategory')) || [] });
+
+    this.currentUrlParams.set('cat_ids', [node.key]);
     this.props.history.push({
       pathname: this.props.location.pathname,
       search: "&" + this.currentUrlParams.toString()
     });
-    if (node.children) { node.toggled = toggled; }
-    this.setState({ cursor: node });
+
+  }
+
+  setCategoryIdParams = (id, index) => {
+    this.currentUrlParams.set('cat_ids', [id]);
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
+    this.setState({ parentCategory: this.state.parentCategory.slice(0, index) })
+    localStorage.setItem('parentCategory', JSON.stringify(JSON.parse(localStorage.getItem('parentCategory')).slice(0, index)));
 
   }
 
@@ -132,6 +185,7 @@ export default class ProductList extends React.Component {
       menuOptions,
       priceRange,
       category_breadcrumbs,
+      parentCategory
     } = this.state;
 
     return (
@@ -192,54 +246,16 @@ export default class ProductList extends React.Component {
                     <header className='card-header'>
                       <h6 className='title'>Filter by Categories </h6>
                     </header>
+                    {parentCategory?.length > 0 && parentCategory?.map((item, index) =>
+                      <li key={index} className='breadcrumb-item'>
+                        <span onClick={() => this.setCategoryIdParams(item?.parent_id, index)}>{item?.name}</span></li>)}
                     <Treebeard
                       data={menuOptions}
                       style={treeStyle}
                       onToggle={this.onCategoryFilter}
                     />
-
-
                   </article >
 
-                  {/* <article>
-                    <header class="card-header"><h6 class="title">Filter by Material </h6></header>
-                    <div className="filter-box">
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="menswear" value="menswear" />
-                        <label className="form-check-label" htmlFor="menswear">Art Silk
-</label>
-                      </div>
-
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="womenswear" value="womenswear" />
-                        <label className="form-check-label" htmlFor="womenswear">Bamboo
-</label>
-                      </div>
-
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="homeTextile" value="homeTextile" />
-                        <label className="form-check-label" htmlFor="homeTextile">Banana Fiber
-</label>
-                      </div>
-
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="homeDecore" value="homeDecore" />
-                        <label className="form-check-label" htmlFor="homeDecore">Cotton
-</label>
-                      </div>
-
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="floorCoverings" value="floorCoverings" />
-                        <label className="form-check-label" htmlFor="floorCoverings">Cotton-Silk
-</label>
-                      </div>
-
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="clothing" value="clothing" />
-                        <label className="form-check-label" htmlFor="clothing">Eri Silk
-</label>
-                      </div>
-
-                      <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="officeSup" value="officeSup" />
-                        <label className="form-check-label" htmlFor="officeSup">Georgette
-</label>
-                      </div>
-                    </div>
-                  </article> */}
                 </div >
               </div >
               <div className='col-lg-9'>

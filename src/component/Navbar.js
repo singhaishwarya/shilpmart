@@ -33,8 +33,7 @@ export default class Navbar extends React.Component {
               search: "?cat_ids=" + item.id,
               state: {
                 category_id: item.id,
-                category_breadcrumbs: [{ id: item.id, title: item.title }],
-                parent_id: item.parent_id
+                category_breadcrumbs: [{ id: item.id, title: item.title }]
               }
             }} onClick={() => this.setIsMenuShown(false)}>
               <span key={index}>{item.title}</span>
@@ -51,8 +50,7 @@ export default class Navbar extends React.Component {
                     state: {
                       category_id: subitem1.id,
                       category_breadcrumbs: [{ id: item.id, title: item.title },
-                      { id: subitem1.id, title: subitem1.title }],
-                      parent_id: subitem1.parent_id
+                      { id: subitem1.id, title: subitem1.title }]
                     }
                   }} onClick={() => this.setIsMenuShown(false)}>
                     {subitem1.title}
@@ -67,8 +65,7 @@ export default class Navbar extends React.Component {
                             category_id: subitem2.id,
                             category_breadcrumbs: [{ id: item.id, title: item.title },
                             { id: subitem1.id, title: subitem1.title },
-                            { id: subitem2.id, title: subitem2.title }],
-                            parent_id: subitem2.parent_id
+                            { id: subitem2.id, title: subitem2.title }]
                           }
                         }} onClick={() => this.setIsMenuShown(false)}>
                           <span>
@@ -115,14 +112,14 @@ export default class Navbar extends React.Component {
                   <FontAwesomeIcon icon={isMenuShown ? faAngleUp : faAngleDown} />
                 </span>
                 {isMenuShown && (
-                  
-                    <ReactMegaMenu
-                      tolerance={50}
-                      direction={"RIGHT"}
-                      data={menuOptions}
-                      styleConfig={"mega-menu"}
-                    />
-                 )}
+
+                  <ReactMegaMenu
+                    tolerance={50}
+                    direction={"RIGHT"}
+                    data={menuOptions}
+                    styleConfig={"mega-menu"}
+                  />
+                )}
               </div>
               <ul className="navbar-nav mr-auto ml-2">
                 {navbarTabs?.map((item, index) => {
