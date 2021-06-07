@@ -108,9 +108,7 @@ export default class AddEditAddress extends React.Component {
         if (!result) return
 
         if (result.success) {
-          this.props.history.push({
-            pathname: '/my-account/address'
-          });
+          window.history.back()
         }
       })
       .catch((err) => {

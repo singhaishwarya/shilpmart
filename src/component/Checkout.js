@@ -1,14 +1,49 @@
 import React from 'react';
 import axios from 'axios';
+import AddressService from '../services/AddressService';
+import Modal from 'react-modal';
+import { Link } from "react-router-dom";
+
+const customAddressStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
 export default class Checkout extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      addressList: [],
+      selectedAddress: {},
+      showModal: false,
       checkOutData: props?.location?.state?.checkout || [],
       totalCartCost: props?.location?.state?.totalCartCost || 0,
     };
   }
+  componentDidMount() {
+    this.getAddress();
+  }
+  getAddress = () => {
+    AddressService.list().then((result) => {
+      if (!result) return
+      this.setState({ selectedAddress: result.data.find(({ is_default }) => is_default === 1), addressList: result.data })
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+  dismissModal = (type) => {
+    this.setState({
+      showModal: !this.state.showModal, overlayType: type
+    });
+  };
+
+
   handleCheckout = async () => {
     try {
       var amount = "100.00";
@@ -23,6 +58,7 @@ export default class Checkout extends React.Component {
         txnAmount: 100,
         userInfo: { custId: 12345 }
       }
+
       var url = "http://localhost:3003/paynow";
       var request = {
         url: url,
@@ -37,10 +73,36 @@ export default class Checkout extends React.Component {
   }
 
   render() {
-    const { checkOutData, totalCartCost } = this.state;
+    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList } = this.state;
     let finItem;
+
     return (
       <section>
+        <div>
+          <Modal
+            isOpen={showModal}
+            onRequestClose={() => this.setState({ showModal: false })}
+            style={customAddressStyles}
+            shouldCloseOnOverlayClick={true}
+            contentLabel="Select Address"
+            ariaHideApp={false}
+          >
+            {addressList?.map((item, index) => (
+              <address key={index}>{item.name}
+                <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
+                <br /> {item.district},  {item.state} - {item.pincode}<br />
+                <strong>Mobile No.</strong>: {item.mobile}<br />
+                <strong>Email</strong> : {item?.email} <br /><br />
+                <p className="d-flex justify-content-between">
+                  <span onClick={() => {
+                    this.setState({ selectedAddress: item, showModal: false })
+                  }} className="btn btn-dark btn-theme">Select</span>
+                </p>
+              </address>
+            ))}
+            <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link>
+          </Modal>
+        </div>
         <div className="container-fluid">
           <div className="row py-5">
             <div className="col-md-4 order-md-2 mb-4">
@@ -84,122 +146,33 @@ export default class Checkout extends React.Component {
             <div className="col-md-8 order-md-1">
               <div className="card shadow pr-5">
                 <div className="card-body">
-                  <h4 className="mb-3">Billing address</h4>
-                  <form className="needs-validation login-card" noValidate >
-                    <div className="row">
-                      <div className="col-md-6 mb-3">
-                        <label htmlFor="firstName">First Name</label>
-                        <input type="text" className="form-control" id="firstName" placeholder required />
-
-                      </div>
-                      <div className="col-md-6 mb-3">
-                        <label htmlFor="lastName">Last Name</label>
-                        <input type="text" className="form-control" id="lastName" placeholder required />
-
-                      </div>
-                    </div>
-
-
-                    <div className="mb-3">
-                      <label htmlFor="address">Address</label>
-                      <input type="text" className="form-control" id="address" placeholder="address here..." required />
-
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="address2">Address 2 <span className="text-muted">(Optional)</span></label>
-                      <input type="text" className="form-control" id="address2" placeholder="Apartment or suite" />
-                    </div>
-
-                    <div className="row">
-                      <div className="col-md-6 mb-3">
-                        <label htmlFor="mobileNO">Mobile No.</label>
-                        <input type="text" className="form-control" id="mobileNO" placeholder="Enter mobile no" required />
-
-                      </div>
-                      <div className="col-md-6 mb-3">
-                        <label htmlFor="emailId">Email ID</label>
-                        <input type="text" className="form-control" id="emailId" placeholder="Enter email id here.." required />
-
-                      </div>
-                    </div>
-
-
-                    <div className="row">
-                      <div className="col-md-5 mb-3">
-                        <label htmlFor="country">Country</label>
-                        <select className="custom-select d-block w-100" id="country" required>
-                          <option value>Choose...</option>
-                          <option>India</option>
-                        </select>
-
-                      </div>
-                      <div className="col-md-4 mb-3">
-                        <label htmlFor="state">State</label>
-                        <select className="custom-select d-block w-100" id="state" required>
-                          <option value>Choose...</option>
-                          <option>New Delhi</option>
-                        </select>
-
-                      </div>
-                      <div className="col-md-3 mb-3">
-                        <label htmlFor="zip">Zip</label>
-                        <input type="text" className="form-control" id="zip" placeholder required />
-
-                      </div>
-                    </div>
+                  <h4 className="mb-3">Shipping address</h4>
+                  < address  > {selectedAddress?.name}
+                    <br />{selectedAddress?.address1} <br />{selectedAddress?.address2} <br /> {selectedAddress?.sub_district}
+                    <br /> {selectedAddress?.district},  {selectedAddress?.state} - {selectedAddress?.pincode}<br />
+                    <strong>Mobile No.</strong>: {selectedAddress?.mobile}<br />
+                    <strong>Email</strong> : {selectedAddress?.email} <br /><br />
+                  </address>
+                  <p className="">
+                    <span className="btn btn-dark btn-theme" onClick={() => this.setState({ showModal: true })}>Change Address</span>
+                  </p>
+                  <form className="needs-validation login-card" noValidate onSubmit={() => this.handleCheckout()}>
                     <hr className="mb-4" />
-                    <div className="custom-control custom-checkbox">
-                      <input type="checkbox" className="custom-control-input" id="same-address" />
-                      <label className="custom-control-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
-                    </div>
-                    <div className="custom-control custom-checkbox">
-                      <input type="checkbox" className="custom-control-input" id="save-info" />
-                      <label className="custom-control-label" htmlFor="save-info">Save this information for next time</label>
-                    </div>
-                    <hr className="mb-4" />
-                    <h4 className="mb-3">Payment</h4>
                     <div className="d-block my-3">
                       <div className="custom-control custom-radio">
                         <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" defaultChecked required />
-                        <label className="custom-control-label" htmlFor="credit">Credit card</label>
+                        <label className="custom-control-label" htmlFor="credit">Cash On Delivery</label>
                       </div>
                       <div className="custom-control custom-radio">
                         <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" required />
-                        <label className="custom-control-label" htmlFor="debit">Debit card</label>
+                        <label className="custom-control-label" htmlFor="debit">Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" alt="Paytm"></img></label>
                       </div>
                       <div className="custom-control custom-radio">
                         <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" required />
-                        <label className="custom-control-label" htmlFor="paypal">PayPal</label>
+                        <label className="custom-control-label" htmlFor="paypal">Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img></label>
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-md-6 mb-3">
-                        <label htmlFor="cc-name">Name on card</label>
-                        <input type="text" className="form-control" id="cc-name" placeholder required />
-                        <small className="text-muted">Full name as displayed on card</small>
-                        <div className="invalid-feedback"> Name on card is required </div>
-                      </div>
-                      <div className="col-md-6 mb-3">
-                        <label htmlFor="cc-number">Credit card number</label>
-                        <input type="text" className="form-control" id="cc-number" placeholder required />
 
-                      </div>
-                    </div>
-                  </form>
-                  <form className="needs-validation login-card" noValidate onSubmit={() => this.handleCheckout()}>
-
-                    <div className="row">
-                      <div className="col-md-3 mb-3">
-                        <label htmlFor="cc-expiration">Expiration</label>
-                        <input type="text" className="form-control" id="cc-expiration" placeholder />
-
-                      </div>
-                      <div className="col-md-3 mb-3">
-                        <label htmlFor="cc-cvv">CVV</label>
-                        <input type="text" className="form-control" id="cc-cvv" placeholder />
-
-                      </div>
-                    </div>
                     <hr className="mb-4" />
                     <button className="btn login-btn btn-lg btn-block" type="submit">Continue to checkout</button>
                   </form>
@@ -207,9 +180,9 @@ export default class Checkout extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+        </div >
 
-      </section>
+      </section >
     );
   }
 }

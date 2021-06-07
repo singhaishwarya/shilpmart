@@ -48,6 +48,12 @@ class ProductDetail extends React.Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
+    this.getProductDetails(this.getQueryParams());
+  }
+
+  componentWillReceiveProps() {
+    window.scrollTo(0, 0);
     this.getProductDetails(this.getQueryParams());
   }
 
