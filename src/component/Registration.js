@@ -6,11 +6,11 @@ import Button from "react-validation/build/button";
 import validator from 'validator';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
-const required = (value) => {
-  if (!value) {
+const required = (value, name) => {
+  if (!name.value) {
     return (
       <div className="alert alert-danger" role="alert">
-        This field is required!
+        Enter your {name.name?.replace(/_/g, ' ') === 'c password' ? 'confirm password' : name.name?.replace(/_/g, ' ')}
       </div>
     );
   }
@@ -25,6 +25,11 @@ const mobile = (value) => {
       </div>
     // );
   }
+  if (!validator.isMobilePhone(value, 'en-IN')) {
+    return <div className="alert alert-danger" role="alert">
+      Mobile number should be numeric.
+      </div>
+  }
 };
 
 const email = (value) => {
@@ -35,9 +40,9 @@ const email = (value) => {
   }
 };
 
-const lt50 = (value) => {
-  if (value.length >= 50) {
-    return <div className="alert alert-danger" role="alert"> It must be string & contain maximum length 50 char.</div>
+const lt50 = (value, name) => {
+  if (name.value.length >= 50) {
+    return <div className="alert alert-danger" role="alert">  {name.name?.replace(/_/g, ' ')} must be string & contain maximum length 50 char.</div>
   }
 };
 
@@ -78,12 +83,13 @@ export default class Registration extends React.Component {
         if (!result) return
 
         if (result.success) {
+          ToastService.success("Successfully Registered")
           this.props.history.push({
             pathname: '/'
           });
         }
         else {
-          return ToastService.error(Object.values(result.data)[0][0])
+          return ToastService.error(Object.values(result.data)[0][0].replace("c password", "confirm password"))
 
         }
       })
@@ -152,87 +158,87 @@ export default class Registration extends React.Component {
 
           <div className="col-md-6 col-12 mb-5">
             <h4 className="mb-4">Registration</h4>
-             <Form className="login-card" onSubmit={this.handleSignUp} ref={(c) => { this.form = c; }}>
+            <Form className="login-card" onSubmit={this.handleSignUp} ref={(c) => { this.form = c; }}>
               <div className="form-group row">
-    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">First Name<span>*</span></label>
-    <div className="col-sm-9">
-    <Input type="text" className="form-control" name="first_name" value={fields.first_name} onChange={this.handleChange.bind(this, "first_name")} validations={[required, lt50]}/>
-    </div>
-  </div>
+                <label htmlFor="staticEmail" className="col-sm-3 col-form-label">First Name<span>*</span></label>
+                <div className="col-sm-9">
+                  <Input type="text" className="form-control" name="first_name" value={fields.first_name} onChange={this.handleChange.bind(this, "first_name")} validations={[required, lt50]} />
+                </div>
+              </div>
 
-  <div className="form-group row">
-    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Last Name<span>*</span></label>
-    <div className="col-sm-9">
-    <Input type="text"
-                      className="form-control"
-                      name="last_name"
-                      value={fields.last_name}
-                      onChange={this.handleChange.bind(this, "last_name")}
-                      validations={[required, lt50]}
-                    />
-    </div>
-  </div>
-
-
-  <div className="form-group row">
-    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Email<span>*</span></label>
-    <div className="col-sm-9">
-    <Input
-                      type="text"
-                      className="form-control"
-                      name="email"
-                      value={fields.email}
-                      onChange={this.handleChange.bind(this, "email")}
-                      validations={[required, email, lt50]}
-                    />
-    </div>
-  </div>
-
-  <div className="form-group row">
-    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Mobile No.<span>*</span></label>
-    <div className="col-sm-9">
-    <Input
-                      type="tel"
-                      className="form-control"
-                      name="mobile"
-                      value={fields.mobile}
-                      onChange={this.handleChange.bind(this, "mobile")}
-                      validations={[required, mobile]}
-                    />
-    </div>
-  </div>
+              <div className="form-group row">
+                <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Last Name<span>*</span></label>
+                <div className="col-sm-9">
+                  <Input type="text"
+                    className="form-control"
+                    name="last_name"
+                    value={fields.last_name}
+                    onChange={this.handleChange.bind(this, "last_name")}
+                    validations={[required, lt50]}
+                  />
+                </div>
+              </div>
 
 
-  <div className="form-group row">
-    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Password<span>*</span></label>
-    <div className="col-sm-9">
-    <Input
-                      type="password"
-                      className="form-control"
-                      name="password"
-                      value={fields.password}
-                      onChange={this.handleChange.bind(this, "password")}
-                      validations={[required, isValidpassword]}
-                    />
-    </div>
-  </div>
+              <div className="form-group row">
+                <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Email<span>*</span></label>
+                <div className="col-sm-9">
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="email"
+                    value={fields.email}
+                    onChange={this.handleChange.bind(this, "email")}
+                    validations={[required, email, lt50]}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group row">
+                <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Mobile No.<span>*</span></label>
+                <div className="col-sm-9">
+                  <Input
+                    type="tel"
+                    className="form-control"
+                    name="mobile"
+                    value={fields.mobile}
+                    onChange={this.handleChange.bind(this, "mobile")}
+                    validations={[required, mobile]}
+                  />
+                </div>
+              </div>
 
 
-  <div className="form-group row">
-    <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Confirm Password<span>*</span></label>
-    <div className="col-sm-9">
-    <Input
-                      type="password"
-                      className="form-control"
-                      name="c_password"
-                      value={fields.c_password}
-                      onChange={this.handleChange.bind(this, "c_password")}
-                      validations={[required, isValidpassword]}
-                    />
-    </div>
-  </div>      
-                <Button className="btn login-btn" value="Submit"  >Register</Button>
-              
+              <div className="form-group row">
+                <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Password<span>*</span></label>
+                <div className="col-sm-9">
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    value={fields.password}
+                    onChange={this.handleChange.bind(this, "password")}
+                    validations={[required, isValidpassword]}
+                  />
+                </div>
+              </div>
+
+
+              <div className="form-group row">
+                <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Confirm Password<span>*</span></label>
+                <div className="col-sm-9">
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="c_password"
+                    value={fields.c_password}
+                    onChange={this.handleChange.bind(this, "c_password")}
+                    validations={[required, isValidpassword]}
+                  />
+                </div>
+              </div>
+              <Button className="btn login-btn" value="Submit"  >Register</Button>
+
             </Form>
           </div>
         </div>
