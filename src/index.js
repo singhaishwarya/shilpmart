@@ -14,7 +14,6 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import 'rc-slider/assets/index.css';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import 'react-toastify/dist/ReactToastify.css';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
