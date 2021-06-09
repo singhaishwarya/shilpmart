@@ -1,6 +1,5 @@
 import React from "react";
 import { Treebeard } from 'react-treebeard';
-// import ReactStars from 'react-stars'
 import { Range, createSliderWithTooltip } from 'rc-slider';
 import ProductGrid from './ProductGrid'
 import Loader from "react-loader-spinner";
@@ -123,7 +122,6 @@ export default class ProductList extends React.Component {
       CategoryService.fetchAllCategory({ parent_id: category_id }).then((result) => {
         MegaMenu = result?.map((item) => {
           return {
-            name: 'root',
             toggled: false,
             name: item.title,
             key: item.id,

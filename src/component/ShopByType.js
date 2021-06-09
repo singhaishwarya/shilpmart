@@ -104,7 +104,7 @@ class ShopByType extends Component {
       </>
 
     )
-  };
+  }
 }
 
 const mapStateToProps = state => {

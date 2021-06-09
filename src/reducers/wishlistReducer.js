@@ -21,4 +21,4 @@ export default function wishlistReducer(state = [], action) {
     default:
       return state;
   }
-};
+}

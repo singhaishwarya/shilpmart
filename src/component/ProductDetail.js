@@ -3,8 +3,8 @@ import Modal from "react-modal";
 import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
-import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram, faIntercom } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faPhone, faQuestion, faEnvelope, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
+import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
+import { faRandom, faCheck, faPhone, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
 import {
@@ -61,13 +61,15 @@ class ProductDetail extends React.Component {
     const urlParams = new URLSearchParams(window.location.search);
     let entries = urlParams.entries(), queryParams = {};
     for (const entry of entries) {
-      switch (entry[0]) {
-        case 'pid':
-          queryParams.product_ids = [entry[1]];
-          break
-        default:
-          return;
-      }
+      queryParams.product_ids = entry[0] === 'pid' ? [entry[1]] : '';
+
+      // switch (entry[0]) {
+      //   case 'pid':
+      //     queryParams.product_ids = [entry[1]];
+      //     break
+      //   default:
+      //     return;
+      // }
     }
     return queryParams;
   }
@@ -183,7 +185,7 @@ class ProductDetail extends React.Component {
   }
 
   render() {
-    const { productDetailData, productCount, wishlistStatus, isActiveTab, showModal, notFountImage, shareUrl, title, productDetailDataImages } = this.state;
+    const { productDetailData, productCount, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages } = this.state;
     return (
       <>
         <section id="maincontent">

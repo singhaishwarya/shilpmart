@@ -25,7 +25,7 @@ export default class Navbar extends React.Component {
   getSubmenuOptions = () => {
     try {
       CategoryService.fetchAllCategory(this.state.filterParams).then((result) => {
-        let MegaMenu = result?.map((item, index) => {
+        let MegaMenu = result?.map((item, index1) => {
 
           return {
             label: <Link to={{
@@ -36,14 +36,14 @@ export default class Navbar extends React.Component {
                 category_breadcrumbs: [{ id: item.id, title: item.title }]
               }
             }} onClick={() => this.setIsMenuShown(false)}>
-              <span key={index}>{item.title}</span>
+              <span key={index1}>{item.title}</span>
               <FontAwesomeIcon icon={faAngleRight} />
             </Link >,
             key: item.id,
-            items: item.child?.map((subitem1, index) => {
+            items: item.child?.map((subitem1, index2) => {
 
               return (
-                <div className="sub-categories" key={index}>
+                <div className="sub-categories" key={index2}>
                   <Link to={{
                     pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}`,
                     search: "?cat_ids=" + subitem1.id,
@@ -55,9 +55,9 @@ export default class Navbar extends React.Component {
                   }} onClick={() => this.setIsMenuShown(false)}>
                     {subitem1.title}
                   </Link>
-                  {subitem1.child?.map((subitem2, index) => {
+                  {subitem1.child?.map((subitem2, index3) => {
                     return (
-                      <div className="super-sub-categories" key={index}>
+                      <div className="super-sub-categories" key={index3}>
                         <Link to={{
                           pathname: `/product-list/${item.title.replace(/\s+/g, '-').toLowerCase()}/${subitem1.title.replace(/\s+/g, '-').toLowerCase()}/${subitem2.title.replace(/\s+/g, '-').toLowerCase()}`,
                           search: "?cat_ids=" + subitem2.id,

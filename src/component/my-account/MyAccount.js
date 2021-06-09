@@ -1,5 +1,4 @@
 import React from "react";
-// import Dashboard from "../Dashboard";
 import { Link } from "react-router-dom";
 export default class MyAccount extends React.Component {
 
@@ -44,5 +43,5 @@ export default class MyAccount extends React.Component {
         </section>
       </>
     )
-  };
+  }
 }

@@ -117,10 +117,17 @@ class ProductGrid extends Component {
 
   onLayoutChange = (value) => {
     this.setState({
-      layoutValue: value,
-      layout: (value === '2X2') ? 'col-lg-6 col-sm-6 col-6' : (value === '3X3')
-        ? 'col-lg-4 col-sm-6 col-6' : 'col-lg-3 col-sm-6 col-6'
+      layoutValue: value
     });
+
+    if (gridLayout === '2X2') {
+      this.setState({ layout: 'col-lg-6 col-sm-6 col-6' });
+    }
+    else {
+      this.setState({
+        layout: (gridLayout === '3X3' ? 'col-lg-4 col-sm-6 col-6' : 'col-lg-3 col-sm-6 col-6')
+      })
+    }
   }
 
   onItemPerPage = (value) => {

@@ -9,11 +9,11 @@ import * as authAction from '../actions/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
-const required = (value) => {
-  if (!value) {
+const required = (value, name) => {
+  if (!name.value) {
     return (
-      <div className="alert alert-danger mt-2 position-relative" role="alert">
-        This field is required! <span className="corss"><FontAwesomeIcon icon={faTimes}/></span>
+      <div className="alert alert-danger" role="alert">
+        Enter your {name.name === 'username' ? 'email' : name.name}
       </div>
     );
   }
@@ -120,7 +120,7 @@ class Login extends Component {
         <p className="login-card-footer-text">Don't have an account? <Link to='/registration' onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
       </div >
     )
-  };
+  }
 }
 
 

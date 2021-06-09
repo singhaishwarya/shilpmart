@@ -92,5 +92,5 @@ export default class PressArticles extends React.Component {
 
       </div>
     )
-  };
+  }
 }

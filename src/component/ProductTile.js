@@ -115,7 +115,14 @@ class ProductTile extends React.Component {
 
     const { data, userData, wishlist, cart, gridLayout } = this.props
     const { currentLocation } = this.state
-    const cellSize = { height: gridLayout === '2X2' ? '465px' : gridLayout === '3X3' ? '297px' : '212px' };
+    const cellSize = {};
+    if (gridLayout === '2X2') {
+      cellSize.height = '465px'
+    }
+    else {
+      cellSize.height = (gridLayout === '3X3' ? '297px' : '212px')
+    }
+
     return (
 
       <div className="product-wrapper" key={data.id} >

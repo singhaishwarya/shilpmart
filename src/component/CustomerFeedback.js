@@ -132,5 +132,5 @@ export default class CustomerFeedback extends React.Component {
         </div>
       </>
     )
-  };
+  }
 }
