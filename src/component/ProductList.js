@@ -2,7 +2,6 @@ import React from "react";
 import { Treebeard } from 'react-treebeard';
 import { Range, createSliderWithTooltip } from 'rc-slider';
 import ProductGrid from './ProductGrid'
-import Loader from "react-loader-spinner";
 import CategoryService from '../services/CategoryService';
 const Ranger = createSliderWithTooltip(Range);
 
@@ -188,16 +187,7 @@ export default class ProductList extends React.Component {
 
     return (
       <>
-        {/* <Loader
-      visible={true}///dont push temporary changes
-      type="Puff"
-      color="#e05206"
-      className="loader"
-      height={100}
-      width={100}
-      margin={0}
-      timeout={1000} //3 secs
-    /> */}
+
         <section id="maincontent">
           <div className='container-fluid'>
             <div className='row py-5'>
@@ -262,6 +252,7 @@ export default class ProductList extends React.Component {
             </div >
           </div >
         </section >
+
       </>
     );
   }
