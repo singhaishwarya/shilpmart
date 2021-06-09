@@ -36,7 +36,7 @@ class App extends Component {
     const { userData } = this.props;
     return (
       <BrowserRouter>
-        <header><Header /></header>
+        <header className="navbar-fixed-top cbp-af-header"><Header /></header>
         <Switch>
           <Route isAuthenticated={userData} path='/' component={Dashboard} exact />
           <Route isAuthenticated={userData} path='/registration' component={Registration} exact />
