@@ -7,7 +7,6 @@ const qs = require('querystring')
 // Import paytm checksum utility
 const PaytmChecksum = require('./config/checksum')
 const PaytmConfig = require('./config/config')
-const { getMaxListeners } = require('process')
 
 const server = http.createServer()
 
