@@ -178,10 +178,9 @@ class ProductGrid extends Component {
       hwaccel: false,
       position: 'absolute'
     };
-    console.log("Demo==", isLoader)
     return (
       <>
-        <Loader loaded={false} message='Loading...' options={options} className="spinner" >
+        <Loader loaded={isLoader} message='Loading...' options={options} className="spinner" >
           <ToastContainer />
           {(pathname !== "/wishlist" && productListData?.data?.length > 0) &&
             <section className='topsection d-flex justify-content-between'>
