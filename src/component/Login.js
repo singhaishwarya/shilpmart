@@ -102,7 +102,7 @@ class Login extends Component {
               validations={[required]}
             />
           </div>
-          <div>{errorMsg}</div>
+          <div className="isaerror">{errorMsg}</div>
           <div className="form-group">
             <Button
               className="btn login-btn btn-block"

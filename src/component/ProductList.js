@@ -187,7 +187,6 @@ export default class ProductList extends React.Component {
 
     return (
       <>
-
         <section id="maincontent">
           <div className='container-fluid'>
             <div className='row py-5'>
