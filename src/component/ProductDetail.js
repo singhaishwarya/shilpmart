@@ -223,10 +223,40 @@ class ProductDetail extends React.Component {
                         <input type="button" value="+" onClick={() => this.countInc()} className="quantity-right-plus" />
                       </div>
                     </div>
+
+
+
                     <button type="submit" className="cart-btn buy-btn" onClick={() => this.addToCheckout(productDetailData)}>Buy Now</button>
                     <button type="submit" className="cart-btn" onClick={() => this.addToCart(productDetailData)} >Add to cart</button>
                     <ToastContainer />
                   </div>
+                  <div className="productVariation">
+                  <span>Color :</span>
+                  <div className="productVariationList">
+                    <div className="colors"><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"
+                              alt="Saree" /></div>
+                              <div className="colors color-active"><img src={require('../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
+                              alt="Saree" /></div>
+                              <div className="colors"><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"
+                              alt="Saree" /></div>
+
+                  </div>
+              </div>
+
+          <div className="productVariation">
+            <span>Size  :</span>
+            <div className="productVariationList">
+              <div className="sizes">
+                  <button>S</button>
+                  <button>M</button>
+                  <button>L</button>
+                  <button className="sizeSelected">XL</button>
+                  <button>XXL</button>
+              </div>
+
+            </div>
+          </div>
+
                   <div className="action-links">
                     <span>
                       <FontAwesomeIcon icon={faRandom} /> Compare</span>

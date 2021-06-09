@@ -190,7 +190,7 @@ export default class ProductList extends React.Component {
 
     return (
       <>
-        {/* <Loader
+        <Loader
       visible={true}///dont push temporary changes
       type="Puff"
       color="#e05206"
@@ -198,8 +198,8 @@ export default class ProductList extends React.Component {
       height={100}
       width={100}
       margin={0}
-      timeout={1000} //3 secs
-    /> */}
+      timeout={3000} //3 secs
+    />
         <section id="maincontent">
           <div className='container-fluid'>
             <div className='row py-5'>
