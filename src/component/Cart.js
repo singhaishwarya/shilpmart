@@ -116,7 +116,7 @@ class Cart extends Component {
                         <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
                           className="img-fluid"
                           onClick={() => this.productDetail(item.product_details.id)}
-                          alt={(finItem?.images?.length > 0 && finItem?.images[0]?.caption) || "false"}
+                          alt={(finItem?.images?.length > 0 && finItem?.images[0]?.caption) || ""}
                           onError={e => { e.currentTarget.src = require('../public/bag1.jpeg') }}
                         />
                       </td>

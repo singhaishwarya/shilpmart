@@ -27,7 +27,7 @@ export default class ProductList extends React.Component {
       category_id: props.history.location.state?.category_id || (this.currentUrlParams.get('cat_ids') || 0),
       category_breadcrumbs: props.history.location.state?.category_breadcrumbs,
       selectedOption: null, queryParams: {},
-      parentCategory: localStorage.getItem('parentCategory') && JSON.parse(localStorage.getItem('parentCategory')) || []
+      parentCategory: (localStorage.getItem('parentCategory') && JSON.parse(localStorage.getItem('parentCategory'))) || []
     };
 
   }

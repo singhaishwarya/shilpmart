@@ -124,7 +124,7 @@ class ProductTile extends React.Component {
       <div className="product-wrapper" key={data.id} >
 
         <div className="prodcut-img" onClick={() => this.productDetail(data.id)} style={cellSize}>
-          <img src={data.images?.length > 0 && data?.images[0]?.image_url || ""}
+          <img src={(data.images?.length > 0 && data?.images[0]?.image_url) || ""}
             className="img-fluid"
             onClick={() => this.productDetail(data.id)}
             alt={(data.images?.length > 0 && data.images[0]?.caption) || ""}

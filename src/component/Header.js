@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import Login from "./Login";
 import CartOverlay from "./CartOverlay";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust, faCross, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal';
 import {
@@ -344,7 +344,7 @@ class Header extends Component {
             <div className="form-inline my-2 my-lg-0">
               <div className="search-bar w-100 d-flex justify-content-start" >
                 <input onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search" />
-                <button className="closeBtn"><FontAwesomeIcon icon={faTimes}/></button>
+                <button className="closeBtn"><FontAwesomeIcon icon={faTimes} /></button>
                 <div className="search-btn">
                   <button className="btn my-2 my-sm-0" type="submit">
                     <FontAwesomeIcon icon={faSearch} />
