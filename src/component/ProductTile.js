@@ -115,14 +115,16 @@ class ProductTile extends React.Component {
 
     const { data, userData, wishlist, cart, gridLayout } = this.props
     const { currentLocation } = this.state
-    const cellSize = { height: gridLayout === '2X2' ? '465px' : gridLayout === '3X3' ? '297px' : '212px' };
+    const cellSize = {};
+    if (gridLayout === '2X2') { cellSize.height = '465px' }
+    else { cellSize.height = (gridLayout === '3X3' ? '297px' : '212px') }
+
     return (
 
       <div className="product-wrapper" key={data.id} >
 
-        <div className="prodcut-img" onClick={() => this.productDetail(data.id)}
-          style={cellSize}>
-          <img src={(data.images?.length > 0 && data?.images[0]?.image_url) || ""}
+        <div className="prodcut-img" onClick={() => this.productDetail(data.id)} style={cellSize}>
+          <img src={data.images?.length > 0 && data?.images[0]?.image_url || ""}
             className="img-fluid"
             onClick={() => this.productDetail(data.id)}
             alt={(data.images?.length > 0 && data.images[0]?.caption) || ""}
@@ -159,13 +161,9 @@ class ProductTile extends React.Component {
           {data.content ? data.content.title : '__'}
         </h5>
         <span className="product-price">
-          <strike><span>₹</span> 1000</strike> <span>₹</span> {data?.price?.length > 0 && data?.price[0]?.price}
+          <strike><span>₹</span> 1000</strike> <span>₹</span> {data?.price?.length > 0 ? data?.price[0]?.price : 0}
         </span>
-      </div >
-
-
-
-    );
+      </div >);
   }
 }
 

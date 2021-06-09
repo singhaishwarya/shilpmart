@@ -90,6 +90,6 @@ export default class ForgotPassword extends Component {
       </section>
 
     )
-  };
+  }
 }
 

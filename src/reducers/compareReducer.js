@@ -19,4 +19,4 @@ export default function compareReducer(state = [], action) {
     default:
       return state;
   }
-};
+}

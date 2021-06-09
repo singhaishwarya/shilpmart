@@ -267,7 +267,6 @@ export default class AddEditAddress extends React.Component {
           </div>
         </div >
       </div >
-
     )
-  };
+  }
 }

@@ -1,9 +1,7 @@
 import React from "react";
 import { Treebeard } from 'react-treebeard';
-// import ReactStars from 'react-stars'
 import { Range, createSliderWithTooltip } from 'rc-slider';
 import ProductGrid from './ProductGrid'
-import Loader from "react-loader-spinner";
 import CategoryService from '../services/CategoryService';
 const Ranger = createSliderWithTooltip(Range);
 
@@ -123,7 +121,6 @@ export default class ProductList extends React.Component {
       CategoryService.fetchAllCategory({ parent_id: category_id }).then((result) => {
         MegaMenu = result?.map((item) => {
           return {
-            name: 'root',
             toggled: false,
             name: item.title,
             key: item.id,
@@ -190,16 +187,6 @@ export default class ProductList extends React.Component {
 
     return (
       <>
-        <Loader
-      visible={true}///dont push temporary changes
-      type="Puff"
-      color="#e05206"
-      className="loader"
-      height={100}
-      width={100}
-      margin={0}
-      timeout={3000} //3 secs
-    />
         <section id="maincontent">
           <div className='container-fluid'>
             <div className='row py-5'>
@@ -264,6 +251,7 @@ export default class ProductList extends React.Component {
             </div >
           </div >
         </section >
+
       </>
     );
   }

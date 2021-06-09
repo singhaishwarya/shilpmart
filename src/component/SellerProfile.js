@@ -25,27 +25,20 @@ export default class SellerProfile extends React.Component {
           label: 'Travel Accessories',
           items: [
             {
-              label: 'Bag',
-              onSelected: function () { }
+              label: 'Bag'
             },
             {
-              label: 'Luggage',
-              onSelected: function () { }
+              label: 'Luggage'
             }, {
-              label: 'Cover',
-              onSelected: function () { }
+              label: 'Cover'
             },
             {
-              label: 'Mask',
-              onSelected: function () { }
+              label: 'Mask'
             }
           ]
         }
       ],
     }
-  }
-
-  componentDidMount() {
   }
 
   render() {
@@ -141,5 +134,5 @@ export default class SellerProfile extends React.Component {
 
       </div>
     )
-  };
+  }
 }

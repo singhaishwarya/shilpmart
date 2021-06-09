@@ -13,10 +13,9 @@ export default function cartReducer(state = [], action) {
 
     case actionTypes.DELETE_CART:
 
-      let fin = state.filter((data, i) =>
+      return state.filter((data, i) =>
         data !== action.id
       );
-      return fin;
 
     case actionTypes.EMPTY_CART:
       return action.cart = [];
@@ -25,4 +24,4 @@ export default function cartReducer(state = [], action) {
     default:
       return state;
   }
-};
+}

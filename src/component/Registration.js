@@ -245,5 +245,5 @@ export default class Registration extends React.Component {
       </div>
 
     )
-  };
+  }
 }

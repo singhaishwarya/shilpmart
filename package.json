@@ -30,7 +30,7 @@
     "react-device-detect": "^1.17.0",
     "react-dom": "^16.8.6",
     "react-image-gallery": "^1.0.9",
-    "react-loader-spinner": "^4.0.0",
+    "react-loader": "^2.4.7",
     "react-mega-menu": "^1.0.1",
     "react-modal": "^3.13.1",
     "react-multi-select-component": "^4.0.1",
