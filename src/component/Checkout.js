@@ -63,10 +63,20 @@ export default class Checkout extends React.Component {
       var request = {
         url: url,
         data: params,
-        method: 'get'
+        method: 'get',
+        headers: {
+          "Access-Control-Allow-Origin": "true", 'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        crossdomain: true, proxy: {
+          host: 'localhost',
+          port: 3003
+        }
+
       }
       const response = await axios(request);
-      // const processParams = await response.json;
+      const processParams = await response.json;
+      console.log("demo==", processParams)
     } catch {
       console.log("demo error")
     }
