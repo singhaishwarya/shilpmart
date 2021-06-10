@@ -12,7 +12,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 const required = (value, name) => {
   if (!name.value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="isaerror" role="alert">
         Enter your {name.name === 'username' ? 'email' : name.name}
       </div>
     );
@@ -102,7 +102,7 @@ class Login extends Component {
               validations={[required]}
             />
           </div>
-          <div className="isaerror">{errorMsg}</div>
+         { errorMsg && <div className="isaerror">{errorMsg}</div>}
           <div className="form-group">
             <Button
               className="btn login-btn btn-block"

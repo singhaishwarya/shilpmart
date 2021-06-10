@@ -188,7 +188,7 @@ class ProductGrid extends Component {
                 <ol className='breadcrumb bg-transparent'>
                   <li className='breadcrumb-item'> <Link to='/'>Home</Link></li>
                   <li className='breadcrumb-item'
-                    aria-current={true}> <Link to='/product-list'>Shop</Link></li>
+                    aria-current={true}>Shop</li>
                   {categoryBreadcrumbs?.map((item, index) => {
                     return (<li key={index}
                       className={`breadcrumb-item ${(index === categoryBreadcrumbs?.length - 1 ? 'active' : '')}`} aria-current={true}>

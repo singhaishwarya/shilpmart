@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faPhone, faQuestion, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faPhone, faQuestion, faEnvelope, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
 import {
@@ -201,6 +201,7 @@ class ProductDetail extends React.Component {
                     showThumbnails={productDetailData?.images?.length > 0 ? true : false}
                     onErrorImageURL={require('../public/No_Image_Available.jpeg')}
                   />
+                  <div className="addtowish"><FontAwesomeIcon icon={faHeart}/></div>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-12">
@@ -364,7 +365,50 @@ class ProductDetail extends React.Component {
 
                   <div className="product-description">
                     <header>Review</header>
-                    <Bars data={this.state.testData} makeUppercase={true} />
+                    {/* <Bars data={this.state.testData} makeUppercase={true} /> */}
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <div className="avgratings">
+                          <div className="avgrate">4.7<span>★</span></div>
+                          <div className="avgstate">324 Ratings & 66 Reviews</div>
+                        </div>
+                      </div>
+                      <div className="col-sm-9">
+                        <div className="barWrapper">
+                          <ul className="rate">
+                            <li className="rateNumbers"><span>5</span><span>★</span></li>
+                            <li className="rateNumbers"><span>4</span><span>★</span></li>
+                            <li className="rateNumbers"><span>3</span><span>★</span></li>
+                            <li className="rateNumbers"><span>2</span><span>★</span></li>
+                            <li className="rateNumbers"><span>1</span><span>★</span></li>
+                          </ul>
+                          <ul className="bars">
+                            <li><div className="bar"><span className="bargreen"></span></div></li>
+                            <li><div className="bar"><span className="bargreen pro4"></span></div></li>
+                            <li><div className="bar"><span className="bargreen pro3"></span></div></li>
+                            <li><div className="bar"><span className="barorange"></span></div></li>
+                            <li><div className="bar"><span className="barred"></span></div></li>
+                          </ul>
+                          <ul className="result">
+                            <li><span>225</span></li>
+                            <li><span>125</span></li>
+                            <li><span>15</span></li>
+                            <li><span>05</span></li>
+                            <li><span>10</span></li>
+                          </ul>
+                        </div>
+                      </div>
+
+      <div className="col my-2">
+        <p>Images uploaded by Customer</p>
+        <div className="imgCustomer">
+      <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"                       alt="Saree" /></span>
+      <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"                       alt="Saree" /></span>
+      </div>
+      </div>
+
+                    </div>
+                    
                   </div>
                 </div>
               </div>

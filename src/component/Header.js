@@ -343,7 +343,7 @@ class Header extends Component {
           >
             <div className="form-inline my-2 my-lg-0">
               <div className="search-bar w-100 d-flex justify-content-start" >
-                <form ><input onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search" />
+                <form className="w-100 position-relative"><input onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search" />
                   {searchQuery &&
                     <button onClick={() => this.setState({ searchQuery: '', seachResults: [] })} type="button" className="closeBtn" ><FontAwesomeIcon icon={faTimes} /></button>
                   }
@@ -400,6 +400,11 @@ class Header extends Component {
           </ul>
         </div >
         <Navbar />
+
+
+
+
+
       </>
     );
   }
