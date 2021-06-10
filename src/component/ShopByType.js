@@ -14,6 +14,7 @@ class ShopByType extends Component {
     super(props);
     this.state = {
       type: this.props.type,
+      tabType: this.props.tabType,
       responsive: {
         0: { items: 2 },
         568: { items: 3 },
@@ -24,9 +25,14 @@ class ShopByType extends Component {
     };
 
   }
+  componentDidUpdate(prevProps) {
+    if (this.props.tabType !== prevProps.tabType) {
+      this.getProductsList(this.props.tabType)
 
+    }
+  }
   componentDidMount() {
-    this.state.type === 'product' ? this.getProductsList() : this.getCateroryList();
+    this.state.type === 'product' ? this.getProductsList(this.props.tabType) : this.getCateroryList();
   }
 
 
@@ -53,8 +59,9 @@ class ShopByType extends Component {
     });
   }
 
-  getProductsList = () => {
-    ProductService.fetchAllProducts().then((result) => {
+  getProductsList = (tab) => {
+    let filterparams = tab === 2 ? { 'order_by': 'desc', 'sort_by': 'created_at' } : {};
+    ProductService.fetchAllProducts(filterparams).then((result) => {
       this.setState({
         shopByProductItems: result?.data?.map((item) =>
           (<ProductTile data={item} {...this.props} errorAlert={this.errorAlert} successAlert={this.successAlert} />))
