@@ -29,14 +29,28 @@ import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
 
+    };
+  }
+
+  componentDidMount() {
+    let _this = this;
+    window.onscroll = function () {
+      if (window.pageYOffset !== 0) {
+        _this.setState({ onScroll: true })
+      }
+    };
+  }
 
   render() {
-
+    const { onScroll } = this.state;
     const { userData } = this.props;
     return (
       <BrowserRouter>
-        <header className="navbar-fixed-top cbp-af-header"><Header /></header>
+        <header ><Header /></header>
         <Switch>
           <Route isAuthenticated={userData} path='/' component={Dashboard} exact />
           <Route isAuthenticated={userData} path='/registration' component={Registration} exact />
