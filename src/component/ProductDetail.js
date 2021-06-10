@@ -48,13 +48,14 @@ class ProductDetail extends React.Component {
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0);
+
     this.getProductDetails(this.getQueryParams());
   }
 
-  componentWillReceiveProps() {
-    window.scrollTo(0, 0);
-    this.getProductDetails(this.getQueryParams());
+  componentDidUpdate(prevprops) {
+    if (prevprops.history.location.search !== prevprops.location.search) {
+      this.getProductDetails(this.getQueryParams());
+    }
   }
 
   getQueryParams() {
@@ -90,6 +91,7 @@ class ProductDetail extends React.Component {
               'thumbnail': item.image_url
             }))
         });
+        window.scrollTo(0, 0);
       });
     } catch (err) {
       console.log(err);
@@ -233,31 +235,31 @@ class ProductDetail extends React.Component {
                     <ToastContainer />
                   </div>
                   <div className="productVariation">
-                  <span>Color :</span>
-                  <div className="productVariationList">
-                    <div className="colors"><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"
-                              alt="Saree" /></div>
-                              <div className="colors color-active"><img src={require('../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
-                              alt="Saree" /></div>
-                              <div className="colors"><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"
-                              alt="Saree" /></div>
+                    <span>Color :</span>
+                    <div className="productVariationList">
+                      <div className="colors"><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"
+                        alt="Saree" /></div>
+                      <div className="colors color-active"><img src={require('../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
+                        alt="Saree" /></div>
+                      <div className="colors"><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"
+                        alt="Saree" /></div>
 
+                    </div>
                   </div>
-              </div>
 
-          <div className="productVariation">
-            <span>Size  :</span>
-            <div className="productVariationList">
-              <div className="sizes">
-                  <button>S</button>
-                  <button>M</button>
-                  <button>L</button>
-                  <button className="sizeSelected">XL</button>
-                  <button>XXL</button>
-              </div>
+                  <div className="productVariation">
+                    <span>Size  :</span>
+                    <div className="productVariationList">
+                      <div className="sizes">
+                        <button>S</button>
+                        <button>M</button>
+                        <button>L</button>
+                        <button className="sizeSelected">XL</button>
+                        <button>XXL</button>
+                      </div>
 
-            </div>
-          </div>
+                    </div>
+                  </div>
 
                   <div className="action-links">
                     <span>
