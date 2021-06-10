@@ -25,7 +25,7 @@ export default class Checkout extends Component {
       config.params = '';
       config.data = '';
       const response = await axios(config);
-      return response.data ? response.data : [];
+      return response.data ? response.data.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;

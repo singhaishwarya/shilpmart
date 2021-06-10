@@ -298,19 +298,22 @@ class Header extends Component {
           })}
         </ul></div>
         <div className="appaccout"> <ul className="navbar-nav flex-row">
-          {this.props.userData.token ? <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
-            onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
-            {isMenuShown &&
-              <div className="myAccout-dropdown">
-                <Link to='/my-account/dashboard'> Dashboard</Link>
-                <Link to='/my-account/order'>Orders</Link>
-                <Link to='/my-account/address'>Addresses</Link>
-                <Link to='/my-account/details'>Account details</Link>
-                <Link to='/my-account/feedback'>Feedback</Link>
-                <Link to='my-account/wishlist'>Wishlist</Link>
-                <Link to="" onClick={() => this.logout()}>Logout</Link>
-              </div>
-            } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
+          {this.props.userData.token ?
+            <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
+              onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
+              {isMenuShown &&
+                <div className="myAccout-dropdown">
+                  <Link to='/my-account/dashboard'> Dashboard</Link>
+                  <Link to='/my-account/order'>Orders</Link>
+                  <Link to='/my-account/address'>Addresses</Link>
+                  <Link to='/my-account/details'>Account details</Link>
+                  <Link to='/my-account/feedback'>Feedback</Link>
+                  <Link to='my-account/wishlist'>Wishlist</Link>
+                  <Link to="" onClick={() => this.logout()}>Logout</Link>
+                </div>
+              }
+            </li>
+            : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
 
           <li className="nav-item">
             <Link to='/wishlist' className="nav-link">

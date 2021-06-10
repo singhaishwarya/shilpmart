@@ -72,7 +72,7 @@ export default class Checkout extends React.Component {
       })
     });
     checkoutObj.products = prodObj;
-    CheckoutService.orderPlace(checkoutObj).then((result) => {
+    CheckoutService.orderCancel(checkoutObj).then((result) => {
       if (!result) return
       console.log("Demo==response", result)
     }).catch((err) => {

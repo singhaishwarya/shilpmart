@@ -1,14 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CheckoutService from '../../../services/CheckoutService';
+import { format } from 'date-fns'
 export default class Orders extends React.Component {
 
   constructor() {
     super();
     this.state = {
+      orderList: []
     };
+  }
+  componentDidMount() {
+    this.getOrders();
+  }
+  getOrders = () => {
+    CheckoutService.list().then((result) => {
+      if (!result) return
+      this.setState({ orderList: result.data });
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+  cancelOrder = (order) => {
+
+    let productIds = [];
+    order.product_details.map((item) => {
+      productIds.push(item.id)
+    })
+    CheckoutService.orderCancel({ order_id: order.id, product_id: productIds }).then((result) => {
+      if (!result) return
+      // this.setState({ orderList: result.data });
+
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   render() {
+
     return (
       <div className="table-responsive">
         <table className="table table-hover">
@@ -23,44 +52,17 @@ export default class Orders extends React.Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>#3535</td>
-              <td>25 May 2021</td>
+            {this.state.orderList.map((item, index) => <tr key={index}>
+              <td>#{item.id}</td>
+              <td>{format(new Date(item.created_at), 'dd-MM-yyyy')}{ }</td>
               <td className="text-success">Complete</td>
-              <td>2530</td>
+              <td><span>₹</span>{item.order_total}</td>
               <td className="text-right act-btn">
                 <Link to='/my-account/order-detail'><button type="button" className="btn btn-success btn-sm">View</button></Link>
-                <button type="button" className="btn btn-danger btn-sm">Cancel</button>
+                <button type="button" className="btn btn-danger btn-sm" onClick={() => this.cancelOrder(item)}>Cancel</button>
                 <button type="button" className="btn btn-warning btn-sm">Support</button>
               </td>
-            </tr>
-
-            {/* <tr>
-              <td>#3536</td>
-              <td>28 May 2021</td>
-              <td className="text-warning">Process</td>
-              <td>2530</td>
-              <td className="text-right act-btn">
-                <button type="button" className="btn btn-success btn-sm">View</button>
-                <button type="button" className="btn btn-danger btn-sm">Cancel</button>
-                <button type="button" className="btn btn-warning btn-sm">Support</button>
-              </td>
-            </tr> */}
-
-            {/* <tr>
-              <td>#3536</td>
-              <td>23 May 2021</td>
-              <td className="text-danger">Cancel</td>
-              <td>2530</td>
-              <td className="text-right act-btn">
-                <button type="button" className="btn btn-success btn-sm">View</button>
-                <button type="button" className="btn btn-danger btn-sm">Cancel</button>
-                <button type="button" className="btn btn-warning btn-sm">Support</button>
-              </td>
-            </tr> */}
-
-
-
+            </tr>)}
           </tbody>
         </table>
       </div>
