@@ -53,7 +53,7 @@ export default class Checkout extends React.Component {
     checkoutObj = {
       "is_checkout": true,
       "coupan_code": "",
-      "is_billing_address_same": this.state.isBillingAddressSame,
+      "is_billing_address_same": 'true',
       "billing_address": {
         "address_id": this.state.selectedAddress.id
       }, "shipping_address": {
@@ -66,7 +66,7 @@ export default class Checkout extends React.Component {
     }
     this.state.checkOutData.map((item, index) => {
       prodObj.push({
-        "product_id": item.product_details.id,
+        "product_id": item.product_details?.id || item.id,
         "quantity": item.quantity,
         "variation_index": item.variation_index
       })

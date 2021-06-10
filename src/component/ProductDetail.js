@@ -14,9 +14,11 @@ import ProductService from '../services/ProductService';
 import ToastService from '../services/ToastService';
 import CartService from '../services/CartService';
 import * as cartAction from '../actions/cart';
+import * as wishlistAction from '../actions/wishlist';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import Bars from 'react-bars';
+import WishlistService from '../services/WishlistService'
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,7 @@ class ProductDetail extends React.Component {
       shareUrl: 'https://app.digitalindiacorporation.in/v1/digi/',
       title: 'eShilpmart',
       productDetailData: {},
-      productCount: 1,
+      productQuantity: 1,
       visible: true,
       showModal: false,
       notFountImage: [{
@@ -58,27 +60,55 @@ class ProductDetail extends React.Component {
     }
   }
 
+  deleteWishlist = (item) => {
+    (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id);
+  }
+
+  deleteWishlistApi(item) {
+    this.props.deleteWishlist(item.id)
+    WishlistService.delete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
+      if (result?.success) {
+        // this.getWishlist();
+      }
+    })
+  }
+
+  addToWishlist = (product) => {
+
+    if (Object.keys(this.props.userData).length > 0) { this.addToWishlistApi(product) } else {
+      this.props.addToWishlist(product.id);
+      this.successAlert(product, 'wishlist');
+    }
+
+  }
+
+  addToWishlistApi = (product) => {
+    this.props.addToWishlist(product.id)
+    WishlistService.add({ product_id: [product.id] }).then((result) => {
+      if (result?.success) {
+        this.successAlert(product, 'wishlist');
+        // this.getWishlist();
+      }
+    });
+  }
+  successAlert = (product, type) => {
+    return ToastService.success(product?.content?.title + " is successfully added to " + type)
+  }
+
   getQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);
     let entries = urlParams.entries(), queryParams = {};
     for (const entry of entries) {
       queryParams.product_ids = entry[0] === 'pid' ? [entry[1]] : '';
-
-      // switch (entry[0]) {
-      //   case 'pid':
-      //     queryParams.product_ids = [entry[1]];
-      //     break
-      //   default:
-      //     return;
-      // }
     }
     return queryParams;
   }
+
   countInc = () => {
-    this.setState({ productCount: this.state.productCount + 1 });
+    this.setState({ productQuantity: this.state.productQuantity + 1 });
   }
   countDec = () => {
-    this.setState({ productCount: this.state.productCount - 1 });
+    this.setState({ productQuantity: this.state.productQuantity - 1 });
   }
   getProductDetails = (queryParams) => {
     try {
@@ -118,9 +148,9 @@ class ProductDetail extends React.Component {
     })
 
   }
-  productCountManual = (event) => {
+  productQuantityManual = (event) => {
 
-    this.setState({ productCount: event.target.value });
+    this.setState({ productQuantity: event.target.value });
   }
 
   addToCart = (product) => {
@@ -180,6 +210,8 @@ class ProductDetail extends React.Component {
 
 
   addToCheckout = (product) => {
+    product.quantity = this.state.productQuantity;
+    product.variation_index = 1;//to be implemented
     this.props.history.push({
       pathname: '/checkout',
       state: { checkout: [product] }
@@ -187,7 +219,8 @@ class ProductDetail extends React.Component {
   }
 
   render() {
-    const { productDetailData, productCount, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages } = this.state;
+    const { productDetailData, productQuantity, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages } = this.state;
+    const { wishlist, userData } = this.props;
     return (
       <>
         <section id="maincontent">
@@ -201,7 +234,11 @@ class ProductDetail extends React.Component {
                     showThumbnails={productDetailData?.images?.length > 0 ? true : false}
                     onErrorImageURL={require('../public/No_Image_Available.jpeg')}
                   />
-                  <div className="addtowish"><FontAwesomeIcon icon={faHeart}/></div>
+                  <div className="addtowish"><FontAwesomeIcon icon={(wishlist?.includes(productDetailData.id) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
+                    onClick={() => {
+                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || wishlist?.includes(productDetailData.id)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
+                    }} /></div>
+
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-12">
@@ -223,8 +260,8 @@ class ProductDetail extends React.Component {
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
                       <div className="input-group">
-                        <input type="button" value="-" className="quantity-left-minus" disabled={productCount < 1} onClick={() => this.countDec()} />
-                        <input type="number" value={productCount} onChange={this.productCountManual} />
+                        <input type="button" value="-" className="quantity-left-minus" disabled={productQuantity < 1} onClick={() => this.countDec()} />
+                        <input type="number" value={productQuantity} onChange={this.productQuantityManual} />
                         <input type="button" value="+" onClick={() => this.countInc()} className="quantity-right-plus" />
                       </div>
                     </div>
@@ -399,16 +436,16 @@ class ProductDetail extends React.Component {
                         </div>
                       </div>
 
-      <div className="col my-2">
-        <p>Images uploaded by Customer</p>
-        <div className="imgCustomer">
-      <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"                       alt="Saree" /></span>
-      <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"                       alt="Saree" /></span>
-      </div>
-      </div>
+                      <div className="col my-2">
+                        <p>Images uploaded by Customer</p>
+                        <div className="imgCustomer">
+                          <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid" alt="Saree" /></span>
+                          <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid" alt="Saree" /></span>
+                        </div>
+                      </div>
 
                     </div>
-                    
+
                   </div>
                 </div>
               </div>
@@ -433,13 +470,17 @@ class ProductDetail extends React.Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart,
-    userData: state.userData
+    userData: state.userData,
+    wishlist: state.wishlist
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: cart => dispatch(cartAction.addToCart(cart))
+    addToCart: cart => dispatch(cartAction.addToCart(cart)),
+    addToWishlist: wishlist => dispatch(wishlistAction.addToWishlist(wishlist)),
+    deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index)),
+
   }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
