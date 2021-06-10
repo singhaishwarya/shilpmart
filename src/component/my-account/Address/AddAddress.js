@@ -27,7 +27,11 @@ const mobile = (value) => {
 
 const pincode = (value) => {
 
-  // if (!validator.isInt(value, 6, 6)) { }
+  if (value.length !== 6) {
+    return <div className="alert alert-danger" role="alert">
+      Length of pincode should be numeric and contain 6 digit.
+      </div>
+  }
 }
 
 export default class AddEditAddress extends React.Component {
@@ -37,7 +41,7 @@ export default class AddEditAddress extends React.Component {
 
     this.handleAddEditAddress = this.handleAddEditAddress.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    const savedAddress = props.history.location.state?.address;
+    const savedAddress = props?.history?.location.state?.address;
 
     this.state = {
       fields: {
@@ -62,7 +66,7 @@ export default class AddEditAddress extends React.Component {
   }
   componentDidMount() {
     this.getStates();
-    if (this.props.history.location.state?.address) {
+    if (this.props?.history?.location.state?.address) {
 
       this.getDistrict(this.state.fields.state);
       this.getSubDistrict(this.state.fields.state, this.state.fields.district)
@@ -102,6 +106,7 @@ export default class AddEditAddress extends React.Component {
   }
   handleAddEditAddress(e) {
     e.preventDefault();
+
     AddressService.add(this.state.fields)
       .then((result) => {
 
@@ -136,7 +141,7 @@ export default class AddEditAddress extends React.Component {
                 </div>
                 <div className="form-group col-lg-6 col-12">
                   <label htmlFor="fname">Mobile<span>*</span></label>
-                  <Input type="text" className="form-control" name="mobile" value={fields.mobile}
+                  <Input type="number" pattern="[0-9]*" className="form-control" name="mobile" value={fields.mobile}
                     onChange={this.handleChange.bind(this, "mobile")}
                     validations={[required, mobile]}
                   />
@@ -145,7 +150,7 @@ export default class AddEditAddress extends React.Component {
               <div className="form-row">
                 <div className="form-group col"><label htmlFor="fname">Pin Code<span>*</span></label>
                   <Input
-                    type="text"
+                    type="number" pattern="[0-9]*"
                     className="form-control"
                     name="pincode"
                     value={fields.pincode}

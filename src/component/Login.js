@@ -42,7 +42,7 @@ class Login extends Component {
 
   onChangePassword = (e) => {
     this.setState({
-      password: e.target.value,
+      password: e.target.value
     });
   }
 
