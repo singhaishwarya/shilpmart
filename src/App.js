@@ -29,24 +29,10 @@ import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
 
-    };
-  }
-
-  componentDidMount() {
-    let _this = this;
-    // window.onscroll = function () {
-    //   if (window.pageYOffset !== 0) {
-    //     _this.setState({ onScroll: true })
-    //   }
-    // };
-  }
 
   render() {
-    const { onScroll } = this.state;
+
     const { userData } = this.props;
     return (
       <BrowserRouter>
@@ -81,7 +67,7 @@ class App extends Component {
             } />
           </MyAccount>
         </Switch>
-        
+
         <Footer />
         {/* <div className="headersticky">
           <div className="appLogo"> 

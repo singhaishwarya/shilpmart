@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import Login from "./Login";
 import CartOverlay from "./CartOverlay";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust, faTimes, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal';
 import {
@@ -61,16 +61,27 @@ class Header extends Component {
       shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/'],
       title: 'eShilpmart',
       isLoggedIn: this.props.userData.token,
-      isMenuShown: false
+      isMenuShown: false, navbarTabs: [{ title: 'HOME', route: '' },
+      { title: 'ABOUT US', route: '' },
+      { title: 'SHOP', route: 'product-list' },
+      { title: 'CUSTOMER SERVICE', route: '' }], isActiveTab: 0, scrolled: false
     }
   }
 
   componentDidMount = () => {
     document.addEventListener('mousedown', this.handleClickOutside, false)
+    document.addEventListener('scroll', this.handleScroll, false)
 
     if (this.state.isLoggedIn) {
       this.syncWishlist();
       this.syncCart();
+    }
+  }
+  handleScroll = () => {
+
+    let _this = this;
+    window.onscroll = function () {
+      _this.setState({ scrolled: window.pageYOffset > 200 ? true : false })
     }
   }
   syncCart = () => {
@@ -172,7 +183,6 @@ class Header extends Component {
     }
     else {
       Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product?.id)
-
     }
   }
   errorAlert = (product) => {
@@ -271,10 +281,57 @@ class Header extends Component {
   }
 
   render() {
-    const { searchQuery, showModal, shareUrl, title, isMenuShown, overlayType } = this.state;
+    const { searchQuery, showModal, shareUrl, title, isMenuShown, overlayType, navbarTabs, isActiveTab, scrolled } = this.state;
 
     return (
-      <>
+      <>{scrolled ? <div className="headersticky">
+        <div className="appLogo">
+          <Link to='/'><img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" /></Link></div>
+        <div className="appMenu"> <ul className="navbar-nav mr-auto ml-2">
+          {navbarTabs?.map((item, index) => {
+            return (
+              <li key={index}>
+                <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>
+                  {item.title === 'HOME' && <FontAwesomeIcon icon={faHome} />} {item.title} </Link>
+              </li>
+            )
+          })}
+        </ul></div>
+        <div className="appaccout"> <ul className="navbar-nav flex-row">
+          {this.props.userData.token ? <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
+            onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
+            {isMenuShown &&
+              <div className="myAccout-dropdown">
+                <Link to='/my-account/dashboard'> Dashboard</Link>
+                <Link to='/my-account/order'>Orders</Link>
+                <Link to='/my-account/address'>Addresses</Link>
+                <Link to='/my-account/details'>Account details</Link>
+                <Link to='/my-account/feedback'>Feedback</Link>
+                <Link to='my-account/wishlist'>Wishlist</Link>
+                <Link to="" onClick={() => this.logout()}>Logout</Link>
+              </div>
+            } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
+
+          <li className="nav-item">
+            <Link to='/wishlist' className="nav-link">
+              <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></Link>
+          </li>
+
+          <li className="nav-item">
+            <Link to='/compare' className="nav-link">
+              <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span>
+            </Link>
+          </li>
+
+
+          <li className="nav-item" onClick={() => this.dismissModal('cart')}>
+            <span className="nav-link">
+              <FontAwesomeIcon icon={faShoppingBasket} /> <span>{this.props?.cart?.length}</span>
+            </span>
+
+          </li>
+        </ul></div>
+      </div> : <>
         <div>
           <Modal
             isOpen={showModal}
@@ -399,13 +456,7 @@ class Header extends Component {
             </li>
           </ul>
         </div >
-        <Navbar />
-
-
-
-
-
-      </>
+        <Navbar /> </>}</>
     );
   }
 }
