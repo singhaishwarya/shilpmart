@@ -70,20 +70,20 @@ class Header extends Component {
 
   componentDidMount = () => {
     document.addEventListener('mousedown', this.handleClickOutside, false)
-    document.addEventListener('scroll', this.handleScroll, false)
+    document.addEventListener('scroll', this.handleScroll)
 
     if (this.state.isLoggedIn) {
       this.syncWishlist();
       this.syncCart();
     }
   }
-  handleScroll = () => {
-
-    let _this = this;
-    window.onscroll = function () {
-      _this.setState({ scrolled: window.pageYOffset > 200 ? true : false })
-    }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
+  handleScroll = (event) => {
+    this.setState({ scrolled: window.pageYOffset === 0 ? false : true })
+  }
+
   syncCart = () => {
     const { cart } = this.props;
     if (cart?.length > 0) {
@@ -284,160 +284,37 @@ class Header extends Component {
     const { searchQuery, showModal, shareUrl, title, isMenuShown, overlayType, navbarTabs, isActiveTab, scrolled } = this.state;
 
     return (
-      <>{scrolled ? <div className="headersticky">
-        <div className="appLogo">
-          <Link to='/'><img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" /></Link></div>
-        <div className="appMenu"> <ul className="navbar-nav mr-auto ml-2">
-          {navbarTabs?.map((item, index) => {
-            return (
-              <li key={index}>
-                <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>
-                  {item.title === 'HOME' && <FontAwesomeIcon icon={faHome} />} {item.title} </Link>
-              </li>
-            )
-          })}
-        </ul></div>
-        <div className="appaccout"> <ul className="navbar-nav flex-row">
-          {this.props.userData.token ?
-            <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
-              onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
-              {isMenuShown &&
-                <div className="myAccout-dropdown">
-                  <Link to='/my-account/dashboard'> Dashboard</Link>
-                  <Link to='/my-account/order'>Orders</Link>
-                  <Link to='/my-account/address'>Addresses</Link>
-                  <Link to='/my-account/details'>Account details</Link>
-                  <Link to='/my-account/feedback'>Feedback</Link>
-                  <Link to='my-account/wishlist'>Wishlist</Link>
-                  <Link to="" onClick={() => this.logout()}>Logout</Link>
-                </div>
-              }
-            </li>
-            : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
-
-          <li className="nav-item">
-            <Link to='/wishlist' className="nav-link">
-              <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></Link>
-          </li>
-
-          <li className="nav-item">
-            <Link to='/compare' className="nav-link">
-              <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span>
-            </Link>
-          </li>
-
-
-          <li className="nav-item" onClick={() => this.dismissModal('cart')}>
-            <span className="nav-link">
-              <FontAwesomeIcon icon={faShoppingBasket} /> <span>{this.props?.cart?.length}</span>
-            </span>
-
-          </li>
-        </ul></div>
-      </div> : <>
-        <div>
-          <Modal
-            isOpen={showModal}
-            onRequestClose={() => this.setState({ showModal: false })}
-            style={overlayType === 'login' ? customLoginStyles : customCartStyles}
-            shouldCloseOnOverlayClick={true}
-            contentLabel={overlayType === 'login' ? "SIGN IN" : "Shopping Cart"}
-            ariaHideApp={false}
-          >
-            {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
-              <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
-          </Modal>
-        </div>
-        <ToastContainer />
-        <div className="header-top py-1  ">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-md-6 col-6">
-                <div className="s-icons">
-                  <FacebookShareButton url={shareUrl} quote={title}>
-                    <FontAwesomeIcon icon={faFacebookF} />
-                  </FacebookShareButton>
-                  <TwitterShareButton url={shareUrl[0]} quote={title}>
-                    <FontAwesomeIcon icon={faTwitter} />
-                  </TwitterShareButton>
-                  <PinterestShareButton url={shareUrl[0]} quote={title}>
-                    <FontAwesomeIcon icon={faPinterest} />
-                  </PinterestShareButton>
-                  <LinkedinShareButton url={shareUrl[0]} quote={title}>
-                    <FontAwesomeIcon icon={faLinkedinIn} />
-                  </LinkedinShareButton>
-
-                  <TelegramShareButton url={shareUrl[0]} quote={title}>
-                    <FontAwesomeIcon icon={faTelegram} />
-                  </TelegramShareButton>
-                </div>
-              </div>
-              <div className="col-md-6 col-6">
-                <div className="acess-container float-right">
-                  <div className="access_icons">
-                    <div className="acess-icon balloon" title="large font size">
-                      <img src={require('../public/increase-font-size.svg')} alt="" />
-                    </div>
-                    <div className="acess-icon balloon" title="small font size">
-                      <img src={require('../public/decrease-font-size.svg')} alt="decrease font" />
-                    </div>
-                    <div className="acess-icon balloon">
-                      <FontAwesomeIcon icon={faAdjust} />
-                    </div>
-                    <div className="acess-icon balloon">
-                      <FontAwesomeIcon icon={faUndo} />
-                    </div>
-                    <a className="skipcontent" href="#maincontent">Skip to Content</a>
+      <>{scrolled ?
+        <div className="headersticky">
+          <div className="appLogo">
+            <Link to='/'><img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" /></Link></div>
+          <div className="appMenu"> <ul className="navbar-nav mr-auto ml-2">
+            {navbarTabs?.map((item, index) => {
+              return (
+                <li key={index}>
+                  <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>
+                    {item.title === 'HOME' && <FontAwesomeIcon icon={faHome} />} {item.title} </Link>
+                </li>
+              )
+            })}
+          </ul></div>
+          <div className="appaccout"> <ul className="navbar-nav flex-row">
+            {this.props.userData.token ?
+              <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
+                onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
+                {isMenuShown &&
+                  <div className="myAccout-dropdown">
+                    <Link to='/my-account/dashboard'> Dashboard</Link>
+                    <Link to='/my-account/order'>Orders</Link>
+                    <Link to='/my-account/address'>Addresses</Link>
+                    <Link to='/my-account/details'>Account details</Link>
+                    <Link to='/my-account/feedback'>Feedback</Link>
+                    <Link to='my-account/wishlist'>Wishlist</Link>
+                    <Link to="" onClick={() => this.logout()}>Logout</Link>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        < div className="header-middle d-flex justify-content-between align-items-center px-3" >
-          <Link to='/'>
-            <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
-          </Link>
-          <div className="search-container mx-5 w-100 position-relative"
-            ref={node => this.node = node}
-          >
-            <div className="form-inline my-2 my-lg-0">
-              <div className="search-bar w-100 d-flex justify-content-start" >
-                <form className="w-100 position-relative"><input onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search" />
-                  {searchQuery &&
-                    <button onClick={() => this.setState({ searchQuery: '', seachResults: [] })} type="button" className="closeBtn" ><FontAwesomeIcon icon={faTimes} /></button>
-                  }
-
-                  <div className="search-btn">
-                    <Link to={{
-                      pathname: `/product-list`,
-                      search: "?q=" + searchQuery,
-                    }} >
-                      <button type="button" className="btn my-2 my-sm-0" >
-                        <FontAwesomeIcon icon={faSearch} />
-                      </button>
-                    </Link>
-                  </div></form>
-              </div>
-            </div>
-            <div className="search-result-wrapper">
-              {this.renderSearchOptions()}
-            </div>
-          </div>
-          <ul className="navbar-nav flex-row">
-            {this.props.userData.token ? <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
-              onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
-              {isMenuShown &&
-                <div className="myAccout-dropdown">
-                  <Link to='/my-account/dashboard'> Dashboard</Link>
-                  <Link to='/my-account/order'>Orders</Link>
-                  <Link to='/my-account/address'>Addresses</Link>
-                  <Link to='/my-account/details'>Account details</Link>
-                  <Link to='/my-account/feedback'>Feedback</Link>
-                  <Link to='my-account/wishlist'>Wishlist</Link>
-                  <Link to="" onClick={() => this.logout()}>Logout</Link>
-                </div>
-              } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
+                }
+              </li>
+              : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
 
             <li className="nav-item">
               <Link to='/wishlist' className="nav-link">
@@ -457,9 +334,133 @@ class Header extends Component {
               </span>
 
             </li>
-          </ul>
-        </div >
-        <Navbar /> </>}</>
+          </ul></div>
+        </div> : <>
+          <div>
+            <Modal
+              isOpen={showModal}
+              onRequestClose={() => this.setState({ showModal: false })}
+              style={overlayType === 'login' ? customLoginStyles : customCartStyles}
+              shouldCloseOnOverlayClick={true}
+              contentLabel={overlayType === 'login' ? "SIGN IN" : "Shopping Cart"}
+              ariaHideApp={false}
+            >
+              {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
+                <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
+            </Modal>
+          </div>
+          <ToastContainer />
+          <div className="header-top py-1  ">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-md-6 col-6">
+                  <div className="s-icons">
+                    <FacebookShareButton url={shareUrl} quote={title}>
+                      <FontAwesomeIcon icon={faFacebookF} />
+                    </FacebookShareButton>
+                    <TwitterShareButton url={shareUrl[0]} quote={title}>
+                      <FontAwesomeIcon icon={faTwitter} />
+                    </TwitterShareButton>
+                    <PinterestShareButton url={shareUrl[0]} quote={title}>
+                      <FontAwesomeIcon icon={faPinterest} />
+                    </PinterestShareButton>
+                    <LinkedinShareButton url={shareUrl[0]} quote={title}>
+                      <FontAwesomeIcon icon={faLinkedinIn} />
+                    </LinkedinShareButton>
+
+                    <TelegramShareButton url={shareUrl[0]} quote={title}>
+                      <FontAwesomeIcon icon={faTelegram} />
+                    </TelegramShareButton>
+                  </div>
+                </div>
+                <div className="col-md-6 col-6">
+                  <div className="acess-container float-right">
+                    <div className="access_icons">
+                      <div className="acess-icon balloon" title="large font size">
+                        <img src={require('../public/increase-font-size.svg')} alt="" />
+                      </div>
+                      <div className="acess-icon balloon" title="small font size">
+                        <img src={require('../public/decrease-font-size.svg')} alt="decrease font" />
+                      </div>
+                      <div className="acess-icon balloon">
+                        <FontAwesomeIcon icon={faAdjust} />
+                      </div>
+                      <div className="acess-icon balloon">
+                        <FontAwesomeIcon icon={faUndo} />
+                      </div>
+                      <a className="skipcontent" href="#maincontent">Skip to Content</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          < div className="header-middle d-flex justify-content-between align-items-center px-3" >
+            <Link to='/'>
+              <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
+            </Link>
+            <div className="search-container mx-5 w-100 position-relative"
+              ref={node => this.node = node}
+            >
+              <div className="form-inline my-2 my-lg-0">
+                <div className="search-bar w-100 d-flex justify-content-start" >
+                  <form className="w-100 position-relative"><input onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search" />
+                    {searchQuery &&
+                      <button onClick={() => this.setState({ searchQuery: '', seachResults: [] })} type="button" className="closeBtn" ><FontAwesomeIcon icon={faTimes} /></button>
+                    }
+
+                    <div className="search-btn">
+                      <Link to={{
+                        pathname: `/product-list`,
+                        search: "?q=" + searchQuery,
+                      }} >
+                        <button type="button" className="btn my-2 my-sm-0" >
+                          <FontAwesomeIcon icon={faSearch} />
+                        </button>
+                      </Link>
+                    </div></form>
+                </div>
+              </div>
+              <div className="search-result-wrapper">
+                {this.renderSearchOptions()}
+              </div>
+            </div>
+            <ul className="navbar-nav flex-row">
+              {this.props.userData.token ? <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
+                onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
+                {isMenuShown &&
+                  <div className="myAccout-dropdown">
+                    <Link to='/my-account/dashboard'> Dashboard</Link>
+                    <Link to='/my-account/order'>Orders</Link>
+                    <Link to='/my-account/address'>Addresses</Link>
+                    <Link to='/my-account/details'>Account details</Link>
+                    <Link to='/my-account/feedback'>Feedback</Link>
+                    <Link to='my-account/wishlist'>Wishlist</Link>
+                    <Link to="" onClick={() => this.logout()}>Logout</Link>
+                  </div>
+                } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
+
+              <li className="nav-item">
+                <Link to='/wishlist' className="nav-link">
+                  <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></Link>
+              </li>
+
+              <li className="nav-item">
+                <Link to='/compare' className="nav-link">
+                  <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span>
+                </Link>
+              </li>
+
+
+              <li className="nav-item" onClick={() => this.dismissModal('cart')}>
+                <span className="nav-link">
+                  <FontAwesomeIcon icon={faShoppingBasket} /> <span>{this.props?.cart?.length}</span>
+                </span>
+
+              </li>
+            </ul>
+          </div >
+          <Navbar /> </>}</>
     );
   }
 }

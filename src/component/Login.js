@@ -42,7 +42,8 @@ class Login extends Component {
 
   onChangePassword = (e) => {
     this.setState({
-      password: e.target.value
+      password: e.target.value,
+      errorMsg: ''
     });
   }
 
@@ -102,7 +103,7 @@ class Login extends Component {
               validations={[required]}
             />
           </div>
-         { errorMsg && <div className="isaerror">{errorMsg}</div>}
+          {errorMsg && <div className="isaerror">{errorMsg}</div>}
           <div className="form-group">
             <Button
               className="btn login-btn btn-block"
