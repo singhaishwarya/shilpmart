@@ -22,6 +22,16 @@ a {
 	height: 100vh;
 	width: 100%;
 }
+.headersticky{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 15px;
+	background-color: #fff;
+	height: 75px;
+	border-bottom: 1px solid #333;
+	border-top: 1px solid #333;
+}
 #maincontent{
 	min-height: 380px;
 }
@@ -138,11 +148,16 @@ a {
 .closeBtn{
 	border: none;
 	background-color: transparent;
+	position: absolute;
+	top: 10px;
+	z-index: 1;
+	cursor: pointer;
 }
 .search-btn {
 	background-color: #0b4981;
 	position: absolute;
 	right: -1px;
+	top:0;
 	height: 100%;
 	z-index: 0;
 	height: 45px;
@@ -2004,6 +2019,11 @@ a:hover, a:focus {
 	border-color: transparent !important;
 	box-shadow: none !important;
 }
+.breadcrumb-item{font-size: 14px;}
+.breadcrumb-item a{
+	color: #555;
+}
+.breadcrumb-item a:hover{color: #e87f13;}
 .per-pge-view, .grid-view {
 	display: inline-flex;
 	margin-right: 25px;
@@ -2213,6 +2233,25 @@ color: #fff;
 }
 .product-img-wrapper div img{
 	height: 100%;
+}
+
+.addtowish{
+	position: absolute;
+top: 15px;
+right: 15px;
+z-index: 1;
+background-color: rgba(255,255,255,0.7);
+width: 35px;
+height: 35px !important;
+border-radius: 50%;
+text-align: center;
+padding: 7px 0;
+box-shadow: 1px 1px 3px #000;
+color: #444;
+}
+.addtowish:hover{
+	background-color: rgba(255,255,255,1);
+	cursor: pointer;
 }
 .product-summary-wrapper {
 	position: relative;
@@ -2593,6 +2632,90 @@ color: #333;
 .product-description .nav-tabs .nav-link {
 	padding-top: 0;
 	border-top: 3px solid transparent;
+}
+
+.avgratings{display: flex;
+	flex-direction: column;
+	align-items: center;}
+
+	.avgrate{
+		font-size: 25px;
+	}
+	.avgstate{
+		font-size: 14px;
+		color: #555;
+		text-align: center;
+	}
+	.imgCustomer{
+		display: flex;
+		justify-content: flex-start;
+	}
+	.imgCustomer span{
+		width: 70px;
+height: 70px;
+margin-right: 15px;
+display: block;
+		
+	}
+.barWrapper{
+	display: flex;
+	justify-content:flex-start
+}
+.barWrapper ul{
+	margin: 0;
+padding: 0;
+display: block;
+list-style: none;
+font-size: 14px;
+color: #555;
+}
+
+.barWrapper ul li{
+	display:flex;
+	
+}
+.bars{flex-basis: 75%;}
+.bars li{
+	height: 20px;
+	padding: 1px 0;
+}
+.bar{position: relative;
+	background: #f0f0f0;
+	margin-top: 7px;
+	margin-left: 7px;
+	height: 5px;
+	width: 100%;
+	border-radius: 100px;
+	margin-right: 7px;
+}
+
+.bar span.bargreen{
+	width: 79%;
+background-color: green;
+position: absolute;
+z-index: 1;
+height: 5px;
+border-radius: 100px;
+}
+.pro4{width: 35% !important;}
+.pro3{width: 28% !important;}
+.bar span.barorange{
+	width: 12%;
+background-color: orange;
+position: absolute;
+z-index: 1;
+height: 5px;
+border-radius: 100px;
+}
+
+.bar span.barred{
+	width: 5%;
+background-color: red;
+position: absolute;
+z-index: 1;
+height: 5px;
+border-radius: 100px;
+
 }
 
 /* seller-profile */
@@ -3279,6 +3402,54 @@ border-radius: 7px;
 .isasuccess::before{
 	content: '\f00c';
 	font-family: fontawesome;
+}
+
+/* other-pages-css */
+.aboutWrapper{
+	position:relative;	
+	display: flex;
+	background:url(./public/Tussar-Saree-bg.jpeg) no-repeat bottom center;
+    background-size: cover;
+	flex-direction: column;
+	text-align: center;
+color:#fff;
+border-bottom-left-radius:10%;
+    border-bottom-right-radius:10%;
+	overflow:hidden}
+
+.aboutbgoverlay{
+	position: absolute;
+width: 100%;
+background-color: transparent;
+background-image: linear-gradient(250deg, #E87F13 0%, #240F65 94%);
+opacity: 0.81;
+transition: all 0.3s, border-radius 0.3s, opacity 0.3s;
+height: 100%;
+z-index: 0;
+}
+.aboutContents{
+	padding: 10rem 20rem;
+position: relative;
+}
+.aboutContents h2{
+	font-size:48px;
+	font-weight:600;
+	margin-bottom:35px
+}
+
+.aboutContents p{
+	font-size: 18px;
+	color: #ccc;
+	line-height: 1.7
+}
+
+.aboutContents span{
+	display: block;
+width: 75px;
+height: 5px;
+background-color: #fff;
+margin: 0 auto 65px auto;    
+
 }
 
 /* responsive css */
