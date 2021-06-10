@@ -38,11 +38,11 @@ class App extends Component {
 
   componentDidMount() {
     let _this = this;
-    window.onscroll = function () {
-      if (window.pageYOffset !== 0) {
-        _this.setState({ onScroll: true })
-      }
-    };
+    // window.onscroll = function () {
+    //   if (window.pageYOffset !== 0) {
+    //     _this.setState({ onScroll: true })
+    //   }
+    // };
   }
 
   render() {

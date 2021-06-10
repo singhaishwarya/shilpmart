@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import AddressService from '../services/AddressService';
+import CheckoutService from '../services/CheckoutService';
 import Modal from 'react-modal';
 import { Link } from "react-router-dom";
 
@@ -24,6 +24,7 @@ export default class Checkout extends React.Component {
       showModal: false,
       checkOutData: props?.location?.state?.checkout || [],
       totalCartCost: props?.location?.state?.totalCartCost || 0,
+      payment_type: ''
     };
   }
   componentDidMount() {
@@ -32,7 +33,7 @@ export default class Checkout extends React.Component {
   getAddress = () => {
     AddressService.list().then((result) => {
       if (!result) return
-      this.setState({ selectedAddress: result.data.find(({ is_default }) => is_default === 1), addressList: result.data })
+      this.setState({ selectedAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0], addressList: result.data })
     }).catch((err) => {
       console.log(err);
     });
@@ -44,42 +45,74 @@ export default class Checkout extends React.Component {
   };
 
 
-  handleCheckout = async () => {
-    try {
-      var amount = "100.00";
-      var phone_number = "9026892671";
-      var email = "aishsinghniit@gmail.com";
-      var orderId = "ORDER_ID" + (new Date().getTime());
-      let params = {
-        amount: amount,
-        phone_number: phone_number,
-        email: email,
-        orderId: orderId,
-        txnAmount: 100,
-        userInfo: { custId: 12345 }
-      }
+  handleCheckout = (e) => {
 
-      var url = "http://localhost:3003/paynow";
-      var request = {
-        url: url,
-        data: params,
-        method: 'get',
-        headers: {
-          "Access-Control-Allow-Origin": "true", 'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        crossdomain: true, proxy: {
-          host: 'localhost',
-          port: 3003
-        }
+    e.preventDefault();
 
+    let checkoutObj = {}, prodObj = [];
+    checkoutObj = {
+      "is_checkout": true,
+      "coupan_code": "",
+      "is_billing_address_same": this.state.isBillingAddressSame,
+      "billing_address": {
+        "address_id": this.state.selectedAddress.id
+      }, "shipping_address": {
+        "address_id": this.state.selectedAddress.id
+      },
+      "is_payment_online": this.state.payment_type === 'cod' ? false : true,
+      "payment_detail": {
+        "online_type": this.state.payment_type
       }
-      const response = await axios(request);
-      const processParams = await response.json;
-      console.log("demo==", processParams)
-    } catch {
-      console.log("demo error")
     }
+    this.state.checkOutData.map((item, index) => {
+      prodObj.push({
+        "product_id": item.product_details.id,
+        "quantity": item.quantity,
+        "variation_index": item.variation_index
+      })
+    });
+    checkoutObj.products = prodObj;
+    CheckoutService.orderPlace(checkoutObj).then((result) => {
+      if (!result) return
+      console.log("Demo==response", result)
+    }).catch((err) => {
+      console.log(err);
+    });
+
+    //   var amount = "100.00";
+    //   var phone_number = "9026892671";
+    //   var email = "aishsinghniit@gmail.com";
+    //   var orderId = "ORDER_ID" + (new Date().getTime());
+    //   let params = {
+    //     amount: amount,
+    //     phone_number: phone_number,
+    //     email: email,
+    //     orderId: orderId,
+    //     txnAmount: 100,
+    //     userInfo: { custId: 12345 }
+    //   }
+
+    //   var url = "http://localhost:3003/paynow";
+    //   var request = {
+    //     url: url,
+    //     data: params,
+    //     method: 'get',
+    //     headers: {
+    //       "Access-Control-Allow-Origin": "true", 'Accept': 'application/json',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     crossdomain: true, proxy: {
+    //       host: 'localhost',
+    //       port: 3003
+    //     }
+
+    //   }
+    //   const response = await axios(request);
+    //   const processParams = await response.json;
+    //   console.log("demo==", processParams)
+    // } catch {
+    //   console.log("demo error")
+    // }
   }
 
   render() {
@@ -164,27 +197,35 @@ export default class Checkout extends React.Component {
                     <strong>Email</strong> : {selectedAddress?.email} <br /><br />
                   </address>
                   <p className="">
-                    <span className="btn btn-dark btn-theme" onClick={() => this.setState({ showModal: true })}>Change Address</span>
+                    <span className="btn btn-dark btn-theme" onClick={() => this.setState({ showModal: true })}>
+                      Change Address</span>
                   </p>
-                  <form className="needs-validation login-card" noValidate onSubmit={() => this.handleCheckout()}>
+
+                  <form className="needs-validation login-card"  >
                     <hr className="mb-4" />
                     <div className="d-block my-3">
                       <div className="custom-control custom-radio">
-                        <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" defaultChecked required />
+                        <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" value='cod'
+                          checked={this.state.payment_type === 'cod'}
+                          onChange={() => this.setState({ payment_type: 'cod' })} />
                         <label className="custom-control-label" htmlFor="credit">Cash On Delivery</label>
                       </div>
                       <div className="custom-control custom-radio">
-                        <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" required />
+                        <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" value='paytm'
+                          checked={this.state.payment_type === 'paytm'}
+                          onChange={() => this.setState({ payment_type: 'paytm' })} />
                         <label className="custom-control-label" htmlFor="debit">Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" alt="Paytm"></img></label>
                       </div>
                       <div className="custom-control custom-radio">
-                        <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" required />
+                        <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" value='airpay'
+                          checked={this.state.payment_type === 'airpay'}
+                          onChange={() => this.setState({ payment_type: 'airpay' })} />
                         <label className="custom-control-label" htmlFor="paypal">Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img></label>
                       </div>
                     </div>
 
                     <hr className="mb-4" />
-                    <button className="btn login-btn btn-lg btn-block" type="submit">Continue to checkout</button>
+                    <button className="btn login-btn btn-lg btn-block" type="button" onClick={(e) => this.handleCheckout(e)}>Continue to checkout</button>
                   </form>
                 </div>
               </div>
