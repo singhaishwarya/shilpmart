@@ -344,7 +344,7 @@ class Header extends Component {
             <div className="form-inline my-2 my-lg-0">
               <div className="search-bar w-100 d-flex justify-content-start" >
                 <input onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search" />
-                <button className="closeBtn"><FontAwesomeIcon icon={faTimes} /></button>
+                {searchQuery && <button onClick={() => console.log("clicked")} className="closeBtn" ><FontAwesomeIcon icon={faTimes} /></button>}
                 <div className="search-btn">
                   <button className="btn my-2 my-sm-0" type="submit">
                     <FontAwesomeIcon icon={faSearch} />
