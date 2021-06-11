@@ -24,6 +24,7 @@ import Feedback from './component/my-account/Feedback';
 import Inquiry from './component/my-account/Inquiry';
 import MyDashboard from './component/my-account/Dashboard';
 import Checkout from './component/Checkout';
+import CheckoutCallback from './component/CheckoutCallback';
 import ForgotPassword from './component/ForgotPassword';
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
@@ -48,6 +49,7 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/cart' component={Cart} exact />
           <Route isAuthenticated={userData} path='/forgot-password' component={ForgotPassword} exact />
           <Route isAuthenticated={userData} path='/checkout' component={Checkout} exact />
+          <Route isAuthenticated={userData} path='/checkout-response' component={CheckoutCallback} exact />
 
           <MyAccount>
             <Route component={({ match }) =>
