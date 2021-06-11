@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import ReactMegaMenu from "react-mega-menu"
 import CategoryService from '../services/CategoryService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp, faAngleRight, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import TopBarMenu from './TopBarMenu';
+import { isMobile } from 'react-device-detect';
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
@@ -83,6 +84,7 @@ export default class Navbar extends React.Component {
   }
 
   setIsMenuShown = (status) => {
+    console.log("demo===", isMobile)
     this.setState({ isMenuShown: status })
   }
 
@@ -91,15 +93,13 @@ export default class Navbar extends React.Component {
     const { isMenuShown, menuOptions } = this.state;
     return (
       <>
-        {/* // <!--main - navigation-- > */}
         < div className="main-menu">
           <nav className="navbar navbar-expand-lg navbar-light border-top border-bottom">
-            <button className="navbar-toggler" type="button" data-toggle="collapse"
+            <button className="navbar-toggler" type="button" data-toggle="collapse" onMouseEnter={() => this.setIsMenuShown(true)}
               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
               aria-label="Toggle navigation"> <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" >
-              {/* <!--brows-categories-menu--> */}
               <div onMouseEnter={() => this.setIsMenuShown(true)}
                 onMouseLeave={() => this.setIsMenuShown(false)} className="categories-nav dropdown">
                 <span className="brows-menu dropdown-toggle" data-toggle="dropdown">
@@ -107,15 +107,23 @@ export default class Navbar extends React.Component {
                   <span>Browse Categories</span>
                   <FontAwesomeIcon icon={isMenuShown ? faAngleUp : faAngleDown} />
                 </span>
-                {isMenuShown && (
-
-                  <ReactMegaMenu
-                    tolerance={50}
-                    direction={"RIGHT"}
-                    data={menuOptions}
-                    styleConfig={"mega-menu"}
-                  />
-                )}
+                {isMenuShown ?
+                  isMobile ? <div className="myAccout-dropdown">
+                    <span > Dashboard</span>
+                    <span >Orders</span>
+                    <span  >Addresses</span>
+                    <span  >Account details</span>
+                    <span  >Feedback</span>
+                    <span >Wishlist</span>
+                    <span onClick={() => this.logout()}>Logout</span>
+                  </div> :
+                    <ReactMegaMenu
+                      tolerance={50}
+                      direction={"RIGHT"}
+                      data={menuOptions}
+                      styleConfig={"mega-menu"}
+                    />
+                  : ''}
               </div>
               <ul className="navbar-nav mr-auto ml-2">
                 <TopBarMenu />

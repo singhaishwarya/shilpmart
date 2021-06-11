@@ -13,7 +13,7 @@ const required = (value, name) => {
   if (!name.value) {
     return (
       <div className="isaerror" role="alert">
-        Enter your {name.name === 'username' ? 'email' : name.name}
+        Please enter your {name.name === 'username' ? 'email' : name.name}
       </div>
     );
   }

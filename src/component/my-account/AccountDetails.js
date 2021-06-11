@@ -6,11 +6,11 @@ import { ToastContainer } from 'react-toastify';
 import ToastService from '../../services/ToastService';
 import Button from "react-validation/build/button";
 
-const required = (value) => {
-  if (!value) {
+const required = (value, name) => {
+  if (!name.value) {
     return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
+      <div className="isaerror" role="alert">
+        Please enter your {name.name}
       </div>
     );
   }
@@ -20,7 +20,7 @@ const isValidpassword = (value) => {
   let pattern = new RegExp(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/);
   if (!pattern.test(value) || (value.length < 8)
   ) {
-    return <div className="alert alert-danger" role="alert">  Password must contain atleast eight alpha numeric  </div>
+    return <div className="isaerror" role="alert">  Password must contain atleast eight alpha numeric  </div>
 
   }
 }

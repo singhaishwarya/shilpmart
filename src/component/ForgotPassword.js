@@ -7,7 +7,7 @@ import AuthService from '../services/AuthService';
 const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="isaerror" role="alert">
         Please enter registered mobile/email.
       </div>
     );

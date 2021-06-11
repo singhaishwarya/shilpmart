@@ -9,8 +9,8 @@ import ToastService from '../services/ToastService';
 const required = (value, name) => {
   if (!name.value) {
     return (
-      <div className="alert alert-danger" role="alert">
-        Enter your {name.name?.replace(/_/g, ' ') === 'c password' ? 'confirm password' : name.name?.replace(/_/g, ' ')}
+      <div className="isaerror" role="alert">
+        Please enter your {name.name?.replace(/_/g, ' ') === 'c password' ? 'confirm password' : name.name?.replace(/_/g, ' ')}
       </div>
     );
   }
@@ -20,29 +20,29 @@ const mobile = (value) => {
   // var pattern = new RegExp(/(\+*)((0[ -]+)*|(91 )*)(\d{12}+|\d{10}+))|\d{5}([- ]*)\d{6}/);
   if (value.length !== 10) {
     // if (!validator.isMobilePhone(value, 'en-IN')) {
-    return <div className="alert alert-danger" role="alert">
+    return <div className="isaerror" role="alert">
       Length of mobile number should be numeric and contain 10 digit.
-      </div>
+    </div>
     // );
   }
   if (!validator.isMobilePhone(value, 'en-IN')) {
-    return <div className="alert alert-danger" role="alert">
+    return <div className="isaerror" role="alert">
       Mobile number should be numeric.
-      </div>
+    </div>
   }
 };
 
 const email = (value) => {
   if (!validator.isEmail(value)) {
-    return <div className="alert alert-danger" role="alert">
+    return <div className="isaerror" role="alert">
       Enter a valid email, should contain maximum 50 characters (example@domainname)
-         </div>
+    </div>
   }
 };
 
 const lt50 = (value, name) => {
   if (name.value.length >= 50) {
-    return <div className="alert alert-danger" role="alert">  {name.name?.replace(/_/g, ' ')} must be string & contain maximum length 50 char.</div>
+    return <div className="isaerror" role="alert">  {name.name?.replace(/_/g, ' ')} must be string & contain maximum length 50 char.</div>
   }
 };
 
@@ -50,7 +50,7 @@ const isValidpassword = (value) => {
   let pattern = new RegExp(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/);
   if (!pattern.test(value) || (value.length < 8)
   ) {
-    return <div className="alert alert-danger" role="alert">  Password must contain atleast eight alpha numeric  </div>
+    return <div className="isaerror" role="alert">  Password must contain atleast eight alpha numeric  </div>
 
   }
 }

@@ -6,11 +6,11 @@ import MasterService from '../../../services/MasterService';
 import AddressService from '../../../services/AddressService';
 import Button from "react-validation/build/button";
 
-const required = (value) => {
-  if (!value) {
+const required = (value, name) => {
+  if (!name.value) {
     return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
+      <div className="isaerror" role="alert">
+        Please enter your {name.name}.
       </div>
     );
   }
@@ -19,18 +19,18 @@ const required = (value) => {
 const mobile = (value) => {
   // var pattern = new RegExp(/(\+*)((0[ -]+)*|(91 )*)(\d{12}+|\d{10}+))|\d{5}([- ]*)\d{6}/);
   if (value.length !== 10) {
-    return <div className="alert alert-danger" role="alert">
+    return <div className="isaerror" role="alert">
       Length of mobile number should be numeric and contain 10 digit.
-      </div>
+    </div>
   }
 }
 
 const pincode = (value) => {
 
   if (value.length !== 6) {
-    return <div className="alert alert-danger" role="alert">
+    return <div className="isaerror" role="alert">
       Length of pincode should be numeric and contain 6 digit.
-      </div>
+    </div>
   }
 }
 

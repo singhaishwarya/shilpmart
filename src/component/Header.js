@@ -279,10 +279,22 @@ class Header extends Component {
   }
 
   render() {
-    const { searchQuery, showModal, shareUrl, title, isMenuShown, overlayType, navbarTabs, isActiveTab, scrolled } = this.state;
+    const { searchQuery, showModal, shareUrl, title, isMenuShown, overlayType, scrolled } = this.state;
 
     return (
-      <>{scrolled ?
+      <> <div>
+        <Modal
+          isOpen={showModal}
+          onRequestClose={() => this.setState({ showModal: false })}
+          style={overlayType === 'login' ? customLoginStyles : customCartStyles}
+          shouldCloseOnOverlayClick={true}
+          contentLabel={overlayType === 'login' ? "SIGN IN" : "Shopping Cart"}
+          ariaHideApp={false}
+        >
+          {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
+            <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
+        </Modal>
+      </div> {scrolled ?
         <div className="headersticky fixed-header">
           <div className="appLogo">
             <Link to='/'><img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" /></Link></div>
@@ -327,19 +339,7 @@ class Header extends Component {
             </li>
           </ul></div>
         </div> : <>
-          <div>
-            <Modal
-              isOpen={showModal}
-              onRequestClose={() => this.setState({ showModal: false })}
-              style={overlayType === 'login' ? customLoginStyles : customCartStyles}
-              shouldCloseOnOverlayClick={true}
-              contentLabel={overlayType === 'login' ? "SIGN IN" : "Shopping Cart"}
-              ariaHideApp={false}
-            >
-              {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
-                <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
-            </Modal>
-          </div>
+
           <ToastContainer />
           <div className="header-top py-1  ">
             <div className="container-fluid">
