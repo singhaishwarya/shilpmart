@@ -8,6 +8,7 @@ import Loader from "react-loader";
 class ProductGrid extends Component {
   constructor(props) {
     super(props);
+    this.currentUrlParams = new URLSearchParams(window.location.search);
 
     this.state = {
       isLoader: false,
@@ -26,13 +27,14 @@ class ProductGrid extends Component {
 
 
   }
-  componentWillReceiveProps() {
-    this.currentUrlParams = new URLSearchParams(window.location.search);
-    this.getProductList(this.getSetQueryParams())
+
+  componentDidUpdate(prevprops) {
+    if (prevprops.history.location.search !== prevprops.location.search) {
+      this.getProductList(this.getSetQueryParams())
+    }
   }
 
   componentDidMount() {
-    this.currentUrlParams = new URLSearchParams(window.location.search);
     this.getProductList(this.getSetQueryParams());
     this.handleScrollPosition();
   }
@@ -101,6 +103,7 @@ class ProductGrid extends Component {
         this.setState({
           productListData: result, isLoader: true
         });
+        this.props.setPriceRangeProps([result?.filter?.min_price * 1, result?.filter?.max_price * 1])
       });
     } catch (err) {
       console.log(err);

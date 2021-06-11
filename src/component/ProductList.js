@@ -61,15 +61,10 @@ export default class ProductList extends React.Component {
     }
   }
 
-  componentWillReceiveProps(props) {
-    // if (localStorage.getItem('parentCategory') !== null) {
-    //   if (this.state.category_id !== JSON.parse(localStorage.getItem('parentCategory'))?.id) {
-    //     localStorage.removeItem("parentCategory");
-    //     this.setState({ parentCategory: '' })
-    //   }
-    // }
-    this.currentUrlParams = new URLSearchParams(window.location.search);
-    this.getCategoryFilter((this.currentUrlParams.get('cat_ids') || 0));
+  componentDidUpdate(prevProps) {
+    if (prevProps.history.location.search !== prevProps.location.search) {
+      this.getCategoryFilter((this.currentUrlParams.get('cat_ids') || 0));
+    }
   }
 
   onSliderPriceChange = (value) => {
@@ -105,6 +100,10 @@ export default class ProductList extends React.Component {
   ratingChanged = (value) => {
     console.log(value);
   }
+
+  // setPriceRangeFilter = (value) => {
+  //   this.setState({ priceRange: value })
+  // }
 
   setSelected = (value) => {
     this.setState({ selectedOffer: value });
@@ -246,7 +245,9 @@ export default class ProductList extends React.Component {
                 </div >
               </div >
               <div className='col-lg-9'>
-                <ProductGrid categoryBreadcrumbs={category_breadcrumbs} {...this.props} />
+                <ProductGrid categoryBreadcrumbs={category_breadcrumbs} {...this.props}
+                  setPriceRangeProps={(e) => this.onSliderPriceChange(e)}
+                />
               </div>
             </div >
           </div >
