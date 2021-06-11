@@ -18,7 +18,7 @@ const customAddressStyles = {
     transform: 'translate(-50%, -50%)'
   }
 };
-class Checkout extends React.Component {
+class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
     if (typeof props?.location?.state !== 'undefined') {
@@ -88,6 +88,27 @@ class Checkout extends React.Component {
       CheckoutService.orderPlace(checkoutObj).then((result) => {
         if (!result) return
         console.log("Demo==response", result)
+        this.setState({
+          config: {
+            "root": "",
+            "flow": "DEFAULT",
+            "orderId": result.data.order_details.id,
+            "MID": 32977,
+            "data": {
+              "orderId": result.data.order_details.id,
+              "token": "",
+              "tokenType": "TXN_TOKEN",
+              "amount": result.data.order_details.order_total
+            }
+          }
+        })
+        var information = {
+          action: "https://securegw-stage.paytm.in/order/process",
+          params: this.state.config
+        }
+        this.post(information)
+        // return <CheckoutProvider config={config} openInPopup="false" env='PROD' />
+
 
       }).catch((err) => {
         console.log(err);
@@ -97,7 +118,27 @@ class Checkout extends React.Component {
       this.dismissModal('login')
     }
   }
+  post(details) {
+    const form = this.buildForm(details)
+    document.body.appendChild(form)
+    form.submit()
+    form.remove()
+  }
+  buildForm({ action, params }) {
+    const form = document.createElement('form')
+    form.setAttribute('method', 'post')
+    form.setAttribute('action', action)
 
+    Object.keys(params).forEach(key => {
+      const input = document.createElement('input')
+      input.setAttribute('type', 'hidden')
+      input.setAttribute('name', key)
+      input.setAttribute('value', JSON.stringify(params[key]))
+      form.appendChild(input)
+    })
+
+    return form
+  }
   //   var amount = "100.00";
   //   var phone_number = "9026892671";
   //   var email = "aishsinghniit@gmail.com";
@@ -135,7 +176,7 @@ class Checkout extends React.Component {
   // }
 
   render() {
-    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType } = this.state;
+    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType, config } = this.state;
     let finItem;
     return (
       <section>
@@ -265,5 +306,5 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps, null)(Checkout);
+export default connect(mapStateToProps, null)(CheckoutComp);
 
