@@ -17,7 +17,7 @@ import * as cartAction from '../actions/cart';
 import * as wishlistAction from '../actions/wishlist';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import Bars from 'react-bars';
+// import Bars from 'react-bars';
 import WishlistService from '../services/WishlistService'
 class ProductDetail extends React.Component {
   constructor(props) {
