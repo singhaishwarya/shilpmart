@@ -3,6 +3,10 @@ import AddressService from '../services/AddressService';
 import CheckoutService from '../services/CheckoutService';
 import Modal from 'react-modal';
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import ToastService from '../services/ToastService';
+import Login from "./Login";
 
 const customAddressStyles = {
   content: {
@@ -14,16 +18,20 @@ const customAddressStyles = {
     transform: 'translate(-50%, -50%)'
   }
 };
-export default class Checkout extends React.Component {
-
+class Checkout extends React.Component {
   constructor(props) {
     super(props);
+    if (typeof props?.location?.state !== 'undefined') {
+      localStorage.setItem('checkOutData', JSON.stringify(props?.location?.state?.checkout));
+      localStorage.setItem('totalCartCost', props?.location?.state?.totalCartCost)
+    }
+
     this.state = {
       addressList: [],
       selectedAddress: {},
       showModal: false,
-      checkOutData: props?.location?.state?.checkout || [],
-      totalCartCost: props?.location?.state?.totalCartCost || 0,
+      checkOutData: JSON.parse(localStorage.getItem('checkOutData')) || [],
+      totalCartCost: localStorage.getItem('totalCartCost') || 0,
       payment_type: ''
     };
   }
@@ -48,79 +56,90 @@ export default class Checkout extends React.Component {
   handleCheckout = (e) => {
 
     e.preventDefault();
-
     let checkoutObj = {}, prodObj = [];
-    checkoutObj = {
-      "is_checkout": true,
-      "coupan_code": "",
-      "is_billing_address_same": 'true',
-      "billing_address": {
-        "address_id": this.state.selectedAddress.id
-      }, "shipping_address": {
-        "address_id": this.state.selectedAddress.id
-      },
-      "is_payment_online": this.state.payment_type === 'cod' ? false : true,
-      "payment_detail": {
-        "online_type": this.state.payment_type
-      }
-    }
-    this.state.checkOutData.map((item, index) => {
-      prodObj.push({
-        "product_id": item.product_details?.id || item.id,
-        "quantity": item.quantity,
-        "variation_index": item.variation_index
+
+
+    if (this.props.userData?.token) {
+      if (!this.state.selectedAddress.id) return ToastService.error("Please select shipping address");
+      if (!this.state.payment_type) return ToastService.error("Please select payment type");
+
+      checkoutObj = {
+        "is_checkout": true,
+        "coupan_code": "",
+        "is_billing_address_same": 'true',
+        "billing_address": {
+          "address_id": this.state.selectedAddress.id
+        }, "shipping_address": {
+          "address_id": this.state.selectedAddress.id
+        },
+        "is_payment_online": this.state.payment_type === 'cod' ? false : true,
+        "payment_detail": {
+          "online_type": this.state.payment_type
+        }
+      };
+      this.state.checkOutData.map((item) => {
+        prodObj.push({
+          "product_id": item.product_details?.id || item.id,
+          "quantity": item.quantity,
+          "variation_index": item.variation_index
+        })
+      });
+      checkoutObj.products = prodObj;
+      CheckoutService.orderPlace(checkoutObj).then((result) => {
+        if (!result) return
+        console.log("Demo==response", result)
+
+      }).catch((err) => {
+        console.log(err);
       })
-    });
-    checkoutObj.products = prodObj;
-    CheckoutService.orderPlace(checkoutObj).then((result) => {
-      if (!result) return
-      console.log("Demo==response", result)
-    }).catch((err) => {
-      console.log(err);
-    });
-
-    //   var amount = "100.00";
-    //   var phone_number = "9026892671";
-    //   var email = "aishsinghniit@gmail.com";
-    //   var orderId = "ORDER_ID" + (new Date().getTime());
-    //   let params = {
-    //     amount: amount,
-    //     phone_number: phone_number,
-    //     email: email,
-    //     orderId: orderId,
-    //     txnAmount: 100,
-    //     userInfo: { custId: 12345 }
-    //   }
-
-    //   var url = "http://localhost:3003/paynow";
-    //   var request = {
-    //     url: url,
-    //     data: params,
-    //     method: 'get',
-    //     headers: {
-    //       "Access-Control-Allow-Origin": "true", 'Accept': 'application/json',
-    //       'Content-Type': 'application/json',
-    //     },
-    //     crossdomain: true, proxy: {
-    //       host: 'localhost',
-    //       port: 3003
-    //     }
-
-    //   }
-    //   const response = await axios(request);
-    //   const processParams = await response.json;
-    //   console.log("demo==", processParams)
-    // } catch {
-    //   console.log("demo error")
-    // }
+    }
+    else {
+      this.dismissModal('login')
+    }
   }
 
-  render() {
-    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList } = this.state;
-    let finItem;
+  //   var amount = "100.00";
+  //   var phone_number = "9026892671";
+  //   var email = "aishsinghniit@gmail.com";
+  //   var orderId = "ORDER_ID" + (new Date().getTime());
+  //   let params = {
+  //     amount: amount,
+  //     phone_number: phone_number,
+  //     email: email,
+  //     orderId: orderId,
+  //     txnAmount: 100,
+  //     userInfo: { custId: 12345 }
+  //   }
 
+  //   var url = "http://localhost:3003/paynow";
+  //   var request = {
+  //     url: url,
+  //     data: params,
+  //     method: 'get',
+  //     headers: {
+  //       "Access-Control-Allow-Origin": "true", 'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     crossdomain: true, proxy: {
+  //       host: 'localhost',
+  //       port: 3003
+  //     }
+
+  //   }
+  //   const response = await axios(request);
+  //   const processParams = await response.json;
+  //   console.log("demo==", processParams)
+  // } catch {
+  //   console.log("demo error")
+  // }
+  // }
+
+  render() {
+    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType } = this.state;
+    let finItem;
     return (
       <section>
+        <ToastContainer />
         <div>
           <Modal
             isOpen={showModal}
@@ -129,8 +148,8 @@ export default class Checkout extends React.Component {
             shouldCloseOnOverlayClick={true}
             contentLabel="Select Address"
             ariaHideApp={false}
-          >
-            {addressList?.map((item, index) => (
+          > {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
+            <>{addressList?.map((item, index) => (
               <address key={index}>{item.name}
                 <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
                 <br /> {item.district},  {item.state} - {item.pincode}<br />
@@ -142,8 +161,7 @@ export default class Checkout extends React.Component {
                   }} className="btn btn-dark btn-theme">Select</span>
                 </p>
               </address>
-            ))}
-            <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link>
+            ))}  <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link></>}
           </Modal>
         </div>
         <div className="container-fluid">
@@ -164,68 +182,72 @@ export default class Checkout extends React.Component {
                     <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0)}</span>
                   </li>
                 ))}
-                <li className="list-group-item d-flex justify-content-between bg-light">
+                {/* <li className="list-group-item d-flex justify-content-between bg-light">
                   <div className="text-success">
                     <h6 className="my-0">Promo code</h6>
                     <small>EXAMPLECODE</small>
                   </div>
                   <span className="text-success"><span>₹</span> -0.0</span>
-                </li>
+                </li> */}
                 <li className="list-group-item d-flex justify-content-between">
                   <h5><span>Total Payable</span></h5>
                   <strong><span>₹</span> {totalCartCost}</strong>
                 </li>
               </ul>
-              <p>Have a coupon? Enter your code here...</p>
-              <form className="card p-2">
+              {/* <p>Have a coupon? Enter your code here...</p> */}
+              {/* <form className="card p-2">
                 <div className="input-group">
                   <input type="text" className="form-control" placeholder="Coupon code" />
                   <div className="input-group-append">
                     <button type="submit" className="btn btn-dark btn-theme">Apply Coupon</button>
                   </div>
                 </div>
-              </form>
+              </form> */}
             </div>
             <div className="col-md-8 order-md-1">
               <div className="card shadow pr-5">
                 <div className="card-body">
                   <h4 className="mb-3">Shipping address</h4>
-                  < address  > {selectedAddress?.name}
+                  {selectedAddress?.name ? <>< address  > {selectedAddress?.name}
                     <br />{selectedAddress?.address1} <br />{selectedAddress?.address2} <br /> {selectedAddress?.sub_district}
                     <br /> {selectedAddress?.district},  {selectedAddress?.state} - {selectedAddress?.pincode}<br />
                     <strong>Mobile No.</strong>: {selectedAddress?.mobile}<br />
                     <strong>Email</strong> : {selectedAddress?.email} <br /><br />
                   </address>
-                  <p className="">
-                    <span className="btn btn-dark btn-theme" onClick={() => this.setState({ showModal: true })}>
-                      Change Address</span>
-                  </p>
-
+                    <p className="">
+                      <span className="btn btn-dark btn-theme" onClick={() => this.dismissModal('address')}>
+                        Change Address</span>
+                    </p></> : <p className="">
+                    <span onClick={() => this.props.userData.token ? this.props.history.push({
+                      pathname: '/my-account/add-address'
+                    }) : this.dismissModal('login')} className="btn btn-dark btn-theme" > Add New Address</span>
+                  </p>}
                   <form className="needs-validation login-card"  >
                     <hr className="mb-4" />
                     <div className="d-block my-3">
                       <div className="custom-control custom-radio">
                         <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" value='cod'
-                          checked={this.state.payment_type === 'cod'}
+                          checked={payment_type === 'cod'}
                           onChange={() => this.setState({ payment_type: 'cod' })} />
                         <label className="custom-control-label" htmlFor="credit">Cash On Delivery</label>
                       </div>
                       <div className="custom-control custom-radio">
                         <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" value='paytm'
-                          checked={this.state.payment_type === 'paytm'}
+                          checked={payment_type === 'paytm'}
                           onChange={() => this.setState({ payment_type: 'paytm' })} />
                         <label className="custom-control-label" htmlFor="debit">Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" alt="Paytm"></img></label>
                       </div>
                       <div className="custom-control custom-radio">
                         <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" value='airpay'
-                          checked={this.state.payment_type === 'airpay'}
+                          checked={payment_type === 'airpay'}
                           onChange={() => this.setState({ payment_type: 'airpay' })} />
                         <label className="custom-control-label" htmlFor="paypal">Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img></label>
                       </div>
                     </div>
 
                     <hr className="mb-4" />
-                    <button className="btn login-btn btn-lg btn-block" type="button" onClick={(e) => this.handleCheckout(e)}>Continue to checkout</button>
+                    <button className="btn login-btn btn-lg btn-block" type="button" onClick={(e) => this.handleCheckout(e)}> Continue to checkout
+                    </button>
                   </form>
                 </div>
               </div>
@@ -237,3 +259,11 @@ export default class Checkout extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    userData: state.userData
+  }
+};
+
+export default connect(mapStateToProps, null)(Checkout);
+
