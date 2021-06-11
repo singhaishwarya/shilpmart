@@ -285,10 +285,10 @@ class Header extends Component {
 
     return (
       <>{scrolled ?
-        <div className="headersticky">
+        <div className="headersticky fixed-header">
           <div className="appLogo">
             <Link to='/'><img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" /></Link></div>
-          <div className="appMenu"> <ul className="navbar-nav mr-auto ml-2">
+          <div className="appMenu"> <ul>
             {navbarTabs?.map((item, index) => {
               return (
                 <li key={index}>
@@ -298,7 +298,7 @@ class Header extends Component {
               )
             })}
           </ul></div>
-          <div className="appaccout"> <ul className="navbar-nav flex-row">
+          <div className="appaccout"> <ul>
             {this.props.userData.token ?
               <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
                 onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
@@ -314,7 +314,7 @@ class Header extends Component {
                   </div>
                 }
               </li>
-              : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
+              : <li className="nav-item" onClick={() => this.dismissModal('login')}><span className="nav-link">Login/Register</span></li>}
 
             <li className="nav-item">
               <Link to='/wishlist' className="nav-link">

@@ -234,7 +234,7 @@ class ProductGrid extends Component {
               </div>
             </section>}
 
-          <div className='row py-2'>
+          <div className="row">
 
             {productListData?.data?.length > 0 ?
               (<>{productListData?.data?.map((item, index) => {
