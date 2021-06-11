@@ -4,17 +4,13 @@ import ReactMegaMenu from "react-mega-menu"
 import CategoryService from '../services/CategoryService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faAngleRight, faHome } from '@fortawesome/free-solid-svg-icons'
+import TopBarMenu from './TopBarMenu';
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isMenuShown: false,
-      menuOptions: [],
-      navbarTabs: [{ title: 'HOME', route: '' },
-      { title: 'ABOUT US', route: '' },
-      { title: 'SHOP', route: 'product-list' },
-      { title: 'CUSTOMER SERVICE', route: '' }],
-      isActiveTab: 0
+      menuOptions: []
     };
   }
 
@@ -92,7 +88,7 @@ export default class Navbar extends React.Component {
 
   render() {
 
-    const { isMenuShown, menuOptions, navbarTabs, isActiveTab } = this.state;
+    const { isMenuShown, menuOptions } = this.state;
     return (
       <>
         {/* // <!--main - navigation-- > */}
@@ -122,14 +118,7 @@ export default class Navbar extends React.Component {
                 )}
               </div>
               <ul className="navbar-nav mr-auto ml-2">
-                {navbarTabs?.map((item, index) => {
-                  return (
-                    <li key={index}>
-                      <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>
-                        {item.title === 'HOME' && <FontAwesomeIcon icon={faHome} />} {item.title} </Link>
-                    </li>
-                  )
-                })}
+                <TopBarMenu />
               </ul>
             </div>
           </nav>

@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import Login from "./Login";
 import CartOverlay from "./CartOverlay";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust, faTimes, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal';
 import {
@@ -27,6 +27,7 @@ import WishlistService from '../services/WishlistService';
 import { isMobile } from 'react-device-detect';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
+import TopBarMenu from './TopBarMenu';
 
 const customLoginStyles = {
   content: {
@@ -61,10 +62,7 @@ class Header extends Component {
       shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/'],
       title: 'eShilpmart',
       isLoggedIn: this.props.userData.token,
-      isMenuShown: false, navbarTabs: [{ title: 'HOME', route: '' },
-      { title: 'ABOUT US', route: '' },
-      { title: 'SHOP', route: 'product-list' },
-      { title: 'CUSTOMER SERVICE', route: '' }], isActiveTab: 0, scrolled: false
+      isMenuShown: false, scrolled: false
     }
   }
 
@@ -289,14 +287,7 @@ class Header extends Component {
           <div className="appLogo">
             <Link to='/'><img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" /></Link></div>
           <div className="appMenu"> <ul>
-            {navbarTabs?.map((item, index) => {
-              return (
-                <li key={index}>
-                  <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>
-                    {item.title === 'HOME' && <FontAwesomeIcon icon={faHome} />} {item.title} </Link>
-                </li>
-              )
-            })}
+            <TopBarMenu />
           </ul></div>
           <div className="appaccout"> <ul>
             {this.props.userData.token ?

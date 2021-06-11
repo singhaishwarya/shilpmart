@@ -26,6 +26,8 @@ import MyDashboard from './component/my-account/Dashboard';
 import Checkout from './component/Checkout';
 import CheckoutCallback from './component/CheckoutCallback';
 import ForgotPassword from './component/ForgotPassword';
+import CustomerService from './component/CustomerService';
+import AboutUs from './component/AboutUs';
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 
@@ -50,6 +52,8 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/forgot-password' component={ForgotPassword} exact />
           <Route isAuthenticated={userData} path='/checkout' component={Checkout} exact />
           <Route isAuthenticated={userData} path='/thankyou/for-payment' component={CheckoutCallback} exact />
+          <Route isAuthenticated={userData} path='/about-us' component={AboutUs} exact />
+          <Route isAuthenticated={userData} path='/customer-service' component={CustomerService} exact />
 
           <MyAccount>
             <Route component={({ match }) =>
@@ -69,56 +73,7 @@ class App extends Component {
             } />
           </MyAccount>
         </Switch>
-
         <Footer />
-        {/* <div className="headersticky">
-          <div className="appLogo"> 
-          <Link to='/'><img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" /></Link></div>
-          <div className="appMenu"> <ul className="navbar-nav mr-auto ml-2">
-                {navbarTabs?.map((item, index) => {
-                  return (
-                    <li key={index}>
-                      <Link to={`/${item.route}`} className={`nav-item nav-link ${((isActiveTab === index) ? 'active' : '')}`} onClick={() => this.setState({ isActiveTab: index })}>
-                        {item.title === 'HOME' && <FontAwesomeIcon icon={faHome} />} {item.title} </Link>
-                    </li>
-                  )
-                })}
-              </ul></div>
-          <div className="appaccout"> <ul className="navbar-nav flex-row">
-            {this.props.userData.token ? <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
-              onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
-              {isMenuShown &&
-                <div className="myAccout-dropdown">
-                  <Link to='/my-account/dashboard'> Dashboard</Link>
-                  <Link to='/my-account/order'>Orders</Link>
-                  <Link to='/my-account/address'>Addresses</Link>
-                  <Link to='/my-account/details'>Account details</Link>
-                  <Link to='/my-account/feedback'>Feedback</Link>
-                  <Link to='my-account/wishlist'>Wishlist</Link>
-                  <Link to="" onClick={() => this.logout()}>Logout</Link>
-                </div>
-              } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
-
-            <li className="nav-item">
-              <Link to='/wishlist' className="nav-link">
-                <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to='/compare' className="nav-link">
-                <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span>
-              </Link>
-            </li>
-
-
-            <li className="nav-item" onClick={() => this.dismissModal('cart')}>
-              <span className="nav-link">
-                <FontAwesomeIcon icon={faShoppingBasket} /> <span>{this.props?.cart?.length}</span>
-              </span>
-
-            </li>
-          </ul></div>
-        </div> */}
       </BrowserRouter>
     );
   }

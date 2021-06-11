@@ -101,10 +101,6 @@ export default class ProductList extends React.Component {
     console.log(value);
   }
 
-  // setPriceRangeFilter = (value) => {
-  //   this.setState({ priceRange: value })
-  // }
-
   setSelected = (value) => {
     this.setState({ selectedOffer: value });
   }
@@ -246,7 +242,7 @@ export default class ProductList extends React.Component {
               </div >
               <div className='col-lg-9'>
                 <ProductGrid categoryBreadcrumbs={category_breadcrumbs} {...this.props}
-                  setPriceRangeProps={(e) => this.onSliderPriceChange(e)}
+                  setPriceRangeProps={(e) => this.setState({ priceRange: e })}
                 />
               </div>
             </div >
