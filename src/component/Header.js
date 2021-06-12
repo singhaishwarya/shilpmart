@@ -231,7 +231,8 @@ class Header extends Component {
         <div className="result-product-wrapper" key={index}>
           <Link to={{
             pathname: `/product-detail`,
-            search: "?pid=" + item?.id
+            search: "?cid=" + item.category[0].category_id + "&pid=" + item.content.product_id
+
           }}
             onClick={() => this.setState({ searchQuery: '', seachResults: [] })
             } >

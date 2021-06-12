@@ -234,9 +234,9 @@ class ProductDetail extends React.Component {
                     showThumbnails={productDetailData?.images?.length > 0 ? true : false}
                     onErrorImageURL={require('../public/No_Image_Available.jpeg')}
                   />
-                  <div className="addtowish"><FontAwesomeIcon icon={(wishlist?.includes(productDetailData.id) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
+                  <div className="addtowish"><FontAwesomeIcon icon={(wishlist?.includes(productDetailData?.id) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
                     onClick={() => {
-                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || wishlist?.includes(productDetailData.id)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
+                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || wishlist?.includes(productDetailData?.id)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
                     }} /></div>
 
                 </div>

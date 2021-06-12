@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 export default class Dashboard extends React.Component {
 
   constructor() {
@@ -13,14 +14,14 @@ export default class Dashboard extends React.Component {
 
         <p>From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.</p>
         <div className="my-account-links">
-          <div className="orders"><a href="#">Orders</a></div>
-          <div className="address"><a href="#">Address</a></div>
-          <div className="account-details"><a href="#">Account Details</a></div>
-          <div className="followings"><a href="#">followings</a></div>
-          <div className="feedback"><a href="#">Feedback</a></div>
-          <div className="inquiry"><a href="#">Inquiries</a></div>
-          <div className="wishlist"><a href="#">Wishlist</a></div>
-          <div className="logout"><a href="#">Loout</a></div>
+          <div className="orders"><Link to="/my-account/order">Orders</Link></div>
+          <div className="address"><Link to="/my-account/address">Address</Link></div>
+          <div className="account-details"><Link to="/my-account/details">Account Details</Link></div>
+          {/* <div className="followings"><Link to="/my-account/order">followings</Link></div> */}
+          <div className="feedback"><Link to="/my-account/feedback">Feedback</Link></div>
+          <div className="inquiry"><Link to="/my-account/inquiry">Inquiries</Link></div>
+          <div className="wishlist"><Link to="/my-account/wishlist">Wishlist</Link></div>
+          {/* <div className="logout"><Link to="/my-account/order">Loout</Link></div> */}
         </div>
       </>
     );

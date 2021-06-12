@@ -12,6 +12,8 @@ import ToastService from '../services/ToastService';
 class ShopByType extends Component {
   constructor(props) {
     super(props);
+
+    this.currentUrlParams = new URLSearchParams(window.location.search);
     this.state = {
       type: this.props.type,
       tabType: this.props.tabType,
@@ -27,14 +29,23 @@ class ShopByType extends Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.tabType !== prevProps.tabType) {
-      this.getProductsList(this.props.tabType)
-
+      this.getProductsList(this.getSetQueryParams())
     }
   }
   componentDidMount() {
-    this.state.type === 'product' ? this.getProductsList(this.props.tabType) : this.getCateroryList();
+    this.state.type === 'product' ? this.getProductsList(this.getSetQueryParams()) : this.getCateroryList();
   }
+  getSetQueryParams() {
 
+    let queryParams = {};
+    if (this.currentUrlParams.get('cid')) {
+      queryParams = { cat_ids: [this.currentUrlParams.get('cid')] }
+    }
+    if (this.props.tabType) {
+      queryParams = this.props.tab === 2 ? { 'order_by': 'desc', 'sort_by': 'created_at' } : {}
+    }
+    return queryParams;
+  }
 
   getCateroryList = () => {
     CategoryService.fetchAllCategory({ parent_id: 0 }).then((result) => {
@@ -59,8 +70,7 @@ class ShopByType extends Component {
     });
   }
 
-  getProductsList = (tab) => {
-    let filterparams = tab === 2 ? { 'order_by': 'desc', 'sort_by': 'created_at' } : {};
+  getProductsList = (filterparams) => {
     ProductService.fetchAllProducts(filterparams).then((result) => {
       this.setState({
         shopByProductItems: result?.data?.map((item) =>
@@ -69,12 +79,6 @@ class ShopByType extends Component {
     })
   }
 
-  productDetail = (value) => {
-    this.props.history.push({
-      pathname: '/product-detail',
-      search: "?pid=" + value
-    });
-  }
   productList = (value) => {
 
     this.props.history.push({

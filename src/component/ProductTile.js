@@ -107,7 +107,7 @@ class ProductTile extends React.Component {
 
     this.props.history.push({
       pathname: '/product-detail',
-      search: "?pid=" + value
+      search: "?cid=" + value.category[0].category_id + "&pid=" + value.content.product_id
     });
   }
 
@@ -123,10 +123,10 @@ class ProductTile extends React.Component {
 
       <div className="product-wrapper" key={data.id} >
 
-        <div className="prodcut-img" onClick={() => this.productDetail(data.id)} style={cellSize}>
+        <div className="prodcut-img" onClick={() => this.productDetail(data)} style={cellSize}>
           <img src={(data.images?.length > 0 && data?.images[0]?.image_url) || ""}
             className="img-fluid"
-            onClick={() => this.productDetail(data.id)}
+            onClick={() => this.productDetail(data)}
             alt={(data.images?.length > 0 && data.images[0]?.caption) || ""}
             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
           />
@@ -156,7 +156,7 @@ class ProductTile extends React.Component {
             </div>}
           </div>
         </div>
-        { data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
+        {data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
         <h5 className="product-title">
           {data.content ? data.content.title : '__'}
         </h5>

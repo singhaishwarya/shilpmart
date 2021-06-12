@@ -81,7 +81,7 @@ class Cart extends Component {
   productDetail = (value) => {
     this.props.history.push({
       pathname: '/product-detail',
-      search: "?pid=" + value
+      search: "?cid=" + value.category[0].category_id + "&pid=" + value.content.product_id
     });
   }
 
@@ -115,7 +115,7 @@ class Cart extends Component {
                       <td className="product-thumbnail">
                         <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
                           className="img-fluid"
-                          onClick={() => this.productDetail(item.product_details.id)}
+                          onClick={() => this.productDetail(finItem)}
                           alt={(finItem?.images?.length > 0 && finItem?.images[0]?.caption) || ""}
                           onError={e => { e.currentTarget.src = require('../public/bag1.jpeg') }}
                         />
@@ -174,7 +174,7 @@ class Cart extends Component {
           </div>
 
         </div> : <div className="cart-shop-body">
-        <div class="cart-empty p-5"><p>No products in the cart.</p><a href="/product-list">Return to shop</a></div>
+          <div class="cart-empty p-5"><p>No products in the cart.</p><a href="/product-list">Return to shop</a></div>
         </div>}
       </div>
 
