@@ -81,7 +81,7 @@ class Cart extends Component {
   productDetail = (value) => {
     this.props.history.push({
       pathname: '/product-detail',
-      search: "?cid=" + value.category[0].category_id + "&pid=" + value.content.product_id
+      search: "?cid=" + ((value?.category?.length > 0 && value?.category[0]?.category_id) || 0) + "&pid=" + value?.content?.product_id
     });
   }
 
