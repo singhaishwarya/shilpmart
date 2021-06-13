@@ -36,6 +36,24 @@ export default class Orders extends React.Component {
     });
   }
 
+  getOrderStatus = (status) => {
+    switch (status) {
+      case 0:
+        return 'Initiated'
+      case 1:
+        return 'Confirmed'
+      case 2:
+        return 'Payment Failed'
+      case 3:
+        return 'Order confirmed by vendor'
+      case 4:
+        return 'Item given to dop'
+      case 5:
+        return 'Delivered';
+
+    }
+  }
+
   render() {
 
     return (
@@ -55,7 +73,7 @@ export default class Orders extends React.Component {
             {this.state.orderList.map((item, index) => <tr key={index}>
               <td>#{item.id}</td>
               <td>{format(new Date(item.created_at), 'dd-MM-yyyy')}{ }</td>
-              <td className="text-success">Complete</td>
+              <td className="text-success">{this.getOrderStatus(item.status)}</td>
               <td><span>₹</span>{item.order_total}</td>
               <td className="text-right act-btn">
                 <Link to='/my-account/order-detail'><button type="button" className="btn btn-success btn-sm">View</button></Link>

@@ -111,7 +111,7 @@ class CartOverlay extends Component {
               <div className="cart-shop-footer">
                 <div className="cart-footer-head">
                   <h3>Subtotal:</h3>
-                  <p><span> {totalCost}</span></p>
+                  <p><span> <span>₹</span>{totalCost}</span></p>
                 </div> <div className="cart-action">
                   <Link to='/cart' onClick={() => this.props.dismissModal()}>
                     View Cart</Link>
