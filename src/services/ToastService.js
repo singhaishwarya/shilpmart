@@ -7,6 +7,12 @@ export default class ToastService extends Component {
     return toast.error(
       message,
       {
+        style: {
+          backgroundColor: "red",
+          color: "yellow"
+        }
+      },
+      {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
