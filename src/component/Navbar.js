@@ -93,7 +93,7 @@ export default class Navbar extends React.Component {
     const { isMenuShown, menuOptions } = this.state;
     return (
       <>
-        < div className="main-menu">
+        <div className="main-menu">
           <nav className="navbar navbar-expand-lg navbar-light border-top border-bottom">
             <button className="navbar-toggler" type="button" data-toggle="collapse" onMouseEnter={() => this.setIsMenuShown(true)}
               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

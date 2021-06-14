@@ -229,8 +229,8 @@ export default class ProductList extends React.Component {
                       <h6 className='title'>Filter by Categories </h6>
                     </header>
                     {parentCategory?.length > 0 && parentCategory?.map((item, index) =>
-                      <li key={index} className='breadcrumb-item'>
-                        <span onClick={() => this.setCategoryIdParams(item?.parent_id, index)}>{item?.name}</span></li>)}
+                      <div key={index} className='catHead'>
+                        <span onClick={() => this.setCategoryIdParams(item?.parent_id, index)}>{item?.name}</span></div>)}
                     <Treebeard
                       data={menuOptions}
                       style={treeStyle}

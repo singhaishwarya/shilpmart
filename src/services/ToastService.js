@@ -7,6 +7,12 @@ export default class ToastService extends Component {
     return toast.error(
       message,
       {
+        style: {
+          backgroundColor: "#e87f13",
+          color: "#fff"
+        }
+      },
+      {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -21,6 +27,12 @@ export default class ToastService extends Component {
   static success = async (message) => {
     return toast.success(
       message,
+      {
+        style: {
+          backgroundColor: "#34aa44",
+          color: "#fff"
+        }
+      },
       {
         position: "bottom-right",
         autoClose: 5000,

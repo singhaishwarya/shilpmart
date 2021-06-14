@@ -74,7 +74,7 @@ a {
 	top: 0;
 	left: 0;
 	width: 100%;
-	z-index: 99;
+	z-index: 2;
 	opacity: 1 !important;
 	visibility: visible !important;
 	transform: translateY(0) !important;
@@ -87,7 +87,9 @@ height: 75px;}
 .appLogo img{
 	width: 110px;
 padding: 7px 0;
+
 }
+
 
 .appMenu ul, .appaccout ul{
 	display:inline-flex;
@@ -2570,7 +2572,7 @@ height: 74px;}
 
 
 .product-description header{
-	font-size: 24px;
+	font-size: 18px;
 text-align: left;
 display: flex;
 font-weight: normal;
@@ -3509,6 +3511,18 @@ height: 5px;
 background-color: #fff;
 margin: 0 auto 65px auto;    
 
+}
+
+.catHead::before{
+	content: '\f105';
+	font-family: fontawesome;
+	position: absolute;
+	color: #878787;
+}
+
+.catHead span{
+	padding-left: 15px;
+	color: #878787;
 }
 
 /* responsive css */
