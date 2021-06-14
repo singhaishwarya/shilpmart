@@ -7,7 +7,7 @@ import validator from 'validator';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 const required = (value, name) => {
-  if (!name.value) {
+  if (!value) {
     return (
       <div className="isaerror" role="alert">
         Please enter your {name.name?.replace(/_/g, ' ') === 'c password' ? 'confirm password' : name.name?.replace(/_/g, ' ')}
@@ -16,39 +16,27 @@ const required = (value, name) => {
   }
 };
 
-const mobile = (value) => {
-  // var pattern = new RegExp(/(\+*)((0[ -]+)*|(91 )*)(\d{12}+|\d{10}+))|\d{5}([- ]*)\d{6}/);
-  if (value.length !== 10) {
-    // if (!validator.isMobilePhone(value, 'en-IN')) {
+const pattern = (value, props) => {
+  let propsPattern = new RegExp(props.pattern);
+  if (!propsPattern.test(value) || value.length < props.maxLength) {
     return <div className="isaerror" role="alert">
-      Length of mobile number should contain 10 digit.
-    </div>
-    // );
-  }
-  if (!validator.isMobilePhone(value, 'en-IN')) {
-    return <div className="isaerror" role="alert">
-      Mobile number should be numeric.
+      Please enter a valid {props.name}.
     </div>
   }
-};
+}
+
 
 const email = (value) => {
   if (!validator.isEmail(value)) {
     return <div className="isaerror" role="alert">
-      Enter a valid email(example@domainname)
+      Please enter a valid email(example@domainname)
     </div>
   }
 };
 
-const lt50 = (value, name) => {
-  if (name.value.length >= 50) {
-    return <div className="isaerror" role="alert">  {name.name?.replace(/_/g, ' ')} must be string & contain maximum length 50 char.</div>
-  }
-};
-
-const isValidpassword = (value) => {
-  let pattern = new RegExp(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/);
-  if (!pattern.test(value) || (value.length < 8)
+const isValidpassword = (value, props) => {
+  let propsPattern = new RegExp(props.pattern);
+  if (!propsPattern.test(value) || (value.length < 8)
   ) {
     return <div className="isaerror" role="alert">Password must contain atleast eight alpha numeric(abcd1234)</div>
 
@@ -162,7 +150,7 @@ export default class Registration extends React.Component {
               <div className="form-group row">
                 <label htmlFor="staticEmail" className="col-sm-3 col-form-label">First Name<span>*</span></label>
                 <div className="col-sm-9">
-                  <Input type="text" className="form-control" name="first_name" value={fields.first_name} onChange={this.handleChange.bind(this, "first_name")} validations={[required, lt50]} />
+                  <Input type="text" className="form-control" name="first_name" value={fields.first_name} onChange={this.handleChange.bind(this, "first_name")} maxLength="50" validations={[required]} />
                 </div>
               </div>
 
@@ -172,9 +160,10 @@ export default class Registration extends React.Component {
                   <Input type="text"
                     className="form-control"
                     name="last_name"
+                    maxLength="50"
                     value={fields.last_name}
                     onChange={this.handleChange.bind(this, "last_name")}
-                    validations={[required, lt50]}
+                    validations={[required]}
                   />
                 </div>
               </div>
@@ -187,9 +176,10 @@ export default class Registration extends React.Component {
                     type="text"
                     className="form-control"
                     name="email"
+                    maxLength="50"
                     value={fields.email}
                     onChange={this.handleChange.bind(this, "email")}
-                    validations={[required, email, lt50]}
+                    validations={[required, email]}
                   />
                 </div>
               </div>
@@ -197,13 +187,9 @@ export default class Registration extends React.Component {
               <div className="form-group row">
                 <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Mobile No.<span>*</span></label>
                 <div className="col-sm-9">
-                  <Input
-                    type="tel"
-                    className="form-control"
-                    name="mobile"
-                    value={fields.mobile}
+                  <Input type="text" maxLength="10" pattern="^(0|[1-9][0-9]*)$" className="form-control" name="mobile" value={fields.mobile}
                     onChange={this.handleChange.bind(this, "mobile")}
-                    validations={[required, mobile]}
+                    validations={[required, pattern]}
                   />
                 </div>
               </div>
@@ -216,7 +202,9 @@ export default class Registration extends React.Component {
                     type="password"
                     className="form-control"
                     name="password"
+                    minLength="8"
                     value={fields.password}
+                    pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/"
                     onChange={this.handleChange.bind(this, "password")}
                     validations={[required, isValidpassword]}
                   />
@@ -231,7 +219,9 @@ export default class Registration extends React.Component {
                     type="password"
                     className="form-control"
                     name="c_password"
+                    minLength="8"
                     value={fields.c_password}
+                    pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/"
                     onChange={this.handleChange.bind(this, "c_password")}
                     validations={[required, isValidpassword]}
                   />

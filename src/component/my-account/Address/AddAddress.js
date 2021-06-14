@@ -6,33 +6,25 @@ import MasterService from '../../../services/MasterService';
 import AddressService from '../../../services/AddressService';
 import Button from "react-validation/build/button";
 
-const required = (value, name) => {
-  if (!name.value) {
+const required = (value, props) => {
+  if (!value) {
     return (
       <div className="isaerror" role="alert">
-        Please enter your {name.name}.
+        Please enter your {props.name}.
       </div>
     );
   }
 };
 
-const mobile = (value) => {
-  // var pattern = new RegExp(/(\+*)((0[ -]+)*|(91 )*)(\d{12}+|\d{10}+))|\d{5}([- ]*)\d{6}/);
-  if (value.length !== 10) {
+const pattern = (value, props) => {
+  let propsPattern = new RegExp(props.pattern);
+  if (!propsPattern.test(value) || value.length < props.maxLength) {
     return <div className="isaerror" role="alert">
-      Length of mobile number should be numeric and contain 10 digit.
+      Please enter a valid {props.name}.
     </div>
   }
 }
 
-const pincode = (value) => {
-
-  if (value.length !== 6) {
-    return <div className="isaerror" role="alert">
-      Length of pincode should be numeric and contain 6 digit.
-    </div>
-  }
-}
 
 export default class AddEditAddress extends React.Component {
 
@@ -141,21 +133,23 @@ export default class AddEditAddress extends React.Component {
                 </div>
                 <div className="form-group col-lg-6 col-12">
                   <label htmlFor="fname">Mobile<span>*</span></label>
-                  <Input type="number" pattern="[0-9]*" className="form-control" name="mobile" value={fields.mobile}
+                  <Input type="text" maxLength="10" pattern="^(0|[1-9][0-9]*)$" className="form-control" name="mobile" value={fields.mobile}
                     onChange={this.handleChange.bind(this, "mobile")}
-                    validations={[required, mobile]}
+                    validations={[required, pattern]}
                   />
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group col"><label htmlFor="fname">Pin Code<span>*</span></label>
                   <Input
-                    type="number" pattern="[0-9]*"
+                    type="text"
+                    maxLength="6"
+                    pattern="^(0|[1-9][0-9]*)$"
                     className="form-control"
                     name="pincode"
                     value={fields.pincode}
                     onChange={this.handleChange.bind(this, "pincode")}
-                    validations={[required, pincode]}
+                    validations={[required, pattern]}
                   />
                 </div>
               </div>
