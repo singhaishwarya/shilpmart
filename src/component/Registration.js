@@ -21,7 +21,7 @@ const mobile = (value) => {
   if (value.length !== 10) {
     // if (!validator.isMobilePhone(value, 'en-IN')) {
     return <div className="isaerror" role="alert">
-      Length of mobile number should be numeric and contain 10 digit.
+      Length of mobile number should contain 10 digit.
     </div>
     // );
   }
@@ -35,7 +35,7 @@ const mobile = (value) => {
 const email = (value) => {
   if (!validator.isEmail(value)) {
     return <div className="isaerror" role="alert">
-      Enter a valid email, should contain maximum 50 characters (example@domainname)
+      Enter a valid email(example@domainname)
     </div>
   }
 };
@@ -50,7 +50,7 @@ const isValidpassword = (value) => {
   let pattern = new RegExp(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/);
   if (!pattern.test(value) || (value.length < 8)
   ) {
-    return <div className="isaerror" role="alert">  Password must contain atleast eight alpha numeric  </div>
+    return <div className="isaerror" role="alert">Password must contain atleast eight alpha numeric(abcd1234)</div>
 
   }
 }
@@ -158,7 +158,7 @@ export default class Registration extends React.Component {
 
           <div className="col-md-6 col-12 mb-5">
             <h4 className="mb-4">Registration</h4>
-            <Form className="login-card" onSubmit={this.handleSignUp} ref={(c) => { this.form = c; }}>
+            <Form className="login-card"  >
               <div className="form-group row">
                 <label htmlFor="staticEmail" className="col-sm-3 col-form-label">First Name<span>*</span></label>
                 <div className="col-sm-9">
@@ -236,10 +236,10 @@ export default class Registration extends React.Component {
                     validations={[required, isValidpassword]}
                   />
                 </div>
-              </div>
-              <Button className="btn login-btn" value="Submit"  >Register</Button>
+              </div><button className="btn login-btn" value="Submit" disabled={false} onClick={this.handleSignUp} >Register</button>
 
             </Form>
+
           </div>
         </div>
       </div>

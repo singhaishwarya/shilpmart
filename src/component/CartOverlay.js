@@ -19,11 +19,12 @@ class CartOverlay extends Component {
   }
 
   getCartApi = () => {
-    let totalCost1 = 0, productids = [];
+    let totalCost1 = 0;
+    // let  productids = [];
     CartService.list().then((result) => {
       this.setState({ cartData: result });
       result && result.forEach((item) => {
-        productids.push(item.product_id);
+        // productids.push(item.product_id);
         totalCost1 += (item?.product_details?.price[0]?.price * 1 || 0) * (item.quantity * 1);
       });
 

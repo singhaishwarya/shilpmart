@@ -124,10 +124,10 @@ class ProductTile extends React.Component {
       <div className="product-wrapper" key={data.id} >
 
         <div className="prodcut-img" onClick={() => this.productDetail(data)} style={cellSize}>
-          <img src={(data.images?.length > 0 && data?.images[0]?.image_url) || ""}
+          <img src={data.images?.length > 0 ? data?.images[0]?.image_url : ""}
             className="img-fluid"
             onClick={() => this.productDetail(data)}
-            alt={(data.images?.length > 0 && data.images[0]?.caption) || ""}
+            alt={data.images?.length > 0 ? data.images[0]?.caption : ""}
             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
           />
 
