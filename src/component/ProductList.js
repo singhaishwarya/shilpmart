@@ -238,6 +238,8 @@ export default class ProductList extends React.Component {
                     />
                   </article >
 
+                  
+
                 </div >
               </div >
               <div className='col-lg-9'>
