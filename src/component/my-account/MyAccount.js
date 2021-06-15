@@ -23,20 +23,12 @@ export default class MyAccount extends React.Component {
         <section id="maincontent">
           <div className='container-fluid'>
             <div className='row py-5'>
-              <div className='col-lg-3 col-12 border-right'>
-                <div className='myaccout-sidebar'>
-                  <ul>
-                    {accountSidebar?.map((item, index) => (
-                      // <article className='filter-group' key={index}>
-                      //   <Link to={item.route}> <h4 className="modal-title">{item.title}</h4></Link>
-                      // </article>                
-                      <li className={item.class} key={index}><Link to={item.route}>{item.title}</Link></li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <div className="col-lg-9 col-12 px-4">
-                {this.props.children}
+              
+              <div className="col px-4">             
+
+                
+                  {this.props.children}
+                 
               </div>
             </div>
           </div>
