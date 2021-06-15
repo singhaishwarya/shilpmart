@@ -99,11 +99,13 @@ class CheckoutComp extends React.Component {
         if (!result) return
 
 
-        var information = {
-          action: "https://payments.airpay.co.in/pay/index.php",
-          params: result.data.checksum
-        };
-        this.post(information)
+        if (this.state.payment_type !== 'cod') {
+          var information = {
+            action: this.state.payment_type === 'airpay' ? "https://payments.airpay.co.in/pay/index.php" : "https://securegw-stage.paytm.in/order/process",
+            params: result.data.checksum
+          };
+          this.post(information)
+        }
 
 
       }).catch((err) => {
