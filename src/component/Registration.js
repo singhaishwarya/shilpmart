@@ -6,50 +6,19 @@ import Button from "react-validation/build/button";
 import validator from 'validator';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
-const required = (value, name) => {
-  if (!value) {
-    return (
-      <div className="isaerror" role="alert">
-        Please enter your {name.name?.replace(/_/g, ' ') === 'c password' ? 'confirm password' : name.name?.replace(/_/g, ' ')}
-      </div>
-    );
-  }
-};
 
-const pattern = (value, props) => {
-  let propsPattern = new RegExp(props.pattern);
-  if (!propsPattern.test(value) || value.length < props.maxLength) {
-    return <div className="isaerror" role="alert">
-      Please enter a valid {props.name}.
-    </div>
-  }
-}
-
-
-const email = (value) => {
-  if (!validator.isEmail(value)) {
-    return <div className="isaerror" role="alert">
-      Please enter a valid email(example@domainname)
-    </div>
-  }
-};
-
-const isValidpassword = (value, props) => {
-  let propsPattern = new RegExp(props.pattern);
-  if (!propsPattern.test(value) || (value.length < 8)
-  ) {
-    return <div className="isaerror" role="alert">Password must contain atleast eight alpha numeric(abcd1234)</div>
-
-  }
-}
 
 export default class Registration extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.error = false;
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.requiredBinded = this.required.bind(this);
+    this.emailBinded = this.email.bind(this);
+    this.isValidpasswordBinded = this.isValidpassword.bind(this);
+    this.patternBinded = this.pattern.bind(this);
 
     this.state = {
       fields: {
@@ -63,33 +32,98 @@ export default class Registration extends React.Component {
     }
   }
 
+  required = (value, props) => {
+
+    if (props.isUsed) {
+      if (!value) {
+        this.error = true;
+        return (
+          <div className="isaerror" role="alert">
+            Please enter your {props.name?.replace(/_/g, ' ') === 'c password' ? 'confirm password' : props.name?.replace(/_/g, ' ')}
+          </div>
+        );
+      } else { this.error = false; }
+    }
+  }
+
+
+  pattern = (value, props) => {
+    let propsPattern = new RegExp(props.pattern);
+    if (props.isUsed) {
+      if (!propsPattern.test(value) || value.length < props.maxLength) {
+
+        return <div className="isaerror" role="alert">
+          Please enter a valid {props.name}.
+        </div>
+      }
+    } else { this.error = false; }
+
+  }
+
+
+  email = (value, props) => {
+    if (props.isUsed) {
+      if (!validator.isEmail(value)) {
+
+        return <div className="isaerror" role="alert">
+          Please enter a valid email(example@domainname)
+        </div>
+      }
+    } else { this.error = false; }
+
+  };
+
+  isValidpassword = (value, props) => {
+    let pwdPattern = new RegExp(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/);
+    if (props.isUsed) {
+      if (!pwdPattern.test(value) || (value.length < 8)
+      ) {
+
+        return <div className="isaerror" role="alert">Password must contain atleast eight alpha numeric(abcd1234)</div>
+
+      }
+    } else { this.error = false; }
+
+  }
   handleSignUp(e) {
     e.preventDefault();
-    AuthService.register(this.state.fields)
-      .then((result) => {
 
-        if (!result) return
+    if (this.form.getChildContext()._errors.length > 0) {
+      if (this.error) {
+        return
+      }
+      else {
+        return ToastService.error("Please fill form details")
+      }
+    } else {
+      if (!this.error) {
+        AuthService.register(this.state.fields)
+          .then((result) => {
 
-        if (result.success) {
-          ToastService.success("Successfully Registered")
-          this.props.history.push({
-            pathname: '/'
+            if (!result) return
+
+            if (result.success) {
+              ToastService.success("Successfully Registered")
+              this.props.history.push({
+                pathname: '/'
+              });
+            }
+            else {
+              return ToastService.error(Object.values(result.data)[0][0].replace("c password", "confirm password"));
+            }
+          })
+          .catch((err) => {
+            console.log(err);
           });
-        }
-        else {
-          return ToastService.error(Object.values(result.data)[0][0].replace("c password", "confirm password"))
-
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    }
   }
 
   handleChange(field, e) {
     let fields = this.state.fields;
     fields[field] = e.target.value;
     this.setState({ fields });
+
   }
 
   render() {
@@ -146,11 +180,11 @@ export default class Registration extends React.Component {
 
           <div className="col-md-6 col-12 mb-5">
             <h4 className="mb-4">Registration</h4>
-            <Form className="login-card"  >
+            <Form className="login-card" ref={c => { this.form = c }}>
               <div className="form-group row">
                 <label htmlFor="staticEmail" className="col-sm-3 col-form-label">First Name<span>*</span></label>
                 <div className="col-sm-9">
-                  <Input type="text" className="form-control" name="first_name" value={fields.first_name} onChange={this.handleChange.bind(this, "first_name")} maxLength="50" validations={[required]} />
+                  <Input type="text" className="form-control" name="first_name" value={fields.first_name} onChange={this.handleChange.bind(this, "first_name")} maxLength="50" validations={[this.requiredBinded]} />
                 </div>
               </div>
 
@@ -163,7 +197,7 @@ export default class Registration extends React.Component {
                     maxLength="50"
                     value={fields.last_name}
                     onChange={this.handleChange.bind(this, "last_name")}
-                    validations={[required]}
+                    validations={[this.requiredBinded]}
                   />
                 </div>
               </div>
@@ -179,7 +213,7 @@ export default class Registration extends React.Component {
                     maxLength="50"
                     value={fields.email}
                     onChange={this.handleChange.bind(this, "email")}
-                    validations={[required, email]}
+                    validations={[this.requiredBinded, this.emailBinded]}
                   />
                 </div>
               </div>
@@ -189,7 +223,7 @@ export default class Registration extends React.Component {
                 <div className="col-sm-9">
                   <Input type="text" maxLength="10" pattern="^(0|[1-9][0-9]*)$" className="form-control" name="mobile" value={fields.mobile}
                     onChange={this.handleChange.bind(this, "mobile")}
-                    validations={[required, pattern]}
+                    validations={[this.requiredBinded, this.patternBinded]}
                   />
                 </div>
               </div>
@@ -204,9 +238,8 @@ export default class Registration extends React.Component {
                     name="password"
                     minLength="8"
                     value={fields.password}
-                    pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/"
                     onChange={this.handleChange.bind(this, "password")}
-                    validations={[required, isValidpassword]}
+                    validations={[this.requiredBinded, this.isValidpasswordBinded]}
                   />
                 </div>
               </div>
@@ -221,9 +254,8 @@ export default class Registration extends React.Component {
                     name="c_password"
                     minLength="8"
                     value={fields.c_password}
-                    pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/"
                     onChange={this.handleChange.bind(this, "c_password")}
-                    validations={[required, isValidpassword]}
+                    validations={[this.requiredBinded, this.isValidpasswordBinded]}
                   />
                 </div>
               </div><button className="btn login-btn" value="Submit" disabled={false} onClick={this.handleSignUp} >Register</button>
