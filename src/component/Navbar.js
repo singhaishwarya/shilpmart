@@ -99,7 +99,16 @@ export default class Navbar extends React.Component {
               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
               aria-label="Toggle navigation"> <span className="navbar-toggler-icon" />
             </button>
-            <div className="collapse navbar-collapse" >
+            {isMobile ? isMenuShown ? <div class="mobile-nav">
+              <h2>Navigation</h2>
+              <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div> : '' : <div className="collapse navbar-collapse" >
               <div onMouseEnter={() => this.setIsMenuShown(true)}
                 onMouseLeave={() => this.setIsMenuShown(false)} className="categories-nav dropdown">
                 <span className="brows-menu dropdown-toggle" data-toggle="dropdown">
@@ -108,27 +117,18 @@ export default class Navbar extends React.Component {
                   <FontAwesomeIcon icon={isMenuShown ? faAngleUp : faAngleDown} />
                 </span>
                 {isMenuShown ?
-                  isMobile ? <div className="myAccout-dropdown">
-                    <span > Dashboard</span>
-                    <span >Orders</span>
-                    <span  >Addresses</span>
-                    <span  >Account details</span>
-                    <span  >Feedback</span>
-                    <span >Wishlist</span>
-                    <span onClick={() => this.logout()}>Logout</span>
-                  </div> :
-                    <ReactMegaMenu
-                      tolerance={50}
-                      direction={"RIGHT"}
-                      data={menuOptions}
-                      styleConfig={"mega-menu"}
-                    />
+                  <ReactMegaMenu
+                    tolerance={50}
+                    direction={"RIGHT"}
+                    data={menuOptions}
+                    styleConfig={"mega-menu"}
+                  />
                   : ''}
               </div>
               <ul className="navbar-nav mr-auto ml-2">
                 <TopBarMenu />
               </ul>
-            </div>
+            </div>}
           </nav>
         </div >
       </>
