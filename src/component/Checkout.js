@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 import Login from "./Login";
+import axios from "axios";
 
 const customAddressStyles = {
   content: {
@@ -69,12 +70,20 @@ class CheckoutComp extends React.Component {
         "is_billing_address_same": 'true',
         "billing_address": {
           "address_id": this.state.selectedAddress.id
-        }, "shipping_address": {
+        },
+        "shipping_address": {
           "address_id": this.state.selectedAddress.id
         },
         "is_payment_online": this.state.payment_type === 'cod' ? false : true,
         "payment_detail": {
-          "online_type": this.state.payment_type
+          "online_type": this.state.payment_type,
+          'callback': 'http://localhost:3000/checkout',
+          'website': "WEBSTAGING",
+          'channel_id': "WEB",
+          "country": this.state.selectedAddress.country,
+          "pincode": this.state.selectedAddress.pincode,
+          "state": this.state.selectedAddress.state,
+          "city": this.state.selectedAddress.city
         }
       };
       this.state.checkOutData.map((item) => {
@@ -85,29 +94,16 @@ class CheckoutComp extends React.Component {
         })
       });
       checkoutObj.products = prodObj;
+
       CheckoutService.orderPlace(checkoutObj).then((result) => {
         if (!result) return
-        console.log("Demo==response", result)
-        this.setState({
-          config: {
-            "root": "",
-            "flow": "DEFAULT",
-            "orderId": result.data.order_details.id,
-            "MID": 32977,
-            "data": {
-              "orderId": result.data.order_details.id,
-              "token": "",
-              "tokenType": "TXN_TOKEN",
-              "amount": result.data.order_details.order_total
-            }
-          }
-        })
+
+
         var information = {
-          action: "https://securegw-stage.paytm.in/order/process",
-          params: this.state.config
-        }
+          action: "https://payments.airpay.co.in/pay/index.php",
+          params: result.data.checksum
+        };
         this.post(information)
-        // return <CheckoutProvider config={config} openInPopup="false" env='PROD' />
 
 
       }).catch((err) => {
@@ -176,7 +172,7 @@ class CheckoutComp extends React.Component {
   // }
 
   render() {
-    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType, config } = this.state;
+    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType } = this.state;
     let finItem;
     return (
       <section>
