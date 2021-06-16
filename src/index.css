@@ -3134,7 +3134,13 @@ content: '\f07a';
 .myaccout-sidebar ul li.is-active a::before{
 		opacity: 1;
 	}
-
+.myorderList a{
+	color: #333;
+	font-size: 14px;
+}
+.myorderList a:hover .orderproductInfo span.title{
+	color: #e87f13;
+}
 .orderProductImg{
 	display: flex;
 	justify-content: center;
@@ -3150,12 +3156,16 @@ background-color: #fff;
 color: #000;
 font-weight: 600;
 text-align: center;
-font-size: 12px;
+font-size: 11px;
 bottom: -5px;
 border: 1px solid #eee;
 padding: 5px;
 line-height: 1;
 box-shadow: 1px 1px 3px #ccc;
+	}
+
+	.orderProductImg span:hover{
+		color: #e87f13;
 	}
 	
 .orderimg img{
@@ -3186,7 +3196,7 @@ box-shadow: 1px 1px 3px #ccc;
     margin-right: 8px;}
 
 		.statusColor.deliver::before{
-			background-color: #26a541 !important;
+			background-color: #34aa44 !important;
 		}	
 		.statusColor.cancelled::before{
 			background-color: #ff6161 !important;
@@ -3206,7 +3216,7 @@ box-shadow: 1px 1px 3px #ccc;
 			font-weight: 600;
 		}
 	.refundComplete span{
-		color: #26a541;
+		color: #34aa44;
 		font-weight: 600;
 		font-size: 14px;
 	}	
@@ -3228,6 +3238,71 @@ color: #444;
 .user-profile{
 	display: flex;
 }
+.deladd strong{color: #000;}
+.orderstate span{font-weight: 600;}
+.needhlep a{color:#e87f13; padding: 5px 0;}
+.needhlep a:hover{color: #ed731d;}
+
+.orderRangewrap{padding: 30px 30px 45px 30px;
+	border-bottom: 1px solid #eee;}
+.orderRange{display: flex;
+	position: relative;
+	height: 4px;
+	background: #34aa44;
+	border-radius: 40px;
+	justify-content: space-between;}
+
+	.orderRange span{position: relative;}
+
+	.orderRange small{
+	position: absolute;
+top: -32px;
+left: -15px;
+color: #34aa44;
+font-weight: 600;}
+	.orderRange span::before{
+		content: '';
+		width: 13px;
+height: 13px;
+position: absolute;
+background: #34aa44;
+border-radius: 50%;
+top: -5px;
+	}
+
+	.orderRange span.cancelledRange::before {
+		background-color: #ff0000 !important;
+		right: 0;
+	}
+	.orderRange span.cancelledRange small{color: #ff0000;
+		left: 25px;}
+
+
+	.orderRange .rangeDate > small{
+		position: relative;
+top: 10px;
+color: #878787;
+font-weight: 600;
+font-size: 12px;
+	}
+
+	/* .orderRangeDates{position: relative;
+		padding: 0 15px;
+		text-align: center;
+		left: -35px;
+		color: #878787;
+		display: flex;
+		justify-content: space-between;}
+
+		.orderRangeDates span{position: relative;}
+	
+		.orderRangeDates small{
+			
+		} */
+
+
+
+
 .user-profile .user-img{
 	margin-right: 15px;
 }

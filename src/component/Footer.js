@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import AliceCarousel from 'react-alice-carousel';
 export default class Footer extends React.Component {
   state = {
@@ -29,10 +30,10 @@ export default class Footer extends React.Component {
                       <h5>Information</h5>
                       <div className="footer-links">
                         <ul>
-                          <li><span>Terms of use</span></li>
-                          <li><span>Right to Information</span></li>
-                          <li><span>Sitemap </span></li>
-                          <li><span>Subscribe Newsletter</span></li>
+                          <li><Link to="/">Terms of use</Link></li>
+                          <li><Link to="/">Right to Information</Link></li>
+                          <li><Link to="/">Sitemap </Link></li>
+                          <li><Link to="/">Subscribe Newsletter</Link></li>
                         </ul>
                       </div>
                     </div>
@@ -40,10 +41,10 @@ export default class Footer extends React.Component {
                       <h5>Resources</h5>
                       <div className="footer-links">
                         <ul>
-                          <li><span>Terms &amp; Conditions</span></li>
-                          <li><span>Buyer Policy</span></li>
-                          <li><span>Seller Policy </span></li>
-                          <li><span>Exchange Policy</span></li>
+                          <li><Link to="/">Terms &amp; Conditions</Link></li>
+                          <li><Link to="/">Buyer Policy</Link></li>
+                          <li><Link to="/sellerPolicy">Seller Policy </Link></li>
+                          <li><Link to="/">Exchange Policy</Link></li>
                         </ul>
                       </div>
                     </div>
@@ -52,8 +53,8 @@ export default class Footer extends React.Component {
                       <div className="footer-links">
                         <ul>
                           <li><a href="https://seller.digitalindiacorporation.in/register"> Weaver / Artisan Registration</a></li>
-                          <li><a href="https://seller.digitalindiacorporation.in/login">Weaver / Artisan Login </a></li>
-                          <li><a href="#">Corporate Enquiries </a></li>
+              <li><a href="https://seller.digitalindiacorporation.in/login">Weaver / Artisan Login</a></li>
+                          <li><Link to="\">Corporate Enquiries </Link></li>
                         </ul>
                       </div>
                     </div>
@@ -61,9 +62,9 @@ export default class Footer extends React.Component {
                       <h5>Need Help?</h5>
                       <div className="footer-links">
                         <ul>
-                          <li><a href="#">FAQs</a></li>
-                          <li><a href="#">Raise a ticket</a></li>
-                          <li><a href="#">Contact Us </a></li>
+                          <li><Link to="/">FAQs</Link></li>
+                          <li><Link to="/">Raise a ticket</Link></li>
+                          <li><Link to="/customer-service">Contact Us </Link></li>
                         </ul>
                       </div>
                     </div>
@@ -80,12 +81,7 @@ export default class Footer extends React.Component {
               {/* <!-- Swiper --> */}
               <div className="swiper-container py-5 logos">
                 <div className="swiper-wrapper">
-                  {/* <img src={require("../public/data_gov.webp")} className="img-fluid" alt="data gov" />
-                  <img src={require("../public/india-gov.webp")} className="img-fluid" alt="India gov" />
-                  <img src={require("../public/mot.webp")} className="img-fluid" alt="Ministry Textile" />
-                  <img src={require("../public/di.webp")} className="img-fluid" alt="DIC" />
-                  <img src={require("../public/india_post.webp")} className="img-fluid" alt="India Post" />
-                  <img src={require("../public/csc.webp")} className="img-fluid" alt="CSC" /> */}
+                  
 
                   <AliceCarousel
                     animationType='slide'
@@ -100,12 +96,7 @@ export default class Footer extends React.Component {
                     disableButtonsControls //can be enabled if arrows are needed
                   //touchTracking
                   />
-                  {/* <div className="swiper-slide"><img src={require("../public/data_gov.webp")} className="img-fluid" alt="data gov" />
-                  <img src={require("../public/india-gov.webp")} className="img-fluid" alt="India gov" />
-                  <img src={require("../public/mot.webp")} className="img-fluid" alt="Ministry Textile" />
-                  <img src={require("../public/di.webp")} className="img-fluid" alt="DIC" /><img src={require("../public/india_post.webp")} className="img-fluid"
-                    alt="India Post" />
-                    <img src={require("../public/csc.webp")} className="img-fluid" alt="CSC" /></div> */}
+                  
 
 
 

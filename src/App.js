@@ -28,6 +28,7 @@ import CheckoutCallback from './component/CheckoutCallback';
 import ForgotPassword from './component/ForgotPassword';
 import CustomerService from './component/CustomerService';
 import AboutUs from './component/AboutUs';
+import SellerPolicy from './component/SellerPolicy';
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 
@@ -54,6 +55,7 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/thankyou/for-payment' component={CheckoutCallback} exact />
           <Route isAuthenticated={userData} path='/about-us' component={AboutUs} exact />
           <Route isAuthenticated={userData} path='/customer-service' component={CustomerService} exact />
+          <Route isAuthenticated={userData} path='/seller-policy' component={SellerPolicy} exact />
 
           <MyAccount>
             <Route component={({ match }) =>
