@@ -23,6 +23,7 @@ a {
 	width: 100%;
 }
 .headersticky{
+  position: fixed !important;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
