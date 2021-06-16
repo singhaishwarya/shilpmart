@@ -323,14 +323,14 @@ class ProductDetail extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                       <h4 className="mb-4">Ask a Question</h4>
                       <div className="form-group row">
-                        <label for="name" className="col-sm-3 col-12 col-form-label">Name<span>*</span></label>
+                        <label htmlFor="name" className="col-sm-3 col-12 col-form-label">Name<span>*</span></label>
                         <div className="col-sm-9 col-12">
                           <input type="text" readonly className="form-control" id="name" value="" />
                         </div>
                       </div>
 
                       <div className="form-group row">
-                        <label for="Email" className="col-sm-3 col-12 col-form-label">Email<span>*</span></label>
+                        <label htmlFor="Email" className="col-sm-3 col-12 col-form-label">Email<span>*</span></label>
                         <div className="col-sm-9 col-12">
                           <input type="text" readonly className="form-control" id="Email" value="" />
                           <small>Your email address will not be published.</small>
@@ -338,7 +338,7 @@ class ProductDetail extends React.Component {
                       </div>
 
                       <div className="form-group row">
-                        <label for="inquiry" className="col-sm-3 col-12 col-form-label">Your inquiry<span>*</span></label>
+                        <label htmlFor="inquiry" className="col-sm-3 col-12 col-form-label">Your inquiry<span>*</span></label>
                         <div className="col-sm-9 col-12">
                           <textarea className="form-control" placeholder="Type your Question..." />
                         </div>

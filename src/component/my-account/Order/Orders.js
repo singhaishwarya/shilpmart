@@ -1,26 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CheckoutService from '../../../services/CheckoutService';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
-import { format } from 'date-fns'
+import Loader from "react-loader";
 export default class Orders extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      orderList: []
+      orderList: [], isLoaded: false
     };
   }
   componentDidMount() {
     this.getOrders();
   }
   getOrders = () => {
+
     CheckoutService.list().then((result) => {
       if (!result) return
-      this.setState({ orderList: result.data });
+      this.setState({ orderList: result.data, isLoaded: true });
     }).catch((err) => {
       console.log(err);
+      this.setState({ isLoaded: true })
     });
   }
   cancelOrder = (order) => {
@@ -52,24 +52,43 @@ export default class Orders extends React.Component {
         return 'Item given to dop'
       case 5:
         return 'Delivered';
+      default:
+        return
 
     }
   }
 
   render() {
-    const { orderList } = this.state
+    var options = {
+      lines: 13,
+      length: 20,
+      width: 10,
+      radius: 30,
+      scale: 1.00,
+      corners: 1,
+      color: '#000',
+      opacity: 0.25,
+      rotate: 0,
+      direction: 1,
+      speed: 1,
+      trail: 60,
+      fps: 20,
+      zIndex: 2e9,
+      top: '50%',
+      left: '50%',
+      shadow: false,
+      hwaccel: false,
+      position: 'absolute'
+    };
+    const { orderList, isLoaded } = this.state
     return (
       <div className="row">
-
         <div className='col-lg-3 col-12'>
           <div className='myaccout-sidebar'>
             <div className="card shadow">
               <div className="card-body">
                 <article className='filter-group'>
-
                   <h6 className='title'>ORDER STATUS </h6>
-
-
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="ondaway" value="black" />
                     <label className="form-check-label " htmlFor="ondaway">On the way</label>
                   </div>
@@ -116,52 +135,53 @@ export default class Orders extends React.Component {
               </button>
             </div>
           </div>
-          {orderList.length > 0 ?
-            orderList.map((item, index) => (
-              <div className="card mb-3 shadow" key={index}>
-                <div className="card-body myorderList">
-                  <Link to='/my-account/order-detail'>
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <div className="row">
-                          <div className="col-sm-3">
-                            <div className="orderProductImg">
-                              <div className="orderimg">
-                                <img src={require("../../../public/saree.jpg")} className="img-fluid" alt="CSC" />
+          <Loader loaded={isLoaded} message='Loading...' options={options} className="spinner" >
+            {orderList.length > 0 && isLoaded ?
+              orderList.map((item, index) => (
+                <div className="card mb-3 shadow" key={index}>
+                  <div className="card-body myorderList">
+                    <Link to='/my-account/order-detail'>
+                      <div className="row">
+                        <div className="col-sm-6">
+                          <div className="row">
+                            <div className="col-sm-3">
+                              <div className="orderProductImg">
+                                <div className="orderimg">
+                                  <img src={require("../../../public/saree.jpg")} className="img-fluid" alt="CSC" />
+                                </div>
+                                {item.product_details.length > 1 && <span>+{item.product_details.length - 1} More {item.product_details.length === 2 ? "Item" : "Items"}</span>}
                               </div>
-                              {item.product_details.length > 1 && <span>+{item.product_details.length - 1} More Items</span>}
                             </div>
-                          </div>
-                          <div className="col-sm-9">
-                            <div className="orderproductInfo">
-                              <span className="title">Cotton Saree For Product Title</span>
-                              <span> <span>Seller: xyz</span></span>
+                            <div className="col-sm-9">
+                              <div className="orderproductInfo">
+                                <span className="title">Cotton Saree For Product Title</span>
+                                <span> <span>Seller: xyz</span></span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="col-sm-2"><span>₹ {item.order_total}</span></div>
-                      <div className="col-sm-4">
-                        <div className="orderstatus">
-                          <div className="statusColor returne"> <span>{this.getOrderStatus(item.status)}</span></div>
-                          {/* <div className="statusReq"><p>As per your request, your item has been cancelled</p></div> */}
+                        <div className="col-sm-2"><span>₹ {item.order_total}</span></div>
+                        <div className="col-sm-4">
+                          <div className="orderstatus">
+                            <div className="statusColor returne"> <span>{this.getOrderStatus(item.status)}</span></div>
+                            {/* <div className="statusReq"><p>As per your request, your item has been cancelled</p></div> */}
+                          </div>
                         </div>
-                      </div>
-                    </div></Link>
-                </div>
-              </div>))
-            : <div className="card shadow">
-              <div className="card-body">
-                <div className="orderlist">
-                  <div className="noOrder">
-                    <h2>You have No Order Yet!</h2>
-                    <Link to="/product-list">Start Shopping</Link>
+                      </div></Link>
+                  </div>
+                </div>))
+              : <div className="card shadow">
+                <div className="card-body">
+                  <div className="orderlist">
+                    <div className="noOrder">
+                      <h2>You have No Order Yet!</h2>
+                      <Link to="/product-list">Start Shopping</Link>
+                    </div>
                   </div>
                 </div>
-
-              </div>
-            </div>}
+              </div>}
+          </Loader>
         </div>
         <div>
         </div>

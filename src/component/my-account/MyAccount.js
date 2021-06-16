@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 export default class MyAccount extends React.Component {
 
   constructor(props) {
@@ -17,18 +16,17 @@ export default class MyAccount extends React.Component {
   }
 
   render() {
-    const { accountSidebar } = this.state;
     return (
       <>
         <section id="maincontent">
           <div className='container-fluid'>
             <div className='row py-5'>
-              
-              <div className="col px-4">             
 
-                
-                  {this.props.children}
-                 
+              <div className="col px-4">
+
+
+                {this.props.children}
+
               </div>
             </div>
           </div>

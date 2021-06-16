@@ -9,6 +9,7 @@ import { isMobile } from 'react-device-detect';
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
+    this._isMounted = false;
     this.state = {
       isMenuShown: false,
       menuOptions: []
@@ -16,7 +17,12 @@ export default class Navbar extends React.Component {
   }
 
   componentDidMount() {
-    this.getSubmenuOptions();
+    this._isMounted = true;
+    this._isMounted && this.getSubmenuOptions();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   getSubmenuOptions = () => {
@@ -76,7 +82,7 @@ export default class Navbar extends React.Component {
             })
           }
         })
-        this.setState({ menuOptions: result?.length > 0 ? MegaMenu : [] });
+        this._isMounted && this.setState({ menuOptions: result?.length > 0 ? MegaMenu : [] });
       })
     } catch (err) {
       console.log(err);
@@ -84,7 +90,6 @@ export default class Navbar extends React.Component {
   }
 
   setIsMenuShown = (status) => {
-    console.log("demo===", isMobile)
     this.setState({ isMenuShown: status })
   }
 

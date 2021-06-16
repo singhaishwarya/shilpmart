@@ -746,7 +746,7 @@ height: 250px;
 /* .cart-shop-body::-webkit-scrollbar {
 	display: none;
 } */
-.cart-shop-body{ scrollbar-visibility: hidden; scrollbar-width: none;  }
+.cart-shop-body{  scrollbar-width: none;  }
 .cart-shop-footer {
 	position: absolute;
 	border-top: 1px solid #ccc;
@@ -3626,7 +3626,7 @@ border-radius: 7px;
 		font-family: fontawesome;
 		font-style: normal;
 font-weight: 400;
-speak: none;
+
 display: inline-block;
 text-decoration: inherit;
 width: 1em;

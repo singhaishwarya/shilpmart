@@ -2,7 +2,6 @@ import React from "react";
 import AuthService from '../services/AuthService';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import Button from "react-validation/build/button";
 import validator from 'validator';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';

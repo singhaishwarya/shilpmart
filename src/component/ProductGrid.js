@@ -11,7 +11,7 @@ class ProductGrid extends Component {
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
     this.state = {
-      isLoader: false,
+      isLoaded: false,
       pathname: props?.location?.pathname,
       productsData: [],
       currentPage: 1,
@@ -40,12 +40,12 @@ class ProductGrid extends Component {
   }
 
   fetchMoreData = () => {
-    this.setState({ currentPage: this.state.currentPage + 1, isLoader: false });
+    this.setState({ currentPage: this.state.currentPage + 1, isLoaded: false });
     ProductService.fetchNextPage({ page: this.state.currentPage + 1 }).then((result) => (
       this.state.productListData.data?.concat(result.data)
     ));
 
-    this.setState({ isLoader: true });
+    this.setState({ isLoaded: true });
     this.currentUrlParams.set('page', this.state.currentPage + 1)
     this.props.history.push({
       pathname: this.props.location.pathname,
@@ -101,7 +101,7 @@ class ProductGrid extends Component {
     try {
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({
-          productListData: result, isLoader: true
+          productListData: result, isLoaded: true
         });
         this.props.setPriceRangeProps([result?.filter?.min_price * 1, result?.filter?.max_price * 1])
       });
@@ -158,7 +158,7 @@ class ProductGrid extends Component {
     return ToastService.success(product?.content?.title + " is successfully added to " + type)
   }
   render() {
-    const { productListData, layout, pathname, per_page, isLoader, layoutValue } = this.state
+    const { productListData, layout, pathname, per_page, isLoaded, layoutValue } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
     var options = {
       lines: 13,
@@ -183,7 +183,7 @@ class ProductGrid extends Component {
     };
     return (
       <>
-        <Loader loaded={isLoader} message='Loading...' options={options} className="spinner" >
+        <Loader loaded={isLoaded} message='Loading...' options={options} className="spinner" >
           <ToastContainer />
           {(pathname !== "/wishlist" && productListData?.data?.length > 0) &&
             <section className='topsection d-flex justify-content-between'>
@@ -239,7 +239,7 @@ class ProductGrid extends Component {
 
           <div className="row">
 
-            {productListData?.data?.length > 0 ?
+            {(productListData?.data?.length > 0 && isLoaded) ?
               (<>{productListData?.data?.map((item, index) => {
                 return (
                   <div key={index} className={layout} >
