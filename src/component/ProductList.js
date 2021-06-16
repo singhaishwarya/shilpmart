@@ -23,7 +23,7 @@ export default class ProductList extends React.Component {
       ],
       selectedOffer: [],
       categories: [],
-      priceRange: [200, 500],
+      priceRange: [],
       category_id: props.history.location.state?.category_id || (this.currentUrlParams.get('cat_ids') || 0),
       category_breadcrumbs: props.history.location.state?.category_breadcrumbs,
       selectedOption: null, queryParams: {},
@@ -179,7 +179,7 @@ export default class ProductList extends React.Component {
       category_breadcrumbs,
       parentCategory
     } = this.state;
-
+    console.log("demo===", priceRange, priceRange[1])
     return (
       <>
         <section id="maincontent">
@@ -194,20 +194,19 @@ export default class ProductList extends React.Component {
                     <div className='filter-content'>
                       <div className='price-range-wrapper'>
                         <div id='slider-range' className='price-filter-range' name='rangeInput'>
-                          <Ranger
+                          {priceRange.length > 1 && <Ranger
                             defaultValue={priceRange}
                             min={0}
-                            max={5000}
+                            max={50000}
                             className='filter-slider'
                             allowCross={false}
                             onAfterChange={value => { this.onSliderPriceChange(value) }}
-                            draggableTrack={true}
-                          />
+                          />}
                         </div>
                         <div className='price-range d-flex justify-content-between'>
                           <span>
                             Price:
-                          <input type='number' min={0} max={priceRange[0] || 5000} value={priceRange[0] || 0} className='price-range-field'
+                            <input type='number' min={0} max={priceRange[0] || 50000} value={priceRange[0] || 0} className='price-range-field'
                               onChange={(e) => this.onManualPriceChange(0, e)}
                             />
 
@@ -238,7 +237,7 @@ export default class ProductList extends React.Component {
                     />
                   </article >
 
-                  
+
 
                 </div >
               </div >
