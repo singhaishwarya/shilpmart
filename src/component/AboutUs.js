@@ -9,6 +9,7 @@ export default class AboutUs extends React.Component {
 
   render() {
     return (
+      <section id="maincontent">
       <div className="container-fluid">
         <div className="row py-5">
           <div className="col">
@@ -34,6 +35,7 @@ export default class AboutUs extends React.Component {
 
         </div>
       </div>
+      </section>
     );
   }
 }

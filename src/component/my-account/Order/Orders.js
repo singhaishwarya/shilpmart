@@ -119,7 +119,7 @@ export default class Orders extends React.Component {
           {orderList.length > 0 ?
             orderList.map((item, index) => (
               <div className="card mb-3 shadow">
-                <div className="card-body">
+                <div className="card-body myorderList">
                   <Link to='/my-account/order-detail'>
                     <div className="row">
                       <div className="col-sm-6">
@@ -134,14 +134,14 @@ export default class Orders extends React.Component {
                           </div>
                           <div className="col-sm-9">
                             <div className="orderproductInfo">
-                              <span>Cotton Saree For Product Title</span>
-                              <span>Seller: <span>xyz</span></span>
+                              <span className="title">Cotton Saree For Product Title</span>
+                              <span> <span>Seller: xyz</span></span>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      <div className="col-sm-2"><span>₹{item.order_total}</span></div>
+                      <div className="col-sm-2"><span>₹ {item.order_total}</span></div>
                       <div className="col-sm-4">
                         <div className="orderstatus">
                           <div className="statusColor returne"> <span>{this.getOrderStatus(item.status)}</span></div>
