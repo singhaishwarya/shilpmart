@@ -25,24 +25,24 @@ class ShopByType extends Component {
       shopByCategoryItems: [],
       shopByProductItems: []
     };
-
   }
+
   componentDidUpdate(prevProps) {
     if (this.props.tabType !== prevProps.tabType) {
       this.getProductsList(this.getSetQueryParams())
     }
   }
+
   componentDidMount() {
     this.state.type === 'product' ? this.getProductsList(this.getSetQueryParams()) : this.getCateroryList();
   }
   getSetQueryParams() {
-
     let queryParams = {};
     if (this.currentUrlParams.get('cid')) {
       queryParams = { cat_ids: [this.currentUrlParams.get('cid')] }
     }
     if (this.props.tabType) {
-      queryParams = this.props.tab === 2 ? { 'order_by': 'desc', 'sort_by': 'created_at' } : {}
+      queryParams = this.props.tabType === 2 ? { 'order_by': 'desc', 'sort_by': 'created_at' } : {}
     }
     return queryParams;
   }
