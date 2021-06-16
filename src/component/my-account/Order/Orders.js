@@ -71,35 +71,35 @@ export default class Orders extends React.Component {
 
 
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="ondaway" value="black" />
-                    <label className="form-check-label " for="ondaway">On the way</label>
+                    <label className="form-check-label " htmlFor="ondaway">On the way</label>
                   </div>
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="deliver" value="black" />
-                    <label className="form-check-label " for="deliver">Delivered</label>
+                    <label className="form-check-label " htmlFor="deliver">Delivered</label>
                   </div>
 
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="cancel" value="black" />
-                    <label className="form-check-label " for="cancel">Cancelled</label>
+                    <label className="form-check-label " htmlFor="cancel">Cancelled</label>
                   </div>
 
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="returne" value="black" />
-                    <label className="form-check-label " for="returne">Returned</label>
+                    <label className="form-check-label " htmlFor="returne">Returned</label>
                   </div>
 
                   <h6 className='title'>ORDER TIME </h6>
 
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="lastday" value="black" />
-                    <label className="form-check-label " for="lastday">Last 30 days</label>
+                    <label className="form-check-label " htmlFor="lastday">Last 30 days</label>
                   </div>
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="lastyear" value="black" />
-                    <label className="form-check-label " for="lastyear">2020</label>
+                    <label className="form-check-label " htmlFor="lastyear">2020</label>
                   </div>
 
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="llyear" value="black" />
-                    <label className="form-check-label " for="llyear">2019</label>
+                    <label className="form-check-label " htmlFor="llyear">2019</label>
                   </div>
 
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="older" value="black" />
-                    <label className="form-check-label " for="older">Older</label>
+                    <label className="form-check-label " htmlFor="older">Older</label>
                   </div>
                 </article>
               </div>
@@ -118,7 +118,7 @@ export default class Orders extends React.Component {
           </div>
           {orderList.length > 0 ?
             orderList.map((item, index) => (
-              <div className="card mb-3 shadow">
+              <div className="card mb-3 shadow" key={index}>
                 <div className="card-body myorderList">
                   <Link to='/my-account/order-detail'>
                     <div className="row">

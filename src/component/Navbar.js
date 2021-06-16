@@ -99,7 +99,7 @@ export default class Navbar extends React.Component {
               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
               aria-label="Toggle navigation"> <span className="navbar-toggler-icon" />
             </button>
-            {isMobile ? isMenuShown ? <div class="mobile-nav">
+            {isMobile ? isMenuShown ? <div className="mobile-nav">
               <h2>Navigation</h2>
               <ul>
                 <li><a href="#">Home</a></li>

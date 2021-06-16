@@ -130,7 +130,7 @@ class CartOverlay extends Component {
               </div>
             </>
             :
-            <div class="cart-empty">
+            <div className="cart-empty">
               <p>No products in the cart.</p>
               <Link to="/product-list" onClick={() =>
                 this.props.dismissModal('cart')
