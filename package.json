@@ -23,6 +23,7 @@
     "big.js": "^5.2.2",
     "customize-cra": "^1.0.0",
     "date-fns": "^2.22.1",
+    "paytm-blink-checkout-react": "0.0.2",
     "rc-slider": "^8.7.1",
     "react": "^16.14.0",
     "react-alice-carousel": "^2.5.1",

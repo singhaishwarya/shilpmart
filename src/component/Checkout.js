@@ -81,7 +81,7 @@ class CheckoutComp extends React.Component {
         "is_payment_online": this.state.payment_type === 'cod' ? false : true,
         "payment_detail": {
           "online_type": this.state.payment_type,
-          'callback': 'https://main.digitalindiacorporation.in/checkout',
+          'callback': 'https://main.digitalindiacorporation.in/thankyou/for-payment',
           'website': "WEBSTAGING",
           'channel_id': "WEB",
           "country": this.state.selectedAddress.country,
@@ -103,12 +103,6 @@ class CheckoutComp extends React.Component {
         if (!result) return
 
         if (this.state.payment_type === 'paytm') {
-          const script = document.createElement("script");
-
-          script.src = "https://securegw-stage.paytm.in/merchantpgpui/checkoutjs/merchants/" + result.data.checksum.body.mid + ".js";
-          script.async = true;
-
-          document.body.appendChild(script);
 
           var post_data = JSON.stringify(result.data.checksum);
 
@@ -133,7 +127,6 @@ class CheckoutComp extends React.Component {
 
             post_res.on('end', function () {
               var txnResponse = JSON.parse(response)
-              console.log('Response: ', txnResponse);
               _this.setState({
                 config: {
                   "root": "",
@@ -142,7 +135,7 @@ class CheckoutComp extends React.Component {
                     "orderId": result.data.order_details.id,
                     "token": txnResponse.body.txnToken,
                     "tokenType": "TXN_TOKEN",
-                    "amount": ""
+                    "amount": result.data.order_details.order_total
                   },
                   "handler": {
                     "notifyMerchant": function (eventName, data) {
@@ -150,6 +143,24 @@ class CheckoutComp extends React.Component {
                       console.log("eventName => ", eventName);
                       console.log("data => ", data);
                     }
+                  },
+                  merchant: {
+                    mid: "Digita62153518081968",
+                    callbackUrl: "https://main.digitalindiacorporation.in/thankyou/for-payment",
+                    name: "E-Shilpmart",
+                    logo: "https://main.digitalindiacorporation.in/static/media/logo-eshilp.dffc449c.svg",
+                    redirect: true
+                  },
+                  mapClientMessage: {},
+                  labels: {},
+                  payMode: {
+                    labels: {},
+                    filter: { exclude: [] },
+                    order: [
+                      "NB",
+                      "CARD",
+                      "LOGIN"
+                    ]
                   }
                 }
               });
@@ -160,10 +171,36 @@ class CheckoutComp extends React.Component {
           post_req.end();
         }
         if (this.state.payment_type === 'airpay') {
+          var configAirpay = {
+            "buyerEmail": "buyer@example.com",
+            "buyerPhone": 9898989989898,
+            "buyerFirstName": "Sam",
+            "buyerLastName": "Johan",
+            "orderid": "d3t54978",
+            "amount": result.data.order_details.order_total,
+            "privatekey": result.data.checksum.privatekey,
+            "mercid": result.data.checksum.mercid,
+            "checksum": result.data.checksum.checksum,
+            "currency": 356,
+            "isocurrency": "INR",
+            "token": "",
+            "sb_nextrundate": "03/23/2016",
+            "sb_period": "Month",
+            "sb_frequency": 2,
+            "sb_amount": 20.00,
+            "sb_isrecurring": 1,
+            "sb_recurringcount": 1,
+            "sb_retryattempts": 1,
+            "sb_trial_amount": 2.00,
+            "sb_trial_period": 1,
+            "sb_trial_frequency": 1
+          }
           var information = {
             action: "https://payments.airpay.co.in/pay/index.php",
-            params: result.data.checksum
+            params: configAirpay
           };
+
+          console.log("Demo===", information)
           this.post(information)
         }
 
@@ -203,9 +240,9 @@ class CheckoutComp extends React.Component {
     return (
       <section>
         <ToastContainer />
-        {/* <CheckoutProvider config={config} env='STAGE'>
+        {config && <CheckoutProvider config={config} env='STAGE'>
           <Checkout />
-        </CheckoutProvider> */}
+        </CheckoutProvider>}
         <div>
           <Modal
             isOpen={showModal}

@@ -10,7 +10,7 @@ export default class CheckoutCallback extends React.Component {
   render() {
     return (
       <div className="empty-wishlist">
-        <h2>Thank you.</h2>
+        <h2>Thank you for shopping with us.</h2>
       </div>
     );
   }
