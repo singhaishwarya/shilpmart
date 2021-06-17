@@ -8,7 +8,8 @@ import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 import Login from "./Login";
 import axios from "axios";
-
+import { CheckoutProvider, Checkout, injectCheckout } from 'paytm-blink-checkout-react'
+const https = require('https');
 const customAddressStyles = {
   content: {
     top: '50%',
@@ -33,11 +34,14 @@ class CheckoutComp extends React.Component {
       showModal: false,
       checkOutData: JSON.parse(localStorage.getItem('checkOutData')) || [],
       totalCartCost: localStorage.getItem('totalCartCost') || 0,
-      payment_type: ''
+      payment_type: '', config: {}
     };
   }
+
   componentDidMount() {
+
     this.getAddress();
+
   }
   getAddress = () => {
     AddressService.list().then((result) => {
@@ -54,20 +58,20 @@ class CheckoutComp extends React.Component {
   };
 
 
-  handleCheckout = (e) => {
+  handleCheckout = async (e) => {
 
     e.preventDefault();
     let checkoutObj = {}, prodObj = [];
 
 
     if (this.props.userData?.token) {
-      if (!this.state.selectedAddress.id) return ToastService.error("Please select shipping address");
+      if (!this.state.selectedAddress?.id) return ToastService.error("Please select shipping address");
       if (!this.state.payment_type) return ToastService.error("Please select payment type");
 
       checkoutObj = {
         "is_checkout": true,
         "coupan_code": "",
-        "is_billing_address_same": 'true',
+        "is_billing_address_same": true,
         "billing_address": {
           "address_id": this.state.selectedAddress.id
         },
@@ -77,7 +81,7 @@ class CheckoutComp extends React.Component {
         "is_payment_online": this.state.payment_type === 'cod' ? false : true,
         "payment_detail": {
           "online_type": this.state.payment_type,
-          'callback': 'http://localhost:3000/checkout',
+          'callback': 'https://main.digitalindiacorporation.in/checkout',
           'website': "WEBSTAGING",
           'channel_id': "WEB",
           "country": this.state.selectedAddress.country,
@@ -95,18 +99,73 @@ class CheckoutComp extends React.Component {
       });
       checkoutObj.products = prodObj;
 
-      CheckoutService.orderPlace(checkoutObj).then((result) => {
+      CheckoutService.orderPlace(checkoutObj).then(async (result) => {
         if (!result) return
 
+        if (this.state.payment_type === 'paytm') {
+          const script = document.createElement("script");
 
-        if (this.state.payment_type !== 'cod') {
+          script.src = "https://securegw-stage.paytm.in/merchantpgpui/checkoutjs/merchants/" + result.data.checksum.body.mid + ".js";
+          script.async = true;
+
+          document.body.appendChild(script);
+
+          var post_data = JSON.stringify(result.data.checksum);
+
+          var options = {
+            hostname: 'securegw-stage.paytm.in',
+            port: 443,
+            path: '/theia/api/v1/initiateTransaction?mid=Digita62153518081968&orderId=' + result.data.order_details.id,
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Content-Length': post_data.length
+            }
+          };
+
+          var response = "";
+          let _this = this;
+          var post_req = https.request(options, function (post_res) {
+
+            post_res.on('data', function (chunk) {
+              response += chunk;
+            });
+
+            post_res.on('end', function () {
+              var txnResponse = JSON.parse(response)
+              console.log('Response: ', txnResponse);
+              _this.setState({
+                config: {
+                  "root": "",
+                  "flow": "DEFAULT",
+                  "data": {
+                    "orderId": result.data.order_details.id,
+                    "token": txnResponse.body.txnToken,
+                    "tokenType": "TXN_TOKEN",
+                    "amount": ""
+                  },
+                  "handler": {
+                    "notifyMerchant": function (eventName, data) {
+                      console.log("notifyMerchant handler function called");
+                      console.log("eventName => ", eventName);
+                      console.log("data => ", data);
+                    }
+                  }
+                }
+              });
+            });
+          });
+
+          post_req.write(post_data);
+          post_req.end();
+        }
+        if (this.state.payment_type === 'airpay') {
           var information = {
-            action: this.state.payment_type === 'airpay' ? "https://payments.airpay.co.in/pay/index.php" : "https://securegw-stage.paytm.in/order/process",
+            action: "https://payments.airpay.co.in/pay/index.php",
             params: result.data.checksum
           };
           this.post(information)
         }
-
 
       }).catch((err) => {
         console.log(err);
@@ -137,48 +196,16 @@ class CheckoutComp extends React.Component {
 
     return form
   }
-  //   var amount = "100.00";
-  //   var phone_number = "9026892671";
-  //   var email = "aishsinghniit@gmail.com";
-  //   var orderId = "ORDER_ID" + (new Date().getTime());
-  //   let params = {
-  //     amount: amount,
-  //     phone_number: phone_number,
-  //     email: email,
-  //     orderId: orderId,
-  //     txnAmount: 100,
-  //     userInfo: { custId: 12345 }
-  //   }
-
-  //   var url = "http://localhost:3003/paynow";
-  //   var request = {
-  //     url: url,
-  //     data: params,
-  //     method: 'get',
-  //     headers: {
-  //       "Access-Control-Allow-Origin": "true", 'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     crossdomain: true, proxy: {
-  //       host: 'localhost',
-  //       port: 3003
-  //     }
-
-  //   }
-  //   const response = await axios(request);
-  //   const processParams = await response.json;
-  //   console.log("demo==", processParams)
-  // } catch {
-  //   console.log("demo error")
-  // }
-  // }
 
   render() {
-    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType } = this.state;
+    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType, config } = this.state;
     let finItem;
     return (
       <section>
         <ToastContainer />
+        {/* <CheckoutProvider config={config} env='STAGE'>
+          <Checkout />
+        </CheckoutProvider> */}
         <div>
           <Modal
             isOpen={showModal}
@@ -230,7 +257,7 @@ class CheckoutComp extends React.Component {
                 </li> */}
                 <li className="list-group-item d-flex justify-content-between">
                   <h5><span>Total Payable</span></h5>
-                  <strong><span>₹</span> {totalCartCost}</strong>
+                  <strong><span>₹</span> {totalCartCost}.00</strong>
                 </li>
               </ul>
               {/* <p>Have a coupon? Enter your code here...</p> */}

@@ -108,7 +108,7 @@ class Cart extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartProduct.map((item, index) => (
+                  {cartProduct?.map((item, index) => (
                     finItem = item.product_details || item,
                     <tr key={index}>
                       <td className="product-remove"><span onClick={() => this.deleteCart(item)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>

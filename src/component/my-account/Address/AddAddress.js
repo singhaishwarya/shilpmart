@@ -68,7 +68,7 @@ export default class AddEditAddress extends React.Component {
   getStates = () => {
 
     MasterService.getStates().then((result) => {
-      this.setState({ statesOptions: result.data })
+      this.setState({ statesOptions: result?.data })
     })
   }
 
@@ -88,12 +88,12 @@ export default class AddEditAddress extends React.Component {
 
   getDistrict = (stateCode) => {
     MasterService.getDistrict({ state_id: stateCode }).then((result) => {
-      this.setState({ districtOptions: result.data })
+      this.setState({ districtOptions: result?.data })
     })
   }
   getSubDistrict = (stateCode, districtCode) => {
     MasterService.getSubDistrict({ state_id: stateCode, district_id: districtCode }).then((result) => {
-      this.setState({ subDistrictOptions: result.data })
+      this.setState({ subDistrictOptions: result?.data })
     })
   }
   handleAddEditAddress(e) {
@@ -205,7 +205,7 @@ export default class AddEditAddress extends React.Component {
                     validations={[required]} className="form-control">
                     <option  >Select States</option>
 
-                    {statesOptions.length > 0
+                    {statesOptions?.length > 0
                       && statesOptions.map((item, i) => {
                         return (
                           <option key={i} value={item.state_id}>{item.state_name}</option>
@@ -223,7 +223,7 @@ export default class AddEditAddress extends React.Component {
                     validations={[required]} className="form-control">
                     <option  >Select District</option>
 
-                    {districtOptions.length > 0
+                    {districtOptions?.length > 0
                       && districtOptions.map((item, i) => {
                         return (
                           <option key={i} value={item.district_id}>{item.district_name}</option>
@@ -240,7 +240,7 @@ export default class AddEditAddress extends React.Component {
                     validations={[required]} className="form-control">
                     <option  >Select Sub-District</option>
 
-                    {subDistrictOptions.length > 0
+                    {subDistrictOptions?.length > 0
                       && subDistrictOptions.map((item, i) => {
                         return (
                           <option key={i} value={item.sub_district_id}>{item.sub_district_name}</option>

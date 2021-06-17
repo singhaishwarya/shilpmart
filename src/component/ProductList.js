@@ -179,7 +179,7 @@ export default class ProductList extends React.Component {
       category_breadcrumbs,
       parentCategory
     } = this.state;
-    console.log("demo===", priceRange, priceRange[1])
+
     return (
       <>
         <section id="maincontent">

@@ -136,9 +136,9 @@ class Header extends Component {
           result.data.map((item) => (
             wishlistProductids?.push(item.product_id)
           ))
-          ProductService.fetchAllProducts({ product_ids: wishlistProductids }).then((result1) => {
-            result1.data.map((item) => this.props.addToWishlist(item.id));
-          })
+          ProductService.fetchAllProducts({ product_ids: wishlistProductids }).then((result1) => (
+            result1?.data.map((item) => this.props.addToWishlist(item.id))
+          ))
         } else { return }
       });
     }
