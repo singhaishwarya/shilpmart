@@ -214,7 +214,7 @@ class ProductDetail extends React.Component {
     product.variation_index = 1;//to be implemented
     this.props.history.push({
       pathname: '/checkout',
-      state: { checkout: [product] }
+      state: { checkout: [product], totalCartCost: product?.price[0]?.price * this.state.productQuantity }
     })
   }
 

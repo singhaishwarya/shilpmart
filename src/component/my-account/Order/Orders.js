@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CheckoutService from '../../../services/CheckoutService';
 import Loader from "react-loader";
+import { getOrderStatus } from "../../../lib/utils";
+import { format } from 'date-fns'
+
 export default class Orders extends React.Component {
 
   constructor() {
@@ -36,26 +39,6 @@ export default class Orders extends React.Component {
     }).catch((err) => {
       console.log(err);
     });
-  }
-
-  getOrderStatus = (status) => {
-    switch (status) {
-      case 0:
-        return 'Initiated'
-      case 1:
-        return 'Confirmed'
-      case 2:
-        return 'Payment Failed'
-      case 3:
-        return 'Order confirmed by vendor'
-      case 4:
-        return 'Item given to dop'
-      case 5:
-        return 'Delivered';
-      default:
-        return
-
-    }
   }
 
   render() {
@@ -140,7 +123,10 @@ export default class Orders extends React.Component {
               orderList.map((item, index) => (
                 <div className="card mb-3 shadow" key={index}>
                   <div className="card-body myorderList">
-                    <Link to='/my-account/order-detail'>
+                    <Link to={{
+                      pathname: '/my-account/order-detail',
+                      state: { orderDetail: item }
+                    }}  >
                       <div className="row">
                         <div className="col-sm-6">
                           <div className="row">
@@ -160,11 +146,11 @@ export default class Orders extends React.Component {
                             </div>
                           </div>
                         </div>
-
+                        <div className="col-sm-2"><span>{format(new Date(item.created_at), 'dd-MM-yyyy')}</span></div>
                         <div className="col-sm-2"><span>₹ {item.order_total}</span></div>
-                        <div className="col-sm-4">
+                        <div className="col-sm-2">
                           <div className="orderstatus">
-                            <div className="statusColor returne"> <span>{this.getOrderStatus(item.status)}</span></div>
+                            <div className="statusColor returne"> <span>{getOrderStatus(item.status)}</span></div>
                             {/* <div className="statusReq"><p>As per your request, your item has been cancelled</p></div> */}
                           </div>
                         </div>

@@ -34,8 +34,15 @@ class CheckoutComp extends React.Component {
       showModal: false,
       checkOutData: JSON.parse(localStorage.getItem('checkOutData')) || [],
       totalCartCost: localStorage.getItem('totalCartCost') || 0,
-      payment_type: '', config: {}
+      payment_type: '', config: {},
+      txnResponse: {},
+      isCheckoutClick: false, checksumResponse: {}
     };
+  }
+  componentDidUpdate() {
+    if (this.state.txnResponse?.STATUS) {
+      this.sendTxnResponse(this.state.checksumResponse, this.state.txnResponse, this.state.payment_type)
+    }
   }
 
   componentDidMount() {
@@ -43,6 +50,7 @@ class CheckoutComp extends React.Component {
     this.getAddress();
 
   }
+
   getAddress = () => {
     AddressService.list().then((result) => {
       if (!result) return
@@ -51,6 +59,18 @@ class CheckoutComp extends React.Component {
       console.log(err);
     });
   }
+
+  sendTxnResponse = (checksumbody, txnResponse, online_type) => {
+    var txnObj = {
+      params: checksumbody.body,
+      txn_response: txnResponse,
+      online_type: online_type,
+    }
+    CheckoutService.txnStatus(txnObj).then(async (result) => {
+      console.log("Demo===", result)
+    })
+  }
+
   dismissModal = (type) => {
     this.setState({
       showModal: !this.state.showModal, overlayType: type
@@ -59,14 +79,14 @@ class CheckoutComp extends React.Component {
 
 
   handleCheckout = async (e) => {
-
+    this.setState({ isCheckoutClick: true })
     e.preventDefault();
     let checkoutObj = {}, prodObj = [];
-
+    if (!this.state.selectedAddress?.id) return ToastService.error("Please select shipping address");
+    if (!this.state.payment_type) return ToastService.error("Please select payment type");
 
     if (this.props.userData?.token) {
-      if (!this.state.selectedAddress?.id) return ToastService.error("Please select shipping address");
-      if (!this.state.payment_type) return ToastService.error("Please select payment type");
+
 
       checkoutObj = {
         "is_checkout": true,
@@ -101,7 +121,7 @@ class CheckoutComp extends React.Component {
 
       CheckoutService.orderPlace(checkoutObj).then(async (result) => {
         if (!result) return
-
+        this.setState({ checksumResponse: result.data.checksum })
         if (this.state.payment_type === 'paytm') {
 
           var post_data = JSON.stringify(result.data.checksum);
@@ -142,14 +162,18 @@ class CheckoutComp extends React.Component {
                       console.log("notifyMerchant handler function called");
                       console.log("eventName => ", eventName);
                       console.log("data => ", data);
+                    },
+                    transactionStatus: function (data) {
+                      window.Paytm.CheckoutJS.close();
+                      _this.setState({ txnResponse: data });
                     }
                   },
                   merchant: {
                     mid: "Digita62153518081968",
-                    callbackUrl: "https://main.digitalindiacorporation.in/thankyou/for-payment",
+                    callbackUrl: "",
                     name: "E-Shilpmart",
                     logo: "https://main.digitalindiacorporation.in/static/media/logo-eshilp.dffc449c.svg",
-                    redirect: true
+                    redirect: false,
                   },
                   mapClientMessage: {},
                   labels: {},
@@ -235,7 +259,7 @@ class CheckoutComp extends React.Component {
   }
 
   render() {
-    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType, config } = this.state;
+    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType, config, isCheckoutClick } = this.state;
     let finItem;
     return (
       <section>
@@ -294,7 +318,7 @@ class CheckoutComp extends React.Component {
                 </li> */}
                 <li className="list-group-item d-flex justify-content-between">
                   <h5><span>Total Payable</span></h5>
-                  <strong><span>₹</span> {totalCartCost}.00</strong>
+                  <strong><span>₹</span> {totalCartCost}</strong>
                 </li>
               </ul>
               {/* <p>Have a coupon? Enter your code here...</p> */}
@@ -330,10 +354,11 @@ class CheckoutComp extends React.Component {
                     <div className="d-block my-3">
                       <div className="custom-control custom-radio">
                         <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" value='cod'
-                          checked={payment_type === 'cod'}
+                          checked={payment_type === 'cod'} disabled={totalCartCost > 5000}
                           onChange={() => this.setState({ payment_type: 'cod' })} />
                         <label className="custom-control-label" htmlFor="credit">Cash On Delivery</label>
                       </div>
+                      {<span>Cash On Delivery is unavailable for current order</span>}
                       <div className="custom-control custom-radio">
                         <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" value='paytm'
                           checked={payment_type === 'paytm'}
@@ -349,7 +374,7 @@ class CheckoutComp extends React.Component {
                     </div>
 
                     <hr className="mb-4" />
-                    <button className="btn login-btn btn-lg btn-block" type="button" onClick={(e) => this.handleCheckout(e)}> Continue to checkout
+                    <button className="btn login-btn btn-lg btn-block" type="button" disabled={isCheckoutClick} onClick={(e) => this.handleCheckout(e)}> Continue to checkout
                     </button>
                   </form>
                 </div>
