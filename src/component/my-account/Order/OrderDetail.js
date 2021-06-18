@@ -11,9 +11,15 @@ export default class OrderDetail extends React.Component {
     this.state = {
       orderDetail: props?.location?.state?.orderDetail
     };
-
   }
 
+  componentDidMount() {
+    if (this.state.orderDetail === undefined) {
+      this.props.history.push({
+        pathname: '/my-account/order'
+      })
+    }
+  }
   render() {
     const { orderDetail } = this.state;
     return (
@@ -36,7 +42,7 @@ export default class OrderDetail extends React.Component {
             </div>
           </div>
 
-          {orderDetail.product_details?.map((item, index) => (<div className="card mb-3 shadow" key={index}>
+          {orderDetail?.product_details?.map((item, index) => (<div className="card mb-3 shadow" key={index}>
             <div className="card-body">
               <div className="row">
                 <div className="col-sm-3">
