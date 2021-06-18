@@ -43,7 +43,7 @@ export default class Footer extends React.Component {
                         <ul>
                           <li><Link to="/">Terms &amp; Conditions</Link></li>
                           <li><Link to="/">Buyer Policy</Link></li>
-                          <li><Link to="/sellerPolicy">Seller Policy </Link></li>
+                          <li><Link to="/seller-policy">Seller Policy </Link></li>
                           <li><Link to="/">Exchange Policy</Link></li>
                         </ul>
                       </div>
@@ -53,7 +53,7 @@ export default class Footer extends React.Component {
                       <div className="footer-links">
                         <ul>
                           <li><a href="https://seller.digitalindiacorporation.in/register"> Weaver / Artisan Registration</a></li>
-              <li><a href="https://seller.digitalindiacorporation.in/login">Weaver / Artisan Login</a></li>
+                          <li><a href="https://seller.digitalindiacorporation.in/login">Weaver / Artisan Login</a></li>
                           <li><Link to="\">Corporate Enquiries </Link></li>
                         </ul>
                       </div>
@@ -81,7 +81,7 @@ export default class Footer extends React.Component {
               {/* <!-- Swiper --> */}
               <div className="swiper-container py-5 logos">
                 <div className="swiper-wrapper">
-                  
+
 
                   <AliceCarousel
                     animationType='slide'
@@ -96,7 +96,7 @@ export default class Footer extends React.Component {
                     disableButtonsControls //can be enabled if arrows are needed
                   //touchTracking
                   />
-                  
+
 
 
 
@@ -108,8 +108,8 @@ export default class Footer extends React.Component {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-md-6 col-12"> <small>Ministry of Textile
-                                <i className="fa fa-copyright"></i> 2020. <br />
-                                Designed &amp; Developed by Digital India Corporation</small>
+                  <i className="fa fa-copyright"></i> 2020. <br />
+                  Designed &amp; Developed by Digital India Corporation</small>
                 </div>
                 <div className="col-md-6 col-12 text-right"> <a href="#"><img src={require("../public/gp-300x89.png")}
                   className="img-fluid" alt="google play store" /></a> &nbsp;&nbsp; <a href="#"><img

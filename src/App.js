@@ -53,9 +53,9 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/forgot-password' component={ForgotPassword} exact />
           <Route isAuthenticated={userData} path='/checkout' component={Checkout} exact />
           <Route isAuthenticated={userData} path='/thankyou/for-payment' component={CheckoutCallback} exact />
-          <Route isAuthenticated={userData} path='/about-us' component={AboutUs} exact />
-          <Route isAuthenticated={userData} path='/customer-service' component={CustomerService} exact />
-          <Route isAuthenticated={userData} path='/seller-policy' component={SellerPolicy} exact />
+          <Route path='/about-us' component={AboutUs} exact />
+          <Route path='/customer-service' component={CustomerService} exact />
+          <Route path='/seller-policy' component={SellerPolicy} exact />
 
           <MyAccount>
             <Route component={({ match }) =>

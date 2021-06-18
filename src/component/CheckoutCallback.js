@@ -1,10 +1,14 @@
 import React from 'react';
+
 export default class CheckoutCallback extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-    };
+  constructor(props) {
+    super(props);
+
+    console.log("demo constructor", props);
+  }
+  componentDidMount() {
+    console.log("demo componentDidMount", this.props);
   }
 
   render() {

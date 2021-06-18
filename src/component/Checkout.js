@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 import Login from "./Login";
-import axios from "axios";
-import { CheckoutProvider, Checkout, injectCheckout } from 'paytm-blink-checkout-react'
+import { CheckoutProvider, Checkout } from 'paytm-blink-checkout-react';
 const https = require('https');
+
 const customAddressStyles = {
   content: {
     top: '50%',
@@ -129,16 +129,16 @@ class CheckoutComp extends React.Component {
               var txnResponse = JSON.parse(response)
               _this.setState({
                 config: {
-                  "root": "",
-                  "flow": "DEFAULT",
-                  "data": {
-                    "orderId": result.data.order_details.id,
-                    "token": txnResponse.body.txnToken,
-                    "tokenType": "TXN_TOKEN",
-                    "amount": result.data.order_details.order_total
+                  root: "",
+                  flow: "DEFAULT",
+                  data: {
+                    orderId: result.data.order_details.id,
+                    token: txnResponse.body.txnToken,
+                    tokenType: "TXN_TOKEN",
+                    amount: result.data.order_details.order_total
                   },
-                  "handler": {
-                    "notifyMerchant": function (eventName, data) {
+                  handler: {
+                    notifyMerchant: function (eventName, data) {
                       console.log("notifyMerchant handler function called");
                       console.log("eventName => ", eventName);
                       console.log("data => ", data);
