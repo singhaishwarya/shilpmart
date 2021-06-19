@@ -89,25 +89,25 @@ class CheckoutComp extends React.Component {
 
 
       checkoutObj = {
-        "is_checkout": true,
-        "coupan_code": "",
-        "is_billing_address_same": true,
-        "billing_address": {
-          "address_id": this.state.selectedAddress.id
+        is_checkout: true,
+        coupan_code: "",
+        is_billing_address_same: true,
+        billing_address: {
+          address_id: this.state.selectedAddress.id
         },
-        "shipping_address": {
-          "address_id": this.state.selectedAddress.id
+        shipping_address: {
+          address_id: this.state.selectedAddress.id
         },
-        "is_payment_online": this.state.payment_type === 'cod' ? false : true,
-        "payment_detail": {
-          "online_type": this.state.payment_type,
-          'callback': 'https://main.digitalindiacorporation.in/thankyou/for-payment',
-          'website': "WEBSTAGING",
-          'channel_id': "WEB",
-          "country": this.state.selectedAddress.country,
-          "pincode": this.state.selectedAddress.pincode,
-          "state": this.state.selectedAddress.state,
-          "city": this.state.selectedAddress.city
+        is_payment_online: this.state.payment_type === 'cod' ? false : true,
+        payment_detail: {
+          online_type: this.state.payment_type,
+          callback: 'https://main.digitalindiacorporation.in/thankyou/for-payment',
+          website: "WEBSTAGING",
+          channel_id: "WEB",
+          country: this.state.selectedAddress.country,
+          pincode: this.state.selectedAddress.pincode,
+          state: this.state.selectedAddress.state,
+          city: this.state.selectedAddress.city
         }
       };
       this.state.checkOutData.map((item) => {
@@ -196,35 +196,24 @@ class CheckoutComp extends React.Component {
         }
         if (this.state.payment_type === 'airpay') {
           var configAirpay = {
-            "buyerEmail": "buyer@example.com",
-            "buyerPhone": 9898989989898,
-            "buyerFirstName": "Sam",
-            "buyerLastName": "Johan",
-            "orderid": "d3t54978",
-            "amount": result.data.order_details.order_total,
-            "privatekey": result.data.checksum.privatekey,
-            "mercid": result.data.checksum.mercid,
-            "checksum": result.data.checksum.checksum,
-            "currency": 356,
-            "isocurrency": "INR",
-            "token": "",
-            "sb_nextrundate": "03/23/2016",
-            "sb_period": "Month",
-            "sb_frequency": 2,
-            "sb_amount": 20.00,
-            "sb_isrecurring": 1,
-            "sb_recurringcount": 1,
-            "sb_retryattempts": 1,
-            "sb_trial_amount": 2.00,
-            "sb_trial_period": 1,
-            "sb_trial_frequency": 1
+            buyerEmail: "buyer@example.com",
+            buyerPhone: 9026892671,
+            buyerFirstName: "Sam",
+            buyerLastName: "Johan",
+            orderid: "d3t54978",
+            amount: result.data.order_details.order_total,
+            privatekey: result.data.checksum.privatekey,
+            mercid: result.data.checksum.mercid,
+            checksum: result.data.checksum.checksum,
+            currency: 356,
+            isocurrency: "INR",
+            token: ""
           }
           var information = {
             action: "https://payments.airpay.co.in/pay/index.php",
             params: configAirpay
           };
 
-          console.log("Demo===", information)
           this.post(information)
         }
 

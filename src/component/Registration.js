@@ -50,13 +50,12 @@ export default class Registration extends React.Component {
     let propsPattern = new RegExp(props.pattern);
     if (props.isUsed) {
       if (!propsPattern.test(value) || value.length < props.maxLength) {
-
+        this.error = true;
         return <div className="isaerror" role="alert">
           Please enter a valid {props.name}.
         </div>
       }
     } else { this.error = false; }
-
   }
 
 

@@ -4,35 +4,19 @@ import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import MasterService from '../../../services/MasterService';
 import AddressService from '../../../services/AddressService';
-import Button from "react-validation/build/button";
-
-const required = (value, props) => {
-  if (!value) {
-    return (
-      <div className="isaerror" role="alert">
-        Please enter your {props.name}.
-      </div>
-    );
-  }
-};
-
-const pattern = (value, props) => {
-  let propsPattern = new RegExp(props.pattern);
-  if (!propsPattern.test(value) || value.length < props.maxLength) {
-    return <div className="isaerror" role="alert">
-      Please enter a valid {props.name}.
-    </div>
-  }
-}
-
+import ToastService from '../../../services/ToastService';
+import { ToastContainer } from 'react-toastify';
 
 export default class AddEditAddress extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.error = false;
     this.handleAddEditAddress = this.handleAddEditAddress.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.requiredBinded = this.required.bind(this);
+    this.patternBinded = this.pattern.bind(this);
+
     const savedAddress = props?.history?.location.state?.address;
 
     this.state = {
@@ -56,20 +40,46 @@ export default class AddEditAddress extends React.Component {
       subDistrictOptions: []
     }
   }
+
+  required = (value, props) => {
+
+    if (props.isUsed) {
+      if (!value) {
+        this.error = true;
+        return (
+          <div className="isaerror" role="alert">
+            Please enter your {props.name?.replace(/_/g, ' ') === 'c password' ? 'confirm password' : props.name?.replace(/_/g, ' ')}
+          </div>
+        );
+      } else { this.error = false; }
+    }
+  }
+
+
+  pattern = (value, props) => {
+    let propsPattern = new RegExp(props.pattern);
+    if (props.isUsed) {
+      if (!propsPattern.test(value) || value.length < props.maxLength) {
+        this.error = true;
+        return <div className="isaerror" role="alert">
+          Please enter a valid {props.name}.
+        </div>
+      }
+    } else { this.error = false; }
+  }
+
   componentDidMount() {
     this.getStates();
     if (this.props?.history?.location.state?.address) {
-
       this.getDistrict(this.state.fields.state);
       this.getSubDistrict(this.state.fields.state, this.state.fields.district)
     }
   }
 
   getStates = () => {
-
     MasterService.getStates().then((result) => {
       this.setState({ statesOptions: result?.data })
-    })
+    });
   }
 
   handleChange(field, e) {
@@ -98,26 +108,27 @@ export default class AddEditAddress extends React.Component {
   }
   handleAddEditAddress(e) {
     e.preventDefault();
+    if (this.form.getChildContext()._errors.length === 0) {
+      if (!this.error) {
+        AddressService.add(this.state.fields)
+          .then((result) => {
 
-    AddressService.add(this.state.fields)
-      .then((result) => {
-
-        if (!result) return
-
-        if (result.success) {
-          window.history.back()
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+            if (!result) return ToastService.error("Please fill form details")
+            if (result.success) {
+              window.history.back()
+            }
+          }).catch((err) => {
+            console.log(err);
+          });
+      }
+    }
   }
 
   render() {
     const { fields, statesOptions, districtOptions, subDistrictOptions } = this.state
     return (
-
       <div className="container-fluid">
+        <ToastContainer />
         <div className="row">
           <div className="col-lg-6 col-12 login-card">
             <h4 className="mb-4">Add New Address</h4>
@@ -128,14 +139,14 @@ export default class AddEditAddress extends React.Component {
                   <label htmlFor="fname">Full Name<span>*</span></label>
                   <Input type="text" className="form-control" name="name" value={fields.name}
                     onChange={this.handleChange.bind(this, "name")}
-                    validations={[required]}
+                    validations={[this.required]}
                   />
                 </div>
                 <div className="form-group col-lg-6 col-12">
                   <label htmlFor="fname">Mobile<span>*</span></label>
                   <Input type="text" maxLength="10" pattern="^(0|[1-9][0-9]*)$" className="form-control" name="mobile" value={fields.mobile}
                     onChange={this.handleChange.bind(this, "mobile")}
-                    validations={[required, pattern]}
+                    validations={[this.required, this.pattern]}
                   />
                 </div>
               </div>
@@ -149,7 +160,7 @@ export default class AddEditAddress extends React.Component {
                     name="pincode"
                     value={fields.pincode}
                     onChange={this.handleChange.bind(this, "pincode")}
-                    validations={[required, pattern]}
+                    validations={[this.required, this.pattern]}
                   />
                 </div>
               </div>
@@ -157,7 +168,7 @@ export default class AddEditAddress extends React.Component {
                 <div className="form-group col"><label htmlFor="fname">Flat, House no., Building, Company, Apartment<span>*</span></label>
                   <Input type="text" className="form-control" name="address1" value={fields.address1}
                     onChange={this.handleChange.bind(this, "address1")}
-                    validations={[required]}
+                    validations={[this.required]}
                   /></div>
               </div>
               <div className="form-row">
@@ -192,7 +203,7 @@ export default class AddEditAddress extends React.Component {
                     name="city"
                     value={fields.city}
                     onChange={this.handleChange.bind(this, "city")}
-                    validations={[required]}
+                    validations={[this.required]}
                   />
                 </div>
               </div>
@@ -202,7 +213,7 @@ export default class AddEditAddress extends React.Component {
                   <label htmlFor="fname">State<span>*</span></label>
                   <Select name='state' value={fields.state}
                     onChange={this.handleChange.bind(this, "state")}
-                    validations={[required]} className="form-control">
+                    validations={[this.required]} className="form-control">
                     <option  >Select States</option>
 
                     {statesOptions?.length > 0
@@ -220,7 +231,7 @@ export default class AddEditAddress extends React.Component {
                   <label htmlFor="fname">District<span>*</span></label>
                   <Select name='district' value={fields.district}
                     onChange={this.handleChange.bind(this, "district")}
-                    validations={[required]} className="form-control">
+                    validations={[this.required]} className="form-control">
                     <option  >Select District</option>
 
                     {districtOptions?.length > 0
@@ -237,7 +248,7 @@ export default class AddEditAddress extends React.Component {
                   <label htmlFor="fname">Sub-District<span>*</span></label>
                   <Select name='subDistrict' value={fields.sub_district}
                     onChange={this.handleChange.bind(this, "sub_district")}
-                    validations={[required]} className="form-control">
+                    validations={[this.required]} className="form-control">
                     <option  >Select Sub-District</option>
 
                     {subDistrictOptions?.length > 0
@@ -254,14 +265,14 @@ export default class AddEditAddress extends React.Component {
                   <label htmlFor="fname">Type<span>*</span></label>
                   <Select name='type' value={fields.type}
                     onChange={this.handleChange.bind(this, "type")}
-                    validations={[required]} className="form-control">
+                    validations={[this.required]} className="form-control">
                     <option value='' defaultValue='selected'>Select Type</option>
                     <option value='1'>Home</option>
                     <option value='2'>Office</option>
                   </Select>
                 </div>
               </div>
-              <Button className="btn login-btn" value="Submit">Add Address</Button>
+              <button className="btn login-btn" value="Submit">Add Address</button>
             </Form>
           </div>
         </div >

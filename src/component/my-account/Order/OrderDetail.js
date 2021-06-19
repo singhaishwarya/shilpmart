@@ -21,7 +21,9 @@ export default class OrderDetail extends React.Component {
     }
   }
   render() {
+
     const { orderDetail } = this.state;
+
     return (
       <div className="row">
         <div className="col">
@@ -31,10 +33,10 @@ export default class OrderDetail extends React.Component {
                 <div className="col-sm-7">
                   <div className="deladd">
                     <h5>Delivery Address</h5>
-                    <h6>Persone Name</h6>
-                    <p>Plot No 7, M G Road, Opp Saibaba Temple, Borivli(e)<br /> Mumbai,  Maharashtra - 46000545
+                    {/* <h6>Persone Name</h6> */}
+                    <p>{orderDetail?.address[0]?.address1}<br /> {orderDetail?.address[0]?.address2} ,{orderDetail?.address[0]?.city}-{orderDetail?.address[0]?.pincode}
                     </p>
-                    <p><strong>Phone Number :</strong> +919811148709</p>
+                    {/* <p><strong>Phone Number :</strong> +919811148709</p> */}
 
                   </div>
                 </div>
@@ -50,14 +52,13 @@ export default class OrderDetail extends React.Component {
                     <div className="col-sm-3">
                       <div className="orderProductImg">
                         <div className="orderimg">
-                          <img src={require("../../../public/saree.jpg")} className="img-fluid" alt="CSC" />
+                          <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
                         </div>
                       </div>
                     </div>
                     <div className="col-sm-9">
                       <div className="orderproductInfo">
-                        <span className="title">Cotton Saree For Product Title</span>
-                        <span> <span>Seller: xyz</span></span>
+                        <span className="title">{item.title.title}</span>
                         <span>₹ {item.price}</span>
                       </div>
                     </div>
