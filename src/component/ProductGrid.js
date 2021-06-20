@@ -5,6 +5,7 @@ import ProductTile from './ProductTile';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 import Loader from "react-loader";
+import { loaderOptions } from "../lib/utils";
 class ProductGrid extends Component {
   constructor(props) {
     super(props);
@@ -186,7 +187,7 @@ class ProductGrid extends Component {
     };
     return (
       <>
-        <Loader loaded={isLoaded} message='Loading...' options={options} className="spinner" >
+        <Loader loaded={isLoaded} message='Loading...' options={loaderOptions} className="spinner" >
           <ToastContainer closeOnClick />
           {(pathname !== "/wishlist" && productListData?.data?.length > 0) &&
             <section className='topsection d-flex justify-content-between'>

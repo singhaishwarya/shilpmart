@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CheckoutService from '../../../services/CheckoutService';
 import Loader from "react-loader";
-import { getOrderStatus } from "../../../lib/utils";
+import { getOrderStatus, loaderOptions } from "../../../lib/utils";
 import { format } from 'date-fns'
 
 export default class Orders extends React.Component {
@@ -42,27 +42,7 @@ export default class Orders extends React.Component {
   }
 
   render() {
-    var options = {
-      lines: 13,
-      length: 20,
-      width: 10,
-      radius: 30,
-      scale: 1.00,
-      corners: 1,
-      color: '#000',
-      opacity: 0.25,
-      rotate: 0,
-      direction: 1,
-      speed: 1,
-      trail: 60,
-      fps: 20,
-      zIndex: 2e9,
-      top: '50%',
-      left: '50%',
-      shadow: false,
-      hwaccel: false,
-      position: 'absolute'
-    };
+
     const { orderList, isLoaded } = this.state
     return (
       <div className="row">
@@ -118,7 +98,7 @@ export default class Orders extends React.Component {
               </button>
             </div>
           </div>
-          <Loader loaded={isLoaded} message='Loading...' options={options} className="spinner" >
+          <Loader loaded={isLoaded} message='Loading...' options={loaderOptions} className="spinner" >
             {orderList.length > 0 && isLoaded ?
               orderList.map((item, index) => (
                 <div className="card mb-3 shadow" key={index}>
