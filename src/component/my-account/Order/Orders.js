@@ -133,14 +133,14 @@ export default class Orders extends React.Component {
                             <div className="col-sm-3">
                               <div className="orderProductImg">
                                 <div className="orderimg">
-                                  <img src={item.product_details[0].images[0].image_url} className="img-fluid" alt="CSC" />
+                                  <img src={item.product_details[0]?.images[0]?.image_url} className="img-fluid" alt="CSC" />
                                 </div>
-                                {item.product_details.length > 1 && <span>+{item.product_details.length - 1} More {item.product_details.length === 2 ? "Item" : "Items"}</span>}
+                                {item.product_details?.length > 1 && <span>+{item.product_details?.length - 1} More {item.product_details?.length === 2 ? "Item" : "Items"}</span>}
                               </div>
                             </div>
                             <div className="col-sm-9">
                               <div className="orderproductInfo">
-                                <span className="title">{item.product_details[0].title.title}</span>
+                                <span className="title">{item.product_details[0]?.title.title}</span>
                                 {/* <span> <span>Seller: xyz</span></span> */}
                               </div>
                             </div>

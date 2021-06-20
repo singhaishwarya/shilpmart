@@ -53,8 +53,11 @@ class ProductGrid extends Component {
     });
   };
 
-  errorAlert = (product) => {
-    return ToastService.error(product?.content?.title + " is already in cart")
+  errorAlert = (product, type) => {
+    // return ToastService.error(product?.content?.title + " is already in cart")
+    return ToastService.error(product?.content?.title + " is " +
+      (type === "cart" ? "already in cart" : "removed from wishlist"));
+
   }
 
   getSetQueryParams() {
@@ -184,7 +187,7 @@ class ProductGrid extends Component {
     return (
       <>
         <Loader loaded={isLoaded} message='Loading...' options={options} className="spinner" >
-          <ToastContainer />
+          <ToastContainer closeOnClick />
           {(pathname !== "/wishlist" && productListData?.data?.length > 0) &&
             <section className='topsection d-flex justify-content-between'>
               {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>

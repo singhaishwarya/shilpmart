@@ -70,7 +70,7 @@ class Wishlist extends Component {
     return (
       <section id="maincontent">
         <div className="container-fluid">
-          <ToastContainer />
+          <ToastContainer closeOnClick />
           {(wishlist?.length > 0) ? (<>
             <div className='row py-5'>
               <div className="col-12"><h4>Your Products Wishlist </h4><hr /></div>

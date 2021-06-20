@@ -30,6 +30,7 @@ class ProductTile extends React.Component {
 
   deleteWishlist = (item) => {
     (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id);
+    this.props.errorAlert(item, 'wishlist');
   }
 
   deleteWishlistApi(item) {
@@ -92,7 +93,7 @@ class ProductTile extends React.Component {
             this.props.successAlert(product, 'cart');
           }
           else {
-            this.props.errorAlert(product);
+            this.props.errorAlert(product, 'cart');
           }
         }
         else { return }

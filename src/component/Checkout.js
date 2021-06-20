@@ -241,7 +241,7 @@ class CheckoutComp extends React.Component {
     let finItem;
     return (
       <section>
-        <ToastContainer />
+        <ToastContainer closeOnClick />
         {config && <CheckoutProvider config={config} env='STAGE'>
           <Checkout />
         </CheckoutProvider>}

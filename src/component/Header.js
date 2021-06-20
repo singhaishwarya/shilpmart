@@ -183,14 +183,16 @@ class Header extends Component {
 
   addToCart = (product) => {
     if (this.props.cart?.includes(product.id)) {
-      this.errorAlert(product);
+      this.errorAlert(product, 'cart');
     }
     else {
       Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product?.id)
     }
   }
-  errorAlert = (product) => {
-    return ToastService.error(product?.content?.title + " is already in cart")
+  errorAlert = (product, type) => {
+    return ToastService.error(product?.content?.title + " is " +
+      (type === "cart" ? "already in cart" : "removed from wishlist"));
+
   }
   addToCartApi = (product) => {
     let cartToSync = [{
@@ -302,7 +304,7 @@ class Header extends Component {
             <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
         </Modal>
       </div>
-        <ToastContainer />
+        <ToastContainer closeOnClick />
         {scrolled ?
           <div className="headersticky fixed-header">
             <div className="appLogo">

@@ -129,7 +129,7 @@ export default class Registration extends React.Component {
     return (
 
       <div className="container-fluid">
-        <ToastContainer />
+        <ToastContainer closeOnClick />
         <div className="row py-5">
           <div className="col-md-6 col-12 mb-5">
             <h4 className="text-center">How It Works</h4>

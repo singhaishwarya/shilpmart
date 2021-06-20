@@ -134,7 +134,7 @@ export default class AccountDetails extends React.Component {
                 /> </div>
 
             </fieldset>
-            <ToastContainer />
+            <ToastContainer closeOnClick />
             <Button type="submit" className="btn login-btn">Save Changes</Button>
           </Form>
         </div>

@@ -128,7 +128,7 @@ export default class AddEditAddress extends React.Component {
     const { fields, statesOptions, districtOptions, subDistrictOptions } = this.state
     return (
       <div className="container-fluid">
-        <ToastContainer />
+        <ToastContainer closeOnClick />
         <div className="row">
           <div className="col-lg-6 col-12 login-card">
             <h4 className="mb-4">Add New Address</h4>

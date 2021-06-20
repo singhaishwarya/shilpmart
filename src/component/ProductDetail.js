@@ -62,6 +62,7 @@ class ProductDetail extends React.Component {
 
   deleteWishlist = (item) => {
     (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id);
+    this.errorAlert(item, 'wishlist');
   }
 
   deleteWishlistApi(item) {
@@ -71,6 +72,12 @@ class ProductDetail extends React.Component {
         // this.getWishlist();
       }
     })
+  }
+
+  errorAlert = (product, type) => {
+    // return ToastService.error(product?.content?.title + " is already in cart")
+    return ToastService.error(product?.content?.title + " is removed from wishlist");
+
   }
 
   addToWishlist = (product) => {
@@ -155,7 +162,7 @@ class ProductDetail extends React.Component {
 
   addToCart = (product) => {
     if (this.props.cart?.includes(product.id)) {
-      this.errorAlert(product);
+      this.errorAlert(product, 'cart');
     }
     else {
       Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product.id)
@@ -163,8 +170,11 @@ class ProductDetail extends React.Component {
     }
   }
 
-  errorAlert = (product) => {
-    return ToastService.error(product?.content?.title + " is already in cart")
+  errorAlert = (product, type) => {
+    // return ToastService.error(product?.content?.title + " is already in cart")
+    return ToastService.error(product?.content?.title + " is " +
+      (type === "cart " ? "already in cart" : "removed from wishlist"));
+
   }
 
   addToCartApi = (product) => {
@@ -187,7 +197,7 @@ class ProductDetail extends React.Component {
             })
           }
           else {
-            this.errorAlert(product);
+            this.errorAlert(product, 'cart');
           }
         }
         else { return }
@@ -270,7 +280,7 @@ class ProductDetail extends React.Component {
 
                     <button type="submit" className="cart-btn buy-btn" onClick={() => this.addToCheckout(productDetailData)}>Buy Now</button>
                     <button type="submit" className="cart-btn" onClick={() => this.addToCart(productDetailData)} >Add to cart</button>
-                    <ToastContainer />
+                    <ToastContainer closeOnClick />
                   </div>
                   <div className="productVariation">
                     <span>Color :</span>
