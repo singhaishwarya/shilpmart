@@ -61,6 +61,21 @@ export default class Checkout extends Component {
       console.log(`FETCH GET ERROR`, response);
     }
   }
+
+  static orderInvoice = async (data) => {
+    try {
+      config.url = baseUrl + 'order-invoice';
+      config.method = 'post';
+      config.data = '';
+      config.params = data;
+      const response = await axios(config);
+      return response.data ? response.data : [];
+    } catch (error) {
+      const { response } = error;
+      if (!response) return;
+      console.log(`FETCH GET ERROR`, response);
+    }
+  }
 }
 
 

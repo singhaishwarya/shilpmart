@@ -9,17 +9,6 @@ import ToastService from '../services/ToastService';
 import Login from "./Login";
 import { CheckoutProvider, Checkout } from 'paytm-blink-checkout-react';
 const https = require('https');
-
-const customAddressStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
 class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
@@ -260,7 +249,6 @@ class CheckoutComp extends React.Component {
           <Modal
             isOpen={showModal}
             onRequestClose={() => this.setState({ showModal: false })}
-            style={customAddressStyles}
             shouldCloseOnOverlayClick={true}
             contentLabel="Select Address"
             ariaHideApp={false}

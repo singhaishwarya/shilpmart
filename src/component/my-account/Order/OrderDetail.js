@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { getOrderStatus } from "../../../lib/utils";
-import { format } from 'date-fns'
+import { format } from 'date-fns';
+import CheckoutService from '../../../services/CheckoutService';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import Modal from "react-modal";
 export default class OrderDetail extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      orderDetail: props?.location?.state?.orderDetail
+      orderDetail: props?.location?.state?.orderDetail, numPages: null,
+      pageNumber: 1, base64Doc: '', showModal: false,
     };
   }
 
@@ -19,10 +23,27 @@ export default class OrderDetail extends React.Component {
         pathname: '/my-account/order'
       })
     }
+
+    this.getInvoidePdf({ order_id: this.state.orderDetail?.id });
   }
+  onDocumentLoad({ numPages }) {
+    this.setState({ numPages });
+  }
+
+  getInvoidePdf(order_id) {
+    CheckoutService.orderInvoice(order_id).then((result) => {
+      this.setState({ base64Doc: result?.data })
+    });
+  }
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
   render() {
 
-    const { orderDetail } = this.state;
+    const { orderDetail, pageNumber, numPages, base64Doc, showModal } = this.state;
+    var report = "data:application/pdf;base64," + base64Doc
 
     return (
       <div className="row">
@@ -33,11 +54,32 @@ export default class OrderDetail extends React.Component {
                 <div className="col-sm-7">
                   <div className="deladd">
                     <h5>Delivery Address</h5>
-                    {/* <h6>Persone Name</h6> */}
                     <p>{orderDetail?.address[0]?.address1}<br /> {orderDetail?.address[0]?.address2} ,{orderDetail?.address[0]?.city}-{orderDetail?.address[0]?.pincode}
                     </p>
-                    {/* <p><strong>Phone Number :</strong> +919811148709</p> */}
+                  </div>
+                </div> <div className="col-sm-5">
+                  <div className="deladd">
+                    <button onClick={this.toggleModal}>View Invoice</button>
+                    <Modal
+                      isOpen={showModal}
+                      onRequestClose={this.toggleModal}
+                      contentLabel="Ask a Question"
+                      shouldCloseOnOverlayClick={true}
+                      ariaHideApp={false}>
 
+                      {base64Doc &&
+                        <div>
+                          <Document
+                            file={report}
+                            onLoadSuccess={this.onDocumentLoadSuccess}
+                          >
+                            <Page pageNumber={pageNumber} />
+                          </Document>
+                          <p>
+                            Page {pageNumber} of {numPages}
+                          </p>
+                        </div>
+                      }</Modal>
                   </div>
                 </div>
               </div>
@@ -102,7 +144,7 @@ export default class OrderDetail extends React.Component {
           ))}
 
         </div>
-      </div>
+      </div >
     );
   }
 }
