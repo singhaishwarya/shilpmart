@@ -10,7 +10,7 @@ export default class Dashboard extends React.Component {
 
   render() {
     return (
-      <><p> Hello Aishwarya Singh (not Aishwarya Singh? Log out)</p>
+      <div className="container"><p> Hello Aishwarya Singh (not Aishwarya Singh? Log out)</p>
 
         <p>From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.</p>
         <div className="my-account-links">
@@ -23,7 +23,7 @@ export default class Dashboard extends React.Component {
           <div className="wishlist"><Link to="/my-account/wishlist">Wishlist</Link></div>
           {/* <div className="logout"><Link to="/my-account/order">Loout</Link></div> */}
         </div>
-      </>
+      </div>
     );
   }
 }

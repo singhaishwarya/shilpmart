@@ -181,7 +181,7 @@ export default class ProductList extends React.Component {
     } = this.state;
 
     return (
-      <>
+     
         <section id="maincontent">
           <div className='container-fluid'>
             <div className='row py-5'>
@@ -250,7 +250,7 @@ export default class ProductList extends React.Component {
           </div >
         </section >
 
-      </>
+     
     );
   }
 }

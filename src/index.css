@@ -1,5 +1,11 @@
 body{
 	font-family: 'Lato', sans-serif;
+	font-size: 14px;
+color: #424242;
+line-height: 1.5;
+	transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
 }
 a {
 	color: #0d3356
@@ -12,14 +18,13 @@ a {
 }
 .loader{
 	position: absolute;
-	background-color: rgba(255,255,255,1);
+	background-color: rgba(255,255,255,0.8);
 	margin: auto;
 	left: 0;
 	right: 0;
 	top: 0;
 	bottom: 0;
-	z-index: 999;
-	height: 100vh;
+	z-index: 999;	
 	width: 100%;
 }
 .headersticky{
@@ -39,6 +44,22 @@ a {
 	transform: translateY(-100px);
 	/*border-top: 1px solid #333; */
 }
+
+.fixed-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 3;
+	opacity: 1 !important;
+	visibility: visible !important;
+	transform: translateY(0) !important;
+	transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+}
+
+
 #maincontent{
 	min-height: 380px;
 }
@@ -72,19 +93,7 @@ a {
 .main-menu .navbar-nav li a:hover {
 	color: #e87f13 !important;
 }
-.fixed-header {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: 3;
-	opacity: 1 !important;
-	visibility: visible !important;
-	transform: translateY(0) !important;
-	transition: all 0.3s ease-in-out;
-	-webkit-transition: all 0.3s ease-in-out;
-	-moz-transition: all 0.3s ease-in-out;
-}
+
 .appLogo{width: auto;
 height: 75px;}
 .appLogo img{
@@ -902,14 +911,17 @@ line-height: 1;
 
 
 .shop-categories .alice-carousel__stage-item, .shopby-product .alice-carousel__stage-item{
-	padding: 0 10px !important;
+	padding: 0 20px 0 0  !important;
 }
 .categorie-img {
 	position: relative;
+	width: 243px;
+	height: 243px;
 	overflow: hidden
 }
 .categorie-img img {
 	width: 100%;
+	height: 100%;
 }
 span.cate-img::before {
 	content: "";
@@ -1752,13 +1764,13 @@ align-content: center;
 }
 .login-card > span{
 	position: absolute;
-right: 0;
+right: -2px;
 border: 1px solid #ccc;
 border-radius: 50%;
 width: 25px;
-height: 23px;
+height: 25px;
 padding: 0px 6px;
-line-height: 1.3;
+line-height: 1.7;
 cursor: pointer;
 }
 .login-card label{
@@ -3240,6 +3252,35 @@ color: #444;
 	display: flex;
 }
 .deladd strong{color: #000;}
+.actionBtn{
+	display: flex;
+justify-content: center;
+align-items: center;
+height: 100%;
+}
+
+.actionBtn button{
+	margin: 0 7px;
+border: 1px solid #cccc;
+padding: 7px 25px;
+background-color: transparent;
+border-radius: 4px;
+text-transform: uppercase;
+font-size: 12px;
+font-weight: 600;
+color: #878787;
+
+}
+
+.actionBtn button:hover{
+	background-color: #e87f13;
+	color: #fff;
+	border: 1px solid #e87f13;
+	cursor: pointer;
+}
+
+
+
 .orderstate span{font-weight: 600;}
 .needhlep a{color:#e87f13; padding: 5px 0;}
 .needhlep a:hover{color: #ed731d;}
@@ -3439,6 +3480,18 @@ text-align: center;
 font-size: 50px;
 
 			}
+
+	.addAction span, .addAction a{
+		color: #000;
+cursor: pointer;
+padding: 0 4px;
+font-weight: 600;
+	}		
+
+
+	.addAction span:hover, .addAction a:hover{
+		color: #e87f13;
+	}
 			.empty-wishlist, .noOrder{
 				display: flex;
 				flex-direction: column;
@@ -3649,8 +3702,26 @@ border-radius: 7px;
 	content: '\f00c';
 	font-family: fontawesome;
 }
+.Toastify__toast-container--top-right{
+	top: 12rem !important
+}
+.Toastify__toast{
+	min-height:35px !important;
+	padding: 2px !important;
+}
 
 /* other-pages-css */
+.subpages-heading{
+	background:url('https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/t_bg.webp') #0b4981 ;
+	color: #fff;	
+}
+
+.subpages-heading h1{
+font-size: 48px;
+font-weight: bold;
+}
+
+
 .aboutWrapper{
 	position:relative;	
 	display: flex;
@@ -3763,6 +3834,9 @@ margin: 0 auto 65px auto;
 }
 .product-wrapper .prodcut-img{
 	height: 150px !important;
+}
+.image-gallery-thumbnails-wrapper{
+	display: none !important;
 }
 
 .custom-modal-width{

@@ -10,6 +10,7 @@ export default class Feedback extends React.Component {
 
   render() {
     return (
+      <div className="container">
       <div className="table-responsive">
         <table className="table table-hover">
           <thead>
@@ -37,6 +38,7 @@ export default class Feedback extends React.Component {
           </tbody>
         </table>
 
+      </div>
       </div>
     );
   }

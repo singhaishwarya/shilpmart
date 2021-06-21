@@ -22,7 +22,6 @@ class ProductGrid extends Component {
       filterParams: {},
       categoryBreadcrumbs: props.categoryBreadcrumbs,
       sortBy: "",
-
       layoutValue: '4X4'
     };
 
