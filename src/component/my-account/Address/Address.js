@@ -36,7 +36,7 @@ export default class Address extends React.Component {
     const { addressList } = this.state;
 
     return (
-      <>
+      <div className="container">
         <p> The following addresses will be used on the checkout page by default.</p>
         <div className="flexi">
           <div className="coloumn-2">
@@ -47,13 +47,13 @@ export default class Address extends React.Component {
           <div className="coloumn-2">
             <h2> Shipping Address</h2>
             {addressList?.map((item, index) => (
-              <address key={index}>{item.name}
+              <address key={index}><strong>{item.name}</strong>
                 <strong >{item.is_default === 1 ? ' Default' : ''}</strong>
                 <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
                 <br /> {item.district},  {item.state} - {item.pincode}<br />
                 <strong>Mobile No.</strong>: {item.mobile}<br />
                 <strong>Email</strong> : {item?.email} <br /><br />
-                <p className="d-flex justify-content-between">
+                <p className="d-flex addAction">
                   {item.is_default !== 1 && <><span onClick={() => {
                     this.setDefaultOrDeleteAddress(item.id, 'def')
                   }}>Set As Default</span><span>|</span></>}
@@ -73,7 +73,7 @@ export default class Address extends React.Component {
         </div>
 
 
-      </>
+      </div>
     );
   }
 }

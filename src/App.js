@@ -29,6 +29,7 @@ import ForgotPassword from './component/ForgotPassword';
 import CustomerService from './component/CustomerService';
 import AboutUs from './component/AboutUs';
 import SellerPolicy from './component/SellerPolicy';
+import BuyerPolicy from './component/BuyerPolicy';
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 

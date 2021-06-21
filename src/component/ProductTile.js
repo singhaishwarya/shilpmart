@@ -117,7 +117,7 @@ class ProductTile extends React.Component {
     const { data, userData, wishlist, cart, gridLayout } = this.props
     const { currentLocation } = this.state
     const cellSize = {};
-    if (gridLayout === '2X2') { cellSize.height = '325px' }
+    if (gridLayout === '2X2') { cellSize.height = '200px' }
     else { cellSize.height = (gridLayout === '3X3' ? '297px' : '212px') }
 
     return (

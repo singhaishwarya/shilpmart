@@ -10,11 +10,18 @@ export default class SellerPolicy extends React.Component {
   render() {
     return (
       <section id="maincontent">
+        <div className="subpages-heading">
+          <div className="container">
+            <h1 className="text-center p-5">Seller Policy</h1>
+
+          </div>
+        </div>
   <div className="container">
     <div className="row py-5">
 	<div className="col">
-     <div className="entry-content">
-  <h2 data-wahfont="24">Seller Policy</h2>
+     
+  <div className="entry-content">
+  {/* <h2>Seller Policy</h2> */}
   <h4>Overview</h4>
   <p>This document gives you an overview on Policy of Sellers. All sellers are expected to adhere to the following policies.</p>
   <h4>Seller Registration</h4>
@@ -356,10 +363,11 @@ export default class SellerPolicy extends React.Component {
   <h4><strong>Commission Structure</strong></h4>
   <p>Our Company has a simple and transparent commission structure, below are the commission charges:35% for Kurtis 45% for the rest of the categories. GST will be charged additionally on the commission. The commission is calculated on the sale price of the product of the seller + Shipping Cost. Any direct or indirect discounts given by the Company will not be considered in the sale price. The minimum commission percentage from 5 April 2018 is 25% + Service Tax/GST. The commission could be variable for seller who requires better penetration of products on our website.</p>
 </div>
-</div>
+
 
       
     </div>
+  </div>
   </div>
 </section>
     );

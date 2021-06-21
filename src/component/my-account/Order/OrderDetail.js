@@ -49,15 +49,17 @@ export default class OrderDetail extends React.Component {
           <div className="card mb-4 shadow">
             <div className="card-body">
               <div className="row">
-                <div className="col-sm-7">
+                <div className="col-sm-7 border-right">
                   <div className="deladd">
                     <h5>Delivery Address</h5>
                     <p>{orderDetail?.address[0]?.address1}<br /> {orderDetail?.address[0]?.address2} ,{orderDetail?.address[0]?.city}-{orderDetail?.address[0]?.pincode}
                     </p>
                   </div>
                 </div> <div className="col-sm-5">
-                  <div className="deladd">
+                  <div className="actionBtn">
+                    
                     <button onClick={this.toggleModal}>View Invoice</button>
+                    <button>Send Email</button>
                     <Modal
                       isOpen={showModal}
                       onRequestClose={this.toggleModal}

@@ -73,9 +73,10 @@ export default class AccountDetails extends React.Component {
 
     const { fields } = this.state
     return (
-      <div className="row">
+      
 
-        <div className="col">
+        <div className="container">
+          <div className="col-sm-6 offset-sm-3 login-card">
 
           <div className="form-row">
             <div className="form-group col-md-6">
@@ -137,9 +138,10 @@ export default class AccountDetails extends React.Component {
             <ToastContainer closeOnClick />
             <Button type="submit" className="btn login-btn">Save Changes</Button>
           </Form>
+          </div>
         </div>
 
-      </div>
+      
     );
   }
 }

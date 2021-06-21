@@ -126,11 +126,11 @@ export default class AddEditAddress extends React.Component {
   render() {
     const { fields, statesOptions, districtOptions, subDistrictOptions } = this.state
     return (
-      <div className="container-fluid">
+      <div className="container">
         <ToastContainer closeOnClick />
         <div className="row">
-          <div className="col-lg-6 col-12 login-card">
-            <h4 className="mb-4">Add New Address</h4>
+          <div className="col-7 login-card py-3 px-5 bg-light shadow">
+            <h4 className="mb-4 text-left">Add New Address</h4>
             <Form onSubmit={this.handleAddEditAddress} ref={(c) => { this.form = c; }} >
 
               <div className="form-row">
@@ -261,7 +261,7 @@ export default class AddEditAddress extends React.Component {
               </div>
               <div className="form-row">
                 <div className="form-group col">
-                  <label htmlFor="fname">Type<span>*</span></label>
+                  <label htmlFor="fname">Address Type<span>*</span></label>
                   <Select name='type' value={fields.type}
                     onChange={this.handleChange.bind(this, "type")}
                     validations={[this.required]} className="form-control">
@@ -274,6 +274,10 @@ export default class AddEditAddress extends React.Component {
               <button className="btn login-btn" value="Submit">Submit</button>
             </Form>
           </div>
+          <div className="col-5">
+          <img src="/static/media/address.svg" class="img-fluid" alt="address"/>            
+          </div>
+
         </div >
       </div >
     )
