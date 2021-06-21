@@ -47,7 +47,7 @@ export default class Checkout extends Component {
     }
   }
 
-  static txnStatus = async (data) => {
+  static orderValidate = async (data) => {
     try {
       config.url = baseUrl + 'order-validate';
       config.method = 'post';

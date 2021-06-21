@@ -1,19 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { getOrderStatus } from "../../../lib/utils";
 import { format } from 'date-fns';
 import CheckoutService from '../../../services/CheckoutService';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import Modal from "react-modal";
 export default class OrderDetail extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      orderDetail: props?.location?.state?.orderDetail, numPages: null,
-      pageNumber: 1, base64Doc: '', showModal: false,
+      orderDetail: props?.location?.state?.orderDetail, base64Doc: '', showModal: false,
     };
   }
 
@@ -42,7 +40,7 @@ export default class OrderDetail extends React.Component {
   };
   render() {
 
-    const { orderDetail, pageNumber, numPages, base64Doc, showModal } = this.state;
+    const { orderDetail, base64Doc, showModal } = this.state;
     var report = "data:application/pdf;base64," + base64Doc
 
     return (
@@ -63,23 +61,13 @@ export default class OrderDetail extends React.Component {
                     <Modal
                       isOpen={showModal}
                       onRequestClose={this.toggleModal}
-                      contentLabel="Ask a Question"
                       shouldCloseOnOverlayClick={true}
                       ariaHideApp={false}>
-
+                      <FontAwesomeIcon className="text-left" icon={faTimes} onClick={() => this.toggleModal} />
                       {base64Doc &&
-                        <div>
-                          <Document
-                            file={report}
-                            onLoadSuccess={this.onDocumentLoadSuccess}
-                          >
-                            <Page pageNumber={pageNumber} />
-                          </Document>
-                          <p>
-                            Page {pageNumber} of {numPages}
-                          </p>
-                        </div>
-                      }</Modal>
+                        <object width="100%" height="100%" type="application/pdf" data={report} />
+                      }
+                    </Modal>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,5 @@
 
+import { isMobile } from 'react-device-detect';
 export const getOrderStatus = (status) => {
   switch (status) {
     case 0:
@@ -37,4 +38,28 @@ export const loaderOptions = {
   shadow: false,
   hwaccel: false,
   position: 'absolute'
+};
+
+export const customLoginStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+
+export const customCartStyles = {
+  content: {
+    width: isMobile ? '80%' : '30%',
+    transition: 'all 0.3s ease-in-out',
+    top: '0%',
+    left: '100%',
+    right: '0%',
+    bottom: '0%',
+    transform: 'translate(-100%, 0)',
+    borderRadius: '0'
+  }
 };

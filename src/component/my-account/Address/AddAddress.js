@@ -112,7 +112,6 @@ export default class AddEditAddress extends React.Component {
       if (!this.error) {
         AddressService.add(this.state.fields)
           .then((result) => {
-
             if (!result) return ToastService.error("Please fill form details")
             if (result.success) {
               window.history.back()
@@ -272,7 +271,7 @@ export default class AddEditAddress extends React.Component {
                   </Select>
                 </div>
               </div>
-              <button className="btn login-btn" value="Submit">Add Address</button>
+              <button className="btn login-btn" value="Submit">Submit</button>
             </Form>
           </div>
         </div >

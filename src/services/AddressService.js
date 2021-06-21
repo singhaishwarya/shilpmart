@@ -14,8 +14,9 @@ export default class Address extends Component {
       return response.data ? response.data : [];
     } catch (error) {
       const { response } = error;
-      if (!response) return;
+      if (!response) { return; }
       console.log(`FETCH GET ERROR`, response);
+      return response ? response : [];
     }
   }
   static list = async () => {

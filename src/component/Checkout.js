@@ -9,7 +9,8 @@ import ToastService from '../services/ToastService';
 import Login from "./Login";
 import { CheckoutProvider, Checkout } from 'paytm-blink-checkout-react';
 import Loader from "react-loader";
-import { loaderOptions } from "../lib/utils";
+import { loaderOptions, customLoginStyles } from "../lib/utils";
+
 const https = require('https');
 class CheckoutComp extends React.Component {
   constructor(props) {
@@ -29,16 +30,17 @@ class CheckoutComp extends React.Component {
       txnResponse: {},
       isCheckoutClick: false, checksumResponse: {}, isLoaded: false
     };
-  }
-  componentDidUpdate() {
-    if (this.state.txnResponse?.STATUS) {
-      this.sendTxnResponse(this.state.checksumResponse, this.state.txnResponse, this.state.payment_type)
-    }
+
   }
 
   componentDidMount() {
-
-    this.getAddress();
+    if (this.props.userData?.token) {
+      this.setState({ isLoaded: false });
+      this.getAddress();
+    } else {
+      this.setState({ isLoaded: true });
+      this.dismissModal('login')
+    }
 
   }
 
@@ -47,17 +49,17 @@ class CheckoutComp extends React.Component {
       if (!result) return
       this.setState({ selectedAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0], addressList: result.data, isLoaded: true })
     }).catch((err) => {
+      this.setState({ isLoaded: true });
       console.log(err);
     });
   }
 
-  sendTxnResponse = (checksumbody, txnResponse, online_type) => {
+  orderValidate = (txnResponse, online_type) => {
     var txnObj = {
-      params: checksumbody.body,
       txn_response: txnResponse,
       online_type: online_type,
     }
-    CheckoutService.txnStatus(txnObj).then(async (result) => {
+    CheckoutService.orderValidate(txnObj).then(async (result) => {
       this.setState({ isLoaded: true })
       if (!result) return
 
@@ -73,15 +75,14 @@ class CheckoutComp extends React.Component {
 
 
   handleCheckout = async (e) => {
-    this.setState({ isCheckoutClick: true, isLoaded: false })
+    this.setState({ isCheckoutClick: true })
     e.preventDefault();
     let checkoutObj = {}, prodObj = [];
     if (!this.state.selectedAddress?.id) return ToastService.error("Please select shipping address");
     if (!this.state.payment_type) return ToastService.error("Please select payment type");
 
     if (this.props.userData?.token) {
-
-
+      this.setState({ isLoaded: false });
       checkoutObj = {
         is_checkout: true,
         coupan_code: "",
@@ -115,7 +116,8 @@ class CheckoutComp extends React.Component {
 
       CheckoutService.orderPlace(checkoutObj).then(async (result) => {
         if (!result) return
-        this.setState({ checksumResponse: result.data.checksum })
+        console.log("demo===", result)
+        // this.setState({ checksumResponse: result.data.checksum })
         if (this.state.payment_type === 'paytm') {
 
           var post_data = JSON.stringify(result.data.checksum);
@@ -159,7 +161,8 @@ class CheckoutComp extends React.Component {
                     },
                     transactionStatus: function (data) {
                       window.Paytm.CheckoutJS.close();
-                      _this.setState({ txnResponse: data });
+                      _this.orderValidate(data, _this.state.payment_type)
+                      // _this.setState({ txnResponse: data });
                     }
                   },
                   merchant: {
@@ -189,28 +192,36 @@ class CheckoutComp extends React.Component {
           post_req.end();
         }
         if (this.state.payment_type === 'airpay') {
-          var configAirpay = {
-            buyerEmail: "buyer@example.com",
-            buyerPhone: 9026892671,
-            buyerFirstName: "Sam",
-            buyerLastName: "Johan",
-            orderid: "d3t54978",
-            amount: result.data.order_details.order_total,
-            privatekey: result.data.checksum.privatekey,
-            mercid: result.data.checksum.mercid,
-            checksum: result.data.checksum.checksum,
-            currency: 356,
-            isocurrency: "INR",
-            token: ""
-          }
+          this.setState({ isLoaded: false });
+          // var configAirpay = {
+          //   buyerEmail: "demo1@gmail.com",
+          //   buyerPhone: 1111111111,
+          //   buyerFirstName: "dem",
+          //   buyerLastName: "dem",
+          //   orderid: result.data.order_details.id,
+          //   amount: result.data.order_details.order_total,
+          //   privatekey: result.data.checksum.privatekey,
+          //   mercid: result.data.checksum.mercid,
+          //   checksum: result.data.checksum.checksum,
+          //   currency: 356,
+          //   isocurrency: "INR",
+          //   token: "",
+          //   chmod: "",
+          //   buyerCity: "LUCKNOW",
+          //   buyerState: "Goa",
+          //   buyerCountry: "India",
+          //   buyerAddress: "Sarojini",
+          //   buyerPinCode: "226008",
+          // }
+
           var information = {
             action: "https://payments.airpay.co.in/pay/index.php",
-            params: configAirpay
+            params: result.data.checksum
           };
-
           this.post(information)
-        }
 
+        }
+        this.setState({ isLoaded: true });
       }).catch((err) => {
         console.log(err);
       })
@@ -225,19 +236,18 @@ class CheckoutComp extends React.Component {
     form.submit()
     form.remove()
   }
+
   buildForm({ action, params }) {
-    const form = document.createElement('form')
+    var form = document.createElement('form')
     form.setAttribute('method', 'post')
     form.setAttribute('action', action)
-
-    Object.keys(params).forEach(key => {
+    for (const [key, value] of Object.entries(params)) {
       const input = document.createElement('input')
       input.setAttribute('type', 'hidden')
       input.setAttribute('name', key)
-      input.setAttribute('value', JSON.stringify(params[key]))
+      input.setAttribute('value', value)
       form.appendChild(input)
-    })
-
+    }
     return form
   }
 
@@ -253,11 +263,13 @@ class CheckoutComp extends React.Component {
         <div>
           <Modal
             isOpen={showModal}
+            style={overlayType === 'login' ? customLoginStyles : {}}
             onRequestClose={() => this.setState({ showModal: false })}
             shouldCloseOnOverlayClick={true}
             contentLabel="Select Address"
             ariaHideApp={false}
-          > {overlayType === 'login' ? <Login dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
+          > {overlayType === 'login' ? <Login
+            dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
             <>{addressList?.map((item, index) => (
               <address key={index}>{item.name}
                 <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
@@ -342,7 +354,7 @@ class CheckoutComp extends React.Component {
                             onChange={() => this.setState({ payment_type: 'cod', isCheckoutClick: false })} />
                           <label className="custom-control-label" htmlFor="credit">Cash On Delivery</label>
                         </div>
-                        {<span>Cash On Delivery is unavailable for current order</span>}
+                        {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
                         <div className="custom-control custom-radio">
                           <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" value='paytm'
                             checked={payment_type === 'paytm'}

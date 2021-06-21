@@ -24,34 +24,12 @@ import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
 import WishlistService from '../services/WishlistService';
-import { isMobile } from 'react-device-detect';
+// import { isMobile } from 'react-device-detect';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 import TopBarMenu from './TopBarMenu';
+import { customLoginStyles, customCartStyles } from "../lib/utils";
 
-const customLoginStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
-
-const customCartStyles = {
-  content: {
-    width: isMobile ? '80%' : '30%',
-    transition: 'all 0.3s ease-in-out',
-    top: '0%',
-    left: '100%',
-    right: '0%',
-    bottom: '0%',
-    transform: 'translate(-100%, 0)',
-    borderRadius: '0'
-  }
-};
 class Header extends Component {
   constructor(props) {
     super(props)

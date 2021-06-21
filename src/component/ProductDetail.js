@@ -173,7 +173,7 @@ class ProductDetail extends React.Component {
   errorAlert = (product, type) => {
     // return ToastService.error(product?.content?.title + " is already in cart")
     return ToastService.error(product?.content?.title + " is " +
-      (type === "cart " ? "already in cart" : "removed from wishlist"));
+      (type === "cart" ? "already in cart" : "removed from wishlist"));
 
   }
 
