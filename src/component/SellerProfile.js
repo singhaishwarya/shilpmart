@@ -12,7 +12,6 @@ export default class SellerProfile extends React.Component {
       isActiveTab: 0,
       config: {
         paddingAtStart: true,
-        // classname: 'my-custom-class',
         listBackgroundColor: ``,
         fontColor: `rgb(8, 54, 71)`,
         backgroundColor: ``,
@@ -98,7 +97,7 @@ export default class SellerProfile extends React.Component {
               <h4>Store Location</h4>
               <div className="mt-3">
                 Google Map
-	                        </div>
+              </div>
             </div>
           </div>
           <div className="col-lg-9 col-md-9 col-12 p-lg-5 p-2">
@@ -126,7 +125,7 @@ export default class SellerProfile extends React.Component {
                 There are no reviews yet. </div>
               <div className={`tab-pane fade ${((isActiveTab === 2) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab">Lorem Ipsum  printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </div>
               <div className={`tab-pane fade ${((isActiveTab === 3) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab"> GENERAL INQUIRIES
-                            There are no inquiries yet. </div>
+                There are no inquiries yet. </div>
             </div>
 
           </div>

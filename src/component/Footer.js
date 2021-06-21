@@ -30,7 +30,7 @@ export default class Footer extends React.Component {
                       <h5>Information</h5>
                       <div className="footer-links">
                         <ul>
-                          <li><Link to="/termsof-use">Terms of use</Link></li>
+                          <li><Link to="/terms-of-use">Terms of use</Link></li>
                           <li><Link to="/">Right to Information</Link></li>
                           <li><Link to="/">Sitemap </Link></li>
                           <li><Link to="/">Subscribe Newsletter</Link></li>
@@ -41,7 +41,7 @@ export default class Footer extends React.Component {
                       <h5>Resources</h5>
                       <div className="footer-links">
                         <ul>
-                          <li><Link to="/terms-conditions">Terms &amp; Conditions</Link></li>
+                          <li><Link to="/terms-and-condition">Terms &amp; Conditions</Link></li>
                           <li><Link to="/buyer-policy">Buyer Policy</Link></li>
                           <li><Link to="/seller-policy">Seller Policy </Link></li>
                           <li><Link to="/exchange-policy">Exchange Policy</Link></li>

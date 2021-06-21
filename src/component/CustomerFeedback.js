@@ -4,6 +4,7 @@ import ReactStars from 'react-stars';
 export default class CustomerFeedback extends React.Component {
   constructor() {
     super();
+    window.scrollTo(0, 0);
     this.state = {
       responsive: {
         0: { items: 1 },
@@ -25,8 +26,8 @@ export default class CustomerFeedback extends React.Component {
           </div>
           <div className="testimonial-text">
             <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
-            Textile for giving us a platform to shop our favourite handloom and
-                                            handicraft product from a single stop shop.​​</p>
+              Textile for giving us a platform to shop our favourite handloom and
+              handicraft product from a single stop shop.​​</p>
             <h5>Anuradha Mitra</h5>
 
           </div>
@@ -42,8 +43,8 @@ export default class CustomerFeedback extends React.Component {
           </div>
           <div className="testimonial-text">
             <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
-            Textile for giving us a platform to shop our favourite handloom and
-                                        handicraft product from a single stop shop.​​</p>
+              Textile for giving us a platform to shop our favourite handloom and
+              handicraft product from a single stop shop.​​</p>
             <h5>Anuradha Mitra</h5>
 
           </div>
@@ -59,8 +60,8 @@ export default class CustomerFeedback extends React.Component {
           </div>
           <div className="testimonial-text">
             <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
-            Textile for giving us a platform to shop our favourite handloom and
-                                        handicraft product from a single stop shop.​​</p>
+              Textile for giving us a platform to shop our favourite handloom and
+              handicraft product from a single stop shop.​​</p>
             <h5>Anuradha Mitra</h5>
 
           </div>
@@ -76,8 +77,8 @@ export default class CustomerFeedback extends React.Component {
           </div>
           <div className="testimonial-text">
             <p>I am a big fan of Handloom and Handicraft items. Thanks to the Ministry of
-            Textile for giving us a platform to shop our favourite handloom and
-                                            handicraft product from a single stop shop.​​</p>
+              Textile for giving us a platform to shop our favourite handloom and
+              handicraft product from a single stop shop.​​</p>
             <h5>Anuradha Mitra</h5>
 
           </div>
