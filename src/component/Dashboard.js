@@ -30,7 +30,7 @@ export default class Dashboard extends React.Component {
               </div>
             </div>
           </div>
-          <div className="row py-4 section-bg">
+          <div className="row py-5 section-bg">
             <div className="col shopby-product">
               <div className="section-title">
                 <span>Shop by Product</span>

@@ -203,17 +203,18 @@ export default class ProductList extends React.Component {
                             onAfterChange={value => { this.onSliderPriceChange(value) }}
                           />}
                         </div>
-                        <div className='price-range d-flex justify-content-between'>
-                          <span>
-                            Price:
-                            <input type='number' min={0} max={priceRange[0] || 50000} value={priceRange[0] || 0} className='price-range-field'
+                        <div className='price-range'>
+                          <div className="rangewraper">
+                             <span>Price: ₹</span> 
+                            <span><input type='number' min={0} max={priceRange[0] || 50000} value={priceRange[0] || 0} className='price-range-field'
                               onChange={(e) => this.onManualPriceChange(0, e)}
-                            />
-
-                            <span>-</span>
-                            <input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
+                            /></span>
+                  <span className="px-2"> — </span> 
+                  <span>₹</span> 
+                            <span><input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
                               onChange={(e) => this.onManualPriceChange(1, e)}
                               className='price-range-field' /></span>
+                              </div>
                           <span>
                             <button onClick={() => { this.filterByPriceRange() }} className='price-range-search'
                               id='price-range-submit'>Filter</button>
@@ -237,7 +238,7 @@ export default class ProductList extends React.Component {
                     />
                   </article >
 
-
+                  
 
                 </div >
               </div >
@@ -261,8 +262,7 @@ const treeStyle = {
       backgroundColor: 'white',
       margin: 0,
       paddingBottom: 30,
-      color: 'rgb(35,31,32)',
-      //fontFamily: '"Helvetica Neue", "Open Sans", Arial, sans-serif',
+      color: 'rgb(35,31,32)',      
       fontSize: '1rem'
     },
     node: {

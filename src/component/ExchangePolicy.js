@@ -22,7 +22,7 @@ export default class ExchangePolicy extends React.Component {
             <div className="col">
 
               <div className="entry-content">
-                <h2>Exchange Policy</h2>
+                
                 <h4>Overview</h4>
                 <p>As a Customer, if you’re considering a product return, please note the following:</p>
                 <ul>

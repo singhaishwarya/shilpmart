@@ -8,7 +8,7 @@ export default class CustomerFeedback extends React.Component {
     this.state = {
       responsive: {
         0: { items: 1 },
-        568: { items: 3 },
+        568: { items: 2 },
         1024: { items: 5 },
       },
       customerFeedbackData: [], customerFeedbackItems: [],

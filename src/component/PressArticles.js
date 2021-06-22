@@ -11,7 +11,7 @@ export default class PressArticles extends React.Component {
     this.setState({
       // pressLayoutData: [{ '05-09-2020', }]//api data to be binded here
       pressLayoutItems: [
-        <div key='0' className="col-lg-6 col-md-6 col-sm-12 col-12">
+        <div key='0' className="col-lg-6 col-md-6 col-sm-12 col-12 mb-3">
           <div className="pressBlock">
             <div className="pressBlock-container">
               <figure className="news-img">
@@ -41,7 +41,7 @@ export default class PressArticles extends React.Component {
             </div>
           </div>
         </div>,
-        <div key='1' className="col-lg-6 col-md-6 col-sm-12 col-12" style={{ width: 310 }}>
+        <div key='1' className="col-lg-6 col-md-6 col-sm-12 col-12">
           <div className="pressBlock">
             <div className="pressBlock-container">
               <figure className="news-img">
