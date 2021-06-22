@@ -120,7 +120,8 @@ export default class SellerProfile extends React.Component {
 
             <div className="tab-content" >
               <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
-                role="tabpanel" aria-labelledby="home-tab"><ProductGrid {...this.props} /> </div>
+                role="tabpanel" aria-labelledby="home-tab"><ProductGrid {...this.props}
+                  setPriceRangeProps={() => console.log("demo")} /> </div>
               <div className={`tab-pane fade ${((isActiveTab === 1) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="profile-tab">
                 There are no reviews yet. </div>
               <div className={`tab-pane fade ${((isActiveTab === 2) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab">Lorem Ipsum  printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </div>

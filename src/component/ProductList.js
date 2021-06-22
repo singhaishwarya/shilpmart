@@ -181,77 +181,77 @@ export default class ProductList extends React.Component {
     } = this.state;
 
     return (
-     
-        <section id="maincontent">
-          <div className='container-fluid'>
-            <div className='row py-5'>
-              <div className='col-lg-3'>
-                <div className='shop-sidebar'>
-                  <article className='filter-group'>
-                    <header className='card-header'>
-                      <h6 className='title'>Filter by price </h6>
-                    </header>
-                    <div className='filter-content'>
-                      <div className='price-range-wrapper'>
-                        <div id='slider-range' className='price-filter-range' name='rangeInput'>
-                          {priceRange.length > 1 && <Ranger
-                            defaultValue={priceRange}
-                            min={0}
-                            max={50000}
-                            className='filter-slider'
-                            allowCross={false}
-                            onAfterChange={value => { this.onSliderPriceChange(value) }}
-                          />}
-                        </div>
-                        <div className='price-range'>
-                          <div className="rangewraper">
-                             <span>Price: ₹</span> 
-                            <span><input type='number' min={0} max={priceRange[0] || 50000} value={priceRange[0] || 0} className='price-range-field'
-                              onChange={(e) => this.onManualPriceChange(0, e)}
-                            /></span>
-                  <span className="px-2"> — </span> 
-                  <span>₹</span> 
-                            <span><input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
-                              onChange={(e) => this.onManualPriceChange(1, e)}
-                              className='price-range-field' /></span>
-                              </div>
-                          <span>
-                            <button onClick={() => { this.filterByPriceRange() }} className='price-range-search'
-                              id='price-range-submit'>Filter</button>
-                          </span>
-                        </div>
-                        <div id='searchResults' className='search-results-block'></div>
+
+      <section id="maincontent">
+        <div className='container-fluid'>
+          <div className='row py-5'>
+            <div className='col-lg-3'>
+              <div className='shop-sidebar'>
+                <article className='filter-group'>
+                  <header className='card-header'>
+                    <h6 className='title'>Filter by price </h6>
+                  </header>
+                  <div className='filter-content'>
+                    <div className='price-range-wrapper'>
+                      <div id='slider-range' className='price-filter-range' name='rangeInput'>
+                        {priceRange.length > 1 && <Ranger
+                          defaultValue={priceRange}
+                          min={0}
+                          max={50000}
+                          className='filter-slider'
+                          allowCross={false}
+                          onAfterChange={value => { this.onSliderPriceChange(value) }}
+                        />}
                       </div>
+                      <div className='price-range'>
+                        <div className="rangewraper">
+                          <span>Price: ₹</span>
+                          <span><input type='number' min={0} max={priceRange[0] || 50000} value={priceRange[0] || 0} className='price-range-field'
+                            onChange={(e) => this.onManualPriceChange(0, e)}
+                          /></span>
+                          <span className="px-2"> — </span>
+                          <span>₹</span>
+                          <span><input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
+                            onChange={(e) => this.onManualPriceChange(1, e)}
+                            className='price-range-field' /></span>
+                        </div>
+                        <span>
+                          <button onClick={() => { this.filterByPriceRange() }} className='price-range-search'
+                            id='price-range-submit'>Filter</button>
+                        </span>
+                      </div>
+                      <div id='searchResults' className='search-results-block'></div>
                     </div>
-                  </article>
-                  <article className='filter-group'>
-                    <header className='card-header'>
-                      <h6 className='title'>Filter by Categories </h6>
-                    </header>
-                    {parentCategory?.length > 0 && parentCategory?.map((item, index) =>
-                      <div key={index} className='catHead'>
-                        <span onClick={() => this.setCategoryIdParams(item?.parent_id, index)}>{item?.name}</span></div>)}
-                    <Treebeard
-                      data={menuOptions}
-                      style={treeStyle}
-                      onToggle={this.onCategoryFilter}
-                    />
-                  </article >
+                  </div>
+                </article>
+                <article className='filter-group'>
+                  <header className='card-header'>
+                    <h6 className='title'>Filter by Categories </h6>
+                  </header>
+                  {parentCategory?.length > 0 && parentCategory?.map((item, index) =>
+                    <div key={index} className='catHead'>
+                      <span onClick={() => this.setCategoryIdParams(item?.parent_id, index)}>{item?.name}</span></div>)}
+                  <Treebeard
+                    data={menuOptions}
+                    style={treeStyle}
+                    onToggle={this.onCategoryFilter}
+                  />
+                </article >
 
-                  
 
-                </div >
+
               </div >
-              <div className='col-lg-9'>
-                <ProductGrid categoryBreadcrumbs={category_breadcrumbs} {...this.props}
-                  setPriceRangeProps={(e) => this.setState({ priceRange: e })}
-                />
-              </div>
             </div >
+            <div className='col-lg-9'>
+              <ProductGrid categoryBreadcrumbs={category_breadcrumbs} {...this.props}
+                setPriceRangeProps={(e) => this.setState({ priceRange: e })}
+              />
+            </div>
           </div >
-        </section >
+        </div >
+      </section >
 
-     
+
     );
   }
 }
@@ -262,7 +262,7 @@ const treeStyle = {
       backgroundColor: 'white',
       margin: 0,
       paddingBottom: 30,
-      color: 'rgb(35,31,32)',      
+      color: 'rgb(35,31,32)',
       fontSize: '1rem'
     },
     node: {
