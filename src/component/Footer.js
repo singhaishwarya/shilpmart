@@ -44,7 +44,7 @@ export default class Footer extends React.Component {
                         <ul>
                           <li><Link to="/terms-and-condition">Terms &amp; Conditions</Link></li>
                           <li><Link to="/buyer-policy">Buyer Policy</Link></li>
-                          
+
                           <li><Link to="/exchange-policy">Exchange Policy</Link></li>
                         </ul>
                       </div>
@@ -63,8 +63,8 @@ export default class Footer extends React.Component {
                       <h5>Need Help?</h5>
                       <div className="footer-links">
                         <ul>
-                          <li><Link to="/">FAQs</Link></li>
-                          <li><Link to="/">Raise a ticket</Link></li>
+                          <li><Link to="/faq">FAQs</Link></li>
+                          <li><Link to="/raise-ticket">Raise a ticket</Link></li>
                           <li><Link to="/customer-service">Contact Us </Link></li>
                         </ul>
                       </div>

@@ -20,11 +20,9 @@ class CartOverlay extends Component {
 
   getCartApi = () => {
     let totalCost1 = 0;
-    // let  productids = [];
     CartService.list().then((result) => {
       this.setState({ cartData: result });
       result && result.forEach((item) => {
-        // productids.push(item.product_id);
         totalCost1 += ((item?.product_details?.price[0]?.price * 1) || 0) * (item.quantity * 1);
       });
 
@@ -45,7 +43,6 @@ class CartOverlay extends Component {
 
   }
   deleteCart = (product) => {
-    // this.props.userData?.token ? this.deleteCartApi(productid) : this.props.deleteCart(productid);
     if (this.props.userData?.token) { (this.deleteCartApi(product.product_id)) }
     else {
       this.props.deleteCart(product.id);

@@ -33,6 +33,7 @@ import BuyerPolicy from './component/BuyerPolicy';
 import ExchangePolicy from './component/ExchangePolicy';
 import TermsConditon from './component/TermsConditon.js';
 import TermsofUse from './component/TermsofUse.js';
+import RaiseATicket from './component/RaiseATicket.js';
 import Faq from './component/Faq.js';
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
@@ -66,6 +67,7 @@ class App extends Component {
           <Route path='/terms-and-condition' component={TermsConditon} exact />
           <Route path='/terms-of-use' component={TermsofUse} exact />
           <Route path='/faq' component={Faq} exact />
+          <Route path='/raise-ticket' component={RaiseATicket} exact />
           <MyAccount>
             <Route component={({ match }) =>
               <>

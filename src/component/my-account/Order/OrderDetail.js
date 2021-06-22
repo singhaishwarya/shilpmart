@@ -57,7 +57,7 @@ export default class OrderDetail extends React.Component {
                   </div>
                 </div> <div className="col-sm-5">
                   <div className="actionBtn">
-                    
+
                     <button onClick={this.toggleModal}>View Invoice</button>
                     <button>Send Email</button>
                     <Modal
@@ -67,7 +67,7 @@ export default class OrderDetail extends React.Component {
                       ariaHideApp={false}>
                       <FontAwesomeIcon className="text-left" icon={faTimes} onClick={() => this.toggleModal} />
                       {base64Doc &&
-                        <object width="100%" height="100%" type="application/pdf" data={report} />
+                        <object aria-labelledby="label1" width="100%" height="100%" type="application/pdf" data={report} />
                       }
                     </Modal>
                   </div>
