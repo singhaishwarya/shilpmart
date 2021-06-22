@@ -11,7 +11,6 @@ import { CheckoutProvider, Checkout } from 'paytm-blink-checkout-react';
 import Loader from "react-loader";
 import { loaderOptions, customLoginStyles } from "../lib/utils";
 
-const https = require('https');
 class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +25,7 @@ class CheckoutComp extends React.Component {
       showModal: false,
       checkOutData: JSON.parse(localStorage.getItem('checkOutData')) || [],
       totalCartCost: localStorage.getItem('totalCartCost') || 0,
-      payment_type: '', config: {},
+      payment_type: '', paytmConfig: {},
       txnResponse: {},
       isCheckoutClick: false, checksumResponse: {}, isLoaded: false
     };
@@ -117,107 +116,59 @@ class CheckoutComp extends React.Component {
       CheckoutService.orderPlace(checkoutObj).then(async (result) => {
         if (!result) return
         console.log("demo===", result)
-        // this.setState({ checksumResponse: result.data.checksum })
         if (this.state.payment_type === 'paytm') {
 
-          var post_data = JSON.stringify(result.data.checksum);
-
-          var options = {
-            hostname: 'securegw-stage.paytm.in',
-            port: 443,
-            path: '/theia/api/v1/initiateTransaction?mid=Digita62153518081968&orderId=' + result.data.order_details.id,
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Content-Length': post_data.length
-            }
-          };
-
-          var response = "";
           let _this = this;
-          var post_req = https.request(options, function (post_res) {
+          _this.setState({
+            paytmConfig: {
+              root: "",
+              flow: "DEFAULT",
+              data: {
+                orderId: result.data.order_details.id,
+                token: result.data.checksum.body.txnToken,
+                tokenType: "TXN_TOKEN",
+                amount: result.data.order_details.order_total
+              },
+              handler: {
+                notifyMerchant: function (eventName, data) {
+                  console.log("notifyMerchant handler function called");
+                  console.log("eventName => ", eventName);
+                  console.log("data => ", data);
+                },
+                transactionStatus: function (data) {
+                  window.Paytm.CheckoutJS.close();
 
-            post_res.on('data', function (chunk) {
-              response += chunk;
-            });
-
-            post_res.on('end', function () {
-              var txnResponse = JSON.parse(response)
-              _this.setState({
-                config: {
-                  root: "",
-                  flow: "DEFAULT",
-                  data: {
-                    orderId: result.data.order_details.id,
-                    token: txnResponse.body.txnToken,
-                    tokenType: "TXN_TOKEN",
-                    amount: result.data.order_details.order_total
-                  },
-                  handler: {
-                    notifyMerchant: function (eventName, data) {
-                      console.log("notifyMerchant handler function called");
-                      console.log("eventName => ", eventName);
-                      console.log("data => ", data);
-                    },
-                    transactionStatus: function (data) {
-                      window.Paytm.CheckoutJS.close();
-                      _this.orderValidate(data, _this.state.payment_type)
-                      // _this.setState({ txnResponse: data });
-                    }
-                  },
-                  merchant: {
-                    mid: "Digita62153518081968",
-                    callbackUrl: "",
-                    name: "E-Shilpmart",
-                    logo: "https://main.digitalindiacorporation.in/static/media/logo-eshilp.dffc449c.svg",
-                    redirect: false,
-                  },
-                  mapClientMessage: {},
-                  labels: {},
-                  payMode: {
-                    labels: {},
-                    filter: { exclude: [] },
-                    order: [
-                      "NB",
-                      "CARD",
-                      "LOGIN"
-                    ]
-                  }
+                  _this.orderValidate(data, _this.state.payment_type)
                 }
-              });
-            });
+              },
+              merchant: {
+                mid: "Digita62153518081968",
+                callbackUrl: "",
+                name: "E-Shilpmart",
+                logo: "https://main.digitalindiacorporation.in/static/media/logo-eshilp.dffc449c.svg",
+                redirect: false,
+              },
+              mapClientMessage: {},
+              labels: {},
+              payMode: {
+                labels: {},
+                filter: { exclude: [] },
+                order: [
+                  "NB",
+                  "CARD",
+                  "LOGIN"
+                ]
+              }
+            }
           });
-
-          post_req.write(post_data);
-          post_req.end();
         }
         if (this.state.payment_type === 'airpay') {
           this.setState({ isLoaded: false });
-          // var configAirpay = {
-          //   buyerEmail: "demo1@gmail.com",
-          //   buyerPhone: 1111111111,
-          //   buyerFirstName: "dem",
-          //   buyerLastName: "dem",
-          //   orderid: result.data.order_details.id,
-          //   amount: result.data.order_details.order_total,
-          //   privatekey: result.data.checksum.privatekey,
-          //   mercid: result.data.checksum.mercid,
-          //   checksum: result.data.checksum.checksum,
-          //   currency: 356,
-          //   isocurrency: "INR",
-          //   token: "",
-          //   chmod: "",
-          //   buyerCity: "LUCKNOW",
-          //   buyerState: "Goa",
-          //   buyerCountry: "India",
-          //   buyerAddress: "Sarojini",
-          //   buyerPinCode: "226008",
-          // }
-
           var information = {
             action: "https://payments.airpay.co.in/pay/index.php",
             params: result.data.checksum
           };
+          console.log("airpay====", information)
           this.post(information)
 
         }
@@ -252,14 +203,14 @@ class CheckoutComp extends React.Component {
   }
 
   render() {
-    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType, config, isCheckoutClick, isLoaded } = this.state;
+    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType, paytmConfig, isCheckoutClick, isLoaded } = this.state;
     let finItem;
     return (
       <section>
         <ToastContainer closeOnClick />
-        {config && <CheckoutProvider config={config} env='STAGE'>
+        <CheckoutProvider config={paytmConfig} env='STAGE'>
           <Checkout />
-        </CheckoutProvider>}
+        </CheckoutProvider>
         <div>
           <Modal
             isOpen={showModal}
@@ -378,8 +329,6 @@ class CheckoutComp extends React.Component {
               </div>
             </div>
           </div >
-
-
         </Loader>
       </section >
     );

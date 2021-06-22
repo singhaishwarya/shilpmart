@@ -25,7 +25,7 @@ class CartOverlay extends Component {
       this.setState({ cartData: result });
       result && result.forEach((item) => {
         // productids.push(item.product_id);
-        totalCost1 += (item?.product_details?.price[0]?.price * 1 || 0) * (item.quantity * 1);
+        totalCost1 += ((item?.product_details?.price[0]?.price * 1) || 0) * (item.quantity * 1);
       });
 
       this.setState({
@@ -34,12 +34,13 @@ class CartOverlay extends Component {
     })
   }
   getCart = () => {
-
+    let totalCost1 = 0;
     this.props.cart.length > 0 && ProductService.fetchAllProducts({ product_ids: this.props.cart }).then((result1) => {
-      this.setState({ cartData: result1.data })
-      result1.data.map((item) => (
+      result1.data.map((item) => {
+        totalCost1 += ((item?.price[0]?.price * 1) || 0.00);
         this.props.addToCart(item.id)
-      ))
+      })
+      this.setState({ cartData: result1.data, totalCost: totalCost1 })
     })
 
   }

@@ -102,9 +102,7 @@ export default class Registration extends React.Component {
 
             if (result.success) {
               ToastService.success("Successfully Registered")
-              this.props.history.push({
-                pathname: '/'
-              });
+              this.props.history.push({ pathname: '/' });
             }
             else {
               return ToastService.error(Object.values(result.data)[0][0].replace("c password", "confirm password"));
