@@ -11,14 +11,20 @@ export default class AboutUs extends React.Component {
   render() {
     return (
       <section id="maincontent">
+        <div className="subpages-heading">
+          <div className="container">
+            <h1 className="text-center p-5">About Us</h1>
+
+          </div>
+        </div>
         <div className="container-fluid">
           <div className="row py-5">
             <div className="col">
               <div className="aboutWrapper">
                 <div className="aboutbgoverlay"></div>
                 <div className="aboutContents">
-                  <h2>About Us</h2>
-                  <span></span>
+                  {/* <h2>About Us</h2>
+                  <span></span> */}
 
                   <p>#Vocal4handmade #Vocalforlocal #ilovehandloom</p>
 
