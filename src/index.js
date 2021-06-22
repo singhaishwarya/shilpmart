@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { persistor, store } from "./persistStore";
 import { PersistGate } from "redux-persist/integration/react";
-
 import "./public/bootstrap.min.css";
 import "./public/jbility.css";
 import "./index.css";

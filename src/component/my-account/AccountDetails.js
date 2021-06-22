@@ -2,7 +2,6 @@ import React from 'react';
 import AuthService from '../../services/AuthService';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import { ToastContainer } from 'react-toastify';
 import ToastService from '../../services/ToastService';
 import Button from "react-validation/build/button";
 
@@ -73,10 +72,10 @@ export default class AccountDetails extends React.Component {
 
     const { fields } = this.state
     return (
-      
 
-        <div className="container">
-          <div className="col-sm-6 offset-sm-3 login-card">
+
+      <div className="container">
+        <div className="col-sm-6 offset-sm-3 login-card">
 
           <div className="form-row">
             <div className="form-group col-md-6">
@@ -135,13 +134,12 @@ export default class AccountDetails extends React.Component {
                 /> </div>
 
             </fieldset>
-            <ToastContainer closeOnClick />
             <Button type="submit" className="btn login-btn">Save Changes</Button>
           </Form>
-          </div>
         </div>
+      </div>
 
-      
+
     );
   }
 }

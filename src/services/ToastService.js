@@ -1,21 +1,16 @@
 
 import { Component } from "react";
 import { toast } from 'react-toastify';
-toast.configure();
+
 export default class ToastService extends Component {
   static error = async (message) => {
     return toast.error(
       message,
       {
-        toastId: '007'
-      },
-      {
         style: {
           backgroundColor: "#e87f13",
           color: "#fff"
-        }
-      },
-      {
+        },
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -23,9 +18,7 @@ export default class ToastService extends Component {
         pauseOnHover: true,
         draggable: false,
         progress: undefined,
-      },
-      // clearWaitingQueue(),
-      // dismiss(console.log("demooooerrpor"))
+      }
     );
   }
 

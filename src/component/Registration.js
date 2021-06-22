@@ -3,9 +3,7 @@ import AuthService from '../services/AuthService';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import validator from 'validator';
-import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
-
 
 export default class Registration extends React.Component {
 
@@ -127,7 +125,6 @@ export default class Registration extends React.Component {
     return (
 
       <div className="container-fluid">
-        <ToastContainer closeOnClick />
         <div className="row py-5">
           <div className="col-md-6 col-12 mb-5">
             <h4 className="text-center">How It Works</h4>

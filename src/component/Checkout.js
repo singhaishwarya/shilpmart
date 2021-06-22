@@ -4,7 +4,6 @@ import CheckoutService from '../services/CheckoutService';
 import Modal from 'react-modal';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 import Login from "./Login";
 import { CheckoutProvider, Checkout } from 'paytm-blink-checkout-react';
@@ -207,7 +206,6 @@ class CheckoutComp extends React.Component {
     let finItem;
     return (
       <section>
-        <ToastContainer closeOnClick />
         <CheckoutProvider config={paytmConfig} env='STAGE'>
           <Checkout />
         </CheckoutProvider>

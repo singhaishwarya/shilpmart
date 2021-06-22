@@ -7,7 +7,6 @@ import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
 import ProductTile from './ProductTile';
-import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 class ShopByType extends Component {
   constructor(props) {
@@ -109,7 +108,6 @@ class ShopByType extends Component {
     const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
     return (
       <>
-        <ToastContainer closeOnClick />
         <AliceCarousel
           autoPlayInterval={3000}
           autoPlay={true}

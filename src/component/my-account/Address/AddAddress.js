@@ -5,7 +5,6 @@ import Select from "react-validation/build/select";
 import MasterService from '../../../services/MasterService';
 import AddressService from '../../../services/AddressService';
 import ToastService from '../../../services/ToastService';
-import { ToastContainer } from 'react-toastify';
 
 export default class AddEditAddress extends React.Component {
 
@@ -127,7 +126,6 @@ export default class AddEditAddress extends React.Component {
     const { fields, statesOptions, districtOptions, subDistrictOptions } = this.state
     return (
       <div className="container">
-        <ToastContainer closeOnClick />
         <div className="row">
           <div className="col-7 login-card py-3 px-5 bg-light shadow">
             <h4 className="mb-4 text-left">Add New Address</h4>
@@ -275,7 +273,7 @@ export default class AddEditAddress extends React.Component {
             </Form>
           </div>
           <div className="col-5">
-          <img src="/static/media/address.svg" class="img-fluid" alt="address"/>            
+            <img src="/static/media/address.svg" class="img-fluid" alt="address" />
           </div>
 
         </div >

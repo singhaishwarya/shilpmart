@@ -282,7 +282,7 @@ class Header extends Component {
             <CartOverlay dismissModal={() => this.dismissModal(overlayType)} />}
         </Modal>
       </div>
-        <ToastContainer closeOnClick />
+        <ToastContainer />
         {scrolled ?
           <div className="headersticky fixed-header">
             <div className="appLogo">

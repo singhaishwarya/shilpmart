@@ -16,8 +16,6 @@ import CartService from '../services/CartService';
 import * as cartAction from '../actions/cart';
 import * as wishlistAction from '../actions/wishlist';
 import { connect } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
-// import Bars from 'react-bars';
 import WishlistService from '../services/WishlistService'
 class ProductDetail extends React.Component {
   constructor(props) {
@@ -280,7 +278,6 @@ class ProductDetail extends React.Component {
 
                     <button type="submit" className="cart-btn buy-btn" onClick={() => this.addToCheckout(productDetailData)}>Buy Now</button>
                     <button type="submit" className="cart-btn" onClick={() => this.addToCart(productDetailData)} >Add to cart</button>
-                    <ToastContainer closeOnClick />
                   </div>
                   <div className="productVariation">
                     <span>Color :</span>
