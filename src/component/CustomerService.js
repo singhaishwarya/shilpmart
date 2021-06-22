@@ -15,7 +15,7 @@ export default class CustomerService extends React.Component {
       <section id="maincontent">
         <div className="subpages-heading">
           <div className="container">
-            <h1 className="text-center p-5">Cusomer Services</h1>
+            <h1 className="text-center p-5">Customer Services</h1>
 
           </div>
         </div>
