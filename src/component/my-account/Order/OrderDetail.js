@@ -59,13 +59,13 @@ export default class OrderDetail extends React.Component {
                   <div className="actionBtn">
 
                     <button onClick={this.toggleModal}>View Invoice</button>
-                    <button>Send Email</button>
+                    {/* <button>Send Email</button> */}
                     <Modal
                       isOpen={showModal}
                       onRequestClose={this.toggleModal}
                       shouldCloseOnOverlayClick={true}
                       ariaHideApp={false}>
-                      <FontAwesomeIcon className="text-left" icon={faTimes} onClick={() => this.toggleModal} />
+                      <FontAwesomeIcon className="text-left" icon={faTimes} onClick={this.toggleModal} />
                       {base64Doc &&
                         <object aria-labelledby="label1" width="100%" height="100%" type="application/pdf" data={report} />
                       }
@@ -77,180 +77,180 @@ export default class OrderDetail extends React.Component {
           </div>
 
           {orderDetail?.product_details?.map((item, index) => (
-           <div className="card mb-3 shadow" key={index}>
-            <div className="card-body">
-              <div className="row">
-                <div className="col-sm-3">
-                  <div className="row">
-                    <div className="col-12">
-                      <span className="d-block mb-2"><strong>Order No. : {457812 + index}</strong></span>
-                    </div>
+            <div className="card mb-3 shadow" key={index}>
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="row">
+                      <div className="col-12">
+                        <span className="d-block mb-2"><strong>Order No. : {457812 + index}</strong></span>
+                      </div>
                     </div>
                     <div className="row mb-2">
-                    <div className="col-sm-3">
-                      <div className="orderProductImg">
-                        <div className="orderimg">
-                          <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
+                      <div className="col-sm-3">
+                        <div className="orderProductImg">
+                          <div className="orderimg">
+                            <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
+                          </div>
+                          <span>+4 More Item</span>
+
                         </div>
-                        <span>+4 More Item</span>
-                        
+                      </div>
+                      <div className="col-sm-9">
+                        <div className="orderproductInfo">
+                          <span className="title">{item.title.title}</span>
+                          <span>₹ {item.price}</span>
+                          {/* <span className="plusItem"><small>+</small>4</span> */}
+                        </div>
                       </div>
                     </div>
-                    <div className="col-sm-9">
-                      <div className="orderproductInfo">
-                        <span className="title">{item.title.title}</span>
-                        <span>₹ {item.price}</span>
-                        {/* <span className="plusItem"><small>+</small>4</span> */}
-                      </div>
-                    </div>
+
+
+
+
                   </div>
 
-                 
-
-
-                </div>
-
-                <div className="col-sm-6">
-                  <div className="orderRangewrap">
-                    <div className="orderRange">
-                      <span className="orderd"><small>Orderd</small><p className="rangeDate"><small>{format(new Date(item.created_at), 'dd-MM-yyyy')}</small></p></span>
-                      {/* <span className="packed"><small>Packed</small><p className="rangeDate"><small>Sat, 15 June 21</small></p></span>
+                  <div className="col-sm-6">
+                    <div className="orderRangewrap">
+                      <div className="orderRange">
+                        <span className="orderd"><small>Orderd</small><p className="rangeDate"><small>{format(new Date(item.created_at), 'dd-MM-yyyy')}</small></p></span>
+                        {/* <span className="packed"><small>Packed</small><p className="rangeDate"><small>Sat, 15 June 21</small></p></span>
                       <span className="shipped"><small>Shipped</small><p className="rangeDate"><small>Sat, 15 June 21</small></p></span>
                       <span className="delivered"><small>Delivered</small><p className="rangeDate"><small>Sat, 15 June 21</small></p></span>
                       <span className="cancelledRange"><small>Cancelled</small><p className="rangeDate"><small>Sat, 15 June 21</small></p></span> */}
+                      </div>
+
+
                     </div>
-
-
-                  </div>
-                  <p><small>Your Order is {getOrderStatus(orderDetail.status)}</small></p>
-                </div>
-
-                <div className="col-sm-3">
-                  <div className="orderstatus">
-                    <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
-                    <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</Link></div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
-               
-               <div className="col-md-6 offset-md-3">
-             
-               <div className="row mb-2">
-                  <div className="col-sm-3">
-                    <div className="orderProductImg">
-                      <div className="orderimg">
-                        <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
-                      </div>                        
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="orderproductInfo">
-                      <span className="title">{item.title.title}</span>
-                      <span>₹ {item.price}</span>
-                      
-                    </div>
+                    <p><small>Your Order is {getOrderStatus(orderDetail.status)}</small></p>
                   </div>
 
                   <div className="col-sm-3">
-                  <div className="orderstatus">
-                    <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
-                    <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</Link></div>
+                    <div className="orderstatus">
+                      <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
+                      <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</Link></div>
+                    </div>
                   </div>
                 </div>
 
-                </div>
-                {/* <div className="awbinfo">AWB No. <FontAwesomeIcon icon={faQuestionCircle} />
+                <div className="row">
+
+                  <div className="col-md-6 offset-md-3">
+
+                    <div className="row mb-2">
+                      <div className="col-sm-3">
+                        <div className="orderProductImg">
+                          <div className="orderimg">
+                            <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="orderproductInfo">
+                          <span className="title">{item.title.title}</span>
+                          <span>₹ {item.price}</span>
+
+                        </div>
+                      </div>
+
+                      <div className="col-sm-3">
+                        <div className="orderstatus">
+                          <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
+                          <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</Link></div>
+                        </div>
+                      </div>
+
+                    </div>
+                    {/* <div className="awbinfo">AWB No. <FontAwesomeIcon icon={faQuestionCircle} />
                 <span className="awbfullinfo">AWB Info</span>
                 </div> */}
-                
 
 
-                <div className="row mb-2">
-                  <div className="col-sm-3">
-                    <div className="orderProductImg">
-                      <div className="orderimg">
-                        <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
-                      </div>                        
+
+                    <div className="row mb-2">
+                      <div className="col-sm-3">
+                        <div className="orderProductImg">
+                          <div className="orderimg">
+                            <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="orderproductInfo">
+                          <span className="title">{item.title.title}</span>
+                          <span>₹ {item.price}</span>
+
+                        </div>
+                      </div>
+
+                      <div className="col-sm-3">
+                        <div className="orderstatus">
+                          <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
+                          <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</Link></div>
+                        </div>
+                      </div>
+
                     </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="orderproductInfo">
-                      <span className="title">{item.title.title}</span>
-                      <span>₹ {item.price}</span>
-                      
+
+
+                    <div className="row mb-2">
+                      <div className="col-sm-3">
+                        <div className="orderProductImg">
+                          <div className="orderimg">
+                            <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="orderproductInfo">
+                          <span className="title">{item.title.title}</span>
+                          <span>₹ {item.price}</span>
+
+                        </div>
+                      </div>
+
+                      <div className="col-sm-3">
+                        <div className="orderstatus">
+                          <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
+                          <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestion} /> Need Help</Link></div>
+                        </div>
+                      </div>
+
                     </div>
-                  </div>
 
-                  <div className="col-sm-3">
-                  <div className="orderstatus">
-                    <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
-                    <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</Link></div>
-                  </div>
-                </div>
 
-                </div>
 
-                
-                <div className="row mb-2">
-                  <div className="col-sm-3">
-                    <div className="orderProductImg">
-                      <div className="orderimg">
-                        <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
-                      </div>                        
+
+
+                    <div className="row mb-2">
+                      <div className="col-sm-3">
+                        <div className="orderProductImg">
+                          <div className="orderimg">
+                            <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="orderproductInfo">
+                          <span className="title">{item.title.title}</span>
+                          <span>₹ {item.price}</span>
+
+                        </div>
+                      </div>
+
+                      <div className="col-sm-3">
+                        <div className="orderstatus">
+                          <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
+                          <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</Link></div>
+                        </div>
+                      </div>
+
+
                     </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="orderproductInfo">
-                      <span className="title">{item.title.title}</span>
-                      <span>₹ {item.price}</span>
-                      
-                    </div>
+
                   </div>
 
-                  <div className="col-sm-3">
-                  <div className="orderstatus">
-                    <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
-                    <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestion} /> Need Help</Link></div>
-                  </div>
-                </div>
 
-                </div>
-
-
-
-
-
-                <div className="row mb-2">
-                  <div className="col-sm-3">
-                    <div className="orderProductImg">
-                      <div className="orderimg">
-                        <img src={item.images[0].image_url} className="img-fluid" alt="CSC" />
-                      </div>                        
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="orderproductInfo">
-                      <span className="title">{item.title.title}</span>
-                      <span>₹ {item.price}</span>
-                      
-                    </div>
-                  </div>
-
-                  <div className="col-sm-3">
-                  <div className="orderstatus">
-                    <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
-                    <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</Link></div>
-                  </div>
-                </div>
-
-
-                </div>
-
-                 </div>
-
-                
 
                 </div>
 
@@ -261,7 +261,7 @@ export default class OrderDetail extends React.Component {
                 </div>
 
 
-              {/* <div className="card">
+                {/* <div className="card">
                 <div className="card-body">
                   <div className="refundComplete"><span>Refund Completed  <span>(Refund ID: SM454545454)</span></span>
                     <ul>
@@ -270,10 +270,10 @@ export default class OrderDetail extends React.Component {
                   </div>
                 </div>
               </div> */}
+              </div>
             </div>
-          </div> 
-          
-           ))}
+
+          ))}
 
         </div>
       </div >

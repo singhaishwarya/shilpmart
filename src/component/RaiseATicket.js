@@ -10,7 +10,7 @@ export default class SellerPolicy extends React.Component {
 
   render() {
     return (
-      <></>
+      <><span>demo</span></>
     );
   }
 }

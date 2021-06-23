@@ -9,11 +9,10 @@ import Login from "./Login";
 import { CheckoutProvider, Checkout } from 'paytm-blink-checkout-react';
 import Loader from "react-loader";
 import { loaderOptions, customLoginStyles } from "../lib/utils";
-
+const xhr = new XMLHttpRequest();
 class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
-    console.log("Airpaydemo===", props)
     if (typeof props?.location?.state !== 'undefined') {
       localStorage.setItem('checkOutData', JSON.stringify(props?.location?.state?.checkout));
       localStorage.setItem('totalCartCost', props?.location?.state?.totalCartCost)
@@ -21,13 +20,14 @@ class CheckoutComp extends React.Component {
 
     this.state = {
       addressList: [],
-      selectedAddress: {},
+      selectedShippingAddress: {},
+      selectedBillingAddress: {},
       showModal: false,
       checkOutData: JSON.parse(localStorage.getItem('checkOutData')) || [],
       totalCartCost: localStorage.getItem('totalCartCost') || 0,
       payment_type: '', paytmConfig: {},
       txnResponse: {},
-      isCheckoutClick: false, checksumResponse: {}, isLoaded: false
+      isCheckoutClick: false, checksumResponse: {}, isLoaded: false, isBillingAddressSame: true, addressType: ''
     };
 
   }
@@ -46,7 +46,8 @@ class CheckoutComp extends React.Component {
   getAddress = () => {
     AddressService.list().then((result) => {
       if (!result) return
-      this.setState({ selectedAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0], addressList: result.data, isLoaded: true })
+      this.setState({ selectedShippingAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0], addressList: result.data, isLoaded: true });
+
     }).catch((err) => {
       this.setState({ isLoaded: true });
       console.log(err);
@@ -64,12 +65,34 @@ class CheckoutComp extends React.Component {
     })
   }
 
-  dismissModal = (type) => {
-    this.setState({
-      showModal: !this.state.showModal, overlayType: type
-    });
+  dismissModal = (type, addressType, isBillingAddressSame) => {
+
+    if (type === 'address') {
+
+      this.setState({ addressType: addressType, isBillingAddressSame: isBillingAddressSame });
+
+      console.log("dismissModal====,", addressType, '====', this.state)
+      if (addressType === "billing") {
+        if (!this.state.isBillingAddressSame) return;
+        else {
+          this.setState({
+            showModal: !this.state.showModal, overlayType: type
+          });
+        }
+      }
+    } else {
+      this.setState({
+        showModal: !this.state.showModal, overlayType: type
+      });
+    }
+
   };
 
+  changeAddress = (type) => {
+    this.setState({
+      showModal: !this.state.showModal, overlayType: 'address', addressType: type
+    });
+  }
 
   handleCheckout = async (e) => {
     this.setState({ isCheckoutClick: true })
@@ -83,7 +106,7 @@ class CheckoutComp extends React.Component {
       checkoutObj = {
         is_checkout: true,
         coupan_code: "",
-        is_billing_address_same: true,
+        isBillingAddressSame: true,
         billing_address: {
           address_id: this.state.selectedAddress.id
         },
@@ -113,7 +136,6 @@ class CheckoutComp extends React.Component {
 
       CheckoutService.orderPlace(checkoutObj).then(async (result) => {
         if (!result) return
-        console.log("demo===", result)
         if (this.state.payment_type === 'paytm') {
 
           let _this = this;
@@ -179,6 +201,7 @@ class CheckoutComp extends React.Component {
       this.dismissModal('login')
     }
   }
+
   post(details) {
     const form = this.buildForm(details)
     document.body.appendChild(form)
@@ -201,7 +224,8 @@ class CheckoutComp extends React.Component {
   }
 
   render() {
-    const { checkOutData, totalCartCost, selectedAddress, showModal, addressList, payment_type, overlayType, paytmConfig, isCheckoutClick, isLoaded } = this.state;
+    const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, payment_type, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType } = this.state;
+    // console.log("demo====", showModal || !isBillingAddressSame, '===', showModal, !isBillingAddressSame)
     let finItem;
     return (
       <section>
@@ -226,7 +250,8 @@ class CheckoutComp extends React.Component {
                 <strong>Email</strong> : {item?.email} <br /><br />
                 <p className="d-flex justify-content-between">
                   <span onClick={() => {
-                    this.setState({ selectedAddress: item, showModal: false })
+                    addressType === 'shipping' ? this.setState({ selectedShippingAddress: item, showModal: false }) :
+                      this.setState({ selectedBillingAddress: item, showModal: false })
                   }} className="btn btn-dark btn-theme">Select</span>
                 </p>
               </address>
@@ -279,21 +304,52 @@ class CheckoutComp extends React.Component {
                 <div className="card shadow pr-5">
                   <div className="card-body">
                     <h4 className="mb-3">Shipping address</h4>
-                    {selectedAddress?.name ? <>< address  > {selectedAddress?.name}
-                      <br />{selectedAddress?.address1} <br />{selectedAddress?.address2} <br /> {selectedAddress?.sub_district}
-                      <br /> {selectedAddress?.district},  {selectedAddress?.state} - {selectedAddress?.pincode}<br />
-                      <strong>Mobile No.</strong>: {selectedAddress?.mobile}<br />
-                      <strong>Email</strong> : {selectedAddress?.email} <br /><br />
+                    {selectedShippingAddress?.name ? <>< address  > {selectedShippingAddress?.name}
+                      <br />{selectedShippingAddress?.address1} <br />{selectedShippingAddress?.address2} <br /> {selectedShippingAddress?.sub_district}
+                      <br /> {selectedShippingAddress?.district},  {selectedShippingAddress?.state} - {selectedShippingAddress?.pincode}<br />
+                      <strong>Mobile No.</strong>: {selectedShippingAddress?.mobile}<br />
+                      <strong>Email</strong> : {selectedShippingAddress?.email} <br /><br />
                     </address>
                       <p className="">
-                        <span className="btn btn-dark btn-theme" onClick={() => this.dismissModal('address')}>
+                        <span className="btn btn-dark btn-theme" onClick={() => {
+                          this.changeAddress('shipping')
+                        }}>
                           Change Address</span>
                       </p></> : <p className="">
                       <span onClick={() => this.props.userData.token ? this.props.history.push({
                         pathname: '/my-account/add-address'
                       }) : this.dismissModal('login')} className="btn btn-dark btn-theme" > Add New Address</span>
                     </p>}
-                    <form className="needs-validation login-card"  >
+                    <hr className="mb-4" />
+                    <div className="custom-control custom-checkbox">
+                      <input type="checkbox" defaultChecked={this.state.isBillingAddressSame} onChange={() => { this.dismissModal('address', "billing", !isBillingAddressSame) }} />
+                      <label className="custom-control-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
+                    </div>
+
+                    {!isBillingAddressSame ?
+                      <>
+                        <h4 className="mb-3">Billing address</h4>
+                        < address  > {selectedBillingAddress?.name}
+                          <br />{selectedBillingAddress?.address1} <br />{selectedBillingAddress?.address2} <br /> {selectedBillingAddress?.sub_district}
+                          <br /> {selectedBillingAddress?.district},  {selectedBillingAddress?.state} - {selectedBillingAddress?.pincode}<br />
+                          <strong>Mobile No.</strong>: {selectedBillingAddress?.mobile}<br />
+                          <strong>Email</strong> : {selectedBillingAddress?.email} <br /><br />
+                        </address>
+                        <p className="">
+                          <span className="btn btn-dark btn-theme" onClick={() => this.changeAddress('billing')}>
+                            Change Address</span>
+                        </p></> : ''
+                      //   <p className="">
+                      //   <span onClick={() => this.props.userData.token ? this.props.history.push({
+                      //     pathname: '/my-account/add-address'
+                      //   }) : this.dismissModal('login')} className="btn btn-dark btn-theme" > Add New Address</span>
+                      // </p>
+                    }
+                    {/* <div className="custom-control custom-checkbox">
+                      <input type="checkbox" className="custom-control-input" id="save-info" />
+                      <label className="custom-control-label" htmlFor="save-info">Save this information for next time</label>
+                    </div> */}
+                    < form className="needs-validation login-card" >
                       <hr className="mb-4" />
                       <div className="d-block my-3">
                         <div className="custom-control custom-radio">
