@@ -13,7 +13,7 @@ export default class TermsCondition extends React.Component {
       <section id="maincontent">
         <div className="subpages-heading">
           <div className="container">
-            <h1 className="text-center p-5">Terms &amp; Condition</h1>
+            <h1 className="text-center p-5">Terms &amp; Conditions</h1>
 
           </div>
         </div>
