@@ -13,6 +13,7 @@ import { loaderOptions, customLoginStyles } from "../lib/utils";
 class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
+    console.log("Airpaydemo===", props)
     if (typeof props?.location?.state !== 'undefined') {
       localStorage.setItem('checkOutData', JSON.stringify(props?.location?.state?.checkout));
       localStorage.setItem('totalCartCost', props?.location?.state?.totalCartCost)
@@ -60,8 +61,6 @@ class CheckoutComp extends React.Component {
     CheckoutService.orderValidate(txnObj).then(async (result) => {
       this.setState({ isLoaded: true })
       if (!result) return
-
-      console.log("Demo===", result)
     })
   }
 
@@ -167,7 +166,7 @@ class CheckoutComp extends React.Component {
             action: "https://payments.airpay.co.in/pay/index.php",
             params: result.data.checksum
           };
-          console.log("airpay====", information)
+          // console.log("airpay====", information)
           this.post(information)
 
         }

@@ -54,7 +54,6 @@ export default class AddEditAddress extends React.Component {
     }
   }
 
-
   pattern = (value, props) => {
     let propsPattern = new RegExp(props.pattern);
     if (props.isUsed) {
@@ -245,7 +244,7 @@ export default class AddEditAddress extends React.Component {
                   <label htmlFor="fname">Sub-District<span>*</span></label>
                   <Select name='subDistrict' value={fields.sub_district}
                     onChange={this.handleChange.bind(this, "sub_district")}
-                    validations={[this.required]} className="form-control">
+                    className="form-control">
                     <option  >Select Sub-District</option>
 
                     {subDistrictOptions?.length > 0
@@ -273,7 +272,7 @@ export default class AddEditAddress extends React.Component {
             </Form>
           </div>
           <div className="col-5">
-            <img src="/static/media/address.svg" class="img-fluid" alt="address" />
+            <img src={require("../../../public/address.svg")} class="img-fluid" alt="address" />
           </div>
 
         </div >
