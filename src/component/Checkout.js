@@ -68,10 +68,7 @@ class CheckoutComp extends React.Component {
   dismissModal = (type, addressType, isBillingAddressSame) => {
 
     if (type === 'address') {
-
       this.setState({ addressType: addressType, isBillingAddressSame: isBillingAddressSame });
-
-      console.log("dismissModal====,", addressType, '====', this.state)
       if (addressType === "billing") {
         if (!this.state.isBillingAddressSame) return;
         else {
