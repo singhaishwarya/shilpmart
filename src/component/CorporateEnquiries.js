@@ -1,5 +1,5 @@
 import React from 'react';
-export default class RaiseATicket extends React.Component {
+export default class CorporateEnquiries extends React.Component {
 
   constructor() {
     super();
