@@ -8,7 +8,8 @@ import ToastService from '../services/ToastService';
 import Login from "./Login";
 import { CheckoutProvider, Checkout } from 'paytm-blink-checkout-react';
 import Loader from "react-loader";
-import { loaderOptions, customLoginStyles } from "../lib/utils";
+import * as cartAction from '../actions/cart';
+import { loaderOptions, customLoginStyles, paymentConfig } from "../lib/utils";
 const xhr = new XMLHttpRequest();
 class CheckoutComp extends React.Component {
   constructor(props) {
@@ -25,9 +26,13 @@ class CheckoutComp extends React.Component {
       showModal: false,
       checkOutData: JSON.parse(localStorage.getItem('checkOutData')) || [],
       totalCartCost: localStorage.getItem('totalCartCost') || 0,
-      payment_type: '', paytmConfig: {},
+      paymentType: '', paytmConfig: {},
       txnResponse: {},
-      isCheckoutClick: false, checksumResponse: {}, isLoaded: false, isBillingAddressSame: true, addressType: ''
+      isCheckoutClick: false,
+      checksumResponse: {},
+      isLoaded: false,
+      isBillingAddressSame: true,
+      addressType: ''
     };
 
   }
@@ -62,6 +67,13 @@ class CheckoutComp extends React.Component {
     CheckoutService.orderValidate(txnObj).then(async (result) => {
       this.setState({ isLoaded: true })
       if (!result) return
+      this.props.history.push({
+        pathname: '/thankyou/for-payment/',
+        state: { paymentType: this.state.paymentType, result: result.data }
+      });
+      localStorage.removeItem("checkOutData");
+      localStorage.removeItem("totalCartCost");
+      this.props.emptyCart();
     })
   }
 
@@ -93,47 +105,43 @@ class CheckoutComp extends React.Component {
 
   handleCheckout = async (e) => {
     this.setState({ isCheckoutClick: true })
+    const { paymentType } = this.state;
     e.preventDefault();
     let checkoutObj = {}, prodObj = [];
-    if (!this.state.selectedAddress?.id) return ToastService.error("Please select shipping address");
-    if (!this.state.payment_type) return ToastService.error("Please select payment type");
+    if (!this.state.selectedShippingAddress?.id) return ToastService.error("Please select shipping address");
+    if (!paymentType) return ToastService.error("Please select payment type");
 
     if (this.props.userData?.token) {
       this.setState({ isLoaded: false });
       checkoutObj = {
         is_checkout: true,
         coupan_code: "",
-        isBillingAddressSame: true,
+        isBillingAddressSame: this.state.isBillingAddressSame,
         billing_address: {
-          address_id: this.state.selectedAddress.id
+          address_id: this.state.isBillingAddressSame ? this.state.selectedShippingAddress?.id : this.state.selectedBillingAddress?.id
         },
         shipping_address: {
-          address_id: this.state.selectedAddress.id
+          address_id: this.state.selectedShippingAddress?.id
         },
-        is_payment_online: this.state.payment_type === 'cod' ? false : true,
+        is_payment_online: paymentType === 'cod' ? false : true,
         payment_detail: {
-          online_type: this.state.payment_type,
-          callback: 'https://main.digitalindiacorporation.in/thankyou/for-payment',
+          online_type: paymentType, callback: 'https://main.digitalindiacorporation.in/thankyou/for-payment',
           website: "WEBSTAGING",
-          channel_id: "WEB",
-          country: this.state.selectedAddress.country,
-          pincode: this.state.selectedAddress.pincode,
-          state: this.state.selectedAddress.state,
-          city: this.state.selectedAddress.city
+          channel_id: "WEB"
         }
       };
       this.state.checkOutData.map((item) => {
         prodObj.push({
           "product_id": item.product_details?.id || item.id,
-          "quantity": item.quantity,
-          "variation_index": item.variation_index
+          "quantity": item.quantity || 1,
+          "variation_index": item.variation_index || 1
         })
       });
       checkoutObj.products = prodObj;
 
       CheckoutService.orderPlace(checkoutObj).then(async (result) => {
         if (!result) return
-        if (this.state.payment_type === 'paytm') {
+        if (paymentType === 'paytm') {
 
           let _this = this;
           _this.setState({
@@ -149,17 +157,15 @@ class CheckoutComp extends React.Component {
               handler: {
                 notifyMerchant: function (eventName, data) {
                   console.log("notifyMerchant handler function called");
-                  console.log("eventName => ", eventName);
-                  console.log("data => ", data);
                 },
                 transactionStatus: function (data) {
                   window.Paytm.CheckoutJS.close();
-
-                  _this.orderValidate(data, _this.state.payment_type)
+                  console.log("demo request header", document, window)
+                  _this.orderValidate(data, paymentType);
                 }
               },
               merchant: {
-                mid: "Digita62153518081968",
+                mid: paymentConfig.paytmMid,
                 callbackUrl: "",
                 name: "E-Shilpmart",
                 logo: "https://main.digitalindiacorporation.in/static/media/logo-eshilp.dffc449c.svg",
@@ -170,24 +176,25 @@ class CheckoutComp extends React.Component {
               payMode: {
                 labels: {},
                 filter: { exclude: [] },
-                order: [
-                  "NB",
-                  "CARD",
-                  "LOGIN"
-                ]
+                order: ["NB", "CARD", "LOGIN"]
               }
             }
           });
         }
-        if (this.state.payment_type === 'airpay') {
+        if (paymentType === 'airpay') {
           this.setState({ isLoaded: false });
           var information = {
             action: "https://payments.airpay.co.in/pay/index.php",
             params: result.data.checksum
           };
-          // console.log("airpay====", information)
           this.post(information)
-
+          localStorage.removeItem("checkOutData");
+          localStorage.removeItem("totalCartCost");
+          this.props.emptyCart();
+          this.props.history.push({
+            pathname: '/thankyou/for-payment/',
+            state: { paymentType: paymentType }
+          })
         }
         this.setState({ isLoaded: true });
       }).catch((err) => {
@@ -221,7 +228,7 @@ class CheckoutComp extends React.Component {
   }
 
   render() {
-    const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, payment_type, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType } = this.state;
+    const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, paymentType, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType } = this.state;
     // console.log("demo====", showModal || !isBillingAddressSame, '===', showModal, !isBillingAddressSame)
     let finItem;
     return (
@@ -351,21 +358,21 @@ class CheckoutComp extends React.Component {
                       <div className="d-block my-3">
                         <div className="custom-control custom-radio">
                           <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" value='cod'
-                            checked={payment_type === 'cod'} disabled={totalCartCost > 5000}
-                            onChange={() => this.setState({ payment_type: 'cod', isCheckoutClick: false })} />
+                            checked={paymentType === 'cod'} disabled={totalCartCost > 5000}
+                            onChange={() => this.setState({ paymentType: 'cod', isCheckoutClick: false })} />
                           <label className="custom-control-label" htmlFor="credit">Cash On Delivery</label>
                         </div>
                         {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
                         <div className="custom-control custom-radio">
                           <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" value='paytm'
-                            checked={payment_type === 'paytm'}
-                            onChange={() => this.setState({ payment_type: 'paytm', isCheckoutClick: false })} />
+                            checked={paymentType === 'paytm'}
+                            onChange={() => this.setState({ paymentType: 'paytm', isCheckoutClick: false })} />
                           <label className="custom-control-label" htmlFor="debit">Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" alt="Paytm"></img></label>
                         </div>
                         <div className="custom-control custom-radio">
                           <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" value='airpay'
-                            checked={payment_type === 'airpay'}
-                            onChange={() => this.setState({ payment_type: 'airpay', isCheckoutClick: false })} />
+                            checked={paymentType === 'airpay'}
+                            onChange={() => this.setState({ paymentType: 'airpay', isCheckoutClick: false })} />
                           <label className="custom-control-label" htmlFor="paypal">Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img></label>
                         </div>
                       </div>
@@ -390,5 +397,11 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps, null)(CheckoutComp);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    emptyCart: index => dispatch(cartAction.emptyCart(index))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutComp);
 

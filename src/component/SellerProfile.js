@@ -1,10 +1,17 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMailBulk, faPhone, faMapMarker, faUserPlus, faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { faMailBulk, faPhone, faMapMarker } from '@fortawesome/free-solid-svg-icons'
 import { MultilevelMenu } from 'react-multilevel-menu';
-import ReactStars from 'react-stars'
-import ProductGrid from './ProductGrid'
+import ProductGrid from './ProductGrid';
+import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps"
 
+const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+  <GoogleMap
+    defaultZoom={8}
+    defaultCenter={{ lat: 26.8467, lng: 80.9462 }}
+  >
+    {props.isMarkerShown && <Marker position={{ lat: 26.8467, lng: 80.9462 }} />}
+  </GoogleMap>))
 export default class SellerProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -53,8 +60,8 @@ export default class SellerProfile extends React.Component {
                   <div className="seller-brand">
                     <div className="s-logo">
                       <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="logo" /></div>
-                    <div className="ratings d-flex"><span>
-                      <ReactStars count={5} size={15} /></span></div>
+                    {/* <div className="ratings d-flex"><span>
+                      <ReactStars count={5} size={15} /></span></div>*/}
                   </div>
                   <div className="seller-details">
                     <h1>Seller Title</h1>
@@ -66,7 +73,7 @@ export default class SellerProfile extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="action-btn"><a href="#"><FontAwesomeIcon icon={faQuestion} /> Inquiry</a><a href="#"><FontAwesomeIcon icon={faUserPlus} /> Follow</a></div>
+                {/* <div className="action-btn"><a href="#"><FontAwesomeIcon icon={faQuestion} /> Inquiry</a><a href="#"><FontAwesomeIcon icon={faUserPlus} /> Follow</a></div> */}
 
               </div>
             </div>
@@ -79,7 +86,7 @@ export default class SellerProfile extends React.Component {
             <div className="sidebar">
               <h4>Search</h4>
               <div className="mb-3">
-                <input type="search" className="search-field" placeholder="Search products…" value="" name="s" />
+                <input type="search" className="search-field" placeholder="Search products…" name="s" />
               </div>
               <h4>Categories</h4>
               <div className="mb-3">
@@ -96,7 +103,13 @@ export default class SellerProfile extends React.Component {
               </div>
               <h4>Store Location</h4>
               <div className="mt-3">
-                Google Map
+                <MyMapComponent
+                  isMarkerShown
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `400px` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                />
               </div>
             </div>
           </div>

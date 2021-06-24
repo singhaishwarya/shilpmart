@@ -63,3 +63,8 @@ export const customCartStyles = {
     borderRadius: '0'
   }
 };
+
+
+export const paymentConfig = {
+  paytmMid: "Digita62153518081968",
+}
