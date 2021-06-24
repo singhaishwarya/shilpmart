@@ -108,7 +108,7 @@ export default class AddEditAddress extends React.Component {
     e.preventDefault();
     if (this.form.getChildContext()._errors.length === 0) {
       if (!this.error) {
-        AddressService.add(this.state.fields)
+        AddressService.addEdit(this.state.fields)
           .then((result) => {
             if (!result) return ToastService.error("Please fill form details")
             if (result.success) {

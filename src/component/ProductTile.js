@@ -79,6 +79,7 @@ class ProductTile extends React.Component {
       "quantity": 1,
       "variation_index": 0
     }], cartProductids = [];
+
     try {
       CartService.add({ products: cartToSync }).then((result) => {
 
@@ -105,10 +106,9 @@ class ProductTile extends React.Component {
 
   productDetail = (value) => {
     sessionStorage.setItem("scrollPosition", window.pageYOffset);
-
     this.props.history.push({
       pathname: '/product-detail',
-      search: "?cid=" + value.category[0].category_id + "&pid=" + value.content.product_id
+      search: (value?.category ? "?cid=" + value?.category[0]?.category_id : '') + "&pid=" + value?.content?.product_id
     });
   }
 

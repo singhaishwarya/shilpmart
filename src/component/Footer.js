@@ -55,7 +55,7 @@ export default class Footer extends React.Component {
                         <ul>
                           <li><a href="https://seller.digitalindiacorporation.in/register"> Weaver / Artisan Registration</a></li>
                           <li><a href="https://seller.digitalindiacorporation.in/login">Weaver / Artisan Login</a></li>
-                          <li><Link to="/">Corporate Enquiries </Link></li>
+                          <li><Link to="/corporate-enquiries">Corporate Enquiries </Link></li>
                         </ul>
                       </div>
                     </div>

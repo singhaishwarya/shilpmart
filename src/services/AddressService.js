@@ -4,7 +4,7 @@ import { baseUrl, config } from './index.js';
 
 export default class Address extends Component {
 
-  static add = async (data) => {
+  static addEdit = async (data) => {
     try {
       config.url = baseUrl + 'address-add-edit';
       config.method = 'post';
