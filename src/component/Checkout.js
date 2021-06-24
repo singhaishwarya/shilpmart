@@ -367,7 +367,7 @@ class CheckoutComp extends React.Component {
                           <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" value='paytm'
                             checked={paymentType === 'paytm'}
                             onChange={() => this.setState({ paymentType: 'paytm', isCheckoutClick: false })} />
-                          <label className="custom-control-label" htmlFor="debit">Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" alt="Paytm"></img></label>
+                          <label className="custom-control-label" htmlFor="debit">Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" width="55px" alt="Paytm"></img></label>
                         </div>
                         <div className="custom-control custom-radio">
                           <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" value='airpay'
