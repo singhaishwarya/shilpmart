@@ -7,7 +7,7 @@ import Button from "react-validation/build/button";
 import AuthService from '../services/AuthService';
 import * as authAction from '../actions/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const required = (value, name) => {
   if (!name.value) {
@@ -75,9 +75,9 @@ class Login extends Component {
       <div className="login-card">
         <span><FontAwesomeIcon className="text-right" icon={faTimes} onClick={() => this.props?.dismissModal('login')} /></span>
         <h4 className="modal-title">Sign in</h4>
-        <Form onSubmit={this.handleLogin} ref={(c) => {this.form = c;}}>
+        <Form onSubmit={this.handleLogin} ref={(c) => { this.form = c; }}>
           <div className="form-group">
-            <label htmlFor="username">Email/Mobile</label>            
+            <label htmlFor="username">Email/Mobile</label>
             <Input type="text" className="form-control" name="username" value={this.state.username}
               onChange={this.onChangeUsername}
               validations={[required]}
@@ -96,7 +96,7 @@ class Login extends Component {
           </div>
           {errorMsg && <div className="isaerror">{errorMsg}</div>}
           <div className="form-group">
-            
+
             <Button
               className="btn login-btn mb-0 float-left"
             // disabled={this.state.loading}

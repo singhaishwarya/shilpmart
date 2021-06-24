@@ -10,7 +10,7 @@ import { CheckoutProvider, Checkout } from 'paytm-blink-checkout-react';
 import Loader from "react-loader";
 import * as cartAction from '../actions/cart';
 import { loaderOptions, customLoginStyles, paymentConfig } from "../lib/utils";
-const xhr = new XMLHttpRequest();
+
 class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
