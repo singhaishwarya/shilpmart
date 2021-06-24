@@ -78,16 +78,16 @@ class CheckoutComp extends React.Component {
     })
   }
 
-  dismissModal = (type, addressType, isBillingAddressSame) => {
+  dismissModal = (type, addressType) => {
     if (type === 'address') {
-      this.setState({ addressType: addressType, isBillingAddressSame: isBillingAddressSame });
+      this.setState({
+        addressType: addressType
+      });
       if (addressType === "billing") {
-        if (!this.state.isBillingAddressSame) return;
-        else {
-          this.setState({
-            showModal: !this.state.showModal, overlayType: type
-          });
-        }
+
+        this.setState({
+          showModal: !this.state.showModal, overlayType: type
+        });
       }
     } else {
       this.setState({
@@ -189,9 +189,6 @@ class CheckoutComp extends React.Component {
           };
           this.post(information)
           localStorage.setItem('paymentType', 'airpay');
-          // localStorage.removeItem("checkOutData");
-          // localStorage.removeItem("totalCartCost");
-          // this.props.emptyCart();
         }
         this.setState({ isLoaded: true });
       }).catch((err) => {
@@ -237,15 +234,14 @@ class CheckoutComp extends React.Component {
           <Modal
             isOpen={showModal}
             style={overlayType === 'login' ? customLoginStyles : {}}
-            onRequestClose={() => this.setState({ showModal: false })}
-            shouldCloseOnOverlayClick={true}
-            contentLabel="Select Address"
+            shouldCloseOnOverlayClick={false}
             ariaHideApp={false}
           > {overlayType === 'login' ? <Login
             dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
             <>
+              <h1> Select Address</h1>
               <FontAwesomeIcon className="text-left" icon={faTimes} onClick={() => this.setState({
-                showModal: false, selectedBillingAddress: {}, isBillingAddressSame: !isBillingAddressSame
+                showModal: false, selectedBillingAddress: selectedBillingAddress ? selectedBillingAddress : {}
               })} />{addressList?.map((item, index) => (
                 <address key={index}>{item.name}
                   <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
@@ -255,7 +251,7 @@ class CheckoutComp extends React.Component {
                   <p className="d-flex justify-content-between">
                     <span onClick={() => {
                       addressType === 'shipping' ? this.setState({ selectedShippingAddress: item, showModal: false }) :
-                        this.setState({ selectedBillingAddress: item, showModal: false })
+                        this.setState({ selectedBillingAddress: item, showModal: false, isBillingAddressSame: false })
                     }} className="btn btn-dark btn-theme">Select</span>
                   </p>
                 </address>
@@ -326,7 +322,9 @@ class CheckoutComp extends React.Component {
                     </p>}
                     <hr className="mb-4" />
                     <div className="custom-control custom-checkbox">
-                      <input type="checkbox" defaultChecked={isBillingAddressSame} onChange={() => { this.dismissModal('address', "billing", !isBillingAddressSame) }} />
+                      <input type="checkbox" checked={isBillingAddressSame}
+                        onChange={() => { this.dismissModal('address', "billing") }}
+                      />
                       <label className="custom-control-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
                     </div>
 
