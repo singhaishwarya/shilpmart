@@ -125,7 +125,8 @@ class CheckoutComp extends React.Component {
         },
         is_payment_online: paymentType === 'cod' ? false : true,
         payment_detail: {
-          online_type: paymentType, callback: 'https://main.digitalindiacorporation.in/thankyou/for-payment',
+          online_type: paymentType,
+          callback: '',
           website: "WEBSTAGING",
           channel_id: "WEB"
         }
@@ -271,12 +272,12 @@ class CheckoutComp extends React.Component {
                 <ul className="list-group mb-3 shadow(">
                   {checkOutData.map((item, index) => (
                     finItem = item.product_details || item,
-                    <li key={index} className="list-group-item d-flex justify-content-between lh-condensed">
+                    < li key={index} className="list-group-item d-flex justify-content-between lh-condensed" >
                       <div>
                         <h6 className="my-0">{finItem?.content?.title}</h6>
                         <span>Store: <small className="text-muted">{finItem?.store_name}</small></span>
                       </div>
-                      <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0)}</span>
+                      <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0)} X {item?.quantity ? item?.quantity : 1}</span>
                     </li>
                   ))}
                   {/* <li className="list-group-item d-flex justify-content-between bg-light">

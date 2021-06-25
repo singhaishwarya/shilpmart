@@ -36,7 +36,7 @@ export default class CustomerService extends React.Component {
                     <input type="text" className="form-control" id="fname" placeholder="" />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="lName">First Name</label>
+                    <label htmlFor="lName">Last Name</label>
                     <input type="text" className="form-control" id="lName" placeholder="" />
                   </div>
                 </div>

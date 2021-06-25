@@ -119,7 +119,8 @@ export default class OrderDetail extends React.Component {
                     </div>
                     <p><small>Your Order is {getOrderStatus(orderDetail.status)}</small></p>
                   </div>
-                  <button onClick={() => this.getInvoidePdf(productItem.order_id, productItem.awb_number.number)}>View Invoice</button>
+                  <span onClick={() => this.getInvoidePdf(productItem.order_id, productItem.awb_number.number)}>View Invoice</span>
+
                 </div>
 
                 {productItem.awb_number?.product?.map((product, index) => (<div key={index} className="row">

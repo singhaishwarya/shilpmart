@@ -203,7 +203,15 @@ export default class AddEditAddress extends React.Component {
                   />
                 </div>
               </div>
-
+              <div className="form-row">
+                <div className="form-group col">
+                  <label htmlFor="fname">Country<span>*</span></label>
+                  <Select name='country'
+                    className="form-control">
+                    <option >India</option>
+                  </Select>
+                </div>
+              </div>
               <div className="form-row">
                 <div className="form-group col">
                   <label htmlFor="fname">State<span>*</span></label>
