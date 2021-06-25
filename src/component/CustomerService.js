@@ -19,15 +19,27 @@ export default class CustomerService extends React.Component {
 
           </div>
         </div>
-        <div className="container-fluid">
+        <div className="container">
           <div className="row py-5">
-            {/* <div className="col-sm-6 p-5">
-              <h3>Customer Support</h3>
-              <p><FontAwesomeIcon icon={faPhoneSquareAlt} /> 011-24303500</p>
-              <p><FontAwesomeIcon icon={faEnvelopeSquare} /> support[at]eshilpmart[dot]gov[dot]in</p>
-            </div> */}
+            <div className="col-sm-4">
+              <h3>Here to Help</h3>
+        <p>Have a question? You may find an answer in our FAQs. But you can also contact us:</p>
+        <h5> <FontAwesomeIcon icon={faPhoneSquareAlt} />  011-24303500</h5>
+        <ul class="list-unstyled">
+          <li>Opening Hours:</li>
+          <li>Monday to Friday 9:00 am - 6:00 pm</li>
+          <li>Saturday 9:00 am - 4:00 pm</li>
+          <li>Sunday: 9 pm - 2:00 pm</li>
+        </ul>
+        <h5><FontAwesomeIcon icon={faEnvelopeSquare} /> Support[at]eshilpmart[dot]gov[dot]in</h5>
 
-            <div className="col-sm-6 offset-sm-3 p-5">
+        <div className="googleMap">
+          Add map
+        </div>
+            
+            </div>
+
+            <div className="col-sm-8">
               <h3 className="mb-5">Get in Touch</h3>
               <form>
                 <div className="form-row">

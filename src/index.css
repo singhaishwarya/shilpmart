@@ -10,6 +10,9 @@ transition: all 0.3s ease-in-out;
 a {
 	color: #0d3356
 }
+input[type=email], input[type=password], input[type=search], input[type=tel], input[type=text], select, textarea {
+	background-color: #f5f5f5;
+}
 .header-middle {
 	padding: 8px 0;
 }
@@ -3604,6 +3607,18 @@ font-weight: 600;
 	.addAction span:hover, .addAction a:hover{
 		color: #e87f13;
 	}
+
+	.custom-control{
+		padding-left: 0 !important;
+	}
+	.custom-control-label {
+		padding-left: 7px !important;
+	}
+
+	/* .custom-control input[type="checkbox"]{
+		padding-left: 15px !important;
+
+	} */
 			.empty-wishlist, .noOrder{
 				display: flex;
 				flex-direction: column;
@@ -3925,6 +3940,41 @@ display: inline-block;
 	border-radius: 3px 0 0 3px;
 }
 
+.Collapsible{
+	padding: 15px 0;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+}
+.Collapsible__trigger::before{
+	content: '\f0da';
+	font-family: fontawesome;
+	padding-right: 10px;
+}
+
+.Collapsible__trigger.is-open::before {content: '\f0d7';}
+
+.is-open{
+	color: #e87f13;
+}
+.Collapsible__contentInner{
+	padding-top: 1.5rem;
+}
+.Collapsible__contentInner p{
+	font-weight: normal;
+	color: #878787;
+}
+
+.googleMap{
+	margin: 1rem 0;
+	border: 1px solid #eee;
+	height: 250px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+
 /* responsive css */
 
 
@@ -4031,6 +4081,7 @@ height: auto;
 .categorie-img-title h3{
 	font-size: 14px;
 }
+.subpages-heading h1{font-size: 26px;line-height: 1.5;}
 
 }
 

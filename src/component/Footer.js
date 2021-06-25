@@ -8,7 +8,8 @@ export default class Footer extends React.Component {
       <div className="swiper-slide"><img src={require("../public/mot.webp")} className="img-fluid" alt="Ministry Textile" /></div >,
       <div className="swiper-slide"><img src={require("../public/di.webp")} className="img-fluid" alt="DIC" /></div >,
       <div className="swiper-slide"><img src={require("../public/india_post.webp")} className="img-fluid" alt="India Post" /></div >,
-      <div className="swiper-slide"> <img src={require("../public/csc.webp")} className="img-fluid" alt="CSC" /></div >],
+      <div className="swiper-slide"> <img src={require("../public/csc.webp")} className="img-fluid" alt="CSC" /></div>,
+      <div className="swiper-slide"> <img src={require("../public/make-in-india.webp")} className="img-fluid" alt="make in india" /></div>],
     responsive: {
       0: { items: 2 },
       568: { items: 3 },
