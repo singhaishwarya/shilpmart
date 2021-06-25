@@ -10,7 +10,7 @@ transition: all 0.3s ease-in-out;
 a {
 	color: #0d3356
 }
-input[type=email], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], select, textarea {
+input[type=email], input[type=password], input[type=search], input[type=tel], input[type=text], select, textarea {
 	background-color: #f5f5f5;
 }
 .header-middle {
