@@ -99,7 +99,7 @@ export default class Orders extends React.Component {
   render() {
 
     const { orderList, isLoaded } = this.state;
-    console.log("demo===", orderList)
+    let totItems = 0;
     return (
       <div className="row">
         <div className='col-lg-3 col-12'>
@@ -157,6 +157,7 @@ export default class Orders extends React.Component {
           <Loader loaded={isLoaded} message='Loading...' options={loaderOptions} className="spinner" >
             {(orderList.data?.length > 0 && isLoaded) ?
               <> {orderList.data?.map((item, index) => (
+                totItems = 0,
                 <div className="card mb-3 shadow" key={index}>
                   <div className="card-body myorderList">
                     <Link to={{
@@ -169,13 +170,14 @@ export default class Orders extends React.Component {
                             <div className="col-sm-3">
                               <div className="orderProductImg">
                                 <div className="orderimg">
-                                  <img src={item.product_details[0]?.awb_number?.product[0]?.images[0]?.image_url} className="img-fluid" alt="CSC" />
+                                  <img src={item.product_details[0]?.awb_number?.product[0]?.images[0]?.image_url} className="img-fluid" alt="CSC" onError={e => { e.currentTarget.src = require('../../../public/No_Image_Available.jpeg') }} />
                                 </div>{item.product_details.map((item, index) => {
-
+                                  totItems += item.awb_number.product.length;
+                                  return totItems > 1 ? <span key={index}>+{totItems - 1} More
+                                    {totItems === 2 ? " Item" : " Items"}
+                                  </span> : ''
                                 })
-
                                 }
-                                {/* {item.product_details?.length > 1 && <span>+{item.product_details?.length - 1} More {item.product_details?.length === 2 ? "Item" : "Items"}</span>} */}
                               </div>
                             </div>
                             <div className="col-sm-9">
@@ -195,7 +197,8 @@ export default class Orders extends React.Component {
                         </div>
                       </div></Link>
                   </div>
-                </div>))}
+                </div>
+              ))}
                 {orderList.next_page_url && <span className="loadMore" onClick={() => this.fetchMoreData()}><span>Load More</span></span>}
               </>
               : <div className="card shadow">
@@ -213,34 +216,6 @@ export default class Orders extends React.Component {
         <div>
         </div>
       </div>
-
-      // <div className="table-responsive">
-      //   <table className="table table-hover">
-      //     <thead>
-      //       <tr>
-      //         <th scope="col">Order ID</th>
-      //         <th scope="col">Date</th>
-      //         <th scope="col">Order Status</th>
-      //         <th scope="col">Total</th>
-
-      //         <th className="text-right">Actions</th>
-      //       </tr>
-      //     </thead>
-      //     <tbody>
-      //       {this.state.orderList.map((item, index) => <tr key={index}>
-      //         <td>#{item.id}</td>
-      //         <td>{format(new Date(item.created_at), 'dd-MM-yyyy')}{ }</td>
-      //         <td className="text-success">{this.getOrderStatus(item.status)}</td>
-      //         <td><span>₹</span>{item.order_total}</td>
-      //         <td className="text-right act-btn">
-      //           <Link to='/my-account/order-detail'><button type="button" className="btn btn-success btn-sm">View</button></Link>
-      //           <button type="button" className="btn btn-danger btn-sm" onClick={() => this.cancelOrder(item)}>Cancel</button>
-      //           <button type="button" className="btn btn-warning btn-sm">Support</button>
-      //         </td>
-      //       </tr>)}
-      //     </tbody>
-      //   </table>
-      // </div>
     );
   }
 }
