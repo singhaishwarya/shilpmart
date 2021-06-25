@@ -223,7 +223,8 @@ class CheckoutComp extends React.Component {
 
   render() {
     const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, paymentType, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType } = this.state;
-    console.log("demo====", this.state)
+
+
     let finItem;
     return (
       <section>

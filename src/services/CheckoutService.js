@@ -18,12 +18,11 @@ export default class Checkout extends Component {
       console.log(`FETCH GET ERROR`, response);
     }
   }
-  static list = async () => {
+  static list = async (data) => {
     try {
       config.url = baseUrl + 'orders';
       config.method = 'get';
-      config.params = '';
-      config.data = '';
+      config.params = data;
       const response = await axios(config);
       return response.data ? response.data.data : [];
     } catch (error) {
@@ -74,6 +73,21 @@ export default class Checkout extends Component {
       const { response } = error;
       if (!response) return;
       console.log(`FETCH GET ERROR`, response);
+    }
+  }
+  static fetchNextPage = async (data) => {
+    try {
+      config.url = baseUrl + 'orders';
+      config.method = 'get';
+      config.data = '';
+      config.params = data;
+      const response = await axios(config);
+      return response.data ? response.data.data : [];
+    } catch (error) {
+      const { response } = error;
+      if (!response) return;
+      console.log(`FETCH GET ERROR`, response);
+
     }
   }
 }

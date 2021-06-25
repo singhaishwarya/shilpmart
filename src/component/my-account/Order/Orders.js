@@ -9,18 +9,63 @@ export default class Orders extends React.Component {
 
   constructor() {
     super();
+    this.currentUrlParams = new URLSearchParams(window.location.search);
     this.state = {
-      orderList: [], isLoaded: false
+      orderList: [],
+      isLoaded: false,
+      currentPage: 1, per_page: 10,
     };
   }
-  componentDidMount() {
-    this.getOrders();
-  }
-  getOrders = () => {
 
-    CheckoutService.list().then((result) => {
+  componentDidUpdate(prevprops) {
+    if (prevprops.history.location.search !== prevprops.location.search) {
+      this.getOrders(this.getSetQueryParams())
+    }
+  }
+
+  componentDidMount() {
+    this.getOrders(this.getSetQueryParams());
+  }
+
+
+  getSetQueryParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let entries = urlParams.entries(),
+      queryParams = {};
+    for (const entry of entries) {
+
+      switch (entry[0]) {
+
+        case 'order_by':
+          queryParams.order_by = urlParams.get('order_by');
+          break
+        case 'sort_by':
+          queryParams.sort_by = ['price-asc', 'price-desc'].includes(urlParams.get('sort_by')) ? 'price' : urlParams.get('sort_by')
+          this.setState({ sortBy: urlParams.get('sort_by') })
+          break
+        case 'per_page':
+          queryParams.per_page = urlParams.get('per_page');
+          this.setState({ per_page: queryParams.per_page * 1 })
+          break
+
+        case 'q':
+          queryParams.q = urlParams.get('q');
+          break
+        case 'page':
+          queryParams.per_page = urlParams.get('page') * (queryParams.per_page ? queryParams.per_page : 10);
+          break
+        default:
+          return;
+      }
+    }
+    return queryParams;
+  }
+
+  getOrders = (queryParams) => {
+    // console.log("deo-===queryParams", queryParams)
+    CheckoutService.list(queryParams).then((result) => {
       if (!result) return
-      this.setState({ orderList: result.data, isLoaded: true });
+      this.setState({ orderList: result, isLoaded: true });
     }).catch((err) => {
       console.log(err);
       this.setState({ isLoaded: true })
@@ -40,10 +85,21 @@ export default class Orders extends React.Component {
       console.log(err);
     });
   }
-
+  fetchMoreData = () => {
+    this.setState({
+      currentPage: this.state.currentPage + 1
+      , isLoaded: false
+    });
+    this.currentUrlParams.set('page', this.state.currentPage + 1)
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
+  };
   render() {
 
-    const { orderList, isLoaded } = this.state
+    const { orderList, isLoaded } = this.state;
+    console.log("demo===", orderList)
     return (
       <div className="row">
         <div className='col-lg-3 col-12'>
@@ -99,8 +155,8 @@ export default class Orders extends React.Component {
             </div>
           </div>
           <Loader loaded={isLoaded} message='Loading...' options={loaderOptions} className="spinner" >
-            {orderList.length > 0 && isLoaded ?
-              orderList.map((item, index) => (
+            {(orderList.data?.length > 0 && isLoaded) ?
+              <> {orderList.data?.map((item, index) => (
                 <div className="card mb-3 shadow" key={index}>
                   <div className="card-body myorderList">
                     <Link to={{
@@ -113,15 +169,18 @@ export default class Orders extends React.Component {
                             <div className="col-sm-3">
                               <div className="orderProductImg">
                                 <div className="orderimg">
-                                  <img src={item.product_details[0]?.images[0]?.image_url} className="img-fluid" alt="CSC" />
-                                </div>
-                                {item.product_details?.length > 1 && <span>+{item.product_details?.length - 1} More {item.product_details?.length === 2 ? "Item" : "Items"}</span>}
+                                  <img src={item.product_details[0]?.awb_number?.product[0]?.images[0]?.image_url} className="img-fluid" alt="CSC" />
+                                </div>{item.product_details.map((item, index) => {
+
+                                })
+
+                                }
+                                {/* {item.product_details?.length > 1 && <span>+{item.product_details?.length - 1} More {item.product_details?.length === 2 ? "Item" : "Items"}</span>} */}
                               </div>
                             </div>
                             <div className="col-sm-9">
                               <div className="orderproductInfo">
-                                <span className="title">{item.product_details[0]?.title.title}</span>
-                                {/* <span> <span>Seller: xyz</span></span> */}
+                                <span className="title">{item.product_details[0]?.awb_number.product[0]?.title?.title}</span>
                               </div>
                             </div>
                           </div>
@@ -136,7 +195,9 @@ export default class Orders extends React.Component {
                         </div>
                       </div></Link>
                   </div>
-                </div>))
+                </div>))}
+                {orderList.next_page_url && <span className="loadMore" onClick={() => this.fetchMoreData()}><span>Load More</span></span>}
+              </>
               : <div className="card shadow">
                 <div className="card-body">
                   <div className="orderlist">

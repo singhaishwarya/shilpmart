@@ -40,11 +40,6 @@ class ProductGrid extends Component {
 
   fetchMoreData = () => {
     this.setState({ currentPage: this.state.currentPage + 1, isLoaded: false });
-    ProductService.fetchNextPage({ page: this.state.currentPage + 1 }).then((result) => (
-      this.state.productListData.data?.concat(result.data)
-    ));
-
-    this.setState({ isLoaded: true });
     this.currentUrlParams.set('page', this.state.currentPage + 1)
     this.props.history.push({
       pathname: this.props.location.pathname,
@@ -53,7 +48,7 @@ class ProductGrid extends Component {
   };
 
   errorAlert = (product, type) => {
-    // return ToastService.error(product?.content?.title + " is already in cart")
+
     return ToastService.error(product?.content?.title + " is " +
       (type === "cart" ? "already in cart" : "removed from wishlist"));
 
