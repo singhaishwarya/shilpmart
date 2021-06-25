@@ -1,15 +1,17 @@
 import React from 'react';
-import CheckoutService from '../services/CheckoutService';
+import OrderService from '../services/OrderService';
 export default class CheckoutCallback extends React.Component {
 
   constructor(props) {
     super(props);
+    var request = new XMLHttpRequest();
+    console.log("demo====", request.getAllResponseHeaders());
     this.props.location?.state?.paymentType === 'airpay' && this.orderValidate(localStorage.getItem('paymentType'))
   }
 
   orderValidate = (online_type) => {
 
-    CheckoutService.orderValidate({
+    OrderService.orderValidate({
       online_type: online_type,
     }).then(async (result) => {
       this.setState({ isLoaded: true })

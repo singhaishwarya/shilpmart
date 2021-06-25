@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CheckoutService from '../../../services/CheckoutService';
+import OrderService from '../../../services/OrderService';
 import Loader from "react-loader";
 import { getOrderStatus, loaderOptions } from "../../../lib/utils";
 import { format } from 'date-fns'
@@ -13,7 +13,7 @@ export default class Orders extends React.Component {
     this.state = {
       orderList: [],
       isLoaded: false,
-      currentPage: 1, per_page: 10,
+      currentPage: 1, per_page: 10, searchQuery: ''
     };
   }
 
@@ -27,6 +27,13 @@ export default class Orders extends React.Component {
     this.getOrders(this.getSetQueryParams());
   }
 
+  searchOrder = (query) => {
+    this.currentUrlParams.set('q', query)
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
+  }
 
   getSetQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -47,7 +54,6 @@ export default class Orders extends React.Component {
           queryParams.per_page = urlParams.get('per_page');
           this.setState({ per_page: queryParams.per_page * 1 })
           break
-
         case 'q':
           queryParams.q = urlParams.get('q');
           break
@@ -62,8 +68,7 @@ export default class Orders extends React.Component {
   }
 
   getOrders = (queryParams) => {
-    // console.log("deo-===queryParams", queryParams)
-    CheckoutService.list(queryParams).then((result) => {
+    OrderService.list(queryParams).then((result) => {
       if (!result) return
       this.setState({ orderList: result, isLoaded: true });
     }).catch((err) => {
@@ -77,7 +82,7 @@ export default class Orders extends React.Component {
     order.product_details.map((item) => {
       productIds.push(item.id)
     })
-    CheckoutService.orderCancel({ order_id: order.id, product_id: productIds }).then((result) => {
+    OrderService.orderCancel({ order_id: order.id, product_id: productIds }).then((result) => {
       if (!result) return
       // this.setState({ orderList: result.data });
 
@@ -98,7 +103,7 @@ export default class Orders extends React.Component {
   };
   render() {
 
-    const { orderList, isLoaded } = this.state;
+    const { orderList, isLoaded, searchQuery } = this.state;
     let totItems = 0;
     return (
       <div className="row">
@@ -147,9 +152,9 @@ export default class Orders extends React.Component {
 
         <div className='col-lg-9 col-12'>
           <div className="input-group mb-4 shadow">
-            <input type="text" className="form-control" placeholder="Search your order here..." />
+            <input type="text" className="form-control" onChange={(e) => this.setState({ searchQuery: e.target.value })} value={searchQuery} placeholder="Search your order here..." />
             <div className="input-group-append">
-              <button className="btn btn-theme" type="button">
+              <button className="btn btn-theme" type="button" onClick={() => this.searchOrder(searchQuery)}>
                 <i className="fa fa-search"></i> Search Order
               </button>
             </div>

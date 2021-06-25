@@ -109,7 +109,7 @@ class Header extends Component {
   addToWishlist = (wishlistToSync) => {
     let wishlistProductids = [];
     try {
-      WishlistService.add({ product_id: wishlistToSync }).then((result) => {
+      WishlistService.addDelete({ product_id: wishlistToSync }).then((result) => {
         if (result?.success) {
           result.data.map((item) => (
             wishlistProductids?.push(item.product_id)

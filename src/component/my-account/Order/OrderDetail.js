@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion, faQuestionCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { getOrderStatus } from "../../../lib/utils";
 import { format } from 'date-fns';
-import CheckoutService from '../../../services/CheckoutService';
+import OrderService from '../../../services/OrderService';
 import Modal from "react-modal";
 export default class OrderDetail extends React.Component {
 
@@ -27,7 +27,7 @@ export default class OrderDetail extends React.Component {
   }
 
   getInvoidePdf(order_id, awb) {
-    CheckoutService.orderInvoice({ order_id: order_id, awb: awb }).then((result) => {
+    OrderService.orderInvoice({ order_id: order_id, awb: awb }).then((result) => {
       this.setState({ base64Doc: result?.data, showModal: !this.state.showModal })
     });
   }

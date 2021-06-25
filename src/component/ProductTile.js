@@ -35,7 +35,7 @@ class ProductTile extends React.Component {
 
   deleteWishlistApi(item) {
     this.props.deleteWishlist(item.id)
-    WishlistService.delete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
+    WishlistService.addDelete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
       if (result?.success) {
         this.getWishlist();
       }
@@ -53,7 +53,7 @@ class ProductTile extends React.Component {
 
   addToWishlistApi = (product) => {
     this.props.addToWishlist(product.id)
-    WishlistService.add({ product_id: [product.id] }).then((result) => {
+    WishlistService.addDelete({ product_id: [product.id] }).then((result) => {
       if (result?.success) {
         this.props.successAlert(product, 'wishlist');
         this.getWishlist();

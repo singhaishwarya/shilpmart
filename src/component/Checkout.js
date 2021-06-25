@@ -1,6 +1,6 @@
 import React from 'react';
 import AddressService from '../services/AddressService';
-import CheckoutService from '../services/CheckoutService';
+import OrderService from '../services/OrderService';
 import Modal from 'react-modal';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
@@ -65,7 +65,7 @@ class CheckoutComp extends React.Component {
       txn_response: txnResponse,
       online_type: online_type,
     }
-    CheckoutService.orderValidate(txnObj).then(async (result) => {
+    OrderService.orderValidate(txnObj).then(async (result) => {
       this.setState({ isLoaded: true })
       if (!result) return
       this.props.history.push({
@@ -139,7 +139,7 @@ class CheckoutComp extends React.Component {
       });
       checkoutObj.products = prodObj;
 
-      CheckoutService.orderPlace(checkoutObj).then(async (result) => {
+      OrderService.orderPlace(checkoutObj).then(async (result) => {
         if (!result) return
         if (paymentType === 'paytm') {
 
