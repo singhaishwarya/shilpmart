@@ -3604,6 +3604,18 @@ font-weight: 600;
 	.addAction span:hover, .addAction a:hover{
 		color: #e87f13;
 	}
+
+	.custom-control{
+		padding-left: 0 !important;
+	}
+	.custom-control-label {
+		padding-left: 7px !important;
+	}
+
+	/* .custom-control input[type="checkbox"]{
+		padding-left: 15px !important;
+
+	} */
 			.empty-wishlist, .noOrder{
 				display: flex;
 				flex-direction: column;

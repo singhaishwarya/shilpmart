@@ -239,11 +239,12 @@ class CheckoutComp extends React.Component {
             ariaHideApp={false}
           > {overlayType === 'login' ? <Login
             dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
-            <>
+            <div className="login-card">
               <h1> Select Address</h1>
-              <FontAwesomeIcon className="text-left" icon={faTimes} onClick={() => this.setState({
+              <span><FontAwesomeIcon className="text-left" icon={faTimes} onClick={() => this.setState({
                 showModal: false, selectedBillingAddress: selectedBillingAddress ? selectedBillingAddress : {}
-              })} />{addressList?.map((item, index) => (
+              })} /></span>
+              {addressList?.map((item, index) => (
                 <address key={index}>{item.name}
                   <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
                   <br /> {item.district},  {item.state} - {item.pincode}<br />
@@ -256,7 +257,7 @@ class CheckoutComp extends React.Component {
                     }} className="btn btn-dark btn-theme">Select</span>
                   </p>
                 </address>
-              ))}  <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link></>}
+              ))}  <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link></div>}
           </Modal>
         </div>
 
@@ -322,12 +323,18 @@ class CheckoutComp extends React.Component {
                       }) : this.dismissModal('login')} className="btn btn-dark btn-theme" > Add New Address</span>
                     </p>}
                     <hr className="mb-4" />
-                    <div className="custom-control custom-checkbox">
+                    {/* <div>
                       <input type="checkbox" checked={isBillingAddressSame}
                         onChange={() => { this.dismissModal('address', "billing") }}
                       />
-                      <label className="custom-control-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
-                    </div>
+                  <label htmlFor="same-address">Shipping address is the same as my billing address</label>
+                    </div> */}
+
+                    <div className="form-group form-check">
+    <input type="checkbox" className="form-check-input" checked={isBillingAddressSame}
+                        onChange={() => { this.dismissModal('address', "billing") }}/>
+    <label className="form-check-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
+  </div>
 
                     {selectedBillingAddress?.name ?
                       <>
@@ -355,11 +362,38 @@ class CheckoutComp extends React.Component {
                     < form className="needs-validation login-card" >
                       <hr className="mb-4" />
                       <div className="d-block my-3">
-                        <div className="custom-control custom-radio">
+                      <div className="form-check">
+    <input id="credit" name="paymentMethod" type="radio" className="form-check-input" value='cod'
+                            checked={paymentType === 'cod'} disabled={totalCartCost > 5000}
+                            onChange={() => this.setState({ paymentType: 'cod', isCheckoutClick: false })} />
+          
+          <label className="form-check-label" htmlFor="credit">
+          Cash On Delivery
+          </label>
+        </div>
+        {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
+        <div className="form-check">
+        <input id="debit" name="paymentMethod" type="radio" className="form-check-input" value='paytm'
+                            checked={paymentType === 'paytm'}
+                            onChange={() => this.setState({ paymentType: 'paytm', isCheckoutClick: false })} />
+          <label className="form-check-label" htmlFor="debit">
+          Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" width="55px" alt="Paytm"></img>
+          </label>
+        </div>
+        <div className="form-check">
+          
+          <input id="paypal" name="paymentMethod" type="radio" className="form-check-input" value='airpay'
+                            checked={paymentType === 'airpay'}
+                            onChange={() => this.setState({ paymentType: 'airpay', isCheckoutClick: false })} />
+          <label className="form-check-label" htmlFor="paypal">
+          Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img>
+          </label>
+        </div>
+                        {/* <div className="custom-control custom-radio">
                           <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" value='cod'
                             checked={paymentType === 'cod'} disabled={totalCartCost > 5000}
                             onChange={() => this.setState({ paymentType: 'cod', isCheckoutClick: false })} />
-                          <label className="custom-control-label" htmlFor="credit">Cash On Delivery</label>
+                          <label htmlFor="credit">Cash On Delivery</label>
                         </div>
                         {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
                         <div className="custom-control custom-radio">
@@ -373,7 +407,7 @@ class CheckoutComp extends React.Component {
                             checked={paymentType === 'airpay'}
                             onChange={() => this.setState({ paymentType: 'airpay', isCheckoutClick: false })} />
                           <label className="custom-control-label" htmlFor="paypal">Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img></label>
-                        </div>
+                        </div> */}
                       </div>
 
                       <hr className="mb-4" />

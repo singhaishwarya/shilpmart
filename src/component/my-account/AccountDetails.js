@@ -75,7 +75,8 @@ export default class AccountDetails extends React.Component {
 
 
       <div className="container">
-        <div className="col-sm-6 offset-sm-3 login-card">
+        <div className="row">
+        <div className="col-7 login-card py-3 px-5 bg-light shadow">
 
           <div className="form-row">
             <div className="form-group col-md-6">
@@ -137,6 +138,13 @@ export default class AccountDetails extends React.Component {
             <Button type="submit" className="btn login-btn">Save Changes</Button>
           </Form>
         </div>
+
+        <div className="col-5">
+          <div className="product-img-wrapper">
+            <img src={require("../../public/address.svg")} className="img-fluid" alt="address" />
+          </div>
+          </div>
+          </div>
       </div>
 
 
