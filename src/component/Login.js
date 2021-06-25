@@ -99,14 +99,10 @@ class Login extends Component {
 
             <Button
               className="btn login-btn mb-0 float-left"
-            // disabled={this.state.loading}
             >
-              {/* {this.state.loading && (
-                <span className="spinner-border spinner-border-sm"></span>
-              )} */}
               <span>Login</span>
             </Button>
-            <span className="float-right py-2">Forget Password?</span>
+            {/* <span className="float-right py-2">Forget Password?</span> */}
           </div>
 
         </Form>

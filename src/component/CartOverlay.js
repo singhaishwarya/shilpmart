@@ -96,7 +96,7 @@ class CartOverlay extends Component {
                       <div className="cart-info">
                         <span className="product-title">{finItem.content?.title}</span>
                         <div className="pro-store"><span>Store: <span>{finItem.store_name}</span></span></div>
-                        <span className="qty">{item.quantity} x <span>
+                        <span className="qty">{item.quantity || 1} x <span>
                           {finItem.price?.length > 0 && finItem.price[0]?.price}</span></span>
                       </div>
                       <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
