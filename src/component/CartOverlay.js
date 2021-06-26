@@ -23,7 +23,7 @@ class CartOverlay extends Component {
     CartService.list().then((result) => {
       this.setState({ cartData: result });
       result && result.forEach((item) => {
-        totalCost1 += ((item?.product_details?.price[0]?.price * 1) || 0) * (item.quantity * 1);
+        totalCost1 += ((item?.product_details?.price * 1) || 0) * (item.quantity * 1);
       });
 
       this.setState({
@@ -34,10 +34,10 @@ class CartOverlay extends Component {
   getCart = () => {
     let totalCost1 = 0;
     this.props.cart.length > 0 && ProductService.fetchAllProducts({ product_ids: this.props.cart }).then((result1) => {
-      result1.data.map((item) => {
-        totalCost1 += ((item?.price[0]?.price * 1) || 0.00);
+      result1.data.map((item) => (
+        totalCost1 += ((item?.price * 1) || 0.00),
         this.props.addToCart(item.id)
-      })
+      ))
       this.setState({ cartData: result1.data, totalCost: totalCost1 })
     })
 
@@ -97,7 +97,7 @@ class CartOverlay extends Component {
                         <span className="product-title">{finItem.content?.title}</span>
                         <div className="pro-store"><span>Store: <span>{finItem.store_name}</span></span></div>
                         <span className="qty">{item.quantity || 1} x <span>
-                          {finItem.price?.length > 0 && finItem.price[0]?.price}</span></span>
+                          {finItem.price?.length > 0 && finItem.price}</span></span>
                       </div>
                       <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
                     </li>

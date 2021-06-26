@@ -66,7 +66,7 @@ export default class Footer extends React.Component {
                         <ul>
                           <li><Link to="/faq">FAQs</Link></li>
                           <li><Link to="/my-account/order">Raise a ticket</Link></li>
-                          <li><Link to="/customer-service">Contact Us </Link></li>
+                          <li><Link to="/contact-us">Contact Us </Link></li>
                         </ul>
                       </div>
                     </div>

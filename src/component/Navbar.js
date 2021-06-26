@@ -28,7 +28,7 @@ export default class Navbar extends React.Component {
   getSubmenuOptions = () => {
     try {
       CategoryService.fetchAllCategory({ parent_id: 0 }).then((result) => {
-        let MegaMenu = result.slice(0, 10)?.map((item, index1) => {
+        let MegaMenu = result?.slice(0, 10)?.map((item, index1) => {
 
           return {
             label: <Link to={{
@@ -43,7 +43,7 @@ export default class Navbar extends React.Component {
               <FontAwesomeIcon icon={faAngleRight} />
             </Link >,
             key: item.id,
-            items: item.child.slice(0, 10)?.map((subitem1, index2) => {
+            items: item?.child?.slice(0, 10)?.map((subitem1, index2) => {
 
               return (
                 <div className="sub-categories" key={index2}>
@@ -58,7 +58,7 @@ export default class Navbar extends React.Component {
                   }} onClick={() => this.setIsMenuShown(false)}>
                     {subitem1.title}
                   </Link>
-                  {subitem1.child.slice(0, 10)?.map((subitem2, index3) => {
+                  {subitem1?.child?.slice(0, 10)?.map((subitem2, index3) => {
                     return (
                       <div className="super-sub-categories" key={index3}>
                         <Link to={{

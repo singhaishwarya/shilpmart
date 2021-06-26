@@ -278,7 +278,7 @@ class CheckoutComp extends React.Component {
                         <h6 className="my-0">{finItem?.content?.title}</h6>
                         <span>Store: <small className="text-muted">{finItem?.store_name}</small></span>
                       </div>
-                      <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0)} X {item?.quantity ? item?.quantity : 1}</span>
+                      <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price) || 0)} X {item?.quantity ? item?.quantity : 1}</span>
                     </li>
                   ))}
                   {/* <li className="list-group-item d-flex justify-content-between bg-light">
@@ -332,10 +332,10 @@ class CheckoutComp extends React.Component {
                     </div> */}
 
                     <div className="form-group form-check">
-    <input type="checkbox" className="form-check-input" checked={isBillingAddressSame}
-                        onChange={() => { this.dismissModal('address', "billing") }}/>
-    <label className="form-check-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
-  </div>
+                      <input type="checkbox" className="form-check-input" checked={isBillingAddressSame}
+                        onChange={() => { this.dismissModal('address', "billing") }} />
+                      <label className="form-check-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
+                    </div>
 
                     {selectedBillingAddress?.name ?
                       <>
@@ -363,33 +363,33 @@ class CheckoutComp extends React.Component {
                     < form className="needs-validation login-card" >
                       <hr className="mb-4" />
                       <div className="d-block my-3">
-                      <div className="form-check">
-    <input id="credit" name="paymentMethod" type="radio" className="form-check-input" value='cod'
+                        <div className="form-check">
+                          <input id="credit" name="paymentMethod" type="radio" className="form-check-input" value='cod'
                             checked={paymentType === 'cod'} disabled={totalCartCost > 5000}
                             onChange={() => this.setState({ paymentType: 'cod', isCheckoutClick: false })} />
-          
-          <label className="form-check-label" htmlFor="credit">
-          Cash On Delivery
-          </label>
-        </div>
-        {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
-        <div className="form-check">
-        <input id="debit" name="paymentMethod" type="radio" className="form-check-input" value='paytm'
+
+                          <label className="form-check-label" htmlFor="credit">
+                            Cash On Delivery
+                          </label>
+                        </div>
+                        {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
+                        <div className="form-check">
+                          <input id="debit" name="paymentMethod" type="radio" className="form-check-input" value='paytm'
                             checked={paymentType === 'paytm'}
                             onChange={() => this.setState({ paymentType: 'paytm', isCheckoutClick: false })} />
-          <label className="form-check-label" htmlFor="debit">
-          Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" width="55px" alt="Paytm"></img>
-          </label>
-        </div>
-        <div className="form-check">
-          
-          <input id="paypal" name="paymentMethod" type="radio" className="form-check-input" value='airpay'
+                          <label className="form-check-label" htmlFor="debit">
+                            Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" width="55px" alt="Paytm"></img>
+                          </label>
+                        </div>
+                        <div className="form-check">
+
+                          <input id="paypal" name="paymentMethod" type="radio" className="form-check-input" value='airpay'
                             checked={paymentType === 'airpay'}
                             onChange={() => this.setState({ paymentType: 'airpay', isCheckoutClick: false })} />
-          <label className="form-check-label" htmlFor="paypal">
-          Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img>
-          </label>
-        </div>
+                          <label className="form-check-label" htmlFor="paypal">
+                            Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img>
+                          </label>
+                        </div>
                         {/* <div className="custom-control custom-radio">
                           <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" value='cod'
                             checked={paymentType === 'cod'} disabled={totalCartCost > 5000}

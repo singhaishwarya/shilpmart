@@ -1,21 +1,74 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare, faPhoneSquareAlt } from '@fortawesome/free-solid-svg-icons'
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import Textarea from "react-validation/build/textarea";
+import GetInTouch from '../services/GetInTouch';
+import ToastService from '../services/ToastService';
 export default class CustomerService extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.error = false;
+    this.handleChange = this.handleChange.bind(this);
+    this.requiredBinded = this.required.bind(this);
+
     this.state = {
-    };
+      currentPath: this.props.location.pathname,
+      fields: {
+        first_name: '', last_name: '', email: '', msg: '',
+        type: this.props.location.pathname === "/customer-service" ? 1 : 0
+      }
+    }
     window.scrollTo(0, 0);
   }
 
+  required = (value, props) => {
+
+    if (props.isUsed) {
+      if (!value) {
+        this.error = true;
+        return (
+          <div className="isaerror" role="alert">
+            Please enter your {props.name}
+          </div>
+        );
+      } else { this.error = false; }
+    }
+  }
+
+  handleChange(field, e) {
+    let fields = this.state.fields;
+    fields[field] = e.target.value;
+    this.setState({ fields });
+  }
+
+  handleGetInTouch(e) {
+    e.preventDefault();
+    if (this.form.getChildContext()._errors.length === 0) {
+      if (!this.error) {
+        GetInTouch.getinTouch(this.state.fields)
+          .then((result) => {
+            if (!result) return ToastService.error("Please fill form details")
+            if (result.success) {
+              window.history.back()
+            }
+          }).catch((err) => {
+            console.log(err);
+          });
+      }
+    }
+  }
+
   render() {
+    const { fields, currentPath } = this.state;
+
     return (
       <section id="maincontent">
         <div className="subpages-heading">
           <div className="container">
-            <h1 className="text-center p-5">Customer Services</h1>
+            <h1 className="text-center p-5">{currentPath === "/customer-service" ? 'Customer Services' : 'Contact Us'}</h1>
 
           </div>
         </div>
@@ -25,7 +78,7 @@ export default class CustomerService extends React.Component {
               <h3>Here to Help</h3>
               <p>Have a question? You may find an answer in our FAQs. But you can also contact us:</p>
               <h5> <FontAwesomeIcon icon={faPhoneSquareAlt} />  011-24303500</h5>
-              <ul class="list-unstyled">
+              <ul className="list-unstyled">
                 <li>Opening Hours:</li>
                 <li>Monday to Friday 9:00 am - 6:00 pm</li>
                 <li>Saturday 9:00 am - 4:00 pm</li>
@@ -33,41 +86,36 @@ export default class CustomerService extends React.Component {
               </ul>
               <h5><FontAwesomeIcon icon={faEnvelopeSquare} /> Support@eshilpmart.gov.in</h5>
 
-              {/* <div className="googleMap">
-          Add map
-        </div> */}
-
             </div>
 
             <div className="col-sm-8">
               <h3 className="mb-5">Get in Touch</h3>
-              <form>
+              <Form ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleGetInTouch(e)} >
+
                 <div className="form-row">
                   <div className="form-group col-md-6">
                     <label htmlFor="fname">First Name</label>
-                    <input type="text" className="form-control" id="fname" placeholder="" />
+                    <Input type="text" className="form-control" id="fname" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} placeholder="" />
                   </div>
                   <div className="form-group col-md-6">
                     <label htmlFor="lName">Last Name</label>
-                    <input type="text" className="form-control" id="lName" placeholder="" />
+                    <Input type="text" className="form-control" id="lName" name="last name" value={fields.last_name} validations={[this.required]} onChange={this.handleChange.bind(this, "last_name")} placeholder="" />
                   </div>
                 </div>
 
-
                 <div className="form-group">
                   <label htmlFor="email">Email</label>
-                  <input type="email" className="form-control" id="email" placeholder="" />
+                  <Input type="email" className="form-control" id="email" placeholder="Email" name="email" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="inputAddress2">Comment or Message </label>
-                  <textarea className="form-control" name="" rows="4" cols="50">
-
-                  </textarea>
+                  <label htmlFor="InputAddress2">Comment or Message </label>
+                  <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
+                  </Textarea>
                 </div>
 
 
-                <button type="submit" className="btn btn-theme">Submit Query</button>
-              </form>
+                <button value="Submit" className="btn btn-theme">Submit Query</button>
+              </Form>
 
             </div>
 

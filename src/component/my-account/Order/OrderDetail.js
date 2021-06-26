@@ -1,21 +1,46 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestion, faQuestionCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { getOrderStatus } from "../../../lib/utils";
 import { format } from 'date-fns';
 import OrderService from '../../../services/OrderService';
 import Modal from "react-modal";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import Textarea from "react-validation/build/textarea";
 export default class OrderDetail extends React.Component {
 
   constructor(props) {
     super(props);
+    this.error = false;
+    this.handleChange = this.handleChange.bind(this);
+    this.requiredBinded = this.required.bind(this);
+
     this.state = {
       orderDetail: props?.location?.state?.orderDetail, base64Doc: '', showModal: false,
+      fields: {
+        order_id: props?.location?.state?.orderDetail.id,
+        first_name: '', last_name: '', email: '', msg: '',
+        type: 2
+      }
     };
+  }
+  required = (value, props) => {
+
+    if (props.isUsed) {
+      if (!value) {
+        this.error = true;
+        return (
+          <div className="isaerror" role="alert">
+            Please enter your {props.name}
+          </div>
+        );
+      } else { this.error = false; }
+    }
   }
 
   componentDidMount() {
+
     if (this.state.orderDetail === undefined) {
       this.props.history.push({
         pathname: '/my-account/order'
@@ -36,9 +61,25 @@ export default class OrderDetail extends React.Component {
       showModal: !this.state.showModal
     });
   };
+  handleNeedHelp = (e) => {
+    e.preventDefault();
+    if (this.form.getChildContext()._errors.length === 0) {
+      if (!this.error) {
+        OrderService.raiseATicket(this.state.fields).then((result) => {
+          this.setState({ showModal: !this.state.showModal })
+        });
+      }
+    }
+  }
+  handleChange(field, e) {
+    let fields = this.state.fields;
+    fields[field] = e.target.value;
+    this.setState({ fields });
+
+  }
   render() {
 
-    const { orderDetail, base64Doc, showModal } = this.state;
+    const { orderDetail, base64Doc, showModal, fields } = this.state;
     var report = "data:application/pdf;base64," + base64Doc;
     return (
       <div className="row">
@@ -65,10 +106,36 @@ export default class OrderDetail extends React.Component {
                       shouldCloseOnOverlayClick={true}
                       ariaHideApp={false}>
                       <FontAwesomeIcon className="text-left" icon={faTimes} onClick={this.toggleModal} />
-                      {base64Doc &&
+                      {base64Doc ?
                         <object aria-labelledby="label1" width="100%" height="100%" type="application/pdf" data={report} />
-                      }
-                    </Modal>
+                        :
+                        <Form ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleNeedHelp(e)} >
+                          <h1> Support Ticket</h1>
+                          <div className="form-row">
+                            <div className="form-group col-md-6">
+                              <label htmlFor="fname">First Name*</label>
+                              <Input type="text" className="form-control" id="fname" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} placeholder="" />
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label htmlFor="lName">Last Name*</label>
+                              <Input type="text" className="form-control" id="lName" name="last name" value={fields.last_name} validations={[this.required]} onChange={this.handleChange.bind(this, "last_name")} placeholder="" />
+                            </div>
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="email">Email*</label>
+                            <Input type="email" className="form-control" id="email" placeholder="Email" name="email" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="InputAddress2">Issues you are having * </label>
+                            <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
+                            </Textarea>
+                          </div>
+
+
+                          <button value="Submit" className="btn btn-theme">Submit</button>
+                        </Form>
+                      } </Modal>
                   </div>
                 </div>
               </div>
@@ -142,7 +209,7 @@ export default class OrderDetail extends React.Component {
                       <div className="col-sm-3">
                         <div className="orderstatus">
                           <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
-                          <div className="needhlep"><Link to="\"><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</Link></div>
+                          <div className="needhlep" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</div>
                         </div>
                       </div>
                     </div>

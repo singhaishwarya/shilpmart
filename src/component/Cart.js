@@ -26,7 +26,7 @@ class Cart extends Component {
     CartService.list().then((result) => {
       this.setState({ cartProduct: result });
       result.map((item) => (
-        totalCost1 += (item?.product_details?.price[0]?.price * 1 || 0) * (item.quantity * 1)
+        totalCost1 += (item?.product_details?.price * 1 || 0) * (item.quantity * 1)
       ))
       this.setState({
         totalCost: totalCost1
@@ -122,7 +122,7 @@ class Cart extends Component {
                       </td>
                       <td className="product-name">{finItem?.content?.title}
                         <p>Store : <span><span>{finItem?.store_name}</span></span></p></td>
-                      <td className="product-subtotal"><span> <span>₹</span> {(finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0}
+                      <td className="product-subtotal"><span> <span>₹</span> {(finItem?.price?.length > 0 && finItem?.price) || 0}
                       </span></td>
                       <td className="product-quantity" data-title="Quantity"><div className="product-qty">
                         <div className="input-group">
@@ -133,7 +133,7 @@ class Cart extends Component {
                         </div>
                       </div>
                       </td>
-                      <td className="product-price"><span><span>₹</span> {(finItem?.price?.length > 0 && finItem?.price[0]?.price * item.quantity) || 0}</span></td>
+                      <td className="product-price"><span><span>₹</span> {(finItem?.price?.length > 0 && finItem?.price * item.quantity) || 0}</span></td>
                     </tr>
                   ))}
                 </tbody>

@@ -27,6 +27,7 @@ import Checkout from './component/Checkout';
 import CheckoutCallback from './component/CheckoutCallback';
 import ForgotPassword from './component/ForgotPassword';
 import CustomerService from './component/CustomerService';
+import ContactUs from './component/CustomerService';
 import AboutUs from './component/AboutUs';
 import SellerPolicy from './component/SellerPolicy';
 import BuyerPolicy from './component/BuyerPolicy';
@@ -61,6 +62,7 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/thankyou/for-payment' component={CheckoutCallback} exact />
           <Route path='/about-us' component={AboutUs} exact />
           <Route path='/customer-service' component={CustomerService} exact />
+          <Route path='/contact-us' component={ContactUs} exact />
           <Route path='/seller-policy' component={SellerPolicy} exact />
           <Route path='/buyer-policy' component={BuyerPolicy} exact />
           <Route path='/exchange-policy' component={ExchangePolicy} exact />

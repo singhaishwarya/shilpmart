@@ -20,7 +20,7 @@ export default class AddEditAddress extends React.Component {
 
     this.state = {
       fields: {
-        id: savedAddress?.id || '',
+        address_id: savedAddress?.id || '',
         name: savedAddress?.name || '',
         mobile: savedAddress?.mobile || '',
         city: savedAddress?.city || '',
@@ -127,7 +127,7 @@ export default class AddEditAddress extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col-7 login-card py-3 px-5 bg-light shadow">
-            
+
             <h4 className="mb-4 text-left">Add New Address</h4>
             <Form onSubmit={this.handleAddEditAddress} ref={(c) => { this.form = c; }} >
 
@@ -280,13 +280,13 @@ export default class AddEditAddress extends React.Component {
               <button className="btn login-btn" value="Submit">Submit</button>
             </Form>
           </div>
-         
+
 
 
           <div className="col-5">
-          <div className="product-img-wrapper">
-            <img src={require("../../../public/address.svg")} className="img-fluid" alt="address" />
-          </div>
+            <div className="product-img-wrapper">
+              <img src={require("../../../public/address.svg")} className="img-fluid" alt="address" />
+            </div>
           </div>
 
         </div >

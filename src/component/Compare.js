@@ -17,11 +17,11 @@ class Compare extends Component {
                   <div className="compare-col-row compare-title">Description</div>
                   <div className="compare-col-row compare-title">Variation Available</div>
                 </div> : <div className="empty-wishlist empty-compare">
-          <h2>Compare list is empty.</h2>
-          <span>No products added in the compare list. You must add some products to compare them.
-You will find a lot of interesting products on our "Shop" page.</span>
-          <Link to='/product-list'>Return to shop</Link>
-        </div>}
+                  <h2>Compare list is empty.</h2>
+                  <span>No products added in the compare list. You must add some products to compare them.
+                    You will find a lot of interesting products on our "Shop" page.</span>
+                  <Link to='/product-list'>Return to shop</Link>
+                </div>}
                 {compare?.map((item, index) => {
                   return (
                     <div className="compare-col" key={index}>
@@ -35,7 +35,7 @@ You will find a lot of interesting products on our "Shop" page.</span>
                           />
                         </span>
                         <span className="product-name mb-2">{item?.content?.title}</span>
-                        <div className="proPrice mb-2">{item?.price[0]?.price || 0}</div>
+                        <div className="proPrice mb-2">{item?.price || 0}</div>
                         <span className="add-cart">Add to Cart</span>
                       </div>
                       <div className="compare-col-row"><p>{item.content?.product_description}</p></div>

@@ -32,7 +32,7 @@ class Wishlist extends Component {
   }
 
   deleteWishlist = (product) => {
-    if (this.props.userData?.token) { (this.deleteWishlistApi(product.product_id)) }
+    if (this.props.userData?.token) { (this.deleteWishlistApi(product)) }
     else {
       this.props.deleteWishlist(product.id);
       let wishlist = this.state.wishlist.filter(item => item.id !== product.id);

@@ -2,7 +2,7 @@ import axios from "axios";
 import { Component } from "react";
 import { baseUrl, config } from './index.js';
 
-export default class Checkout extends Component {
+export default class Order extends Component {
 
   static orderPlace = async (data) => {
     try {
@@ -64,6 +64,21 @@ export default class Checkout extends Component {
   static orderInvoice = async (data) => {
     try {
       config.url = baseUrl + 'order-invoice';
+      config.method = 'post';
+      config.data = '';
+      config.params = data;
+      const response = await axios(config);
+      return response.data ? response.data : [];
+    } catch (error) {
+      const { response } = error;
+      if (!response) return;
+      console.log(`FETCH GET ERROR`, response);
+    }
+  }
+
+  static raiseATicket = async (data) => {
+    try {
+      config.url = baseUrl + 'raise-ticket ';
       config.method = 'post';
       config.data = '';
       config.params = data;
