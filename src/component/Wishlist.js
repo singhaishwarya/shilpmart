@@ -68,10 +68,16 @@ class Wishlist extends Component {
 
     return (
       <section id="maincontent">
-        <div className="container-fluid">
+        <div className="subpages-heading">
+          <div className="container">
+            <h1 className="text-center p-5">Wishlist</h1>
+
+          </div>
+        </div>
+        <div className="container">
           {(wishlist?.length > 0) ? (<>
             <div className='row py-5'>
-              <div className="col-12"><h4>Your Products Wishlist </h4><hr /></div>
+              
 
               {wishlist?.length > 0 && wishlist?.map((item, index) => {
                 finItem = item.product_details || item;
@@ -87,7 +93,7 @@ class Wishlist extends Component {
             </div>
           </>
 
-          ) : <div className="empty-wishlist">
+          ) : <div className="empty-wishlist py-5">
             <h2>Wishlist is empty.</h2>
             <span>Wishlist is empty. You don't have any products in the wishlist yet. You will find a lot of interesting products on our "Shop" page.</span>
             <Link to='/product-list'>Return to shop</Link>

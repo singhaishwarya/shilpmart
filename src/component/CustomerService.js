@@ -40,7 +40,7 @@ export default class CustomerService extends React.Component {
             </div>
 
             <div className="col-sm-8">
-              <h3 className="mb-5">Get in Touch</h3>
+              
               <form>
                 <div className="form-row">
                   <div className="form-group col-md-6">
