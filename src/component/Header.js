@@ -310,19 +310,21 @@ class Header extends Component {
 
               <li className="nav-item">
                 <Link to='/wishlist' className="nav-link">
-                  <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></Link>
+                  <FontAwesomeIcon icon={faHeart} />
+                  {this.props?.wishlist?.length > 0 ? <span>{this.props?.wishlist?.length}</span> : ''}</Link>
               </li>
 
               <li className="nav-item">
                 <Link to='/compare' className="nav-link">
-                  <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span>
+                  <FontAwesomeIcon icon={faRandom} />
+                  {this.props?.compare?.length > 0 && <span>{this.props?.compare?.length}</span>}
                 </Link>
               </li>
 
 
               <li className="nav-item" onClick={() => this.dismissModal('cart')}>
                 <span className="nav-link">
-                  <FontAwesomeIcon icon={faShoppingBasket} /> <span>{this.props?.cart?.length}</span>
+                  <FontAwesomeIcon icon={faShoppingBasket} /> {this.props?.cart?.length > 0 && <span>{this.props?.cart?.length}</span>}
                 </span>
 
               </li>
@@ -419,20 +421,20 @@ class Header extends Component {
                   } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
 
                 <li className="nav-item">
-                  <Link to='/wishlist' className="nav-link">
-                    <FontAwesomeIcon icon={faHeart} /><span>{this.props?.wishlist?.length}</span></Link>
+                  <Link to='/wishlist' className="nav-link"><FontAwesomeIcon icon={faHeart} />
+                    {this.props?.wishlist?.length > 0 ? <span>{this.props?.wishlist?.length}</span> : ''}</Link>
                 </li>
 
                 <li className="nav-item">
                   <Link to='/compare' className="nav-link">
-                    <FontAwesomeIcon icon={faRandom} /><span>{this.props?.compare?.length}</span>
+                    <FontAwesomeIcon icon={faRandom} />{this.props?.compare?.length > 0 ? <span>{this.props?.compare?.length}</span> : ''}
                   </Link>
                 </li>
 
 
                 <li className="nav-item" onClick={() => this.dismissModal('cart')}>
                   <span className="nav-link">
-                    <FontAwesomeIcon icon={faShoppingBasket} /> <span>{this.props?.cart?.length}</span>
+                    <FontAwesomeIcon icon={faShoppingBasket} /> {this.props?.cart?.length > 0 ? <span>{this.props?.cart?.length}</span> : ''}
                   </span>
 
                 </li>
