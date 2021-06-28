@@ -318,7 +318,7 @@ class ProductDetail extends React.Component {
                   <div className="add-question my-3 py-2">
                     <span onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</span>
                   </div>
-                  <Modal className='custom-modal-width login-card'
+                  <Modal className='custom-modal-width'
                     isOpen={showModal}
                     onRequestClose={this.toggleModal}
                     contentLabel="Ask a Question"
@@ -351,7 +351,7 @@ class ProductDetail extends React.Component {
                         </div>
                       </div>
 
-                      <input className="btn login-btn float-right" type="submit" value="Submit" />
+                      <input className="btn btn-theme float-right" type="submit" value="Submit" />
                     </form>
                   </Modal>
                 </div>

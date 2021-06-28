@@ -56,15 +56,7 @@ export default class Faq extends React.Component {
           Speeding up the process. By ordering online you will you will get prices faster and you will be able to go through order confirmation and payment process much faster. This could save days of your time.Many option available for online booking order e.g. Cash on delivery, online (credit/debit and net banking) and paytm
           </p>
           
-        </Collapsible>
-
-
-        <Collapsible trigger="2. How can I retrieve my password ?">
-          <p>
-          You can retrieve your password by clicking “Lost password?” Instruction on password retrieval will be send to your email.
-          </p>
-          
-        </Collapsible>
+        </Collapsible>        
 
 
         <Collapsible trigger="6. How can I change password?">

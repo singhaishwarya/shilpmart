@@ -293,7 +293,7 @@ class Header extends Component {
             <div className="appaccout"> <ul>
               {this.props.userData.token ?
                 <li className="nav-item" onMouseEnter={() => this.setIsMenuShown(true)}
-                  onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
+                  onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard' className="nav-link">My Account</Link>
                   {isMenuShown &&
                     <div className="myAccout-dropdown">
                       <Link to='/my-account/dashboard'> Dashboard</Link>

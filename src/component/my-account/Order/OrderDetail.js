@@ -186,7 +186,10 @@ export default class OrderDetail extends React.Component {
                     </div>
                     <p><small>Your Order is {getOrderStatus(orderDetail.status)}</small></p>
                   </div>
-                  <span onClick={() => this.getInvoidePdf(productItem.order_id, productItem.awb_number.number)}>View Invoice</span>
+
+                  <div className="col-sm-3">
+                  <span className="float-right" onClick={() => this.getInvoidePdf(productItem.order_id, productItem.awb_number.number)}>View Invoice</span>
+                  </div>
 
                 </div>
 

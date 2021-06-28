@@ -15,13 +15,25 @@ export default class CustomerService extends React.Component {
     this.requiredBinded = this.required.bind(this);
 
     this.state = {
-      currentPath: this.props.location.pathname, contactUsSubmitted: false,
+      currentPath: this.props.location.pathname, contactUsSubmitted: '',
       fields: {
         first_name: '', last_name: '', email: '', msg: '',
         type: this.props.location.pathname === "/customer-service" ? 1 : 0
       }
     }
     window.scrollTo(0, 0);
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.history.location.pathname !== prevProps.location.pathname) {
+      this.setState({
+        currentPath: this.props.location.pathname,
+        contactUsSubmitted: '',
+        fields: {
+          first_name: '', last_name: '', email: '', msg: '',
+          type: this.props.location.pathname === "/customer-service" ? 1 : 0
+        }
+      });
+    }
   }
 
   required = (value, props) => {
@@ -52,7 +64,8 @@ export default class CustomerService extends React.Component {
           .then((result) => {
             if (!result) return ToastService.error("Please fill form details")
             if (result.success) {
-              this.setState({ contactUsSubmitted: true })
+              console.log("Demo===", result)
+              this.setState({ contactUsSubmitted: result.message })
               // window.history.back()
             }
           }).catch((err) => {
@@ -74,7 +87,7 @@ export default class CustomerService extends React.Component {
         </div>
         <div className="container">
           <div className="row py-5">
-            <div className="col-sm-4">
+            <div className="col-sm-5">
               <h3>Here to Help</h3>
               <p>Have a question? You may find an answer in our FAQs. But you can also contact us:</p>
               <h5> <FontAwesomeIcon icon={faPhoneSquareAlt} />  011-24303500</h5>
@@ -88,23 +101,32 @@ export default class CustomerService extends React.Component {
 
             </div>
 
-            {contactUsSubmitted ? <span>Thanks for contacting us! We will get in touch with you shortly.</span> :
-              <div className="col-sm-8">
-                <h3 className="mb-5">Get in Touch</h3>
-                <Form ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleGetInTouch(e)} >
+            {contactUsSubmitted ? <span>{contactUsSubmitted}</span> :
+              <div className="col-sm-7">
+
+                <Form className="login-card p-5" ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleGetInTouch(e)} >
 
                   <div className="form-row">
                     <div className="form-group col-md-6">
-                      <label htmlFor="fname">First Name</label>
-                      <Input type="text" className="form-control" id="fname" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} placeholder="" />
+                      <label htmlFor="fname">First Name <span>*</span></label>
+                      <Input type="text" className="form-control" id="fname" placeholder="" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} />
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="lName">Last Name</label>
-                      <Input type="text" className="form-control" id="lName" name="last name" value={fields.last_name} validations={[this.required]} onChange={this.handleChange.bind(this, "last_name")} placeholder="" />
+                      <label htmlFor="lName">Last Name <span>*</span></label>
+                      <Input type="text" className="form-control" id="lName" placeholder="" name="last name" value={fields.last_name} validations={[this.required]} onChange={this.handleChange.bind(this, "last_name")} />
                     </div>
                   </div>
 
+
                   <div className="form-group">
+                    <label htmlFor="email">Email <span>*</span></label>
+                    <input type="email" className="form-control" id="email" placeholder="" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="inputAddress2">Comment or Message </label>
+                    <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")} />
+                  </div>
+                  {/* <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <Input type="email" className="form-control" id="email" placeholder="Email" name="email" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
                   </div>
@@ -112,7 +134,7 @@ export default class CustomerService extends React.Component {
                     <label htmlFor="InputAddress2">Comment or Message </label>
                     <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
                     </Textarea>
-                  </div>
+                  </div> */}
 
 
                   <button value="Submit" className="btn btn-theme">Submit Query</button>

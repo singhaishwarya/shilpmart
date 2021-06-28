@@ -11,7 +11,7 @@ import Loader from "react-loader";
 import * as cartAction from '../actions/cart';
 import { loaderOptions, customLoginStyles, paymentConfig } from "../lib/utils";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCheck, faStar, faTimes, faTruck } from '@fortawesome/free-solid-svg-icons';
 class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
@@ -265,47 +265,244 @@ class CheckoutComp extends React.Component {
         <Loader loaded={isLoaded} message='Loading...' options={loaderOptions} className="spinner" >
           <div className="container-fluid">
             <div className="row py-5">
-              <div className="col-md-4 order-md-2 mb-4">
-                <h4 className="d-flex justify-content-between align-items-center mb-3">
-                  <span className="text-muted text-center">Your order</span>
-                  {/* <span className="badge badge-secondary badge-pill">3</span> */}
-                </h4>
-                <ul className="list-group mb-3 shadow(">
-                  {checkOutData.map((item, index) => (
-                    finItem = item.product_details || item,
-                    < li key={index} className="list-group-item d-flex justify-content-between lh-condensed" >
-                      <div>
-                        <h6 className="my-0">{finItem?.content?.title}</h6>
-                        <span>Store: <small className="text-muted">{finItem?.store_name}</small></span>
+
+              <div className="col-md-8 order-md-1">
+                <div className="card mb-3">
+                  <div className="card-body">
+                    <div className="checkoutSteps">
+                      <div className="checkoutSrno">1</div>
+                      <div className="checkoutinfo">
+                        <span>Login <FontAwesomeIcon icon={faCheck} /></span>
+                        <span className="bottominfo">+919811148709</span>
                       </div>
-                      <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price) || 0)} X {item?.quantity ? item?.quantity : 1}</span>
-                    </li>
-                  ))}
-                  {/* <li className="list-group-item d-flex justify-content-between bg-light">
-                  <div className="text-success">
-                    <h6 className="my-0">Promo code</h6>
-                    <small>EXAMPLECODE</small>
-                  </div>
-                  <span className="text-success"><span>₹</span> -0.0</span>
-                </li> */}
-                  <li className="list-group-item d-flex justify-content-between">
-                    <h5><span>Total Payable</span></h5>
-                    <strong><span>₹</span> {totalCartCost}</strong>
-                  </li>
-                </ul>
-                {/* <p>Have a coupon? Enter your code here...</p> */}
-                {/* <form className="card p-2">
-                <div className="input-group">
-                  <input type="text" className="form-control" placeholder="Coupon code" />
-                  <div className="input-group-append">
-                    <button type="submit" className="btn btn-dark btn-theme">Apply Coupon</button>
+                      <button>Change</button>
+                    </div>
                   </div>
                 </div>
-              </form> */}
-              </div>
-              <div className="col-md-8 order-md-1">
+
+
+                <div className="card mb-3">
+                  <div className="changeHead">
+                    <h3>
+                      <span className="srno">1</span>
+                      <span>Login</span>
+                    </h3>
+                  </div>
+                  <div className="changewrapper">
+                    <div className="row">
+                      <div className="col">
+                        <div className="logedinfo p-4">
+                          <p className="text-muted">Phone: <span className="text-dark"> +919811148709</span></p>
+                          <p><span className="text-bold text-active">Logout & Sign in to another account</span></p>
+                          <div className="nextbutton"><button>Continue checkout</button></div>
+                        </div>
+
+                      </div>
+                      <div className="col">
+                        <div className="p-4">
+                          <p>Advantages of our secure login</p>
+                          <ul className="advantagelogin">
+                            <li><FontAwesomeIcon icon={faTruck} /> Easily Track Orders, Hassle free Returns</li>
+                            <li><FontAwesomeIcon icon={faBell} /> Get Relevant Alerts and Recommendation</li>
+                            <li><FontAwesomeIcon icon={faStar} /> Wishlist, Reviews, Ratings and more.</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <p className="text-muted pt-3 px-5">Please note that upon clicking "Logout" you will lose all items in cart and will be redirected to eShilpmart home page.</p>
+
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+
+
+
+                <div className="card mb-3">
+                  <div className="card-body">
+                    <div className="checkoutSteps">
+                      <div className="checkoutSrno">2</div>
+                      <div className="checkoutinfo">
+                        <span>Delivery Address <FontAwesomeIcon icon={faCheck} /></span>
+                        <span className="bottominfo">Aishwarya Singh, burhanputr, Sarojni nagar thana</span>
+                      </div>
+                      <button>Change</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card mb-3">
+                  <div className="changeHead">
+                    <h3>
+                      <span className="srno">2</span>
+                      <span>Delivery Address</span>
+                    </h3>
+                  </div>
+                  <div className="changewrapper">
+                    <div className="row">
+                      <div className="col">
+                        <div className="addresswraper">
+                          <p className="d-flex addressTop">
+                            <span><strong><FontAwesomeIcon icon={faCheck} /> Ram Chandra</strong></span>
+                            <span className="type">Home</span>
+                            <span><strong>+919811148709</strong></span>
+                          </p>
+                          <p>G-164, badarpur, New Delhi, Delhi</p>
+                          <div className="nextbutton"><button>Deliver Here</button></div>
+                        </div>
+
+                      </div>
+                      <div className="col">
+                        <span className="checkEdit">Edit</span>
+                      </div>
+
+
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+                <div className="card mb-3">
+                  <div className="card-body">
+                    <div className="checkoutSteps">
+                      <div className="checkoutSrno">3</div>
+                      <div className="checkoutinfo">
+                        <span>Order Summary <FontAwesomeIcon icon={faCheck} /></span>
+                        <span className="bottominfo">Items</span>
+                      </div>
+                      <button>Change</button>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div className="card mb-3">
+                  <div className="changeHead">
+                    <h3>
+                      <span className="srno">3</span>
+                      <span>Order Summary</span>
+                    </h3>
+                  </div>
+                  <div className="changewrapper">
+                    <div className="row">
+                      <div className="col">
+                        <div className="orderSummaryWrapper">
+                          <div className="orderSummary">
+                            <div className="orderImg"><img src="https://seller.digitalindiacorporation.in/images/2/shirt31623065435.jpeg" class="img-fluid" /></div>
+                            <div className="orderInfo">
+                              <p className="producthead">Product Title</p>
+                              <p className="seller">Seller: <span>Seller Name</span></p>
+                              <span className="productprice"><span>₹</span> 399</span>
+                              <span className="mainprice"><strike><span>₹</span> 500</strike></span>
+
+                            </div>
+                            <div className="whendeliver">Delivery by <span>30, June</span> | 45</div>
+
+
+                          </div>
+
+                          <div className="orderaction">
+                            <div class="product-qty">
+                              <div class="input-group">
+                                <input type="button" class="quantity-left-minus" value="-" />
+                                <input type="number" value="5" />
+                                <input type="button" class="quantity-right-plus" value="+" />
+                              </div>
+                            </div>
+                            <span>Remove</span>
+                          </div>
+                        </div>
+
+
+
+
+
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+
+
+                <div className="card mb-3">
+                  <div className="card-body">
+                    <div className="checkoutSteps">
+                      <div className="checkoutSrno">4</div>
+                      <div className="checkoutinfo">
+                        <span>Payment Options <FontAwesomeIcon icon={faCheck} /></span>
+                      </div>
+                      <button>Change</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card mb-3">
+                  <div className="changeHead">
+                    <h3>
+                      <span className="srno">4</span>
+                      <span>Payment Options</span>
+                    </h3>
+                  </div>
+                  <div className="changewrapper">
+                    <div className="row">
+                      <div className="paymentOption">
+                        <div className="form-check">
+                          <input id="credit" name="paymentMethod" type="radio" className="form-check-input" value='cod'
+                            checked={paymentType === 'cod'} disabled={totalCartCost > 5000}
+                            onChange={() => this.setState({ paymentType: 'cod', isCheckoutClick: false })} />
+
+                          <label className="form-check-label" htmlFor="credit">
+                            Cash On Delivery
+                          </label>
+                        </div>
+                        {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
+                        <div className="form-check">
+                          <input id="debit" name="paymentMethod" type="radio" className="form-check-input" value='paytm'
+                            checked={paymentType === 'paytm'}
+                            onChange={() => this.setState({ paymentType: 'paytm', isCheckoutClick: false })} />
+                          <label className="form-check-label" htmlFor="debit">
+                            Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" width="55px" alt="Paytm"></img>
+                          </label>
+                        </div>
+                        <div className="form-check">
+
+                          <input id="paypal" name="paymentMethod" type="radio" className="form-check-input" value='airpay'
+                            checked={paymentType === 'airpay'}
+                            onChange={() => this.setState({ paymentType: 'airpay', isCheckoutClick: false })} />
+                          <label className="form-check-label" htmlFor="paypal">
+                            Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img>
+                          </label>
+                        </div>
+                      </div>
+
+
+
+
+
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+
+
+
+
+
                 <div className="card shadow pr-5">
                   <div className="card-body">
+
+
                     <h4 className="mb-3">Shipping address</h4>
                     {selectedShippingAddress?.name ? <>< address  > {selectedShippingAddress?.name}
                       <br />{selectedShippingAddress?.address1} <br />{selectedShippingAddress?.address2} <br /> {selectedShippingAddress?.sub_district}
@@ -390,25 +587,7 @@ class CheckoutComp extends React.Component {
                             Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img>
                           </label>
                         </div>
-                        {/* <div className="custom-control custom-radio">
-                          <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" value='cod'
-                            checked={paymentType === 'cod'} disabled={totalCartCost > 5000}
-                            onChange={() => this.setState({ paymentType: 'cod', isCheckoutClick: false })} />
-                          <label htmlFor="credit">Cash On Delivery</label>
-                        </div>
-                        {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
-                        <div className="custom-control custom-radio">
-                          <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" value='paytm'
-                            checked={paymentType === 'paytm'}
-                            onChange={() => this.setState({ paymentType: 'paytm', isCheckoutClick: false })} />
-                          <label className="custom-control-label" htmlFor="debit">Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" width="55px" alt="Paytm"></img></label>
-                        </div>
-                        <div className="custom-control custom-radio">
-                          <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" value='airpay'
-                            checked={paymentType === 'airpay'}
-                            onChange={() => this.setState({ paymentType: 'airpay', isCheckoutClick: false })} />
-                          <label className="custom-control-label" htmlFor="paypal">Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img></label>
-                        </div> */}
+
                       </div>
 
                       <hr className="mb-4" />
@@ -418,6 +597,52 @@ class CheckoutComp extends React.Component {
                   </div>
                 </div>
               </div>
+
+
+              <div className="col-md-4 order-md-2 mb-4">
+                <div className="card product-img-wrapper">
+                  <div className="card-header"><h5 className="text-dark text-uppercase mb-0 font-weight-bold">Price Details</h5></div>
+                  <div className="card-body">
+                    <ul className="list-group">
+                      {checkOutData.map((item, index) => (
+                        finItem = item.product_details || item,
+                        < li key={index} className="d-flex justify-content-between border-bottom py-2">
+                          <div>
+                            <h6 className="my-0">{finItem?.content?.title}</h6>
+                            <span>Store: <small className="text-muted">{finItem?.store_name}</small></span>
+                          </div>
+                          <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0)} X {item?.quantity ? item?.quantity : 1}</span>
+
+                        </li>
+                      ))}
+                      {/* <li className="list-group-item d-flex justify-content-between bg-light">
+                  <div className="text-success">
+                    <h6 className="my-0">Promo code</h6>
+                    <small>EXAMPLECODE</small>
+                  </div>
+                  <span className="text-success"><span>₹</span> -0.0</span>
+                </li> */}
+                      <li className="d-flex justify-content-between pt-3">
+                        <h5><span className="text-dark">Total Payable</span></h5>
+                        <strong><span>₹</span> {totalCartCost}</strong>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div>
+                {/* <p>Have a coupon? Enter your code here...</p> */}
+                {/* <form className="card p-2">
+                <div className="input-group">
+                  <input type="text" className="form-control" placeholder="Coupon code" />
+                  <div className="input-group-append">
+                    <button type="submit" className="btn btn-dark btn-theme">Apply Coupon</button>
+                  </div>
+                </div>
+              </form> */}
+
+              </div>
+
+
             </div>
           </div >
         </Loader>
