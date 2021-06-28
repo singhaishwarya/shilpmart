@@ -21,7 +21,7 @@ export default class CustomerService extends React.Component {
         </div>
         <div className="container">
           <div className="row py-5">
-            <div className="col-sm-4">
+            <div className="col-sm-5">
               <h3>Here to Help</h3>
               <p>Have a question? You may find an answer in our FAQs. But you can also contact us:</p>
               <h5> <FontAwesomeIcon icon={faPhoneSquareAlt} />  011-24303500</h5>
@@ -39,23 +39,23 @@ export default class CustomerService extends React.Component {
 
             </div>
 
-            <div className="col-sm-8">
+            <div className="col-sm-7">
               
-              <form>
+              <form className="login-card p-5">
                 <div className="form-row">
                   <div className="form-group col-md-6">
-                    <label htmlFor="fname">First Name</label>
+                    <label htmlFor="fname">First Name <span>*</span></label>
                     <input type="text" className="form-control" id="fname" placeholder="" />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="lName">Last Name</label>
+                    <label htmlFor="lName">Last Name <span>*</span></label>
                     <input type="text" className="form-control" id="lName" placeholder="" />
                   </div>
                 </div>
 
 
                 <div className="form-group">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">Email <span>*</span></label>
                   <input type="email" className="form-control" id="email" placeholder="" />
                 </div>
                 <div className="form-group">

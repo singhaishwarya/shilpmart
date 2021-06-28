@@ -1006,6 +1006,7 @@ position: relative;
 text-align: center;
 border: 5px solid #fff;
 box-sizing: border-box;
+max-width: 250px;
 }
 
 .product-wrapper .prodcut-img {
@@ -1791,14 +1792,13 @@ cursor: pointer;
 }
 
 .login-card .login-btn {
-	padding: 13px 20px 12px;
-	background-color: #000;
-	border-radius: 4px;
-	font-size: 17px;
-	font-weight: bold;
-	line-height: 20px;
-	color: #fff;
-	margin-bottom: 24px;
+	padding: 10px 20px;
+background-color: #000;
+border-radius: 4px;
+font-size: 17px;
+font-weight: bold;
+color: #fff;
+line-height: 1;
 }
 .login-card h4 {
 	margin-bottom: 20px;
@@ -3614,7 +3614,7 @@ margin-bottom: 20px;
 
 
 .changeHead{
-	background-color: #ed731d;
+	background-color: #0b4981;
 	color: #fff;
 	padding:15px;
 }
@@ -3622,7 +3622,7 @@ margin-bottom: 20px;
 .changeHead h3 span{font-weight: 600; text-transform: uppercase;}
 .changeHead h3 span.srno{margin-right: 10px;
 	background-color: #fff;
-	color: #ed731d;
+	color: #0b4981;
 	padding: 2px 7px;
 	border-radius: 3px;
 	font-size: 14px;}
@@ -3697,11 +3697,13 @@ margin-right: 15px; align-items: center;}
 .orderaction span{font-weight: 600; font-size: 16px;}
 .orderaction span:hover{color: #e87f13; cursor: pointer;}
 
+.paymentOption{width: 100%;}
 .paymentOption .form-check{
 	border-bottom: 1px solid #eee;
 	padding: 1rem 1rem 1rem 3rem;
 }
 .paymentOption .form-check:last-child{border-bottom: none;}
+.paymentOption label{display: block; cursor: pointer;}
 
 
 .advantagelogin{display: block;list-style: none; margin: 0; padding: 0;}
@@ -4035,20 +4037,26 @@ position: relative;
 width: 75px;
 height: 5px;
 background-color: #fff;
-margin: 0 auto 65px auto;    
+margin: 0 auto 65px auto;
+}
 
+.css-tzlvnj{
+	font-family: 'Lato', sans-serif !important;
+text-transform: uppercase;
+font-size: 14px !important;
 }
 
 .catHead::before{
-	content: '\f105';
+	content: '\f0da';
 	font-family: fontawesome;
 	position: absolute;
-	color: #878787;
+	color: #e87f13;
 }
 
 .catHead span{
 	padding-left: 15px;
-	color: #878787;
+	color: #333;
+	text-transform: uppercase;
 }
 .bar-label {
 	color: white;
@@ -4087,6 +4095,7 @@ display: inline-block;
 	padding: 15px 0;
 	font-weight: bold;
 	border-bottom: 1px solid #ccc;
+	cursor: pointer;
 }
 .Collapsible__trigger::before{
 	content: '\f0da';
