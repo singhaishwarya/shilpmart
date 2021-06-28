@@ -6,10 +6,10 @@ export default class GetInTouch extends Component {
 
   static getinTouch = async (data) => {
     try {
-      config.url = baseUrl + 'getin-touch';
+      config.url = baseUrl + 'get-in-touch';
       config.method = 'post';
-      config.data = '';
-      config.params = data;
+      config.data = data;
+      config.params = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {

@@ -80,8 +80,8 @@ export default class Order extends Component {
     try {
       config.url = baseUrl + 'raise-ticket ';
       config.method = 'post';
-      config.data = '';
-      config.params = data;
+      config.data = data;
+      config.params = '';
       const response = await axios(config);
       return response.data ? response.data : [];
     } catch (error) {

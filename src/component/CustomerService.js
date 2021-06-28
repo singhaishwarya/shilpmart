@@ -15,7 +15,7 @@ export default class CustomerService extends React.Component {
     this.requiredBinded = this.required.bind(this);
 
     this.state = {
-      currentPath: this.props.location.pathname,
+      currentPath: this.props.location.pathname, contactUsSubmitted: false,
       fields: {
         first_name: '', last_name: '', email: '', msg: '',
         type: this.props.location.pathname === "/customer-service" ? 1 : 0
@@ -52,7 +52,8 @@ export default class CustomerService extends React.Component {
           .then((result) => {
             if (!result) return ToastService.error("Please fill form details")
             if (result.success) {
-              window.history.back()
+              this.setState({ contactUsSubmitted: true })
+              // window.history.back()
             }
           }).catch((err) => {
             console.log(err);
@@ -62,8 +63,7 @@ export default class CustomerService extends React.Component {
   }
 
   render() {
-    const { fields, currentPath } = this.state;
-
+    const { fields, currentPath, contactUsSubmitted } = this.state;
     return (
       <section id="maincontent">
         <div className="subpages-heading">
@@ -88,36 +88,37 @@ export default class CustomerService extends React.Component {
 
             </div>
 
-            <div className="col-sm-8">
-              <h3 className="mb-5">Get in Touch</h3>
-              <Form ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleGetInTouch(e)} >
+            {contactUsSubmitted ? <span>Thanks for contacting us! We will get in touch with you shortly.</span> :
+              <div className="col-sm-8">
+                <h3 className="mb-5">Get in Touch</h3>
+                <Form ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleGetInTouch(e)} >
 
-                <div className="form-row">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="fname">First Name</label>
-                    <Input type="text" className="form-control" id="fname" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} placeholder="" />
+                  <div className="form-row">
+                    <div className="form-group col-md-6">
+                      <label htmlFor="fname">First Name</label>
+                      <Input type="text" className="form-control" id="fname" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} placeholder="" />
+                    </div>
+                    <div className="form-group col-md-6">
+                      <label htmlFor="lName">Last Name</label>
+                      <Input type="text" className="form-control" id="lName" name="last name" value={fields.last_name} validations={[this.required]} onChange={this.handleChange.bind(this, "last_name")} placeholder="" />
+                    </div>
                   </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="lName">Last Name</label>
-                    <Input type="text" className="form-control" id="lName" name="last name" value={fields.last_name} validations={[this.required]} onChange={this.handleChange.bind(this, "last_name")} placeholder="" />
+
+                  <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <Input type="email" className="form-control" id="email" placeholder="Email" name="email" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
                   </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <Input type="email" className="form-control" id="email" placeholder="Email" name="email" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="InputAddress2">Comment or Message </label>
-                  <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
-                  </Textarea>
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="InputAddress2">Comment or Message </label>
+                    <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
+                    </Textarea>
+                  </div>
 
 
-                <button value="Submit" className="btn btn-theme">Submit Query</button>
-              </Form>
+                  <button value="Submit" className="btn btn-theme">Submit Query</button>
+                </Form>
 
-            </div>
+              </div>}
 
             <div className="col-sm-12">
               {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.442528014726!2d77.23733871455852!3d28.586498292914836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2fdedaabe87%3A0xadd98301faac65ce!2sElectronics%20Niketan%2C%20CGO%20Complex%2C%206%20Lodhi%20Road%2C%20Lodhi%20Rd%2C%20CGO%20Complex%2C%20Pragati%20Vihar%2C%20New%20Delhi%2C%20Delhi%20110003!5e0!3m2!1sen!2sin!4v1624280230099!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowFullScreen="" loading="lazy"></iframe> */}
