@@ -240,25 +240,39 @@ class CheckoutComp extends React.Component {
             ariaHideApp={false}
           > {overlayType === 'login' ? <Login
             dismissModal={() => this.dismissModal(overlayType)} {...this.state} /> :
-            <div className="login-card">
-              <h1> Select Address</h1>
+            <div className="changeadd">
               <span><FontAwesomeIcon className="text-left" icon={faTimes} onClick={() => this.setState({
                 showModal: false, selectedBillingAddress: selectedBillingAddress ? selectedBillingAddress : {}
               })} /></span>
+              <h1 className="border-bottom mb-3"> Select Address</h1>
+              
+              <div className="row">
               {addressList?.map((item, index) => (
-                <address key={index}>{item.name}
+                <div className="col-sm-3 col-12">
+                <div className="card shadow mb-3">
+                  <div className="card-body">
+                  <address className="selectAdd" key={index}><strong>{item.name}</strong>
                   <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
                   <br /> {item.district},  {item.state} - {item.pincode}<br />
                   <strong>Mobile No.</strong>: {item.mobile}<br />
-                  <strong>Email</strong> : {item?.email} <br /><br />
-                  <p className="d-flex justify-content-between">
+                  <strong>Email</strong> : {item?.email} 
+                  {/* <p className="d-flex justify-content-between">
                     <span onClick={() => {
                       addressType === 'shipping' ? this.setState({ selectedShippingAddress: item, showModal: false }) :
                         this.setState({ selectedBillingAddress: item, showModal: false, isBillingAddressSame: false })
                     }} className="btn btn-dark btn-theme">Select</span>
-                  </p>
+                  </p> */}
                 </address>
-              ))}  <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link></div>}
+                <div className="form-check radioPos">
+        <input className="form-check-input" type="radio" name="selectAdd" id="selectAdd" defaultValue="option1" defaultChecked />
+        
+      </div>
+                    </div>
+                </div>
+                </div>
+                
+                
+              ))} </div> <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link></div>}
           </Modal>
         </div>
 
@@ -537,7 +551,7 @@ class CheckoutComp extends React.Component {
                     {selectedBillingAddress?.name ?
                       <>
                         <h4 className="mb-3">Billing address</h4>
-                        < address  > {selectedBillingAddress?.name}
+                        <address> {selectedBillingAddress?.name}
                           <br />{selectedBillingAddress?.address1} <br />{selectedBillingAddress?.address2} <br /> {selectedBillingAddress?.sub_district}
                           <br /> {selectedBillingAddress?.district},  {selectedBillingAddress?.state} - {selectedBillingAddress?.pincode}<br />
                           <strong>Mobile No.</strong>: {selectedBillingAddress?.mobile}<br />

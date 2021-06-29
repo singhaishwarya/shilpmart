@@ -282,12 +282,9 @@ class ProductDetail extends React.Component {
                   <div className="productVariation">
                     <span>Color :</span>
                     <div className="productVariationList">
-                      <div className="colors"><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"
-                        alt="Saree" /></div>
-                      <div className="colors color-active"><img src={require('../public/Kasavu-Saree-300x300.jpeg')} className="img-fluid"
-                        alt="Saree" /></div>
-                      <div className="colors"><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid"
-                        alt="Saree" /></div>
+                      <div className="colors color-active" style={{backgroundColor:"Black"}}></div>
+                      <div className="colors" style={{backgroundColor:"red"}}></div>
+                      <div className="colors" style={{backgroundColor:"brown"}}></div>
 
                     </div>
                   </div>
@@ -374,6 +371,7 @@ class ProductDetail extends React.Component {
                   <div className="clearfix"></div>
                   <span className="sku">SKU: <span>-</span></span>
                   <span className="sku">Categories: <span>-</span></span>
+                  <span className="sku">Brand Name: <span>-</span></span>
                   <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span>
 
                   <div className="social-share">
@@ -406,6 +404,13 @@ class ProductDetail extends React.Component {
                     <header>Description</header>
                     <p>{productDetailData?.content?.product_description}</p>
                   </div>
+
+                  <div className="product-description">
+                    <header>Product Specifications</header>
+                    <p>{productDetailData?.content?.product_description}</p>
+                  </div>
+
+                 
 
                   <div className="product-description">
                     <header>Review</header>
@@ -454,6 +459,12 @@ class ProductDetail extends React.Component {
                     </div>
 
                   </div>
+
+                  <div className="product-description">
+                    <header>Inquiries</header>
+                    <p>{productDetailData?.content?.product_description}</p>
+                  </div>
+
                 </div>
               </div>
             </div>

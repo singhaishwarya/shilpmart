@@ -8,7 +8,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import "./public/bootstrap.min.css";
 import "./public/jbility.css";
 import "./index.css";
-import "./public/swiper-bundle.min.css"
+// import "./public/swiper-bundle.min.css"
 import 'react-alice-carousel/lib/alice-carousel.css';
 import 'rc-slider/assets/index.css';
 import 'react-image-gallery/styles/css/image-gallery.css';

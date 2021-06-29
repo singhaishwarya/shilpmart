@@ -283,7 +283,7 @@ export default class AddEditAddress extends React.Component {
 
 
 
-          <div className="col-5">
+          <div className="col-5 d-none d-sm-block">
             <div className="product-img-wrapper">
               <img src={require("../../../public/address.svg")} className="img-fluid" alt="address" />
             </div>

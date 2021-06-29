@@ -96,6 +96,7 @@ class Cart extends Component {
           <form className="col-lg-8 col-sm-6 col-12">
 
             <div className="cart-table-wrapper">
+            <div className="table-responsive">
               <table className="table">
                 <thead>
                   <tr>
@@ -138,6 +139,7 @@ class Cart extends Component {
                   ))}
                 </tbody>
               </table>
+              </div>
               {/* <div className="row">
                 <div className="col">
                   <div className="cart-coupon-wrapper mb-3">

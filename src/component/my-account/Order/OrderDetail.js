@@ -153,7 +153,7 @@ export default class OrderDetail extends React.Component {
                       </div>
                     </div>
                     <div className="row mb-2">
-                      <div className="col-sm-3">
+                      <div className="col-sm-3 col-4">
                         <div className="orderProductImg">
                           <div className="orderimg">
                             <img src={productItem.awb_number.product[0].images[0].image_url} className="img-fluid" alt="CSC" onError={e => { e.currentTarget.src = require('../../../public/No_Image_Available.jpeg') }} />
@@ -162,7 +162,7 @@ export default class OrderDetail extends React.Component {
 
                         </div>
                       </div>
-                      <div className="col-sm-9">
+                      <div className="col-sm-9 col-8">
                         <div className="orderproductInfo">
                           <span className="title">{productItem.awb_number.product[0].title.title}
                           </span>
@@ -187,8 +187,8 @@ export default class OrderDetail extends React.Component {
                     <p><small>Your Order is {getOrderStatus(orderDetail.status)}</small></p>
                   </div>
 
-                  <div className="col-sm-3">
-                  <span className="float-right" onClick={() => this.getInvoidePdf(productItem.order_id, productItem.awb_number.number)}>View Invoice</span>
+                  <div className="col-sm-3 mb-3">
+                  <span className="viewInvoice" onClick={() => this.getInvoidePdf(productItem.order_id, productItem.awb_number.number)}>View Invoice</span>
                   </div>
 
                 </div>
@@ -196,20 +196,20 @@ export default class OrderDetail extends React.Component {
                 {productItem.awb_number?.product?.map((product, index) => (<div key={index} className="row">
                   <div className="col-md-6 offset-md-3">
                     <div className="row mb-2">
-                      <div className="col-sm-3">
+                      <div className="col-sm-3 col-4">
                         <div className="orderProductImg">
                           <div className="orderimg">
                             <img src={product.images[0]?.image_url} className="img-fluid" alt="CSC" onError={e => { e.currentTarget.src = require('../../../public/No_Image_Available.jpeg') }} />
                           </div>
                         </div>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-6 col-6">
                         <div className="orderproductInfo">
                           <span className="title">{product.title.title}</span>
                           <span>₹ {product.price}</span>
                         </div>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-3 col">
                         <div className="orderstatus">
                           <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
                           <div className="needhlep" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</div>

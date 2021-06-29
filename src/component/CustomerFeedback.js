@@ -8,7 +8,7 @@ export default class CustomerFeedback extends React.Component {
     this.state = {
       responsive: {
         0: { items: 1 },
-        568: { items: 2 },
+        568: { items: 1 },
         1024: { items: 4 },
       },
       customerFeedbackData: [], customerFeedbackItems: [],
@@ -117,8 +117,8 @@ export default class CustomerFeedback extends React.Component {
                 mouseTracking
                 infinite
                 mouseTrackingEnabled={true}
-                // autoHeight={true}
-                autoWidth
+                autoHeight={true}
+                //autoWidth
                 disableButtonsControls //can be enabled if arrows are needed
                 touchTracking
               />

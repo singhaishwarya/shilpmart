@@ -109,7 +109,7 @@ export default class Orders extends React.Component {
       <div className="row">
         <div className='col-lg-3 col-12'>
           <div className='myaccout-sidebar'>
-            <div className="card shadow">
+            <div className="card mb-4 shadow">
               <div className="card-body">
                 <article className='filter-group'>
                   <h6 className='title'>ORDER STATUS </h6>
@@ -172,7 +172,7 @@ export default class Orders extends React.Component {
                       <div className="row">
                         <div className="col-sm-6">
                           <div className="row">
-                            <div className="col-sm-3">
+                            <div className="col-3">
                               <div className="orderProductImg">
                                 <div className="orderimg">
                                   <img src={item.product_details[0]?.awb_number?.product[0]?.images[0]?.image_url} className="img-fluid" alt="CSC" onError={e => { e.currentTarget.src = require('../../../public/No_Image_Available.jpeg') }} />
@@ -185,18 +185,18 @@ export default class Orders extends React.Component {
                                 }
                               </div>
                             </div>
-                            <div className="col-sm-9">
+                            <div className="col-9">
                               <div className="orderproductInfo">
                                 <span className="title">{item.product_details[0]?.awb_number.product[0]?.title?.title}</span>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div className="col-sm-2"><span>{format(new Date(item.created_at), 'dd-MM-yyyy')}</span></div>
-                        <div className="col-sm-2"><span>₹ {item.order_total}</span></div>
-                        <div className="col-sm-2">
+                        <div className="col-sm-2 col-4"><span>{format(new Date(item.created_at), 'dd-MM-yyyy')}</span></div>
+                        <div className="col-sm-2 col-4"><span>₹ {item.order_total}</span></div>
+                        <div className="col-sm-2 col-4">
                           <div className="orderstatus">
-                            <div className="statusColor returne"> <span>{getOrderStatus(item.status)}</span></div>
+                            <div className="statusColor deliver"> <span>{getOrderStatus(item.status)}</span></div>
                             {/* <div className="statusReq"><p>As per your request, your item has been cancelled</p></div> */}
                           </div>
                         </div>
