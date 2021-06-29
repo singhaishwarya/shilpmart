@@ -611,7 +611,7 @@ class CheckoutComp extends React.Component {
                             <h6 className="my-0">{finItem?.content?.title}</h6>
                             <span>Store: <small className="text-muted">{finItem?.store_name}</small></span>
                           </div>
-                          <span className="text-muted"><span>₹</span> {((finItem?.price?.length > 0 && finItem?.price[0]?.price) || 0)} X {item?.quantity ? item?.quantity : 1}</span>
+                          <span className="text-muted"><span>₹</span> {finItem?.price} X {item?.quantity ? item?.quantity : 1}</span>
 
                         </li>
                       ))}

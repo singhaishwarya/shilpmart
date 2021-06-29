@@ -233,7 +233,7 @@ class Header extends Component {
           <span>
             <span className="top-head">
               <span className="pro-tile">{item?.content?.title}</span>
-              <span className="pro-price"><del>1999</del> &nbsp; <span>{item?.price[0] ? item?.price[0].price : 0} </span></span>
+              <span className="pro-price"><del>1999</del> &nbsp; <span>{item?.price} </span></span>
             </span>
             <span className="footer-head">
               <span className="result-cat"><small>Saree, Women's Wear</small></span>
@@ -301,6 +301,7 @@ class Header extends Component {
                       <Link to='/my-account/address'>Addresses</Link>
                       <Link to='/my-account/details'>Account details</Link>
                       <Link to='/my-account/feedback'>Feedback</Link>
+                      <Link to='/my-account/order'>Raise Ticket</Link>
                       <Link to='my-account/wishlist'>Wishlist</Link>
                       <Link to="" onClick={() => this.logout()}>Logout</Link>
                     </div>
@@ -415,6 +416,7 @@ class Header extends Component {
                       <Link to='/my-account/address'>Addresses</Link>
                       <Link to='/my-account/details'>Account details</Link>
                       <Link to='/my-account/feedback'>Feedback</Link>
+                      <Link to='/my-account/order'>Raise Ticket</Link>
                       <Link to='/my-account/wishlist'>Wishlist</Link>
                       <Link to="" onClick={() => this.logout()}>Logout</Link>
                     </div>

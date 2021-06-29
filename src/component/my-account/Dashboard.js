@@ -20,6 +20,7 @@ export default class Dashboard extends React.Component {
           {/* <div className="followings"><Link to="/my-account/order">followings</Link></div> */}
           <div className="feedback"><Link to="/my-account/feedback">Feedback</Link></div>
           <div className="inquiry"><Link to="/my-account/inquiry">Inquiries</Link></div>
+          <div className="account-details"><Link to="/my-account/order">Raise Ticket</Link></div>
           <div className="wishlist"><Link to="/my-account/wishlist">Wishlist</Link></div>
           {/* <div className="logout"><Link to="/my-account/order">Loout</Link></div> */}
         </div>

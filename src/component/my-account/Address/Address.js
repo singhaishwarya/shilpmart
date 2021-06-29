@@ -45,7 +45,7 @@ export default class Address extends React.Component {
             </div>
           </div>
           <div className="coloumn-2">
-            <h4> Shipping Address</h4>
+            <h4>  Address</h4>
             {addressList?.map((item, index) => (
               <address key={index}><strong>{item.name}</strong>
                 <strong >{item.is_default === 1 ? ' Default' : ''}</strong>
