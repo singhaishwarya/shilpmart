@@ -407,7 +407,9 @@ class ProductDetail extends React.Component {
 
                   <div className="product-description">
                     <header>Product Specifications</header>
-                    <p>{productDetailData?.content?.product_description}</p>
+                    <p>{productDetailData?.properties?.map((item, index) => (
+                      <> <span key={index}>{item.variation_key} - {item.veriation_value}</span><br /></>
+                    ))}</p>
                   </div>
 
 
