@@ -78,8 +78,7 @@ export default class OrderDetail extends React.Component {
 
   }
   cancelOrder = (order, product) => {
-    console.log("demo===", order, product)
-    OrderService.orderCancel({ order_id: order, product_id: product }).then((result) => {
+    OrderService.orderCancel({ order_id: order, product_id: product.product_id, variation_index: product.variation_index }).then((result) => {
       if (!result) return
       // this.setState({ orderList: result.data });
 
@@ -90,6 +89,7 @@ export default class OrderDetail extends React.Component {
   productDetail = () => {
 
   }
+
   render() {
 
     const { orderDetail, base64Doc, showModal, fields } = this.state;
