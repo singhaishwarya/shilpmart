@@ -256,8 +256,8 @@ class ProductDetail extends React.Component {
                       <ol className="breadcrumb bg-transparent">
                         <li className="breadcrumb-item"><span>Home</span></li>
                         <li className="breadcrumb-item"><span>Shop</span></li>
-                        <li className="breadcrumb-item"><span>Product category</span></li>
-                        {/* <li className="breadcrumb-item active" aria-current="page">{productDetailData?.content?.title}</li> */}
+                        <li className="breadcrumb-item"><span>{productDetailData.category?.parent_title[0]}</span></li>
+                        <li className="breadcrumb-item"><span>{productDetailData.category?.cate_title}</span></li>
                       </ol>
                     </nav>
                   </div>
@@ -282,9 +282,9 @@ class ProductDetail extends React.Component {
                   <div className="productVariation">
                     <span>Color :</span>
                     <div className="productVariationList">
-                      <div className="colors color-active" style={{backgroundColor:"Black"}}></div>
-                      <div className="colors" style={{backgroundColor:"red"}}></div>
-                      <div className="colors" style={{backgroundColor:"brown"}}></div>
+                      <div className="colors color-active" style={{ backgroundColor: "Black" }}></div>
+                      <div className="colors" style={{ backgroundColor: "red" }}></div>
+                      <div className="colors" style={{ backgroundColor: "brown" }}></div>
 
                     </div>
                   </div>
@@ -410,7 +410,7 @@ class ProductDetail extends React.Component {
                     <p>{productDetailData?.content?.product_description}</p>
                   </div>
 
-                 
+
 
                   <div className="product-description">
                     <header>Review</header>

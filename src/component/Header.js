@@ -217,7 +217,7 @@ class Header extends Component {
         <div className="result-product-wrapper" key={index}>
           <Link to={{
             pathname: `/product-detail`,
-            search: "?cid=" + item.category[0].category_id + "&pid=" + item.content.product_id
+            search: "?cid=" + item.category?.category_id + "&pid=" + item.content.product_id
 
           }}
             onClick={() => this.setState({ searchQuery: '', seachResults: [] })
@@ -236,7 +236,7 @@ class Header extends Component {
               <span className="pro-price"><del>1999</del> &nbsp; <span>{item?.price} </span></span>
             </span>
             <span className="footer-head">
-              <span className="result-cat"><small>Saree, Women's Wear</small></span>
+              <span className="result-cat"><small>{item.category?.parent_title[0]}, {item.category?.cate_title}</small></span>
               <span className="result-addtocart" onClick={
                 () => (
                   cart?.includes(item.id) ? '' : this.addToCart(item)

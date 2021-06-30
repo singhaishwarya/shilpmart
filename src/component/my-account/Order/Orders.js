@@ -76,20 +76,7 @@ export default class Orders extends React.Component {
       this.setState({ isLoaded: true })
     });
   }
-  cancelOrder = (order) => {
 
-    let productIds = [];
-    order.product_details.map((item) => {
-      productIds.push(item.id)
-    })
-    OrderService.orderCancel({ order_id: order.id, product_id: productIds }).then((result) => {
-      if (!result) return
-      // this.setState({ orderList: result.data });
-
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
   fetchMoreData = () => {
     this.setState({
       currentPage: this.state.currentPage + 1
@@ -199,7 +186,7 @@ export default class Orders extends React.Component {
                             <div className="statusColor deliver"> <span>{getOrderStatus(item.status)}</span></div>
                             {/* <div className="statusReq"><p>As per your request, your item has been cancelled</p></div> */}
                           </div>
-                        </div>
+                        </div><span>View More</span>
                       </div></Link>
                   </div>
                 </div>

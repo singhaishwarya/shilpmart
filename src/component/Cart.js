@@ -81,7 +81,7 @@ class Cart extends Component {
   productDetail = (value) => {
     this.props.history.push({
       pathname: '/product-detail',
-      search: "?cid=" + ((value?.category?.length > 0 && value?.category[0]?.category_id) || 0) + "&pid=" + value?.content?.product_id
+      search: "?cid=" + ((value?.category?.length > 0 && value?.category?.category_id) || 0) + "&pid=" + value?.content?.product_id
     });
   }
 
@@ -96,49 +96,49 @@ class Cart extends Component {
           <form className="col-lg-8 col-sm-6 col-12">
 
             <div className="cart-table-wrapper">
-            <div className="table-responsive">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col">PRODUCT</th>
-                    <th scope="col">PRICE</th>
-                    <th scope="col">QUANTITY</th>
-                    <th scope="col">SUBTOTAL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cartProduct?.map((item, index) => (
-                    finItem = item.product_details || item,
-                    <tr key={index}>
-                      <td className="product-remove"><span onClick={() => this.deleteCart(item)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
-                      <td className="product-thumbnail">
-                        <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
-                          className="img-fluid"
-                          onClick={() => this.productDetail(finItem)}
-                          alt={(finItem?.images?.length > 0 && finItem?.images[0]?.caption) || ""}
-                          onError={e => { e.currentTarget.src = require('../public/bag1.jpeg') }}
-                        />
-                      </td>
-                      <td className="product-name">{finItem?.content?.title}
-                        <p>Store : <span><span>{finItem?.store_name}</span></span></p></td>
-                      <td className="product-subtotal"><span> <span>₹</span> {(finItem?.price?.length > 0 && finItem?.price) || 0}
-                      </span></td>
-                      <td className="product-quantity" data-title="Quantity"><div className="product-qty">
-                        <div className="input-group">
-                          <input type="button" value="-" className="quantity-left-minus" onClick={() => this.changeQuantity(item.product_details, item.quantity - 1)} disabled={this.props.userData.token ? false : true} />
-                          <input type="number" value={item.quantity || 1} onChange={(e) => this.changeQuantity(item.product_details, e.target.value)} disabled={this.props.userData.token ? false : true} />
-                          <input type="button" value="+" onClick={() => this.changeQuantity(item.product_details, item.quantity + 1)
-                          } className="quantity-right-plus" disabled={this.props.userData.token ? false : true} />
-                        </div>
-                      </div>
-                      </td>
-                      <td className="product-price"><span><span>₹</span> {(finItem?.price?.length > 0 && finItem?.price * item.quantity) || 0}</span></td>
+              <div className="table-responsive">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                      <th scope="col">PRODUCT</th>
+                      <th scope="col">PRICE</th>
+                      <th scope="col">QUANTITY</th>
+                      <th scope="col">SUBTOTAL</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {cartProduct?.map((item, index) => (
+                      finItem = item.product_details || item,
+                      <tr key={index}>
+                        <td className="product-remove"><span onClick={() => this.deleteCart(item)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
+                        <td className="product-thumbnail">
+                          <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
+                            className="img-fluid"
+                            onClick={() => this.productDetail(finItem)}
+                            alt={(finItem?.images?.length > 0 && finItem?.images[0]?.caption) || ""}
+                            onError={e => { e.currentTarget.src = require('../public/bag1.jpeg') }}
+                          />
+                        </td>
+                        <td className="product-name">{finItem?.content?.title}
+                          <p>Store : <span><span>{finItem?.store_name}</span></span></p></td>
+                        <td className="product-subtotal"><span> <span>₹</span> {(finItem?.price?.length > 0 && finItem?.price) || 0}
+                        </span></td>
+                        <td className="product-quantity" data-title="Quantity"><div className="product-qty">
+                          <div className="input-group">
+                            <input type="button" value="-" className="quantity-left-minus" onClick={() => this.changeQuantity(item.product_details, item.quantity - 1)} disabled={this.props.userData.token ? false : true} />
+                            <input type="number" value={item.quantity || 1} onChange={(e) => this.changeQuantity(item.product_details, e.target.value)} disabled={this.props.userData.token ? false : true} />
+                            <input type="button" value="+" onClick={() => this.changeQuantity(item.product_details, item.quantity + 1)
+                            } className="quantity-right-plus" disabled={this.props.userData.token ? false : true} />
+                          </div>
+                        </div>
+                        </td>
+                        <td className="product-price"><span><span>₹</span> {(finItem?.price?.length > 0 && finItem?.price * item.quantity) || 0}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
               {/* <div className="row">
                 <div className="col">

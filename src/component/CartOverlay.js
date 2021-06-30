@@ -82,7 +82,7 @@ class CartOverlay extends Component {
                     <li key={index}>
                       <Link to={{
                         pathname: `/product-detail`,
-                        search: "?cid=" + ((finItem?.category?.length > 0 && finItem?.category[0]?.category_id) || 0) + "&pid=" + finItem?.content?.product_id
+                        search: "?cid=" + ((finItem?.category?.length > 0 && finItem?.category?.category_id) || 0) + "&pid=" + finItem?.content?.product_id
                       }}
                         onClick={(e) => (this.props.dismissModal('cart'))
                         } >

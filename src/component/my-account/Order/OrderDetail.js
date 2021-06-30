@@ -77,6 +77,19 @@ export default class OrderDetail extends React.Component {
     this.setState({ fields });
 
   }
+  cancelOrder = (order, product) => {
+    console.log("demo===", order, product)
+    OrderService.orderCancel({ order_id: order, product_id: product }).then((result) => {
+      if (!result) return
+      // this.setState({ orderList: result.data });
+
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+  productDetail = () => {
+
+  }
   render() {
 
     const { orderDetail, base64Doc, showModal, fields } = this.state;
@@ -188,17 +201,17 @@ export default class OrderDetail extends React.Component {
                   </div>
 
                   <div className="col-sm-3 mb-3">
-                  <span className="viewInvoice" onClick={() => this.getInvoidePdf(productItem.order_id, productItem.awb_number.number)}>View Invoice</span>
+                    <span className="viewInvoice" onClick={() => this.getInvoidePdf(productItem.order_id, productItem.awb_number.number)}>View Invoice</span>
                   </div>
 
                 </div>
 
-                {productItem.awb_number?.product?.map((product, index) => (<div key={index} className="row">
+                {productItem.awb_number?.product?.map((product, productIndex) => (<div key={productIndex} className="row">
                   <div className="col-md-6 offset-md-3">
                     <div className="row mb-2">
-                      <div className="col-sm-3 col-4">
+                      <div className="col-sm-2 col-4">
                         <div className="orderProductImg">
-                          <div className="orderimg">
+                          <div className="orderimg" onClick={this.productDetail()}>
                             <img src={product.images[0]?.image_url} className="img-fluid" alt="CSC" onError={e => { e.currentTarget.src = require('../../../public/No_Image_Available.jpeg') }} />
                           </div>
                         </div>
@@ -209,10 +222,14 @@ export default class OrderDetail extends React.Component {
                           <span>₹ {product.price}</span>
                         </div>
                       </div>
-                      <div className="col-sm-3 col">
+                      <div className="col-sm-2 col">
                         <div className="orderstatus">
                           <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
                           <div className="needhlep" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</div>
+                        </div>
+                      </div><div className="col-sm-2 col">
+                        <div className="orderstatus">
+                          <button onClick={() => this.cancelOrder(productItem.order_id, product)}>cancel order</button>
                         </div>
                       </div>
                     </div>
