@@ -48,7 +48,7 @@ export default class Address extends React.Component {
             {/* <h4>  Address</h4> */}
             <div className="row">
             {addressList?.map((item, index) => (
-              <div className="col-sm-4">
+              <div className="col">
              <div className="card shadow mb-4">
                <div className="card-body">
                <address key={index}><strong>{item.name}</strong>

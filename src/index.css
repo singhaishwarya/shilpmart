@@ -3202,6 +3202,16 @@ content: '\f07a';
 	color: #e87f13;
 }
 .myorderList span{font-size: 13px;}
+.viewmore{border: 1px solid #878787;
+	padding: 6px 10px;
+	border-radius: 18px;
+	color: #878787;
+	font-size: 12px !important;}
+	.viewmore:hover{
+		background-color: #e87f13;
+		color: #fff;
+		border: 1px solid #e87f13;
+	}
 .orderProductImg{
 	display: flex;
 	justify-content: center;
@@ -3238,6 +3248,17 @@ box-shadow: 1px 1px 3px #ccc;
 	.orderstatus{
 		display: flex;
 		flex-direction: column;
+	}
+	.orderstatus button.cancelled{
+		color: #ff0000;
+background-color: transparent;
+border: none;
+font-weight: 600;
+font-size: 12px;
+text-transform: capitalize;
+padding: 0;
+display: block;
+cursor: pointer;
 	}
 	.orderproductInfo{display: flex;
 	flex-direction: column;}
@@ -3458,10 +3479,11 @@ font-size: 12px;
 	}
 	.viewInvoice{
 		float: right;
-		border: 1px solid #0b4981;
+border: 1px solid #0b4981;
 border-radius: 4px;
-padding: 6px 15px;
+padding: 4px 6px;
 color: #0b4981;
+font-size: 12px;
 	}
 	.viewInvoice:hover{
 		border: 1px solid #e87f13;
