@@ -119,6 +119,9 @@ padding: 7px 0;
 font-weight: 600;
 padding: 0px 15px;
 }
+.appMenu ul li a:hover, .appMenu ul li a.active{
+	color: #e87f13;
+}
 
 .appaccout span.nav-link, .appaccout a.nav-link{
 	font-weight: 600;
@@ -128,7 +131,8 @@ padding: 0px 15px;
 .appaccout a, .appaccout span{
 	position: relative;
 }
-.appaccout a span, .appaccout span span{width: 14px;
+.appaccout a span, .appaccout span span{
+	width: 14px;
 	height: 14px;
 	color: #fff;
 	border-radius: 8px;
@@ -143,20 +147,24 @@ padding: 0px 15px;
 
 .header-middle ul > li:first-child {
 	font-weight: 600;
-	padding: 5px 0;
+  padding: 8px 0;
+  text-transform: uppercase;
+	color: #0b4981;
 }
 .header-middle ul > li {
 	margin: 10px;
 	cursor: pointer;
 }
 
-.header-middle ul > li:hover{
+.header-middle ul > li:hover, .header-middle ul > li a:hover{
 	color: #e87f13;
 }
 
 .header-middle ul > li a, .header-middle ul > li {
 	position: relative;
+	text-transform: capitalize;
 }
+
 .header-middle ul > li a i {
 	font-size: 18px
 }
@@ -365,13 +373,13 @@ right: -20px;
 	border: 1px solid #ccc;
 	width: auto;
 	padding: 1rem 0;
-	min-width: 160px;
+	min-width: 170px;
 	background-color: #f8f8f8;
 	z-index: 9;
 	border-radius: 4px;
 	margin-top: 10px;
 	right: 9%;
-	box-shadow: 3px 3px 3px #ccc;	
+	box-shadow: 3px 3px 3px rgb(0 0 0 / 20%);
 }
 
 .myAccout-dropdown::before{
@@ -394,8 +402,12 @@ right: -20px;
 	padding: 7px 10px;	
 	display: block;
 	font-size: 16px;
-	color: #333;	
+	color: #0b4981;	
 	font-weight: normal;
+}
+.myAccout-dropdown a svg{
+	width: 0.9rem !important;
+	margin-right: 10px;
 }
 .myAccout-dropdown a:hover{
 	color: #e87f13;
@@ -432,10 +444,13 @@ right: -20px;
 	padding: 0 1rem !important
 }
 .navbar-nav .nav-item .nav-link {
-	color: #0d3356;
+	color: #0b4981;
 	font-size: 14px;
 	font-weight: 600;
 	text-transform: uppercase
+}
+.navbar-nav .nav-item .nav-link:hover{
+	color: #e87f13;
 }
 /* .navbar-nav .nav-item .nav-link, .navbar-nav .nav-item .nav-link:hover {
 	color: #e87f13
@@ -2737,7 +2752,7 @@ color: #878787;
 	border-top: 1px solid #dee2e6;
 	flex-direction: column;
 }
-.product-description .nav-tabs {
+/* .product-description .nav-tabs {
 	border-bottom: none;
 	width: 50%;
 	margin: 0 auto;
@@ -2750,8 +2765,21 @@ color: #878787;
 .product-description .nav-tabs .nav-link {
 	padding-top: 0;
 	border-top: 3px solid transparent;
+} */
+.product-description ul.specification{list-style: none; padding: 0;}
+.product-description ul.specification li{
+	padding: 7px 0;
+	border-bottom: 1px solid #eee;
+	color: #878787;
+}
+.product-description ul.specification li:last-child{
+	border-bottom: none;
 }
 
+.product-description ul li span{
+	font-weight: 600;	
+	color: #000;
+}
 .avgratings{display: flex;
 	flex-direction: column;
 	align-items: center;}
@@ -2809,7 +2837,7 @@ color: #555;
 
 .bar span.bargreen{
 	width: 79%;
-background-color: green;
+background-color: #34aa44;
 position: absolute;
 z-index: 1;
 height: 5px;
@@ -2981,7 +3009,7 @@ border-radius: 100px;
 	display:block}
 .compare-col-row span{
 	display:block;
-	width:50%;
+	width:85%;
 	margin:0 auto;}		
 .compare-col-row.compare-title{
 	text-transform: uppercase;
@@ -4216,6 +4244,30 @@ display: inline-block;
 	align-items: center;
 	justify-content: center;
 }
+.contact-items{display: flex; flex-direction: column; align-items: center; padding: 5rem 0;}
+.contact-icon{border: 3px solid #e87f13;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	margin-bottom: 15px;
+	text-align: center;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	font-size: 30px;
+	color: #e87f13;}
+	.contact-info h2{
+		text-align: center;
+		font-size: 18px;
+		text-transform: uppercase;
+		font-weight: 700;
+		
+	}
+	.contactBg{
+		background: url(./public/contact-bg.jpg) no-repeat center;
+		background-size: cover;
+		padding: 5rem 0;
+	}
 
 
 
@@ -4342,6 +4394,8 @@ td.product-thumbnail{display: block; height: 110px;}
 .orderaction{margin-top: 15px;}
 .orderInfo {padding: 0;	min-width: 100%;	flex: 1 1;}
 .my-account-links div {flex: 1 1 48%;	max-width: 48%;	width: 48%;}
+.coloumn-2{margin-right: 0;}
+.coloumn-2 .ad-address-wrapper{width: auto;}
 
 
 

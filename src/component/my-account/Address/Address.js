@@ -40,7 +40,7 @@ export default class Address extends React.Component {
         <p> The following addresses will be used on the checkout page by default.</p>
         <div className="flexi">
           <div className="coloumn-2">
-            <div className="ad-address-wrapper">
+            <div className="ad-address-wrapper mb-3">
               <Link to='/my-account/add-address' > Add Address</Link>
             </div>
           </div>

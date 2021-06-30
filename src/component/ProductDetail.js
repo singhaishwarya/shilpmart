@@ -370,8 +370,7 @@ class ProductDetail extends React.Component {
                   </div>
                   <div className="clearfix"></div>
                   <span className="sku">SKU: <span>-</span></span>
-                  <span className="sku">Categories: <span>-</span></span>
-                  <span className="sku">Brand Name: <span>-</span></span>
+                  <span className="sku">Categories: <span>-</span></span>                  
                   <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span>
 
                   <div className="social-share">
@@ -407,9 +406,9 @@ class ProductDetail extends React.Component {
 
                   <div className="product-description">
                     <header>Product Specifications</header>
-                    <p>{productDetailData?.properties?.map((item, index) => (
-                      <> <span key={index}>{item.variation_key} - {item.veriation_value}</span><br /></>
-                    ))}</p>
+                    <ul className="specification">{productDetailData?.properties?.map((item, index) => (
+                      <> <li key={index}><span>{item.variation_key} :</span> {item.veriation_value}</li></>
+                    ))}</ul>
                   </div>
 
 

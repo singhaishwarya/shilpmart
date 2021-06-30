@@ -295,7 +295,7 @@ class CheckoutComp extends React.Component {
                 </div>
 
 
-                <div className="card mb-3">
+                {/* <div className="card mb-3">
                   <div className="changeHead">
                     <h3>
                       <span className="srno">1</span>
@@ -327,7 +327,7 @@ class CheckoutComp extends React.Component {
                     </div>
                   </div>
 
-                </div>
+                </div> */}
 
 
 
