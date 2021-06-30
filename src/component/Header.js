@@ -236,7 +236,7 @@ class Header extends Component {
               <span className="pro-price"><del>1999</del> &nbsp; <span>{item?.price} </span></span>
             </span>
             <span className="footer-head">
-              <span className="result-cat"><small>{item.category?.parent_title[0]}, {item.category?.cate_title}</small></span>
+              <span className="result-cat"><small>{item.category?.parent_category[0].title}, {item.category?.cate_title}</small></span>
               <span className="result-addtocart" onClick={
                 () => (
                   cart?.includes(item.id) ? '' : this.addToCart(item)
