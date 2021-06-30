@@ -256,7 +256,7 @@ class ProductDetail extends React.Component {
                       <ol className="breadcrumb bg-transparent">
                         <li className="breadcrumb-item"><span>Home</span></li>
                         <li className="breadcrumb-item"><span>Shop</span></li>
-                        <li className="breadcrumb-item"><span>{productDetailData.category?.parent_title[0]}</span></li>
+                        <li className="breadcrumb-item"><span>{productDetailData.category?.parent_category[0].title}</span></li>
                         <li className="breadcrumb-item"><span>{productDetailData.category?.cate_title}</span></li>
                       </ol>
                     </nav>
@@ -407,7 +407,9 @@ class ProductDetail extends React.Component {
 
                   <div className="product-description">
                     <header>Product Specifications</header>
-                    <p>{productDetailData?.content?.product_description}</p>
+                    <p>{productDetailData?.properties?.map((item, index) => (
+                      <> <span key={index}>{item.variation_key} - {item.veriation_value}</span><br /></>
+                    ))}</p>
                   </div>
 
 

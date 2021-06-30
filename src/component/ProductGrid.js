@@ -26,16 +26,14 @@ class ProductGrid extends Component {
 
 
   }
-
+  componentDidMount() {
+    this.getProductList(this.getSetQueryParams());
+    this.handleScrollPosition();
+  }
   componentDidUpdate(prevprops) {
     if (prevprops.history.location.search !== prevprops.location.search) {
       this.getProductList(this.getSetQueryParams())
     }
-  }
-
-  componentDidMount() {
-    this.getProductList(this.getSetQueryParams());
-    this.handleScrollPosition();
   }
 
   fetchMoreData = () => {
