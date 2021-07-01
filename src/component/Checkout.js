@@ -281,7 +281,7 @@ class CheckoutComp extends React.Component {
             <div className="row py-5">
 
               <div className="col-md-8 order-md-1">
-                <div className="card mb-3">
+                {/* <div className="card mb-3">
                   <div className="card-body">
                     <div className="checkoutSteps">
                       <div className="checkoutSrno">1</div>
@@ -292,7 +292,7 @@ class CheckoutComp extends React.Component {
                       <button>Change</button>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
 
                 {/* <div className="card mb-3">
@@ -337,7 +337,7 @@ class CheckoutComp extends React.Component {
                 <div className="card mb-3">
                   <div className="card-body">
                     <div className="checkoutSteps">
-                      <div className="checkoutSrno">2</div>
+                      <div className="checkoutSrno">1</div>
                       <div className="checkoutinfo">
                         <span>Delivery Address <FontAwesomeIcon icon={faCheck} /></span>
                         <span className="bottominfo">Aishwarya Singh, burhanputr, Sarojni nagar thana</span>
@@ -350,7 +350,7 @@ class CheckoutComp extends React.Component {
                 <div className="card mb-3">
                   <div className="changeHead">
                     <h3>
-                      <span className="srno">2</span>
+                      <span className="srno">1</span>
                       <span>Delivery Address</span>
                     </h3>
                   </div>
@@ -383,7 +383,7 @@ class CheckoutComp extends React.Component {
                 <div className="card mb-3">
                   <div className="card-body">
                     <div className="checkoutSteps">
-                      <div className="checkoutSrno">3</div>
+                      <div className="checkoutSrno">2</div>
                       <div className="checkoutinfo">
                         <span>Order Summary <FontAwesomeIcon icon={faCheck} /></span>
                         <span className="bottominfo">Items</span>
@@ -397,7 +397,7 @@ class CheckoutComp extends React.Component {
                 <div className="card mb-3">
                   <div className="changeHead">
                     <h3>
-                      <span className="srno">3</span>
+                      <span className="srno">2</span>
                       <span>Order Summary</span>
                     </h3>
                   </div>
@@ -449,7 +449,7 @@ class CheckoutComp extends React.Component {
                 <div className="card mb-3">
                   <div className="card-body">
                     <div className="checkoutSteps">
-                      <div className="checkoutSrno">4</div>
+                      <div className="checkoutSrno">3</div>
                       <div className="checkoutinfo">
                         <span>Payment Options <FontAwesomeIcon icon={faCheck} /></span>
                       </div>
@@ -461,7 +461,7 @@ class CheckoutComp extends React.Component {
                 <div className="card mb-3">
                   <div className="changeHead">
                     <h3>
-                      <span className="srno">4</span>
+                      <span className="srno">3</span>
                       <span>Payment Options</span>
                     </h3>
                   </div>
