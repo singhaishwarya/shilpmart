@@ -2466,6 +2466,7 @@ padding-bottom: 20px;
 .productVariation{
 	display: flex;
 	margin: 15px auto;
+	align-items: center;
 }
 .productVariation span{
 	min-width: 70px;
@@ -2577,27 +2578,31 @@ padding-bottom: 20px;
 	cursor: pointer;
 }
 .seller-details-box {
-	display: inline-block;
-	border: 1px solid #ececec;
-	border-radius: 7px;
-	background-color: white;
-	width: auto;
+	display: inline-block;	
+	background-color: #f5f5f5;
+	color: #000;
+	width: 100%;
 	padding: 5px;
-	min-width: 250px;
+	
 }
+.seller-head{display: inline-block;
+	vertical-align: top;
+	line-height: 2.7;
+	margin-right: 10px;}
+
 .title-meta {
 	margin-left: 25%;
 	font-size: 14px;
 	letter-spacing: 1px;
 }
 .seller-logo {
-	width: 45px;
-	display: inline-block;
-	vertical-align: top;
+	width: 45px;	
 	margin: 5px;
+	float: left;
 }
 .seller-contact {
 	display: inline-block;
+	width: 90%;
 }
 .s-title {
 	font-size: 18px;
@@ -2606,10 +2611,15 @@ padding-bottom: 20px;
 	margin-bottom: 0;
 	letter-spacing: 1px;
 	cursor: pointer;
+	float: left;
 }
-.seller-contact small {
-	color: #777;
-}
+.s-title span{float: left; margin: 7px 0;}
+.s-title span:hover{color: #e87f13;}
+.seller-contact small {color: #777;}
+
+.contactinfo{margin: 6px 0; float: right;}
+.contactinfo small{margin: 0 7px; color: #333;}
+
 .product-meta span {
 	margin-bottom: 7px;
 	display: block;
@@ -2631,6 +2641,11 @@ padding-bottom: 20px;
 	display: inline-block;
 	padding-right: 7px;
 }
+.social-share span button{color: #e87f13 !important;
+	font-size: 16px !important;}
+	.social-share span button:hover{
+		opacity: 0.5;
+	}
 .social-share a {
 	color: #777;
 	font-size: 14px;
