@@ -302,7 +302,7 @@ class Header extends Component {
                       <Link to='/my-account/details'><FontAwesomeIcon icon={faUser}/> Account details</Link>
                       <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo}/> Feedback</Link>
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faTicketAlt}/> Raise Ticket</Link>
-                      <Link to='my-account/wishlist'><FontAwesomeIcon icon={faHeart}/> Wishlist</Link>
+                      <Link to='/my-account/wishlist'><FontAwesomeIcon icon={faHeart}/> Wishlist</Link>
                       <Link to="" onClick={() => this.logout()}><FontAwesomeIcon icon={faSignOutAlt}/> Logout</Link>
                     </div>
                   }
@@ -417,7 +417,7 @@ class Header extends Component {
                       <Link to='/my-account/details'><FontAwesomeIcon icon={faUser}/> Account details</Link>
                       <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo}/> Feedback</Link>
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faTicketAlt}/> Raise Ticket</Link>
-                      <Link to='my-account/wishlist'><FontAwesomeIcon icon={faHeart}/> Wishlist</Link>
+                      <Link to='/my-account/wishlist'><FontAwesomeIcon icon={faHeart}/> Wishlist</Link>
                       <Link to="" onClick={() => this.logout()}><FontAwesomeIcon icon={faSignOutAlt}/> Logout</Link>
                     </div>
                   } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
