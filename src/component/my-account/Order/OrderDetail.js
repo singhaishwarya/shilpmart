@@ -86,8 +86,12 @@ export default class OrderDetail extends React.Component {
       console.log(err);
     });
   }
-  productDetail = () => {
-
+  productDetail = (value) => {
+    console.log("dfdfdfdf", value)
+    // this.props.history.push({
+    //   pathname: '/product-detail',
+    //   search: "?cid=" + ((value?.category?.length > 0 && value?.category?.category_id) || 0) + "&pid=" + value.product_id
+    // });
   }
 
   render() {
@@ -211,7 +215,7 @@ export default class OrderDetail extends React.Component {
                     <div className="row mb-2">
                       <div className="col-sm-2 col-4">
                         <div className="orderProductImg">
-                          <div className="orderimg" onClick={this.productDetail()}>
+                          <div className="orderimg" onClick={this.productDetail(product)}>
                             <img src={product.images[0]?.image_url} className="img-fluid" alt="CSC" onError={e => { e.currentTarget.src = require('../../../public/No_Image_Available.jpeg') }} />
                           </div>
                         </div>
