@@ -171,9 +171,12 @@ export default class Registration extends React.Component {
             </div>
           </div>
 
-          <div className="col-md-6 col-12 mb-5">
-            <h4 className="mb-4">Registration</h4>
-            <Form className="login-card" ref={c => { this.form = c }}>
+          <div className="col-md-6 col-12 mb-5 px-5">
+            
+            <div className="card shadow product-img-wrapper">
+              <div className="card-body">
+              <h4 className="mb-4">Registration</h4>
+              <Form className="login-card" ref={c => { this.form = c }}>
               <div className="form-group row">
                 <label htmlFor="staticEmail" className="col-sm-3 col-form-label">First Name<span>*</span></label>
                 <div className="col-sm-9">
@@ -254,6 +257,9 @@ export default class Registration extends React.Component {
               </div><button className="btn login-btn" value="Submit" disabled={false} onClick={this.handleSignUp} >Register</button>
 
             </Form>
+              </div>
+            </div>
+            
 
           </div>
         </div>

@@ -186,7 +186,8 @@ export default class Orders extends React.Component {
                             <div className="statusColor deliver"> <span>{getOrderStatus(item.status)}</span></div>
                             {/* <div className="statusReq"><p>As per your request, your item has been cancelled</p></div> */}
                           </div>
-                        </div><span>View More</span>
+                        </div>
+                        <div className="col"><span className="viewmore">View More</span></div>
                       </div></Link>
                   </div>
                 </div>

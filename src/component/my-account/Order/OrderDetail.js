@@ -233,7 +233,7 @@ export default class OrderDetail extends React.Component {
                         </div>
                       </div><div className="col-sm-2 col">
                         <div className="orderstatus">
-                          <button onClick={() => this.cancelOrder(productItem.order_id, product)}>cancel order</button>
+                          <button className="cancelled" onClick={() => this.cancelOrder(productItem.order_id, product)}>cancel order</button>
                         </div>
                       </div>
                     </div>

@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faPhone, faQuestion, faEnvelope, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faPhone, faQuestion, faEnvelope, faHeart, faPhoneAlt } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
 import {
@@ -147,9 +147,10 @@ class ProductDetail extends React.Component {
     this.setState({ wishlistStatus: !this.state.wishlistStatus });
   }
 
-  handleSellerProfile = () => {
+  handleSellerProfile = (id) => {
     this.props.history.push({
-      pathname: '/seller-profile'
+      pathname: '/seller-profile',
+      state:id
     })
 
   }
@@ -229,6 +230,7 @@ class ProductDetail extends React.Component {
   render() {
     const { productDetailData, productQuantity, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages } = this.state;
     const { wishlist, userData } = this.props;
+    console.log(productDetailData);
     return (
       <>
         <section id="maincontent">
@@ -354,24 +356,38 @@ class ProductDetail extends React.Component {
                 </div>
 
                 <div className="product-meta py-2">
-                  <div className="seller-details-box my-3" onClick={() => this.handleSellerProfile()}>
-                    <div className="title-meta"><em>Know your weaver</em></div>
-                    <div className="seller-logo"><img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /></div>
+                 
+                  <div className="seller-details-box my-3">
+                    {/* <div className="title-meta">Know your weaver</div> */}
+                    <div className="seller-head"><strong>Sold by :</strong> </div>
                     <div className="seller-contact">
-                      <p className="s-title">saenterpris36</p>
-                      <small><FontAwesomeIcon icon={faPhone} /> &nbsp; 9304637113</small><br />
-                      <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; info@eshilpmart.com</small><br />
-                      <ReactStars
-                        count={5}
-                        edit={false}
-                        size={15}
-                        color2={'#ffd700'} />
+                   
+                    {/* productDetailData.vendor.id */}
+                      <div className="seller-logo" onClick={() => this.handleSellerProfile(productDetailData.vendor.id)}>
+                      {productDetailData ? (
+                          productDetailData.vendor ? (
+                            productDetailData.vendor.logo ? 
+                            <img src={productDetailData.vendor.logo} className="img-fluid" alt={productDetailData ? (productDetailData.vendor ? productDetailData.vendor.brand +" logo" :'') : ''} />
+                             :<img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" />
+                             ) :''
+                             ) : ''}
+                      {/* <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /> */}
+                      </div>
+                      <div className="s-title"><span> {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.brand :'') : ''}</span> 
+                      {/* <span><ReactStars count={5} edit={false} size={15} color2={'#e87f13'} /></span> */}
+                      </div>
+                      <div className="contactinfo">
+                      <small><FontAwesomeIcon icon={faPhoneAlt} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.mobile :'') : ''}</small>
+                      <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.email :'') : ''}</small>
+                      </div>
+                     
+                      
                     </div>
                   </div>
+
                   <div className="clearfix"></div>
                   <span className="sku">SKU: <span>-</span></span>
-                  <span className="sku">Categories: <span>-</span></span>
-                  <span className="sku">Brand Name: <span>-</span></span>
+                  <span className="sku">Categories: <span>-</span></span>                  
                   <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span>
 
                   <div className="social-share">
@@ -407,9 +423,9 @@ class ProductDetail extends React.Component {
 
                   <div className="product-description">
                     <header>Product Specifications</header>
-                    <p>{productDetailData?.properties?.map((item, index) => (
-                      <> <span key={index}>{item.variation_key} - {item.veriation_value}</span><br /></>
-                    ))}</p>
+                    <ul className="specification">{productDetailData?.properties?.map((item, index) => (
+                      <> <li key={index}><span>{item.variation_key} :</span> {item.veriation_value}</li></>
+                    ))}</ul>
                   </div>
 
 

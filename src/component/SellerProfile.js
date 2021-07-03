@@ -44,14 +44,17 @@ export default class SellerProfile extends React.Component {
           ]
         }
       ],
+      vendor_id:this.props.history.location ? this.props.history.location.state : ''
     }
   }
-
+  componentDidMount = ()=>{
+    console.log(this.state.vendor_id); 
+  }
   render() {
     const { isActiveTab, categories, config } = this.state;
     return (
       <div className="container-fluid">
-        <div className="row pt-5">
+        <div className="row">
           <div className="col">
             <div className="seller-cover-wrapper">
               <div className="cover-area"></div>

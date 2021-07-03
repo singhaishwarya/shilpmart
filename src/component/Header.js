@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import Login from "./Login";
 import CartOverlay from "./CartOverlay";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faRandom, faHeart, faUndo, faShoppingBasket, faAdjust, faTimes, faTachometerAlt, faSignOutAlt, faTicketAlt, faUser, faList } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faTwitter, faLinkedinIn, faTelegram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import Modal from 'react-modal';
 import {
@@ -296,14 +296,14 @@ class Header extends Component {
                   onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard' className="nav-link">My Account</Link>
                   {isMenuShown &&
                     <div className="myAccout-dropdown">
-                      <Link to='/my-account/dashboard'> Dashboard</Link>
-                      <Link to='/my-account/order'>Orders</Link>
-                      <Link to='/my-account/address'>Addresses</Link>
-                      <Link to='/my-account/details'>Account details</Link>
-                      <Link to='/my-account/feedback'>Feedback</Link>
-                      <Link to='/my-account/order'>Raise Ticket</Link>
-                      <Link to='my-account/wishlist'>Wishlist</Link>
-                      <Link to="" onClick={() => this.logout()}>Logout</Link>
+                      <Link to='/my-account/dashboard'><FontAwesomeIcon icon={faTachometerAlt}/> Dashboard</Link>
+                      <Link to='/my-account/order'><FontAwesomeIcon icon={faShoppingBasket}/> Orders</Link>
+                      <Link to='/my-account/address'><FontAwesomeIcon icon={faList}/> Addresses</Link>
+                      <Link to='/my-account/details'><FontAwesomeIcon icon={faUser}/> Account details</Link>
+                      <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo}/> Feedback</Link>
+                      <Link to='/my-account/order'><FontAwesomeIcon icon={faTicketAlt}/> Raise Ticket</Link>
+                      <Link to='/my-account/wishlist'><FontAwesomeIcon icon={faHeart}/> Wishlist</Link>
+                      <Link to="" onClick={() => this.logout()}><FontAwesomeIcon icon={faSignOutAlt}/> Logout</Link>
                     </div>
                   }
                 </li>
@@ -411,14 +411,14 @@ class Header extends Component {
                   onMouseLeave={() => this.setIsMenuShown(false)} > <Link to='/my-account/dashboard'>My Account</Link>
                   {isMenuShown &&
                     <div className="myAccout-dropdown">
-                      <Link to='/my-account/dashboard'> Dashboard</Link>
-                      <Link to='/my-account/order'>Orders</Link>
-                      <Link to='/my-account/address'>Addresses</Link>
-                      <Link to='/my-account/details'>Account details</Link>
-                      <Link to='/my-account/feedback'>Feedback</Link>
-                      <Link to='/my-account/order'>Raise Ticket</Link>
-                      <Link to='/my-account/wishlist'>Wishlist</Link>
-                      <Link to="" onClick={() => this.logout()}>Logout</Link>
+                      <Link to='/my-account/dashboard'><FontAwesomeIcon icon={faTachometerAlt}/> Dashboard</Link>
+                      <Link to='/my-account/order'><FontAwesomeIcon icon={faShoppingBasket}/> Orders</Link>
+                      <Link to='/my-account/address'><FontAwesomeIcon icon={faList}/> Addresses</Link>
+                      <Link to='/my-account/details'><FontAwesomeIcon icon={faUser}/> Account details</Link>
+                      <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo}/> Feedback</Link>
+                      <Link to='/my-account/order'><FontAwesomeIcon icon={faTicketAlt}/> Raise Ticket</Link>
+                      <Link to='/my-account/wishlist'><FontAwesomeIcon icon={faHeart}/> Wishlist</Link>
+                      <Link to="" onClick={() => this.logout()}><FontAwesomeIcon icon={faSignOutAlt}/> Logout</Link>
                     </div>
                   } </li> : <li className="nav-item" onClick={() => this.dismissModal('login')}>Login/Register</li>}
 

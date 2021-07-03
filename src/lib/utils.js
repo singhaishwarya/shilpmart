@@ -21,9 +21,9 @@ export const getOrderStatus = (status) => {
 export const loaderOptions = {
   lines: 13,
   length: 20,
-  width: 10,
-  radius: 30,
-  scale: 1.00,
+  width: 5,
+  radius: 20,
+  scale: 0.70,
   corners: 1,
   color: '#000',
   opacity: 0.25,

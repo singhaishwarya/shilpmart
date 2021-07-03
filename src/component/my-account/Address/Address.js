@@ -40,7 +40,7 @@ export default class Address extends React.Component {
         <p> The following addresses will be used on the checkout page by default.</p>
         <div className="flexi">
           <div className="coloumn-2">
-            <div className="ad-address-wrapper">
+            <div className="ad-address-wrapper mb-3">
               <Link to='/my-account/add-address' > Add Address</Link>
             </div>
           </div>
@@ -48,7 +48,7 @@ export default class Address extends React.Component {
             {/* <h4>  Address</h4> */}
             <div className="row">
             {addressList?.map((item, index) => (
-              <div className="col-sm-4">
+              <div className="col">
              <div className="card shadow mb-4">
                <div className="card-body">
                <address key={index}><strong>{item.name}</strong>

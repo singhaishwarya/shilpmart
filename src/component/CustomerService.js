@@ -1,11 +1,21 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelopeSquare, faPhoneSquareAlt } from '@fortawesome/free-solid-svg-icons'
+import { faBullhorn, faEnvelope, faEnvelopeSquare, faPhone, faPhoneAlt, faPhoneSquareAlt } from '@fortawesome/free-solid-svg-icons'
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
 import GetInTouch from '../services/GetInTouch';
 import ToastService from '../services/ToastService';
+import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps"
+
+const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+  <GoogleMap
+    defaultZoom={8}
+    defaultCenter={{ lat: 26.8467, lng: 80.9462 }}
+  >
+    {props.isMarkerShown && <Marker position={{ lat: 26.8467, lng: 80.9462 }} />}
+  </GoogleMap>))
+
 export default class CustomerService extends React.Component {
 
   constructor(props) {
@@ -84,9 +94,39 @@ export default class CustomerService extends React.Component {
             <h1 className="text-center p-5">{currentPath === "/customer-service" ? 'Customer Services' : 'Contact Us'}</h1>
 
           </div>
+        
         </div>
         <div className="container">
-          <div className="row py-5">
+        <div className="row">
+          
+          <div className="col-sm-4">
+            <div className="contact-items">
+              <span className="contact-icon"><FontAwesomeIcon icon={faPhoneAlt}/></span>
+              <span className="contact-info">
+                <h2>Call Us</h2>
+                <p>011-24303500</p>
+                </span>
+            </div>
+          </div>
+          <div className="col-sm-4">
+            <div className="contact-items">
+              <span className="contact-icon"><FontAwesomeIcon icon={faEnvelope}/></span>
+              <span className="contact-info"><h2>Email Us</h2><p>Support@eshilpmart.gov.in</p></span>
+            </div>
+          </div>
+          <div className="col-sm-4">
+            <div className="contact-items">
+              <span className="contact-icon"><FontAwesomeIcon icon={faBullhorn}/></span>
+              <span className="contact-info">
+                <h2>Opening Hours</h2>
+              <p className="text-center">Monday to Sunday 9:00 am - 6:00 pm</p></span>
+            </div>
+          </div>
+        </div>
+
+
+
+          {/* <div className="row py-5">
             <div className="col-sm-5">
               <h3>Here to Help</h3>
               <p>Have a question? You may find an answer in our FAQs. But you can also contact us:</p>
@@ -126,15 +166,7 @@ export default class CustomerService extends React.Component {
                     <label htmlFor="inputAddress2">Comment or Message </label>
                     <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")} />
                   </div>
-                  {/* <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <Input type="email" className="form-control" id="email" placeholder="Email" name="email" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="InputAddress2">Comment or Message </label>
-                    <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
-                    </Textarea>
-                  </div> */}
+                 
 
 
                   <button value="Submit" className="btn btn-theme">Submit Query</button>
@@ -142,12 +174,59 @@ export default class CustomerService extends React.Component {
 
               </div>}
 
-            <div className="col-sm-12">
-              {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.442528014726!2d77.23733871455852!3d28.586498292914836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2fdedaabe87%3A0xadd98301faac65ce!2sElectronics%20Niketan%2C%20CGO%20Complex%2C%206%20Lodhi%20Road%2C%20Lodhi%20Rd%2C%20CGO%20Complex%2C%20Pragati%20Vihar%2C%20New%20Delhi%2C%20Delhi%20110003!5e0!3m2!1sen!2sin!4v1624280230099!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowFullScreen="" loading="lazy"></iframe> */}
+           
+
+          </div> */}
+        </div>
+        
+
+<section className="contactBg">
+        <div className="container">
+          <div className="row">
+          <div className="col-sm-7 p-5">
+            <h1 className="h1 font-weight-bold pt-5 px-5 pb-2 text-light">Get in touch is easy!</h1>
+            <p className="px-5 text-light h5 " style={{lineHeight:"1.7"}}>Electronics Niketan Annexe,<br/>
+6 CGO Complex Lodhi Road,<br/> New Delhi-110003<br/>
+Contact No. : +91-11-24360199 / 24301756
+</p>
+          </div>
+          <div className="col-sm-5">
+            <div className="card shadow">
+              <div className="card-body">
+              <Form className="p-3" ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleGetInTouch(e)} >
+
+<div className="form-row">
+  <div className="form-group col-md-6">
+    <label htmlFor="fname">First Name <span>*</span></label>
+    <Input type="text" className="form-control" id="fname" placeholder="" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} />
+  </div>
+  <div className="form-group col-md-6">
+    <label htmlFor="lName">Last Name <span>*</span></label>
+    <Input type="text" className="form-control" id="lName" placeholder="" name="last name" value={fields.last_name} validations={[this.required]} onChange={this.handleChange.bind(this, "last_name")} />
+  </div>
+</div>
+
+
+<div className="form-group">
+  <label htmlFor="email">Email <span>*</span></label>
+  <input type="email" className="form-control" id="email" placeholder="" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
+</div>
+<div className="form-group">
+  <label htmlFor="inputAddress2">Comment or Message </label>
+  <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")} />
+</div>
+
+
+
+<button value="Submit" className="btn btn-theme">Submit Query</button>
+</Form>
+              </div>
             </div>
 
           </div>
+          </div>
         </div>
+        </section>
       </section>
     );
   }
