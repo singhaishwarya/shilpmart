@@ -18,7 +18,7 @@ export default class AboutUs extends React.Component {
           </div>
         </div>
         <div className="container-fluid">
-          <div className="row py-5">
+          <div className="row pb-5">
             <div className="col">
               <div className="aboutWrapper">
                 <div className="aboutbgoverlay"></div>

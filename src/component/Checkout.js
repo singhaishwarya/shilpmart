@@ -358,19 +358,62 @@ class CheckoutComp extends React.Component {
                     <div className="row">
                       <div className="col">
                         <div className="addresswraper">
+                          <div className="form-check addressList">
+                          <input type="radio" className="form-check-input" name="address" readonly id="defaultAddress"/>
+                          <label className="form-check-label" for="defaultAddress"> 
                           <p className="d-flex addressTop">
-                            <span><strong><FontAwesomeIcon icon={faCheck} /> Ram Chandra</strong></span>
+                            <span><strong> Ram Chandra</strong></span>
                             <span className="type">Home</span>
                             <span><strong>+919811148709</strong></span>
                           </p>
                           <p>G-164, badarpur, New Delhi, Delhi</p>
                           <div className="nextbutton"><button>Deliver Here</button></div>
+                           </label>
+                           <span className="checkEdit">Edit</span>
+                          </div>
+
+
+                          <div className="form-check addressList">
+                          <input type="radio" className="form-check-input" name="address" readonly id="defaultAddress"/>
+                          <label className="form-check-label" for="defaultAddress"> 
+                          <p className="d-flex addressTop">
+                            <span><strong> Ram Chandra</strong></span>
+                            <span className="type">Home</span>
+                            <span><strong>+919811148709</strong></span>
+                          </p>
+                          <p>G-164, badarpur, New Delhi, Delhi</p>
+                          
+                           </label>
+                          </div>
+
+
+                          <div className="form-check addressList">
+                          <input type="radio" className="form-check-input" name="address" readonly id="defaultAddress"/>
+                          <label className="form-check-label" for="defaultAddress"> 
+                          <p className="d-flex addressTop">
+                            <span><strong> Ram Chandra</strong></span>
+                            <span className="type">Home</span>
+                            <span><strong>+919811148709</strong></span>
+                          </p>
+                          <p>G-164, badarpur, New Delhi, Delhi</p>
+                          
+                           </label>
+                          </div>
+                          
+                          <div className="row">
+                            <div className="col">  <div className="form-group form-check">
+                      <input type="checkbox" className="form-check-input" checked={isBillingAddressSame}
+                        onChange={() => { this.dismissModal('address', "billing") }} />
+                      <label className="form-check-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
+                    </div></div>
+                            <div className="col nextbutton"><button className="float-right">Add New Address</button></div>
+                          </div>
+                        
+
                         </div>
 
                       </div>
-                      <div className="col">
-                        <span className="checkEdit">Edit</span>
-                      </div>
+                     
 
 
                     </div>
@@ -404,6 +447,34 @@ class CheckoutComp extends React.Component {
                   <div className="changewrapper">
                     <div className="row">
                       <div className="col">
+                        <div className="orderSummaryWrapper">
+                          <div className="orderSummary">
+                            <div className="orderImg"><img src="https://seller.digitalindiacorporation.in/images/2/shirt31623065435.jpeg" class="img-fluid" /></div>
+                            <div className="orderInfo">
+                              <p className="producthead">Product Title</p>
+                              <p className="seller">Seller: <span>Seller Name</span></p>
+                              <span className="productprice"><span>₹</span> 399</span>
+                              <span className="mainprice"><strike><span>₹</span> 500</strike></span>
+
+                            </div>
+                            <div className="whendeliver">Delivery by <span>30, June</span> | 45</div>
+
+
+                          </div>
+
+                          <div className="orderaction">
+                            <div class="product-qty">
+                              <div class="input-group">
+                                <input type="button" class="quantity-left-minus" value="-" />
+                                <input type="number" value="5" />
+                                <input type="button" class="quantity-right-plus" value="+" />
+                              </div>
+                            </div>
+                            <span>Remove</span>
+                          </div>
+                        </div>
+
+
                         <div className="orderSummaryWrapper">
                           <div className="orderSummary">
                             <div className="orderImg"><img src="https://seller.digitalindiacorporation.in/images/2/shirt31623065435.jpeg" class="img-fluid" /></div>
