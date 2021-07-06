@@ -3703,11 +3703,32 @@ margin-bottom: 20px;
 
 .checkoutinfo{
 	color: #878787;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    text-transform: uppercase;
+font-size: 16px;
+font-weight: 600;
+margin-bottom: 6px;
+text-transform: uppercase;
+
 }
+.orderSummary{display: flex;
+	float: left;
+	align-items: center;}
+.checkoutInfo_img{width: 65px;
+	height: 65px;
+	position: relative;	
+	float: left;
+	margin-right: 15px;}
+.checkoutInfo_img span{position: absolute;
+	background: #fff;
+	border: 1px solid #ccc;
+	bottom: -7px;
+	font-size: 10px;
+	color: #000;
+	text-align: center;
+	padding: 2px 7px;
+	border-radius: 3px;
+	z-index: 9999;
+	left: 6px;}
+.checkoutInfo_title{font-size: 14px; font-weight: 600; color: #000;}
 
 .checkoutinfo span{display: block;}
 .checkoutinfo span.bottominfo{font-size: 14px; text-transform: capitalize; font-weight: normal; color: #444;}

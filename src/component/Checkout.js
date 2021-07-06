@@ -447,16 +447,16 @@ class CheckoutComp extends React.Component {
                               finItem = item.product_details || item,
 
                               <div className="orderSummaryWrapper" key={index}>
-                                <div className="orderSummary">
+                                <div className="row">
+                                  <div className="col-sm-9 col-12"><div className="orderSummary">
                                   <div className="orderImg"><img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
                                   <div className="orderInfo">
                                     <p className="producthead">{finItem?.content?.title}</p>
                                     {/* <p className="seller">Seller: <span>Seller Name</span></p> */}
                                     <span className="productprice"><span>₹</span> {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
                                   </div>
-                                </div>
-
-                                <div className="orderaction">
+                                </div></div>
+                                  <div className="col-sm-3 col-12"><div className="orderaction">
                                   <div className="product-qty">
                                     <div className="input-group">
                                       <input type="button" className="quantity-left-minus" value="-" onClick={() => this.changeQuantity(item, item?.quantity - 1, 'dec')} />
@@ -465,9 +465,14 @@ class CheckoutComp extends React.Component {
                                     </div>
                                   </div>
                                   <span onClick={() => this.changeQuantity(item, 0, 'dec')}>Remove</span>
-                                </div>
+                                </div></div>
+                                  </div>
+                                
+
+                                
                               </div>))}
                             {/* </div> */}
+                            <div class="d-flex address_btn my-2 float-right"><button>Procced</button></div>
                           </div>
                         </div>
                       </div>
@@ -475,14 +480,20 @@ class CheckoutComp extends React.Component {
                     : <div className="card mb-3">
                       <div className="card-body">
                         <div className="checkoutSteps">
-                          <div className="checkoutinfo">
-                            {checkOutData.map((item, index) => (
-                              finItem = item.product_details || item,
-                              <span className="bottominfo">{finItem?.content?.title}- ₹ {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
-                            ))}
+                          <div className="checkoutinfo orderSummary">
+                            {/* {checkOutData.map((item, index) => (
+                              finItem = item.product_details || item, */}
+                              <div className="checkoutInfo_img"><img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
+                              <span>+1 Item</span>
+                              </div>
+                              <div className="checkoutInfo_title">Handloom Jacquard Cotton Saree</div>
+                              
+                            
                           </div>
                           <button onClick={() => this.setState({ sectionToggle: { orderSummary: true } })}>Change</button>
+                          
                         </div>
+                        
                       </div>
                     </div>}
                 {/* <div className="card mb-3">
