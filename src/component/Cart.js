@@ -26,7 +26,7 @@ class Cart extends Component {
     CartService.list().then((result) => {
       this.setState({ cartProduct: result });
       result.map((item) => (
-        totalCost1 += (item?.product_details?.price * 1 || 0) * (item.quantity * 1)
+        totalCost1 += (item?.product_details?.prices[0]?.price * 1 || 0) * (item.quantity * 1)
       ))
       this.setState({
         totalCost: totalCost1
@@ -64,12 +64,12 @@ class Cart extends Component {
     })
   }
 
-  productCountManual = (event, product) => {
+  // productCountManual = (event, product) => {
 
-    this.setState({ productCount: event.target.value });
-    this.changeQuantity(product, event.target.value)
+  //   this.setState({ productCount: event.target.value });
+  //   this.changeQuantity(product, event.target.value)
 
-  }
+  // }
 
   changeQuantity = (product, quantity) => {
     this.setState({ productCount: quantity });
@@ -118,12 +118,12 @@ class Cart extends Component {
                             className="img-fluid"
                             onClick={() => this.productDetail(finItem)}
                             alt={(finItem?.images?.length > 0 && finItem?.images[0]?.caption) || ""}
-                            onError={e => { e.currentTarget.src = require('../public/bag1.jpeg') }}
+                            onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                           />
                         </td>
                         <td className="product-name">{finItem?.content?.title}
                           <p>Store : <span><span>{finItem?.store_name}</span></span></p></td>
-                        <td className="product-subtotal"><span> <span>₹</span> {(finItem?.price?.length > 0 && finItem?.price) || 0}
+                        <td className="product-subtotal"><span> <span>₹</span> {finItem?.prices[0]?.price || 0}
                         </span></td>
                         <td className="product-quantity" data-title="Quantity"><div className="product-qty">
                           <div className="input-group">
@@ -134,7 +134,7 @@ class Cart extends Component {
                           </div>
                         </div>
                         </td>
-                        <td className="product-price"><span><span>₹</span> {(finItem?.price?.length > 0 && finItem?.price * item.quantity) || 0}</span></td>
+                        <td className="product-price"><span><span>₹</span> {(finItem?.prices[0]?.price * item.quantity) || 0}</span></td>
                       </tr>
                     ))}
                   </tbody>

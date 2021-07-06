@@ -150,7 +150,7 @@ class ProductDetail extends React.Component {
   handleSellerProfile = (id) => {
     this.props.history.push({
       pathname: '/seller-profile',
-      state:id
+      state: id
     })
 
   }
@@ -356,38 +356,38 @@ class ProductDetail extends React.Component {
                 </div>
 
                 <div className="product-meta py-2">
-                 
+
                   <div className="seller-details-box my-3">
                     {/* <div className="title-meta">Know your weaver</div> */}
                     <div className="seller-head"><strong>Sold by :</strong> </div>
                     <div className="seller-contact">
-                   
-                    {/* productDetailData.vendor.id */}
+
+                      {/* productDetailData.vendor.id */}
                       <div className="seller-logo" onClick={() => this.handleSellerProfile(productDetailData.vendor.id)}>
-                      {productDetailData ? (
+                        {productDetailData ? (
                           productDetailData.vendor ? (
-                            productDetailData.vendor.logo ? 
-                            <img src={productDetailData.vendor.logo} className="img-fluid" alt={productDetailData ? (productDetailData.vendor ? productDetailData.vendor.brand +" logo" :'') : ''} />
-                             :<img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" />
-                             ) :''
-                             ) : ''}
-                      {/* <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /> */}
+                            productDetailData.vendor.logo ?
+                              <img src={productDetailData.vendor.logo} className="img-fluid" alt={productDetailData ? (productDetailData.vendor ? productDetailData.vendor.brand + " logo" : '') : ''} />
+                              : <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" />
+                          ) : ''
+                        ) : ''}
+                        {/* <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /> */}
                       </div>
-                      <div className="s-title"><span> {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.brand :'') : ''}</span> 
-                      {/* <span><ReactStars count={5} edit={false} size={15} color2={'#e87f13'} /></span> */}
+                      <div className="s-title"><span> {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.brand : '') : ''}</span>
+                        {/* <span><ReactStars count={5} edit={false} size={15} color2={'#e87f13'} /></span> */}
                       </div>
                       <div className="contactinfo">
-                      <small><FontAwesomeIcon icon={faPhoneAlt} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.mobile :'') : ''}</small>
-                      <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.email :'') : ''}</small>
+                        <small><FontAwesomeIcon icon={faPhoneAlt} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.mobile : '') : ''}</small>
+                        <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.email : '') : ''}</small>
                       </div>
-                     
-                      
+
+
                     </div>
                   </div>
 
                   <div className="clearfix"></div>
                   <span className="sku">SKU: <span>-</span></span>
-                  <span className="sku">Categories: <span>-</span></span>                  
+                  <span className="sku">Categories: <span>-</span></span>
                   <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span>
 
                   <div className="social-share">

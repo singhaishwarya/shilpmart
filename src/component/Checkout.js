@@ -10,30 +10,34 @@ import { CheckoutProvider, Checkout } from 'paytm-blink-checkout-react';
 import Loader from "react-loader";
 import * as cartAction from '../actions/cart';
 import { loaderOptions, customLoginStyles, paymentConfig } from "../lib/utils";
+import AddAddress from "./my-account/Address/AddAddress";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell, faCheck, faStar, faTimes, faTruck } from '@fortawesome/free-solid-svg-icons';
 class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
+    this.changeQuantity = this.changeQuantity.bind(this);
+
     if (typeof props?.location?.state !== 'undefined') {
       localStorage.setItem('checkOutData', JSON.stringify(props?.location?.state?.checkout));
-      localStorage.setItem('totalCartCost', props?.location?.state?.totalCartCost)
+      localStorage.setItem('totalCartCost', props?.location?.state?.totalCartCost * 1)
     }
 
     this.state = {
       addressList: [],
+      sectionToggle: { shipping: false, billing: false, orderSummary: false },
       selectedShippingAddress: {},
       selectedBillingAddress: {},
       showModal: false,
       checkOutData: JSON.parse(localStorage.getItem('checkOutData')) || [],
-      totalCartCost: localStorage.getItem('totalCartCost') || 0,
+      totalCartCost: localStorage.getItem('totalCartCost') * 1 || 0,
       paymentType: '', paytmConfig: {},
       txnResponse: {},
       isCheckoutClick: false,
       checksumResponse: {},
       isLoaded: false,
       isBillingAddressSame: true,
-      addressType: ''
+      addressType: '', addeditAddress: false, productQuantity: 1
     };
 
   }
@@ -52,7 +56,10 @@ class CheckoutComp extends React.Component {
   getAddress = () => {
     AddressService.list().then((result) => {
       if (!result) return
-      this.setState({ selectedShippingAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0], addressList: result.data, isLoaded: true });
+      this.setState({
+        selectedShippingAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0],
+        selectedBillingAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0], addressList: result.data, isLoaded: true
+      });
 
     }).catch((err) => {
       this.setState({ isLoaded: true });
@@ -222,10 +229,42 @@ class CheckoutComp extends React.Component {
     return form
   }
 
+  toggleSection = (type) => {
+    let sectionToggle = this.state.sectionToggle;
+    sectionToggle[type] = !this.state.sectionToggle[type];
+    this.setState({ sectionToggle });
+  }
+
+  changeQuantity = (product, quantity, type) => {
+    const { totalCartCost, checkOutData } = this.state;
+    let objIndex, checkOutDataLoc, cartProduct, cartCost;
+    if (quantity === 0) {
+      cartProduct = checkOutData.filter((item) => item.id !== product.id);
+      cartCost = totalCartCost - (product.product_details.prices[0].price * product.quantity);
+      this.setState({
+        checkOutData: cartProduct,
+        totalCartCost: cartCost
+      });
+      localStorage.setItem('checkOutData', JSON.stringify(cartProduct));
+      localStorage.setItem('totalCartCost', totalCartCost - (product.product_details.prices[0].price * product.quantity));
+    } else {
+      objIndex = checkOutData.findIndex((obj => obj.id === product.id));
+      checkOutDataLoc = [...checkOutData];
+      checkOutDataLoc[objIndex] = { ...checkOutDataLoc[objIndex], quantity: quantity };
+
+      cartCost = type === 'inc' ? totalCartCost + (product.product_details.prices[0].price * 1) :
+        totalCartCost - (product.product_details.prices[0].price * 1)
+      this.setState({
+        checkOutData: checkOutDataLoc, totalCartCost: cartCost
+      });
+      localStorage.setItem('checkOutData', JSON.stringify(checkOutDataLoc));
+      localStorage.setItem('totalCartCost', cartCost);
+    }
+
+  }
+
   render() {
-    const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, paymentType, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType } = this.state;
-
-
+    const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, paymentType, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType, productQuantity, addeditAddress, sectionToggle } = this.state;
     let finItem;
     return (
       <section>
@@ -245,34 +284,34 @@ class CheckoutComp extends React.Component {
                 showModal: false, selectedBillingAddress: selectedBillingAddress ? selectedBillingAddress : {}
               })} /></span>
               <h1 className="border-bottom mb-3"> Select Address</h1>
-              
+
               <div className="row">
-              {addressList?.map((item, index) => (
-                <div className="col-sm-3 col-12">
-                <div className="card shadow mb-3">
-                  <div className="card-body">
-                  <address className="selectAdd" key={index}><strong>{item.name}</strong>
-                  <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
-                  <br /> {item.district},  {item.state} - {item.pincode}<br />
-                  <strong>Mobile No.</strong>: {item.mobile}<br />
-                  <strong>Email</strong> : {item?.email} 
-                  {/* <p className="d-flex justify-content-between">
-                    <span onClick={() => {
-                      addressType === 'shipping' ? this.setState({ selectedShippingAddress: item, showModal: false }) :
-                        this.setState({ selectedBillingAddress: item, showModal: false, isBillingAddressSame: false })
-                    }} className="btn btn-dark btn-theme">Select</span>
-                  </p> */}
-                </address>
-                <div className="form-check radioPos">
-        <input className="form-check-input" type="radio" name="selectAdd" id="selectAdd" defaultValue="option1" defaultChecked />
-        
-      </div>
+                {addressList?.map((item, index) => (
+                  <div key={index} className="col-sm-3 col-12">
+                    <div className="card shadow mb-3">
+                      <div className="card-body" onClick={() => {
+                        addressType === 'shipping' ? this.setState({ selectedShippingAddress: item, showModal: false }) :
+                          this.setState({ selectedBillingAddress: item, showModal: false, isBillingAddressSame: false })
+                      }} >
+                        <address className="selectAdd"><strong>{item.name}</strong>
+                          <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
+                          <br /> {item.district},  {item.state} - {item.pincode}<br />
+                          <strong>Mobile No.</strong>: {item.mobile}<br />
+                          <strong>Email</strong> : {item?.email}
+                        </address>
+                        <div className="form-check radioPos">
+                          {/* onClick={() => {
+                            addressType === 'shipping' ? this.setState({ selectedShippingAddress: item, showModal: false }) :
+                              this.setState({ selectedBillingAddress: item, showModal: false, isBillingAddressSame: false })
+                          }} */}
+                          <input className="form-check-input" type="radio" name="selectAdd" value={item.id} checked={item.id === selectedShippingAddress.id} defaultValue={selectedShippingAddress.id} defaultChecked />
+                        </div>
+                      </div>
                     </div>
-                </div>
-                </div>
-                
-                
-              ))} </div> <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link></div>}
+                  </div>
+
+
+                ))} </div> <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link></div>}
           </Modal>
         </div>
 
@@ -281,172 +320,172 @@ class CheckoutComp extends React.Component {
             <div className="row py-5">
 
               <div className="col-md-8 order-md-1">
-                {/* <div className="card mb-3">
-                  <div className="card-body">
-                    <div className="checkoutSteps">
-                      <div className="checkoutSrno">1</div>
-                      <div className="checkoutinfo">
-                        <span>Login <FontAwesomeIcon icon={faCheck} /></span>
-                        <span className="bottominfo">+919811148709</span>
-                      </div>
-                      <button>Change</button>
-                    </div>
-                  </div>
-                </div> */}
-
-
-                {/* <div className="card mb-3">
-                  <div className="changeHead">
-                    <h3>
-                      <span className="srno">1</span>
-                      <span>Login</span>
-                    </h3>
-                  </div>
-                  <div className="changewrapper">
-                    <div className="row">
-                      <div className="col">
-                        <div className="logedinfo p-4">
-                          <p className="text-muted">Phone: <span className="text-dark"> +919811148709</span></p>
-                          <p><span className="text-bold text-active">Logout & Sign in to another account</span></p>
-                          <div className="nextbutton"><button>Continue checkout</button></div>
-                        </div>
-
-                      </div>
-                      <div className="col">
-                        <div className="p-4">
-                          <p>Advantages of our secure login</p>
-                          <ul className="advantagelogin">
-                            <li><FontAwesomeIcon icon={faTruck} /> Easily Track Orders, Hassle free Returns</li>
-                            <li><FontAwesomeIcon icon={faBell} /> Get Relevant Alerts and Recommendation</li>
-                            <li><FontAwesomeIcon icon={faStar} /> Wishlist, Reviews, Ratings and more.</li>
-                          </ul>
-                        </div>
-                      </div>
-                      <p className="text-muted pt-3 px-5">Please note that upon clicking "Logout" you will lose all items in cart and will be redirected to eShilpmart home page.</p>
-
-                    </div>
-                  </div>
-
-                </div> */}
-
-
-
-
-
-
-                <div className="card mb-3">
-                  <div className="card-body">
-                    <div className="checkoutSteps">
-                      <div className="checkoutSrno">1</div>
-                      <div className="checkoutinfo">
-                        <span>Delivery Address <FontAwesomeIcon icon={faCheck} /></span>
-                        <span className="bottominfo">Aishwarya Singh, burhanputr, Sarojni nagar thana</span>
-                      </div>
-                      <button>Change</button>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="card mb-3">
                   <div className="changeHead">
                     <h3>
                       <span className="srno">1</span>
-                      <span>Delivery Address</span>
+                      <span>Shipping Address</span>
                     </h3>
                   </div>
-                  <div className="changewrapper">
+                  {sectionToggle.shipping ? <div className="changewrapper">
                     <div className="row">
-                      <div className="col">
-                        <div className="addresswraper">
-                          <p className="d-flex addressTop">
-                            <span><strong><FontAwesomeIcon icon={faCheck} /> Ram Chandra</strong></span>
-                            <span className="type">Home</span>
-                            <span><strong>+919811148709</strong></span>
-                          </p>
-                          <p>G-164, badarpur, New Delhi, Delhi</p>
-                          <div className="nextbutton"><button>Deliver Here</button></div>
+                      {addeditAddress ? <AddAddress
+                        address={selectedShippingAddress}
+                        selectedAddress={(e) => { this.setState({ selectedShippingAddress: e, addeditAddress: false }); this.getAddress() }} /> :
+                        <>
+                          <div className="col">
+                            <div className="addresswraper">
+                              <p className="d-flex addressTop">
+                                <span><strong><FontAwesomeIcon icon={faCheck} /> {selectedShippingAddress.name}</strong></span>
+                                <span className="type">{selectedShippingAddress.type === 1 ? "Home" : "Work"}</span>
+                                < span > <strong>Mobile No.</strong>: <strong>{selectedShippingAddress.mobile}</strong></span>
+                              </p>
+                              <p>{selectedShippingAddress.address1}</p>
+                              <p>{selectedShippingAddress.address2}</p>
+                              <p> <strong>PinCode</strong>: {selectedShippingAddress.pincode}</p>
+                              <div ><button onClick={() => this.setState({ sectionToggle: { shipping: false } })}>Procced</button> <span>    </span>
+                                <button onClick={() => { this.changeAddress('shipping') }}>Select Address</button></div>
+                            </div>
+                            <div className="form-group form-check">
+                              <input type="checkbox" className="form-check-input" checked={isBillingAddressSame}
+                                onChange={() => { this.setState({ isBillingAddressSame: !isBillingAddressSame }); (isBillingAddressSame && this.dismissModal('address', "billing")) }} />
+                              <label className="form-check-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
+                            </div>
+                          </div>
+                          <div className="col">
+                            <span className="checkEdit" onClick={() => { this.setState({ addeditAddress: true }) }}>Edit</span>
+                          </div></>
+                      }
+                    </div>
+                  </div> :
+                    <div className="card-body">
+                      <div className="checkoutSteps">
+                        {/* <div className="checkoutSrno">1</div> */}
+                        <div className="checkoutinfo">
+                          {/* <span>Shipping Addressinside <FontAwesomeIcon icon={faCheck} /></span> */}
+                          <span className="bottominfo">{selectedShippingAddress.name},{selectedShippingAddress.address1},{selectedShippingAddress.address2}</span>
+                          <span className="bottominfo">{selectedShippingAddress.mobile}</span>
+                          <span className="bottominfo">{selectedShippingAddress.state}</span>
+                          <span className="bottominfo"> <strong>Pincode</strong>: {selectedShippingAddress.pincode}</span>
                         </div>
-
+                        <button onClick={() => this.setState({ sectionToggle: { shipping: true } })}>Change</button>
                       </div>
-                      <div className="col">
-                        <span className="checkEdit">Edit</span>
-                      </div>
-
-
-                    </div>
-                  </div>
-
+                    </div>}
                 </div>
-
-
-
-                <div className="card mb-3">
-                  <div className="card-body">
-                    <div className="checkoutSteps">
-                      <div className="checkoutSrno">2</div>
-                      <div className="checkoutinfo">
-                        <span>Order Summary <FontAwesomeIcon icon={faCheck} /></span>
-                        <span className="bottominfo">Items</span>
-                      </div>
-                      <button>Change</button>
-                    </div>
-                  </div>
-                </div>
-
-
                 <div className="card mb-3">
                   <div className="changeHead">
                     <h3>
                       <span className="srno">2</span>
-                      <span>Order Summary</span>
+                      <span>Billing Address</span>
                     </h3>
                   </div>
-                  <div className="changewrapper">
+                  {sectionToggle.billing ? <div className="changewrapper">
                     <div className="row">
-                      <div className="col">
-                        <div className="orderSummaryWrapper">
-                          <div className="orderSummary">
-                            <div className="orderImg"><img src="https://seller.digitalindiacorporation.in/images/2/shirt31623065435.jpeg" class="img-fluid" /></div>
-                            <div className="orderInfo">
-                              <p className="producthead">Product Title</p>
-                              <p className="seller">Seller: <span>Seller Name</span></p>
-                              <span className="productprice"><span>₹</span> 399</span>
-                              <span className="mainprice"><strike><span>₹</span> 500</strike></span>
-
+                      {addeditAddress ? <AddAddress
+                        address={selectedBillingAddress}
+                        selectedAddress={(e) => { this.setState({ selectedBillingAddress: e, addeditAddress: false }); this.getAddress() }} /> :
+                        <>
+                          <div className="col">
+                            <div className="addresswraper">
+                              <p className="d-flex addressTop">
+                                <span><strong><FontAwesomeIcon icon={faCheck} /> {selectedBillingAddress.name}</strong></span>
+                                <span className="type">{selectedBillingAddress.type === 1 ? "Home" : "Work"}</span>
+                                < span > <strong>Mobile No.</strong>: <strong>{selectedBillingAddress.mobile}</strong></span>
+                              </p>
+                              <p>{selectedBillingAddress.address1}</p>
+                              <p>{selectedBillingAddress.address2}</p>
+                              <p> <strong>PinCode</strong>: {selectedBillingAddress.pincode}</p>
+                              <div className=""><button onClick={() => this.setState({ sectionToggle: { billing: false } })}>Procced</button> <span>    </span>
+                                <button onClick={() => { this.changeAddress('billing') }}>Select Address</button></div>
                             </div>
-                            <div className="whendeliver">Delivery by <span>30, June</span> | 45</div>
-
-
                           </div>
-
-                          <div className="orderaction">
-                            <div class="product-qty">
-                              <div class="input-group">
-                                <input type="button" class="quantity-left-minus" value="-" />
-                                <input type="number" value="5" />
-                                <input type="button" class="quantity-right-plus" value="+" />
-                              </div>
-                            </div>
-                            <span>Remove</span>
-                          </div>
-                        </div>
-
-
-
-
-
-                      </div>
-
+                          <div className="col">
+                            <span className="checkEdit" onClick={() => { this.setState({ addeditAddress: true }) }}>Edit</span>
+                          </div></>
+                      }
                     </div>
+                  </div> :
+                    <div className="card-body">
+                      <div className="checkoutSteps">
+                        {/* <div className="checkoutSrno">2</div> */}
+                        <div className="checkoutinfo">
+                          {/* <span>Billing Address <FontAwesomeIcon icon={faCheck} /></span> */}
+                          <span className="bottominfo">{selectedBillingAddress.name},{selectedBillingAddress.address1},{selectedBillingAddress.address2}</span>
+                          <span className="bottominfo">{selectedBillingAddress.mobile}</span>
+                          <span className="bottominfo">{selectedBillingAddress.state}</span>
+                          <span className="bottominfo"> <strong>Pincode</strong>: {selectedBillingAddress.pincode}</span>
+                        </div>
+                        <button onClick={() => this.setState({ sectionToggle: { billing: true } })}>Change</button>
+                      </div>
+                    </div>}
+                </div>
+                <div className="changeHead">
+                  <h3>
+                    <span className="srno">3</span>
+                    <span>Order Summary</span>
+                  </h3>
+                </div>
+                {checkOutData.length === 0 ? <div className="card mb-3">
+                  <div className="card-body">
+                    <div className="checkoutSteps">
+                      <div className="checkoutinfo">
+                        <span>Sorry, your checkout session has expired.</span>
+                      </div></div>
                   </div>
-
                 </div>
 
+                  :
 
+                  sectionToggle.orderSummary ?
+                    <div className="card mb-3">
 
+                      <div className="changewrapper">
+                        <div className="row">
+                          <div className="col">
 
+                            {checkOutData.map((item, index) => (
+                              finItem = item.product_details || item,
 
-                <div className="card mb-3">
+                              <div className="orderSummaryWrapper" key={index}>
+                                <div className="orderSummary">
+                                  <div className="orderImg"><img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
+                                  <div className="orderInfo">
+                                    <p className="producthead">{finItem?.content?.title}</p>
+                                    {/* <p className="seller">Seller: <span>Seller Name</span></p> */}
+                                    <span className="productprice"><span>₹</span> {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
+                                  </div>
+                                </div>
+
+                                <div className="orderaction">
+                                  <div className="product-qty">
+                                    <div className="input-group">
+                                      <input type="button" className="quantity-left-minus" value="-" onClick={() => this.changeQuantity(item, item?.quantity - 1, 'dec')} />
+                                      <input type="number" value={item?.quantity || 1} disabled={true} />
+                                      <input type="button" className="quantity-right-plus" value="+" onClick={() => this.changeQuantity(item, item?.quantity + 1, 'inc')} />
+                                    </div>
+                                  </div>
+                                  <span onClick={() => this.changeQuantity(item, 0, 'dec')}>Remove</span>
+                                </div>
+                              </div>))}
+                            {/* </div> */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    : <div className="card mb-3">
+                      <div className="card-body">
+                        <div className="checkoutSteps">
+                          <div className="checkoutinfo">
+                            {checkOutData.map((item, index) => (
+                              finItem = item.product_details || item,
+                              <span className="bottominfo">{finItem?.content?.title}- ₹ {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
+                            ))}
+                          </div>
+                          <button onClick={() => this.setState({ sectionToggle: { orderSummary: true } })}>Change</button>
+                        </div>
+                      </div>
+                    </div>}
+                {/* <div className="card mb-3">
                   <div className="card-body">
                     <div className="checkoutSteps">
                       <div className="checkoutSrno">3</div>
@@ -456,12 +495,12 @@ class CheckoutComp extends React.Component {
                       <button>Change</button>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="card mb-3">
+                {checkOutData.length > 0 && <div className="card mb-3">
                   <div className="changeHead">
                     <h3>
-                      <span className="srno">3</span>
+                      <span className="srno">4</span>
                       <span>Payment Options</span>
                     </h3>
                   </div>
@@ -496,124 +535,24 @@ class CheckoutComp extends React.Component {
                           </label>
                         </div>
                       </div>
-
-
-
-
-
                     </div>
                   </div>
 
-                </div>
-
-
-
-
-
-
-
+                </div>}
 
                 <div className="card shadow pr-5">
                   <div className="card-body">
-
-
-                    <h4 className="mb-3">Shipping address</h4>
-                    {selectedShippingAddress?.name ? <>< address  > {selectedShippingAddress?.name}
-                      <br />{selectedShippingAddress?.address1} <br />{selectedShippingAddress?.address2} <br /> {selectedShippingAddress?.sub_district}
-                      <br /> {selectedShippingAddress?.district},  {selectedShippingAddress?.state} - {selectedShippingAddress?.pincode}<br />
-                      <strong>Mobile No.</strong>: {selectedShippingAddress?.mobile}<br />
-                      <strong>Email</strong> : {selectedShippingAddress?.email} <br /><br />
-                    </address>
-                      <p className="">
-                        <span className="btn btn-dark btn-theme" onClick={() => {
-                          this.changeAddress('shipping')
-                        }}>
-                          Change Address</span>
-                      </p></> : <p className="">
-                      <span onClick={() => this.props.userData.token ? this.props.history.push({
-                        pathname: '/my-account/add-address'
-                      }) : this.dismissModal('login')} className="btn btn-dark btn-theme" > Add New Address</span>
-                    </p>}
-                    <hr className="mb-4" />
-                    {/* <div>
-                      <input type="checkbox" checked={isBillingAddressSame}
-                        onChange={() => { this.dismissModal('address', "billing") }}
-                      />
-                  <label htmlFor="same-address">Shipping address is the same as my billing address</label>
-                    </div> */}
-
-                    <div className="form-group form-check">
-                      <input type="checkbox" className="form-check-input" checked={isBillingAddressSame}
-                        onChange={() => { this.dismissModal('address', "billing") }} />
-                      <label className="form-check-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
-                    </div>
-
-                    {selectedBillingAddress?.name ?
-                      <>
-                        <h4 className="mb-3">Billing address</h4>
-                        <address> {selectedBillingAddress?.name}
-                          <br />{selectedBillingAddress?.address1} <br />{selectedBillingAddress?.address2} <br /> {selectedBillingAddress?.sub_district}
-                          <br /> {selectedBillingAddress?.district},  {selectedBillingAddress?.state} - {selectedBillingAddress?.pincode}<br />
-                          <strong>Mobile No.</strong>: {selectedBillingAddress?.mobile}<br />
-                          <strong>Email</strong> : {selectedBillingAddress?.email} <br /><br />
-                        </address>
-                        <p className="">
-                          <span className="btn btn-dark btn-theme" onClick={() => this.changeAddress('billing')}>
-                            Change Address</span>
-                        </p></> : ''
-                      //   <p className="">
-                      //   <span onClick={() => this.props.userData.token ? this.props.history.push({
-                      //     pathname: '/my-account/add-address'
-                      //   }) : this.dismissModal('login')} className="btn btn-dark btn-theme" > Add New Address</span>
-                      // </p>
-                    }
-                    {/* <div className="custom-control custom-checkbox">
-                      <input type="checkbox" className="custom-control-input" id="save-info" />
-                      <label className="custom-control-label" htmlFor="save-info">Save this information for next time</label>
-                    </div> */}
                     < form className="needs-validation login-card" >
-                      <hr className="mb-4" />
-                      <div className="d-block my-3">
-                        <div className="form-check">
-                          <input id="credit" name="paymentMethod" type="radio" className="form-check-input" value='cod'
-                            checked={paymentType === 'cod'} disabled={totalCartCost > 5000}
-                            onChange={() => this.setState({ paymentType: 'cod', isCheckoutClick: false })} />
-
-                          <label className="form-check-label" htmlFor="credit">
-                            Cash On Delivery
-                          </label>
-                        </div>
-                        {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
-                        <div className="form-check">
-                          <input id="debit" name="paymentMethod" type="radio" className="form-check-input" value='paytm'
-                            checked={paymentType === 'paytm'}
-                            onChange={() => this.setState({ paymentType: 'paytm', isCheckoutClick: false })} />
-                          <label className="form-check-label" htmlFor="debit">
-                            Paytm  <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/paytm-payments/images/paytm.png" width="55px" alt="Paytm"></img>
-                          </label>
-                        </div>
-                        <div className="form-check">
-
-                          <input id="paypal" name="paymentMethod" type="radio" className="form-check-input" value='airpay'
-                            checked={paymentType === 'airpay'}
-                            onChange={() => this.setState({ paymentType: 'airpay', isCheckoutClick: false })} />
-                          <label className="form-check-label" htmlFor="paypal">
-                            Online Payments <img src="https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/woocommerce-gateway-airpay/assets/img/logo_airpay.png" alt="Online Payments"></img>
-                          </label>
-                        </div>
-
-                      </div>
-
-                      <hr className="mb-4" />
-                      <button className="btn login-btn btn-lg btn-block" type="button" disabled={isCheckoutClick} onClick={(e) => this.handleCheckout(e)}> Continue to checkout
+                      <button className="btn login-btn btn-lg btn-block" type="button" disabled={isCheckoutClick || checkOutData.length === 0} onClick={(e) => this.handleCheckout(e)}> Continue to checkout
                       </button>
                     </form>
                   </div>
                 </div>
+
               </div>
 
 
-              <div className="col-md-4 order-md-2 mb-4">
+              {checkOutData.length > 0 && <div className="col-md-4 order-md-2 mb-4">
                 <div className="card product-img-wrapper">
                   <div className="card-header"><h5 className="text-dark text-uppercase mb-0 font-weight-bold">Price Details</h5></div>
                   <div className="card-body">
@@ -623,43 +562,24 @@ class CheckoutComp extends React.Component {
                         < li key={index} className="d-flex justify-content-between border-bottom py-2">
                           <div>
                             <h6 className="my-0">{finItem?.content?.title}</h6>
-                            <span>Store: <small className="text-muted">{finItem?.store_name}</small></span>
+                            {/* <span>Store: <small className="text-muted">{finItem?.store_name}</small></span> */}
                           </div>
-                          <span className="text-muted"><span>₹</span> {finItem?.price} X {item?.quantity ? item?.quantity : 1}</span>
+                          <span className="text-muted"><span>₹</span> {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
 
                         </li>
                       ))}
-                      {/* <li className="list-group-item d-flex justify-content-between bg-light">
-                  <div className="text-success">
-                    <h6 className="my-0">Promo code</h6>
-                    <small>EXAMPLECODE</small>
-                  </div>
-                  <span className="text-success"><span>₹</span> -0.0</span>
-                </li> */}
+
                       <li className="d-flex justify-content-between pt-3">
                         <h5><span className="text-dark">Total Payable</span></h5>
                         <strong><span>₹</span> {totalCartCost}</strong>
                       </li>
                     </ul>
                   </div>
-
                 </div>
-                {/* <p>Have a coupon? Enter your code here...</p> */}
-                {/* <form className="card p-2">
-                <div className="input-group">
-                  <input type="text" className="form-control" placeholder="Coupon code" />
-                  <div className="input-group-append">
-                    <button type="submit" className="btn btn-dark btn-theme">Apply Coupon</button>
-                  </div>
-                </div>
-              </form> */}
-
-              </div>
-
-
+              </div>}
             </div>
           </div >
-        </Loader>
+        </Loader >
       </section >
     );
   }

@@ -10,14 +10,14 @@ export default class AddEditAddress extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.error = false;
     this.handleAddEditAddress = this.handleAddEditAddress.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.requiredBinded = this.required.bind(this);
     this.patternBinded = this.pattern.bind(this);
 
-    const savedAddress = props?.history?.location.state?.address;
-
+    const savedAddress = props?.history?.location.state?.address || props?.address;
     this.state = {
       fields: {
         address_id: savedAddress?.id || '',
@@ -68,7 +68,7 @@ export default class AddEditAddress extends React.Component {
 
   componentDidMount() {
     this.getStates();
-    if (this.props?.history?.location.state?.address) {
+    if (this.state.fields.address_id) {
       this.getDistrict(this.state.fields.state);
       this.getSubDistrict(this.state.fields.state, this.state.fields.district)
     }
@@ -112,7 +112,7 @@ export default class AddEditAddress extends React.Component {
           .then((result) => {
             if (!result) return ToastService.error("Please fill form details")
             if (result.success) {
-              window.history.back()
+              window.location.pathname === '/checkout' ? this.props.selectedAddress(this.state.fields) : window.history.back()
             }
           }).catch((err) => {
             console.log(err);
@@ -128,7 +128,7 @@ export default class AddEditAddress extends React.Component {
         <div className="row">
           <div className="col-7 login-card py-3 px-5 bg-light shadow">
 
-            <h4 className="mb-4 text-left">Add New Address</h4>
+            <h4 className="mb-4 text-left">{fields?.address_id ? "Edit Address" : "Add New Address"}</h4>
             <Form onSubmit={this.handleAddEditAddress} ref={(c) => { this.form = c; }} >
 
               <div className="form-row">
