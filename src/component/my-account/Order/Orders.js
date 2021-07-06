@@ -187,7 +187,7 @@ export default class Orders extends React.Component {
                             {/* <div className="statusReq"><p>As per your request, your item has been cancelled</p></div> */}
                           </div>
                         </div>
-                        <div className="col"><span className="viewmore">View More</span></div>
+                        <div className="col mt-3"><span className="viewmore">View More</span></div>
                       </div></Link>
                   </div>
                 </div>
