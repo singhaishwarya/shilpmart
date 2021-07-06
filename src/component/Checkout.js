@@ -340,10 +340,10 @@ class CheckoutComp extends React.Component {
                                 <span className="type">{selectedShippingAddress.type === 1 ? "Home" : "Work"}</span>
                                 < span > <strong>Mobile No.</strong>: <strong>{selectedShippingAddress.mobile}</strong></span>
                               </p>
-                              <p>{selectedShippingAddress.address1}</p>
-                              <p>{selectedShippingAddress.address2}</p>
-                              <p> <strong>PinCode</strong>: {selectedShippingAddress.pincode}</p>
-                              <div ><button onClick={() => this.setState({ sectionToggle: { shipping: false } })}>Procced</button> <span>    </span>
+                              <p>{selectedShippingAddress.address1}<br/>
+                              {selectedShippingAddress.address2}<br/>
+                              <strong>PinCode</strong>: {selectedShippingAddress.pincode}</p>
+                              <div className="d-flex address_btn"><button onClick={() => this.setState({ sectionToggle: { shipping: false } })}>Procced</button> 
                                 <button onClick={() => { this.changeAddress('shipping') }}>Select Address</button></div>
                             </div>
                             <div className="form-group form-check">
@@ -392,11 +392,11 @@ class CheckoutComp extends React.Component {
                                 <span className="type">{selectedBillingAddress.type === 1 ? "Home" : "Work"}</span>
                                 < span > <strong>Mobile No.</strong>: <strong>{selectedBillingAddress.mobile}</strong></span>
                               </p>
-                              <p>{selectedBillingAddress.address1}</p>
-                              <p>{selectedBillingAddress.address2}</p>
-                              <p> <strong>PinCode</strong>: {selectedBillingAddress.pincode}</p>
-                              <div className=""><button onClick={() => this.setState({ sectionToggle: { billing: false } })}>Procced</button> <span>    </span>
-                                <button onClick={() => { this.changeAddress('billing') }}>Select Address</button></div>
+              <p>{selectedBillingAddress.address1}<br/>{selectedBillingAddress.address2}<br/>               <strong>PinCode</strong>: {selectedBillingAddress.pincode}</p>
+                              <div className="d-flex address_btn">
+                                <button onClick={() => this.setState({ sectionToggle: { billing: false } })}>Procced</button> 
+                                <button onClick={() => { this.changeAddress('billing') }}>Select Address</button>
+                                </div>
                             </div>
                           </div>
                           <div className="col">
@@ -513,10 +513,10 @@ class CheckoutComp extends React.Component {
                             onChange={() => this.setState({ paymentType: 'cod', isCheckoutClick: false })} />
 
                           <label className="form-check-label" htmlFor="credit">
-                            Cash On Delivery
+                            Cash On Delivery  {totalCartCost > 5000 && <span className="float-right">Cash On Delivery is unavailable for current order</span>}
                           </label>
                         </div>
-                        {totalCartCost > 5000 && <span>Cash On Delivery is unavailable for current order</span>}
+                      
                         <div className="form-check">
                           <input id="debit" name="paymentMethod" type="radio" className="form-check-input" value='paytm'
                             checked={paymentType === 'paytm'}
@@ -540,10 +540,10 @@ class CheckoutComp extends React.Component {
 
                 </div>}
 
-                <div className="card shadow pr-5">
+                <div className="card">
                   <div className="card-body">
-                    < form className="needs-validation login-card" >
-                      <button className="btn login-btn btn-lg btn-block" type="button" disabled={isCheckoutClick || checkOutData.length === 0} onClick={(e) => this.handleCheckout(e)}> Continue to checkout
+                    <form className="needs-validation login-card" >
+                      <button className="btn login-btn" type="button" disabled={isCheckoutClick || checkOutData.length === 0} onClick={(e) => this.handleCheckout(e)}> Continue to checkout
                       </button>
                     </form>
                   </div>
@@ -554,24 +554,31 @@ class CheckoutComp extends React.Component {
 
               {checkOutData.length > 0 && <div className="col-md-4 order-md-2 mb-4">
                 <div className="card product-img-wrapper">
-                  <div className="card-header"><h5 className="text-dark text-uppercase mb-0 font-weight-bold">Price Details</h5></div>
+                  <div className="card-header">
+                    <h6 className="text-dark text-uppercase mb-0 font-weight-bold">Price Details</h6>
+                  </div>
                   <div className="card-body">
                     <ul className="list-group">
                       {checkOutData.map((item, index) => (
                         finItem = item.product_details || item,
-                        < li key={index} className="d-flex justify-content-between border-bottom py-2">
-                          <div>
+                        <li key={index} className="d-flex justify-content-between border-bottom py-3">
+                          
                             <h6 className="my-0">{finItem?.content?.title}</h6>
                             {/* <span>Store: <small className="text-muted">{finItem?.store_name}</small></span> */}
-                          </div>
+                          
                           <span className="text-muted"><span>₹</span> {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
 
                         </li>
                       ))}
 
+                      <li className="d-flex justify-content-between border-bottom py-3">
+                        <h5 className="text-dark">Shipping Charges</h5>
+                        <span className="text-success text-uppercase">Free</span>
+                      </li>
+
                       <li className="d-flex justify-content-between pt-3">
                         <h5><span className="text-dark">Total Payable</span></h5>
-                        <strong><span>₹</span> {totalCartCost}</strong>
+                        <h6><span>₹</span> {totalCartCost}</h6>
                       </li>
                     </ul>
                   </div>

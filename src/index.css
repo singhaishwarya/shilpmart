@@ -2473,7 +2473,7 @@ padding-bottom: 20px;
 	border-right: 0;
 	appearance: none;
 	cursor: pointer;
-	-webkit-appearance: none;
+	-webkit-appearance: none;	
 }
 .product-qty input[type=number]::-webkit-inner-spin-button, .product-qty input[type=number]::-webkit-outer-spin-button {
  -webkit-appearance: none;
@@ -2544,7 +2544,7 @@ padding-bottom: 20px;
 }
 .addtocart .cart-btn {
 	border: 0;
-	background-color: #e87f13;
+	background-color: #0b4981;
 	color: white;
 	text-align: center;
 	padding: 9px 20px;
@@ -3710,7 +3710,7 @@ margin-bottom: 20px;
 }
 
 .checkoutinfo span{display: block;}
-.checkoutinfo span.bottominfo{font-size: 12px; text-transform: capitalize; font-weight: normal; color: #444;}
+.checkoutinfo span.bottominfo{font-size: 14px; text-transform: capitalize; font-weight: normal; color: #444;}
 
 .checkoutSteps button{
 	float: right;
@@ -3724,9 +3724,33 @@ margin-bottom: 20px;
     background: #fff;
     margin-left: auto;
     cursor: pointer;
+		border-radius: 4px;
     text-transform: uppercase;
 }
 
+.checkoutSteps button:hover{
+	background-color: #e87f13;
+	color: #fff;
+	border: 1px solid #e87f13;
+	border-radius: 4px;
+}
+
+.address_btn button{
+	margin-right: 15px;
+background-color: #fff;
+border: 1px solid #ccc;
+color: #e87f13;
+text-align: center;
+padding: 7px 15px;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.address_btn button:hover{
+	background-color: #e87f13;
+	border-color: #e87f13;
+	color: #fff;
+}
 
 .changeHead{
 	background-color: #0b4981;
@@ -3812,7 +3836,7 @@ position: relative;
 .productprice{font-size: 16px; color: #333; font-weight: bold; margin-right: 10px;}
 .mainprice{color: #878787;}
 .orderaction{display: flex;
-margin-right: 15px; align-items: center;}
+margin-top: 15px; align-items: center;}
 
 .orderaction span{font-weight: 600; font-size: 16px;}
 .orderaction span:hover{color: #e87f13; cursor: pointer;}

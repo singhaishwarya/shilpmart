@@ -277,7 +277,8 @@ export default class AddEditAddress extends React.Component {
                   </Select>
                 </div>
               </div>
-              <button className="btn login-btn" value="Submit">Submit</button>
+              <button className="btn login-btn mr-2" value="Submit">Submit</button>
+              <button className="btn login-btn" value="Cancel">Cancel</button>
             </Form>
           </div>
 
