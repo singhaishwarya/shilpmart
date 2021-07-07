@@ -484,7 +484,7 @@ class CheckoutComp extends React.Component {
                             {/* {checkOutData.map((item, index) => (
                               finItem = item.product_details || item, */}
                               <div className="checkoutInfo_img"><img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
-                              <span>+1 Item</span>
+                              <span>+10 Items</span>
                               </div>
                               <div className="checkoutInfo_title">Handloom Jacquard Cotton Saree</div>
                               

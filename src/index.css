@@ -3726,8 +3726,8 @@ text-transform: uppercase;
 	text-align: center;
 	padding: 2px 7px;
 	border-radius: 3px;
-	z-index: 9999;
-	left: 6px;}
+	z-index: 1;
+	left: 0;}
 .checkoutInfo_title{font-size: 14px; font-weight: 600; color: #000;}
 
 .checkoutinfo span{display: block;}
