@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faPhone, faQuestion, faEnvelope, faHeart, faPhoneAlt } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faQuestion, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
 import {
@@ -266,6 +266,7 @@ class ProductDetail extends React.Component {
                   <h1>{productDetailData?.content?.title}</h1>
                   <p className="product-price">
                     <span>₹</span> {productDetailData?.price ? productDetailData?.price : 0}</p>
+                   <p className="available">Availability: &nbsp;<span className="text-success">In Stock</span> <span className="text-danger">Out of Stock</span></p> 
                   <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div>
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
@@ -316,6 +317,28 @@ class ProductDetail extends React.Component {
 
                   <div className="add-question my-3 py-2">
                     <span onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestion} /> Ask a Question</span>
+                  </div>
+                  <div className="social-share">
+                    <span>Share:</span>
+                    <span>
+                      <FacebookShareButton url={shareUrl} quote={title}>
+                        <FontAwesomeIcon icon={faFacebook} />
+                      </FacebookShareButton>
+                    </span>
+                    <span>
+                      <TwitterShareButton url={shareUrl} quote={title}>
+                        <FontAwesomeIcon icon={faTwitter} />
+                      </TwitterShareButton></span>
+                    <span><PinterestShareButton url={shareUrl} quote={title}>
+                      <FontAwesomeIcon icon={faPinterest} />
+                    </PinterestShareButton></span>
+                    <span><LinkedinShareButton url={shareUrl} quote={title}>
+                      <FontAwesomeIcon icon={faLinkedin} />
+                    </LinkedinShareButton></span>
+                    <span>
+                      <TelegramShareButton url={shareUrl} quote={title}>
+                        <FontAwesomeIcon icon={faTelegram} />
+                      </TelegramShareButton></span>
                   </div>
                   <Modal className='custom-modal-width'
                     isOpen={showModal}
@@ -376,42 +399,23 @@ class ProductDetail extends React.Component {
                       <div className="s-title"><span> {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.brand : '') : ''}</span>
                         {/* <span><ReactStars count={5} edit={false} size={15} color2={'#e87f13'} /></span> */}
                       </div>
-                      <div className="contactinfo">
+                      <div className="s-ratings"><span>
+                        <ReactStars count={5} edit={false} size={15} color2={'#ffd700'} /></span></div>
+                      {/* <div className="contactinfo">
                         <small><FontAwesomeIcon icon={faPhoneAlt} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.mobile : '') : ''}</small>
                         <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.email : '') : ''}</small>
-                      </div>
+                      </div> */}
 
 
                     </div>
                   </div>
 
                   <div className="clearfix"></div>
-                  <span className="sku">SKU: <span>-</span></span>
+                  {/* <span className="sku">SKU: <span>-</span></span>
                   <span className="sku">Categories: <span>-</span></span>
-                  <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span>
+                  <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span> */}
 
-                  <div className="social-share">
-                    <span>Share:</span>
-                    <span>
-                      <FacebookShareButton url={shareUrl} quote={title}>
-                        <FontAwesomeIcon icon={faFacebook} />
-                      </FacebookShareButton>
-                    </span>
-                    <span>
-                      <TwitterShareButton url={shareUrl} quote={title}>
-                        <FontAwesomeIcon icon={faTwitter} />
-                      </TwitterShareButton></span>
-                    <span><PinterestShareButton url={shareUrl} quote={title}>
-                      <FontAwesomeIcon icon={faPinterest} />
-                    </PinterestShareButton></span>
-                    <span><LinkedinShareButton url={shareUrl} quote={title}>
-                      <FontAwesomeIcon icon={faLinkedin} />
-                    </LinkedinShareButton></span>
-                    <span>
-                      <TelegramShareButton url={shareUrl} quote={title}>
-                        <FontAwesomeIcon icon={faTelegram} />
-                      </TelegramShareButton></span>
-                  </div>
+                
                 </div>
 
 

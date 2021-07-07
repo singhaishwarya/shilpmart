@@ -74,7 +74,7 @@ class Login extends Component {
     return (
       <div className="login-card">
         <span><FontAwesomeIcon className="text-right" icon={faTimes} onClick={() => this.props?.dismissModal('login')} /></span>
-        <h4 className="modal-title">Sign in</h4>
+        <h4 className="modal-title">Sign in Or Register</h4>
         <Form onSubmit={this.handleLogin} ref={(c) => { this.form = c; }}>
           <div className="form-group">
             <label htmlFor="username">Email/Mobile</label>
@@ -108,7 +108,7 @@ class Login extends Component {
         </Form>
         {/* <Link to='/forgot-password' onClick={() => this.props?.dismissModal('login')}>Forgot password?</Link> */}
         <div className="clearfix"></div>
-        <p className="login-card-footer-text text-center pt-4 mb-0">Don't have an account? <Link to='/registration' onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
+        <p className="login-card-footer-text pt-4 mb-0">Don't have an account? <Link to='/registration' onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
       </div >
     )
   }
