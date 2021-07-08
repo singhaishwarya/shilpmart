@@ -4,6 +4,7 @@ import { faMailBulk, faPhone, faMapMarker } from '@fortawesome/free-solid-svg-ic
 import { MultilevelMenu } from 'react-multilevel-menu';
 import ProductGrid from './ProductGrid';
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps"
+import ProductService from '../services/ProductService';
 
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
@@ -44,11 +45,18 @@ export default class SellerProfile extends React.Component {
           ]
         }
       ],
-      vendor_id:this.props.history.location ? this.props.history.location.state : ''
+      brandName: this.props.history.location ? this.props.history.location.state : ''
     }
   }
-  componentDidMount = ()=>{
-    console.log(this.state.vendor_id); 
+  componentDidMount = () => {
+    this.getVendorDetails(this.state.brandName)
+
+  }
+
+  getVendorDetails = (brandName) => {
+    ProductService.fetchVendor({ brand_name: brandName }).then((result) => {
+      console.log(result);
+    });
   }
   render() {
     const { isActiveTab, categories, config } = this.state;

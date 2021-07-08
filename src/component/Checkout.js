@@ -240,20 +240,20 @@ class CheckoutComp extends React.Component {
     let objIndex, checkOutDataLoc, cartProduct, cartCost;
     if (quantity === 0) {
       cartProduct = checkOutData.filter((item) => item.id !== product.id);
-      cartCost = totalCartCost - (product.product_details.prices[0].price * product.quantity);
+      cartCost = totalCartCost - (product.product_details?.prices[0]?.price * product.quantity);
       this.setState({
         checkOutData: cartProduct,
         totalCartCost: cartCost
       });
       localStorage.setItem('checkOutData', JSON.stringify(cartProduct));
-      localStorage.setItem('totalCartCost', totalCartCost - (product.product_details.prices[0].price * product.quantity));
+      localStorage.setItem('totalCartCost', totalCartCost - (product.product_details?.prices[0]?.price * product.quantity));
     } else {
       objIndex = checkOutData.findIndex((obj => obj.id === product.id));
       checkOutDataLoc = [...checkOutData];
       checkOutDataLoc[objIndex] = { ...checkOutDataLoc[objIndex], quantity: quantity };
 
-      cartCost = type === 'inc' ? totalCartCost + (product.product_details.prices[0].price * 1) :
-        totalCartCost - (product.product_details.prices[0].price * 1)
+      cartCost = type === 'inc' ? totalCartCost + (product.product_details?.prices[0]?.price * 1) :
+        totalCartCost - (product.product_details?.prices[0]?.price * 1)
       this.setState({
         checkOutData: checkOutDataLoc, totalCartCost: cartCost
       });
@@ -264,7 +264,7 @@ class CheckoutComp extends React.Component {
   }
 
   render() {
-    const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, paymentType, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType, productQuantity, addeditAddress, sectionToggle } = this.state;
+    const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, paymentType, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType, addeditAddress, sectionToggle } = this.state;
     let finItem;
     return (
       <section>
@@ -340,10 +340,10 @@ class CheckoutComp extends React.Component {
                                 <span className="type">{selectedShippingAddress.type === 1 ? "Home" : "Work"}</span>
                                 < span > <strong>Mobile No.</strong>: <strong>{selectedShippingAddress.mobile}</strong></span>
                               </p>
-                              <p>{selectedShippingAddress.address1}<br/>
-                              {selectedShippingAddress.address2}<br/>
-                              <strong>PinCode</strong>: {selectedShippingAddress.pincode}</p>
-                              <div className="d-flex address_btn"><button onClick={() => this.setState({ sectionToggle: { shipping: false } })}>Procced</button> 
+                              <p>{selectedShippingAddress.address1}<br />
+                                {selectedShippingAddress.address2}<br />
+                                <strong>Pincode</strong>: {selectedShippingAddress.pincode}</p>
+                              <div className="d-flex address_btn"><button onClick={() => this.setState({ sectionToggle: { shipping: false } })}>Procced</button>
                                 <button onClick={() => { this.changeAddress('shipping') }}>Select Address</button></div>
                             </div>
                             <div className="form-group form-check">
@@ -392,11 +392,11 @@ class CheckoutComp extends React.Component {
                                 <span className="type">{selectedBillingAddress.type === 1 ? "Home" : "Work"}</span>
                                 < span > <strong>Mobile No.</strong>: <strong>{selectedBillingAddress.mobile}</strong></span>
                               </p>
-              <p>{selectedBillingAddress.address1}<br/>{selectedBillingAddress.address2}<br/>               <strong>PinCode</strong>: {selectedBillingAddress.pincode}</p>
+                              <p>{selectedBillingAddress.address1}<br />{selectedBillingAddress.address2}<br />               <strong>Pincode</strong>: {selectedBillingAddress.pincode}</p>
                               <div className="d-flex address_btn">
-                                <button onClick={() => this.setState({ sectionToggle: { billing: false } })}>Procced</button> 
+                                <button onClick={() => this.setState({ sectionToggle: { billing: false } })}>Procced</button>
                                 <button onClick={() => { this.changeAddress('billing') }}>Select Address</button>
-                                </div>
+                              </div>
                             </div>
                           </div>
                           <div className="col">
@@ -449,27 +449,24 @@ class CheckoutComp extends React.Component {
                               <div className="orderSummaryWrapper" key={index}>
                                 <div className="row">
                                   <div className="col-sm-9 col-12"><div className="orderSummary">
-                                  <div className="orderImg"><img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
-                                  <div className="orderInfo">
-                                    <p className="producthead">{finItem?.content?.title}</p>
-                                    {/* <p className="seller">Seller: <span>Seller Name</span></p> */}
-                                    <span className="productprice"><span>₹</span> {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
-                                  </div>
-                                </div></div>
-                                  <div className="col-sm-3 col-12"><div className="orderaction">
-                                  <div className="product-qty">
-                                    <div className="input-group">
-                                      <input type="button" className="quantity-left-minus" value="-" onClick={() => this.changeQuantity(item, item?.quantity - 1, 'dec')} />
-                                      <input type="number" value={item?.quantity || 1} disabled={true} />
-                                      <input type="button" className="quantity-right-plus" value="+" onClick={() => this.changeQuantity(item, item?.quantity + 1, 'inc')} />
+                                    <div className="orderImg"><img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
+                                    <div className="orderInfo">
+                                      <p className="producthead">{finItem?.content?.title}</p>
+                                      {/* <p className="seller">Seller: <span>Seller Name</span></p> */}
+                                      <span className="productprice"><span>₹</span> {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
                                     </div>
-                                  </div>
-                                  <span onClick={() => this.changeQuantity(item, 0, 'dec')}>Remove</span>
-                                </div></div>
-                                  </div>
-                                
-
-                                
+                                  </div></div>
+                                  <div className="col-sm-3 col-12"><div className="orderaction">
+                                    <div className="product-qty">
+                                      <div className="input-group">
+                                        <input type="button" className="quantity-left-minus" value="-" onClick={() => this.changeQuantity(item, item?.quantity - 1, 'dec')} />
+                                        <input type="number" value={item?.quantity || 1} disabled={true} />
+                                        <input type="button" className="quantity-right-plus" value="+" onClick={() => this.changeQuantity(item, item?.quantity + 1, 'inc')} />
+                                      </div>
+                                    </div>
+                                    <span onClick={() => this.changeQuantity(item, 0, 'dec')}>Remove</span>
+                                  </div></div>
+                                </div>
                               </div>))}
                             {/* </div> */}
                             <div class="d-flex address_btn my-2 float-right"><button>Procced</button></div>
@@ -481,19 +478,14 @@ class CheckoutComp extends React.Component {
                       <div className="card-body">
                         <div className="checkoutSteps">
                           <div className="checkoutinfo orderSummary">
-                            {/* {checkOutData.map((item, index) => (
-                              finItem = item.product_details || item, */}
-                              <div className="checkoutInfo_img"><img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
-                              <span>+1 Item</span>
-                              </div>
-                              <div className="checkoutInfo_title">Handloom Jacquard Cotton Saree</div>
-                              
-                            
+                            <div className="checkoutInfo_img"><img src={(checkOutData[0]?.images?.length > 0 && checkOutData[0]?.images[0]?.image_url) || checkOutData[0]?.product_details.images[0]?.image_url || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
+                              {checkOutData.length > 1 && <span>+{checkOutData.length - 1} {(checkOutData.length - 1) > 1 ? "Items" : "Item"}</span>}
+                            </div>
+                            <div className="checkoutInfo_title">Handloom Jacquard Cotton Saree</div>
                           </div>
                           <button onClick={() => this.setState({ sectionToggle: { orderSummary: true } })}>Change</button>
-                          
                         </div>
-                        
+
                       </div>
                     </div>}
                 {/* <div className="card mb-3">
@@ -527,7 +519,7 @@ class CheckoutComp extends React.Component {
                             Cash On Delivery  {totalCartCost > 5000 && <span className="float-right">Cash On Delivery is unavailable for current order</span>}
                           </label>
                         </div>
-                      
+
                         <div className="form-check">
                           <input id="debit" name="paymentMethod" type="radio" className="form-check-input" value='paytm'
                             checked={paymentType === 'paytm'}
@@ -573,10 +565,10 @@ class CheckoutComp extends React.Component {
                       {checkOutData.map((item, index) => (
                         finItem = item.product_details || item,
                         <li key={index} className="d-flex justify-content-between border-bottom py-3">
-                          
-                            <h6 className="my-0">{finItem?.content?.title}</h6>
-                            {/* <span>Store: <small className="text-muted">{finItem?.store_name}</small></span> */}
-                          
+
+                          <h6 className="my-0">{finItem?.content?.title}</h6>
+                          {/* <span>Store: <small className="text-muted">{finItem?.store_name}</small></span> */}
+
                           <span className="text-muted"><span>₹</span> {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
 
                         </li>

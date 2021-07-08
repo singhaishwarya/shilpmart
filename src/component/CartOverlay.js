@@ -23,7 +23,7 @@ class CartOverlay extends Component {
     CartService.list().then((result) => {
       this.setState({ cartData: result });
       result && result.forEach((item) => {
-        totalCost1 += ((item?.product_details?.prices[0].price * 1) || 0) * (item.quantity * 1);
+        totalCost1 += ((item?.product_details?.prices[0]?.price * 1) || 0) * (item.quantity * 1);
       });
 
       this.setState({

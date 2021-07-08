@@ -21,15 +21,16 @@ class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      combination: [], finCombination: [], variationIndex: null,
       isActiveTab: 0,
       filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
       shareUrl: 'https://app.digitalindiacorporation.in/v1/digi/',
       title: 'eShilpmart',
-      productDetailData: {},
+      productDetailData: [],
       productQuantity: 1,
       visible: true,
-      showModal: false,
+      showModal: false, productDetailDataImages: [], productDetailData: null,
       notFountImage: [{
         original: require('../public/No_Image_Available.jpeg'),
         thumbnail: require('../public/No_Image_Available.jpeg'),
@@ -117,15 +118,25 @@ class ProductDetail extends React.Component {
   }
   getProductDetails = (queryParams) => {
     try {
+      let variation = [];
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({
-          productDetailData: result?.data[0],
-          productDetailDataImages: result?.data[0]?.images?.map((item, index) => (
-            {
-              'original': item.image_url,
-              'thumbnail': item.image_url
-            }))
+          productDetailData: result?.data[0], productDetailDataPrice: result?.data[0].price
         });
+        this.state.productDetailData.images.map((item, index) => {
+          if (item.variation_index === null) {
+            this.setState({
+              productDetailDataImages: [{
+                'original': item.image_url,
+                'thumbnail': item.image_url
+              }]
+            });
+          }
+        });
+        result?.data[0]?.variation_available && result.data[0].properties.map((item) => (
+          item.veriation_value.indexOf(",") !== - 1 && variation.push({ key: item.variation_key, value: item.veriation_value.split(',') })
+        ));
+        this.setState({ variations: variation })
         window.scrollTo(0, 0);
       });
     } catch (err) {
@@ -147,10 +158,10 @@ class ProductDetail extends React.Component {
     this.setState({ wishlistStatus: !this.state.wishlistStatus });
   }
 
-  handleSellerProfile = (id) => {
+  handleSellerProfile = (brand) => {
     this.props.history.push({
       pathname: '/seller-profile',
-      state: id
+      state: brand
     })
 
   }
@@ -226,11 +237,60 @@ class ProductDetail extends React.Component {
       state: { checkout: [product], totalCartCost: product?.price * this.state.productQuantity }
     })
   }
+  makeCombo = (key, value) => {
 
+    if (this.state.combination.length > 0) {
+      this.state.combination.map((item, index) => {
+        if (item.variation_id === key && item.variation_value !== value) {
+          item.variation_value = value;
+        }
+        else {
+
+          this.setState({
+            combination: this.state.combination.concat(
+              { variation_id: key, variation_value: value }
+            )
+          });
+
+        }
+      });
+
+      const filteredArr = this.state.combination?.reduce((acc, current) => {
+        const x = acc.find(item => item.variation_value === current.variation_value);
+        if (!x) {
+          return acc.concat([current]);
+        } else {
+          return acc;
+        }
+      }, []);
+      this.setState({ finCombination: filteredArr });
+      this.getVariationIndex(filteredArr);
+    } else {
+
+      this.setState({
+        combination: this.state.combination.concat(
+          { variation_id: key, variation_value: value }
+        )
+      });
+    }
+
+  }
+  getVariationIndex = (combi) => {
+    this.state.productDetailData.variations.map((item, index) => {
+      if (JSON.stringify(item.variation_index) === JSON.stringify(combi)) {
+        this.setState({
+          variationIndex: index, productDetailDataImages: [{
+            'original': this.state.productDetailData.images[index].image_url,
+            'thumbnail': this.state.productDetailData.images[index].image_url
+          }], productDetailDataPrice: this.state.productDetailData.prices[index].price
+        });
+
+      }
+    })
+  }
   render() {
-    const { productDetailData, productQuantity, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages } = this.state;
+    const { productDetailData, productQuantity, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice } = this.state;
     const { wishlist, userData } = this.props;
-    console.log(productDetailData);
     return (
       <>
         <section id="maincontent">
@@ -239,9 +299,9 @@ class ProductDetail extends React.Component {
               <div className="col-lg-6 col-md-6 col-12 mb-2">
                 <div className="product-img-wrapper">
                   <ImageGallery
-                    items={productDetailData?.images?.length > 0 ? productDetailDataImages : notFountImage}
+                    items={productDetailDataImages || notFountImage}
                     thumbnailPosition='left'
-                    showThumbnails={productDetailData?.images?.length > 0 ? true : false}
+                    showThumbnails={productDetailDataImages.length > 1 ? true : false}
                     onErrorImageURL={require('../public/No_Image_Available.jpeg')}
                   />
                   <div className="addtowish"><FontAwesomeIcon icon={(wishlist?.includes(productDetailData?.id) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
@@ -258,14 +318,14 @@ class ProductDetail extends React.Component {
                       <ol className="breadcrumb bg-transparent">
                         <li className="breadcrumb-item"><span>Home</span></li>
                         <li className="breadcrumb-item"><span>Shop</span></li>
-                        <li className="breadcrumb-item"><span>{productDetailData.category?.parent_category[0].title}</span></li>
-                        <li className="breadcrumb-item"><span>{productDetailData.category?.cate_title}</span></li>
+                        <li className="breadcrumb-item"><span>{productDetailData?.category?.parent_category[0].title}</span></li>
+                        <li className="breadcrumb-item"><span>{productDetailData?.category?.cate_title}</span></li>
                       </ol>
                     </nav>
                   </div>
                   <h1>{productDetailData?.content?.title}</h1>
                   <p className="product-price">
-                    <span>₹</span> {productDetailData?.price ? productDetailData?.price : 0}</p>
+                    <span>₹</span> {productDetailDataPrice || 0}</p>
                   <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div>
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
@@ -276,34 +336,23 @@ class ProductDetail extends React.Component {
                       </div>
                     </div>
 
-
-
                     <button type="submit" className="cart-btn buy-btn" onClick={() => this.addToCheckout(productDetailData)}>Buy Now</button>
                     <button type="submit" className="cart-btn" onClick={() => this.addToCart(productDetailData)} >Add to cart</button>
                   </div>
-                  <div className="productVariation">
-                    <span>Color :</span>
-                    <div className="productVariationList">
-                      <div className="colors color-active" style={{ backgroundColor: "Black" }}></div>
-                      <div className="colors" style={{ backgroundColor: "red" }}></div>
-                      <div className="colors" style={{ backgroundColor: "brown" }}></div>
-
-                    </div>
-                  </div>
-
-                  <div className="productVariation">
-                    <span>Size  :</span>
-                    <div className="productVariationList">
-                      <div className="sizes">
-                        <button>S</button>
-                        <button>M</button>
-                        <button>L</button>
-                        <button className="sizeSelected">XL</button>
-                        <button>XXL</button>
+                  {variations?.map((itemKey, index) => (
+                    <div className="productVariation" key={index} >
+                      <span>{itemKey.key} :</span>
+                      <div className="productVariationList" >
+                        {itemKey.value.map((itemValue, index) => (itemKey.key === "Color" ?
+                          <div className="colors color-active" key={index} style={{ backgroundColor: itemValue }}
+                            onClick={() => this.makeCombo(itemKey.key, itemValue)}
+                          /> :
+                          <button key={index}
+                            onClick={() => this.makeCombo(itemKey.key, itemValue)}
+                          >{itemValue}</button>))}
                       </div>
-
                     </div>
-                  </div>
+                  ))}
 
                   <div className="action-links">
                     <span>
@@ -363,7 +412,7 @@ class ProductDetail extends React.Component {
                     <div className="seller-contact">
 
                       {/* productDetailData.vendor.id */}
-                      <div className="seller-logo" onClick={() => this.handleSellerProfile(productDetailData.vendor.id)}>
+                      <div className="seller-logo" onClick={() => this.handleSellerProfile(productDetailData.vendor.brand)}>
                         {productDetailData ? (
                           productDetailData.vendor ? (
                             productDetailData.vendor.logo ?

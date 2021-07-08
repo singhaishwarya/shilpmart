@@ -120,7 +120,10 @@ export default class AddEditAddress extends React.Component {
       }
     }
   }
-
+  cancel = (e) => {
+    e.preventDefault();
+    window.location.pathname === '/checkout' ? this.props.selectedAddress(this.state.fields) : window.history.back()
+  }
   render() {
     const { fields, statesOptions, districtOptions, subDistrictOptions } = this.state
     return (
@@ -129,7 +132,7 @@ export default class AddEditAddress extends React.Component {
           <div className="col-7 login-card py-3 px-5 bg-light shadow">
 
             <h4 className="mb-4 text-left">{fields?.address_id ? "Edit Address" : "Add New Address"}</h4>
-            <Form onSubmit={this.handleAddEditAddress} ref={(c) => { this.form = c; }} >
+            <Form ref={(c) => { this.form = c; }} >
 
               <div className="form-row">
                 <div className="form-group col-lg-6 col-12">
@@ -277,8 +280,8 @@ export default class AddEditAddress extends React.Component {
                   </Select>
                 </div>
               </div>
-              <button className="btn login-btn mr-2" value="Submit">Submit</button>
-              <button className="btn login-btn" value="Cancel">Cancel</button>
+              <button className="btn login-btn mr-2" value="Submit" onClick={(e) => this.handleAddEditAddress(e)}>Submit</button>
+              <button className="btn login-btn" value="Cancel" onClick={(e) => this.cancel(e)}>Cancel</button>
             </Form>
           </div>
 

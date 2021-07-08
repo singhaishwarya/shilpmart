@@ -18,5 +18,19 @@ export default class ProductService extends Component {
 
     }
   }
+  static fetchVendor = async (data) => {
+    try {
+      config.url = baseUrl + 'vendor';
+      config.method = 'get';
+      config.params = data;
+      config.data = '';
+      const response = await axios(config);
+      return response.data ? response.data.data : [];
+    } catch (error) {
+      const { response } = error;
+      if (!response) return;
+      console.log(`FETCH GET ERROR`, response);
 
+    }
+  }
 }
