@@ -376,7 +376,7 @@ class Header extends Component {
               </div>
             </div>
           </div>
-            < div className="header-middle d-flex justify-content-between align-items-center px-3" >
+            <div className="header-middle d-flex justify-content-between align-items-center px-3" >
               <Link to='/'>
                 <img className="image-middle" src={require('../public/logo-eshilp.svg')} alt="logoeship" />
               </Link>

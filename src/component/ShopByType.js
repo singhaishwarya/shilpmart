@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import AliceCarousel from 'react-alice-carousel';
 import CategoryService from '../services/CategoryService';
 import ProductService from '../services/ProductService';
@@ -70,7 +71,7 @@ class ShopByType extends Component {
           </div>
           <div className="categorie-img-title">
             <h3>{item.title}</h3>
-            <div className="more-products"><a href="#">More Products</a></div>
+            <div className="more-products"><Link to="/product-list">More Products</Link></div>
           </div>
         </div>)
         )

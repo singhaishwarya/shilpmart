@@ -305,7 +305,7 @@ const treeStyle = {
         base: {
           display: 'inline-block',
           verticalAlign: 'top',
-          color: 'rgb(35,31,32)'
+          color: 'rgb(35,31,32)'          
         },
         connector: {
           width: '2px',

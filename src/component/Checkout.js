@@ -12,7 +12,7 @@ import * as cartAction from '../actions/cart';
 import { loaderOptions, customLoginStyles, paymentConfig } from "../lib/utils";
 import AddAddress from "./my-account/Address/AddAddress";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell, faCheck, faStar, faTimes, faTruck } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCheck, faStar, faTimes, faTrash, faTrashAlt, faTruck } from '@fortawesome/free-solid-svg-icons';
 class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
@@ -460,13 +460,16 @@ class CheckoutComp extends React.Component {
                                     <div className="product-qty">
                                       <div className="input-group">
                                         <input type="button" className="quantity-left-minus" value="-" onClick={() => this.changeQuantity(item, item?.quantity - 1, 'dec')} />
-                                        <input type="number" value={item?.quantity || 1} disabled={true} />
+                                        <input type="number" value={item?.quantity || 1} />
                                         <input type="button" className="quantity-right-plus" value="+" onClick={() => this.changeQuantity(item, item?.quantity + 1, 'inc')} />
                                       </div>
                                     </div>
-                                    <span onClick={() => this.changeQuantity(item, 0, 'dec')}>Remove</span>
+                                    <span onClick={() => this.changeQuantity(item, 0, 'dec')}><FontAwesomeIcon icon={faTrashAlt} /></span>
                                   </div></div>
                                 </div>
+
+
+
                               </div>))}
                             {/* </div> */}
                             <div class="d-flex address_btn my-2 float-right"><button>Procced</button></div>
@@ -478,10 +481,18 @@ class CheckoutComp extends React.Component {
                       <div className="card-body">
                         <div className="checkoutSteps">
                           <div className="checkoutinfo orderSummary">
-                            <div className="checkoutInfo_img"><img src={(checkOutData[0]?.images?.length > 0 && checkOutData[0]?.images[0]?.image_url) || checkOutData[0]?.product_details.images[0]?.image_url || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
-                              {checkOutData.length > 1 && <span>+{checkOutData.length - 1} {(checkOutData.length - 1) > 1 ? "Items" : "Item"}</span>}
+                            {/* {checkOutData.map((item, index) => (
+                              finItem = item.product_details || item, */}
+                            <div className="checkoutInfo_img">
+                              <div className="orderImgs">
+                                <img src={(checkOutData[0]?.images?.length > 0 && checkOutData[0]?.images[0]?.image_url) || checkOutData[0]?.product_details.images[0]?.image_url || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
+
+                              </div>
+                              <span> {checkOutData.length > 1 && <span>+{checkOutData.length - 1} {(checkOutData.length - 1) > 1 ? "Items" : "Item"}</span>}</span>
                             </div>
-                            <div className="checkoutInfo_title">Handloom Jacquard Cotton Saree</div>
+                            <div className="checkoutInfo_title">{checkOutData[0]?.product_details?.content.title || checkOutData[0]?.content.title}</div>
+
+
                           </div>
                           <button onClick={() => this.setState({ sectionToggle: { orderSummary: true } })}>Change</button>
                         </div>
@@ -558,7 +569,7 @@ class CheckoutComp extends React.Component {
               {checkOutData.length > 0 && <div className="col-md-4 order-md-2 mb-4">
                 <div className="card product-img-wrapper">
                   <div className="card-header">
-                    <h6 className="text-dark text-uppercase mb-0 font-weight-bold">Price Details</h6>
+                    <h6 className="text-dark text-uppercase mb-0">Price Details</h6>
                   </div>
                   <div className="card-body">
                     <ul className="list-group">
@@ -581,7 +592,7 @@ class CheckoutComp extends React.Component {
 
                       <li className="d-flex justify-content-between pt-3">
                         <h5><span className="text-dark">Total Payable</span></h5>
-                        <h6><span>₹</span> {totalCartCost}</h6>
+                        <span className="text-dark h6"><span>₹</span> {totalCartCost}</span>
                       </li>
                     </ul>
                   </div>

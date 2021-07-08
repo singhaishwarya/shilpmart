@@ -163,7 +163,7 @@ export default class OrderDetail extends React.Component {
             <div className="card mb-3 shadow" key={index}>
               <div className="card-body">
                 <div className="row">
-                  <div className="col-sm-3">
+                  <div className="col-sm-4">
                     <div className="row">
                       <div className="col-12">
                         <span className="d-block mb-2"><strong>Order No. : {productItem.order_id}</strong></span>
@@ -204,7 +204,7 @@ export default class OrderDetail extends React.Component {
                     <p><small>Your Order is {getOrderStatus(orderDetail.status)}</small></p>
                   </div>
 
-                  <div className="col-sm-3 mb-3">
+                  <div className="col-sm-2 mb-3">
                     <span className="viewInvoice" onClick={() => this.getInvoidePdf(productItem.order_id, productItem.awb_number.number)}>View Invoice</span>
                   </div>
 

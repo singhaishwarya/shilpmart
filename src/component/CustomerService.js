@@ -1,20 +1,12 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBullhorn, faEnvelope, faEnvelopeSquare, faPhone, faPhoneAlt, faPhoneSquareAlt } from '@fortawesome/free-solid-svg-icons'
+import { faBullhorn, faEnvelope, faPhoneAlt } from '@fortawesome/free-solid-svg-icons'
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
 import GetInTouch from '../services/GetInTouch';
 import ToastService from '../services/ToastService';
-import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps"
 
-const MyMapComponent = withScriptjs(withGoogleMap((props) =>
-  <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: 26.8467, lng: 80.9462 }}
-  >
-    {props.isMarkerShown && <Marker position={{ lat: 26.8467, lng: 80.9462 }} />}
-  </GoogleMap>))
 
 export default class CustomerService extends React.Component {
 
@@ -122,61 +114,7 @@ export default class CustomerService extends React.Component {
               <p className="text-center">Monday to Sunday 9:00 am - 6:00 pm</p></span>
             </div>
           </div>
-        </div>
-
-
-
-          {/* <div className="row py-5">
-            <div className="col-sm-5">
-              <h3>Here to Help</h3>
-              <p>Have a question? You may find an answer in our FAQs. But you can also contact us:</p>
-              <h5> <FontAwesomeIcon icon={faPhoneSquareAlt} />  011-24303500</h5>
-              <ul className="list-unstyled">
-                <li>Opening Hours:</li>
-                <li>Monday to Friday 9:00 am - 6:00 pm</li>
-                <li>Saturday 9:00 am - 4:00 pm</li>
-                <li>Sunday: 9 pm - 2:00 pm</li>
-              </ul>
-              <h5><FontAwesomeIcon icon={faEnvelopeSquare} /> Support@eshilpmart.gov.in</h5>
-
-            </div>
-
-            {contactUsSubmitted ? <span>{contactUsSubmitted}</span> :
-              <div className="col-sm-7">
-
-                <Form className="login-card p-5" ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleGetInTouch(e)} >
-
-                  <div className="form-row">
-                    <div className="form-group col-md-6">
-                      <label htmlFor="fname">First Name <span>*</span></label>
-                      <Input type="text" className="form-control" id="fname" placeholder="" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} />
-                    </div>
-                    <div className="form-group col-md-6">
-                      <label htmlFor="lName">Last Name <span>*</span></label>
-                      <Input type="text" className="form-control" id="lName" placeholder="" name="last name" value={fields.last_name} validations={[this.required]} onChange={this.handleChange.bind(this, "last_name")} />
-                    </div>
-                  </div>
-
-
-                  <div className="form-group">
-                    <label htmlFor="email">Email <span>*</span></label>
-                    <input type="email" className="form-control" id="email" placeholder="" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="inputAddress2">Comment or Message </label>
-                    <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")} />
-                  </div>
-                 
-
-
-                  <button value="Submit" className="btn btn-theme">Submit Query</button>
-                </Form>
-
-              </div>}
-
-           
-
-          </div> */}
+        </div>        
         </div>
         
 
