@@ -139,11 +139,11 @@ class ProductTile extends React.Component {
               <FontAwesomeIcon
                 icon={cart?.includes(data.id) ? faCheck : faCartPlus}
                 onClick={
-                  () => cart?.includes(data.id) ? this.props.errorAlert(data, 'cart') : this.addToCart(data)
+                  () => cart?.includes(data.id) ? this.props.errorAlert(data, 'cart') : (data.variation_available ? this.productDetail(data) : this.addToCart(data))
                 }
               /></span></div>
             <div className="shop-btn"><span>
-              <FontAwesomeIcon icon={faRandom} onClick={() => { this.props.addToCompare(data); this.props.successAlert(data, 'compare') }}
+              <FontAwesomeIcon icon={faRandom} onClick={() => (this.props.compare.length <= 5 ? (this.props.addToCompare(data), this.props.successAlert(data, 'compare')) : this.props.limitAlert())}
               />
             </span></div>
             {currentLocation !== '/wishlist' && <div className="shop-btn"><span>
@@ -173,7 +173,8 @@ const mapStateToProps = state => {
   return {
     wishlist: state.wishlist,
     userData: state.userData,
-    cart: state.cart
+    cart: state.cart,
+    compare: state.compare
   }
 };
 

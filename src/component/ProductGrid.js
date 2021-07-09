@@ -15,7 +15,7 @@ class ProductGrid extends Component {
       pathname: props?.location?.pathname,
       productsData: [],
       currentPage: 1,
-      per_page: 12,
+      per_page: 10,
       layout: 'col-lg-3 col-sm-6 col-6', //default 4X4
       productListData: [],
       filterParams: {},
@@ -152,6 +152,9 @@ class ProductGrid extends Component {
   successAlert = (product, type) => {
     return ToastService.success(product?.content?.title + " is successfully added to " + type)
   }
+  limitAlert = () => {
+    return ToastService.error("Compare Cart is full(limit :5)")
+  }
   render() {
     const { productListData, layout, pathname, per_page, isLoaded, layoutValue } = this.state
     let categoryBreadcrumbs = this.props?.history?.location?.state?.category_breadcrumbs;
@@ -218,7 +221,7 @@ class ProductGrid extends Component {
                 return (
                   <div key={index} className={layout} >
 
-                    <ProductTile data={item} {...this.props} errorAlert={this.errorAlert} successAlert={this.successAlert} gridLayout={layoutValue} />
+                    <ProductTile data={item} {...this.props} errorAlert={this.errorAlert} limitAlert={this.limitAlert} successAlert={this.successAlert} gridLayout={layoutValue} />
 
                   </div>
                 )

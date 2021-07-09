@@ -16,6 +16,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 export default class SellerProfile extends React.Component {
   constructor(props) {
     super(props);
+    const query = new URLSearchParams(props.location.search);
     this.state = {
       isActiveTab: 0,
       config: {
@@ -45,8 +46,9 @@ export default class SellerProfile extends React.Component {
           ]
         }
       ],
-      brandName: this.props.history.location ? this.props.history.location.state : ''
+      brandName: query.get('brand-name')
     }
+
   }
   componentDidMount = () => {
     this.getVendorDetails(this.state.brandName)

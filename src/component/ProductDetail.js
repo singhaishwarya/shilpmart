@@ -21,14 +21,14 @@ class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      combination: [], finCombination: [], variationIndex: null,
+      combination: [], finCombination: [], variationIndex: 0,
       isActiveTab: 0,
       filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
       shareUrl: 'https://app.digitalindiacorporation.in/v1/digi/',
       title: 'eShilpmart',
       productDetailData: [],
-      productQuantity: 1,
+      productQuantity: 1, currentvalue2: '', currentvalue1: '',
       visible: true,
       showModal: false, productDetailDataImages: [], productDetailData: null,
       notFountImage: [{
@@ -121,18 +121,23 @@ class ProductDetail extends React.Component {
       let variation = [];
       ProductService.fetchAllProducts(queryParams).then((result) => {
         this.setState({
-          productDetailData: result?.data[0], productDetailDataPrice: result?.data[0].price
+          productDetailData: result?.data[0], productDetailDataPrice: result?.data[0].price,
+          productDetailDataImages: result?.data[0]?.images?.map((item, index) => (
+            {
+              'original': item.image_url,
+              'thumbnail': item.image_url
+            }))
         });
-        this.state.productDetailData.images.map((item, index) => {
-          if (item.variation_index === null) {
-            this.setState({
-              productDetailDataImages: [{
-                'original': item.image_url,
-                'thumbnail': item.image_url
-              }]
-            });
-          }
-        });
+        // this.state.productDetailData.images.map((item, index) => {
+        //   if (item.variation_index === null) {
+        //     this.setState({
+        //       productDetailDataImages: [{
+        //         'original': item.image_url,
+        //         'thumbnail': item.image_url
+        //       }]
+        //     });
+        //   }
+        // });
         result?.data[0]?.variation_available && result.data[0].properties.map((item) => (
           item.veriation_value.indexOf(",") !== - 1 && variation.push({ key: item.variation_key, value: item.veriation_value.split(',') })
         ));
@@ -159,10 +164,11 @@ class ProductDetail extends React.Component {
   }
 
   handleSellerProfile = (brand) => {
-    this.props.history.push({
-      pathname: '/seller-profile',
-      state: brand
-    })
+    (brand !== null) &&
+      this.props.history.push({
+        pathname: '/seller-profile',
+        search: '?brand-name=' + brand,
+      })
 
   }
   productQuantityManual = (event) => {
@@ -231,11 +237,12 @@ class ProductDetail extends React.Component {
 
   addToCheckout = (product) => {
     product.quantity = this.state.productQuantity;
-    product.variation_index = 1;//to be implemented
+    product.variation_index = this.state.variationIndex;
     this.props.history.push({
       pathname: '/checkout',
       state: { checkout: [product], totalCartCost: product?.price * this.state.productQuantity }
     })
+
   }
   makeCombo = (key, value) => {
 
@@ -279,18 +286,17 @@ class ProductDetail extends React.Component {
     this.state.productDetailData.variations.map((item, index) => {
       if (JSON.stringify(item.variation_index) === JSON.stringify(combi)) {
         this.setState({
-          variationIndex: index, productDetailDataImages: [{
-            'original': this.state.productDetailData.images[index].image_url,
-            'thumbnail': this.state.productDetailData.images[index].image_url
-          }], productDetailDataPrice: this.state.productDetailData.prices[index].price
+          variationIndex: index,
+          productDetailDataPrice: this.state.productDetailData.prices[index].price
         });
 
       }
     })
   }
   render() {
-    const { productDetailData, productQuantity, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice } = this.state;
+    const { productDetailData, productQuantity, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice, variationIndex, currentvalue2, currentvalue1 } = this.state;
     const { wishlist, userData } = this.props;
+
     return (
       <>
         <section id="maincontent">
@@ -299,9 +305,10 @@ class ProductDetail extends React.Component {
               <div className="col-lg-6 col-md-6 col-12 mb-2">
                 <div className="product-img-wrapper">
                   <ImageGallery
-                    items={productDetailDataImages || notFountImage}
+                    items={productDetailData?.images?.length > 0 ? productDetailDataImages : notFountImage}
                     thumbnailPosition='left'
-                    showThumbnails={productDetailDataImages.length > 1 ? true : false}
+                    showThumbnails={productDetailData?.images?.length > 0 ? true : false}
+                    startIndex={variationIndex}
                     onErrorImageURL={require('../public/No_Image_Available.jpeg')}
                   />
                   <div className="addtowish"><FontAwesomeIcon icon={(wishlist?.includes(productDetailData?.id) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
@@ -347,11 +354,11 @@ class ProductDetail extends React.Component {
                       <span>{itemKey.key} :</span>
                       <div className="productVariationList sizes">
                         {itemKey.value.map((itemValue, index) => (itemKey.key === "Color" ?
-                          <div className="colors color-active" key={index} style={{ backgroundColor: itemValue }}
-                            onClick={() => this.makeCombo(itemKey.key, itemValue)}
+                          <div className={`colors ${currentvalue1 === itemValue ? 'color-active' : ''}`} key={index} style={{ backgroundColor: itemValue }}
+                            onClick={() => { this.makeCombo(itemKey.key, itemValue); this.setState({ currentvalue1: itemValue }) }}
                           /> :
-                          <button key={index}
-                            onClick={() => this.makeCombo(itemKey.key, itemValue)}
+                          <button key={index} className={currentvalue2 === itemValue ? "sizeSelected" : ''}
+                            onClick={() => { this.makeCombo(itemKey.key, itemValue); this.setState({ currentvalue2: itemValue }) }}
                           >{itemValue}</button>))}
                       </div>
                     </div>
@@ -479,7 +486,7 @@ class ProductDetail extends React.Component {
                   <div className="product-description">
                     <header>Product Specifications</header>
                     <ul className="specification">{productDetailData?.properties?.map((item, index) => (
-                      <> <li key={index}><span>{item.variation_key} :</span> {item.veriation_value}</li></>
+                      <li key={index}><span>{item.variation_key} :</span> {item.veriation_value}</li>
                     ))}</ul>
                   </div>
 
