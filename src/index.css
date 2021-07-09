@@ -1089,6 +1089,7 @@ background-color: #e87f13;
   text-align: center;
   border: 5px solid #fff;
   box-sizing: border-box;
+  max-width: 250px;
 }
 
 .product-wrapper .prodcut-img {
@@ -2576,7 +2577,8 @@ padding-right: 5px;
 }
 .productVariation span {
   min-width: 70px;
-  font-weight: 400;
+font-weight: 500;
+color: #000;
 }
 .productVariationList {
   display: flex;
@@ -2592,7 +2594,8 @@ padding-right: 5px;
 }
 
 .color-active {
-  border: 1px solid #333;
+  border: 2px solid #fff;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
 }
 
 .sizes {
@@ -2657,9 +2660,7 @@ padding-right: 5px;
   background-color: #ff9f00;
 }
 .action-links {
-  margin-bottom: 30px;
-  border-top: 1px solid #eee;
-  padding-top: 20px;
+  margin-bottom: 30px;  
 }
 .action-links span {
   padding: 0 15px 0 0;
@@ -2722,13 +2723,14 @@ padding-right: 5px;
 	align-items: center;
 }
 .s-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #555;
-  margin-bottom: 0;
-  letter-spacing: 1px;
-  cursor: pointer;
-  float: left;
+  font-size: 14px;
+font-weight: 500;
+color: #555;
+margin-bottom: 0;
+letter-spacing: 1px;
+cursor: pointer;
+float: left;
+margin-right: 10px;
 }
 .s-title span {
   float: left;
@@ -4234,6 +4236,7 @@ address {
 }
 .empty-wishlist span {
   color: #777;
+  text-align: center;
 }
 
 .empty-wishlist::before,
@@ -4635,7 +4638,7 @@ td.product-price span {
   text-align: center;
   font-size: 18px;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
 }
 .contactBg {
   background: url(./public/contact-bg.jpg) no-repeat center;

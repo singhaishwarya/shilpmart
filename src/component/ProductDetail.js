@@ -345,7 +345,7 @@ class ProductDetail extends React.Component {
                   {variations?.map((itemKey, index) => (
                     <div className="productVariation" key={index} >
                       <span>{itemKey.key} :</span>
-                      <div className="productVariationList" >
+                      <div className="productVariationList sizes">
                         {itemKey.value.map((itemValue, index) => (itemKey.key === "Color" ?
                           <div className="colors color-active" key={index} style={{ backgroundColor: itemValue }}
                             onClick={() => this.makeCombo(itemKey.key, itemValue)}

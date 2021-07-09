@@ -122,7 +122,7 @@ export default class CustomerService extends React.Component {
         <div className="container">
           <div className="row">
           <div className="col-sm-7 p-5">
-            <h1 className="h1 font-weight-bold pt-5 px-5 pb-2 text-light">Get in touch is easy!</h1>
+            <h1 className="h1 pt-5 px-5 pb-2 text-light">Get in touch is easy!</h1>
             <p className="px-5 text-light h5 " style={{lineHeight:"1.7"}}>Electronics Niketan Annexe,<br/>
 6 CGO Complex Lodhi Road,<br/> New Delhi-110003<br/>
 Contact No. : +91-11-24360199 / 24301756
