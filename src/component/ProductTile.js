@@ -150,7 +150,7 @@ class ProductTile extends React.Component {
               <FontAwesomeIcon
                 icon={(wishlist?.includes(data.id) || (Object.keys(userData).length > 0 && data?.wishlist?.id)) ? faHeart : farHeart}
                 onClick={() => {
-                  ((Object.keys(userData).length > 0 && data?.wishlist?.id) || wishlist?.includes(data.id)) ? this.deleteWishlist(data) : this.addToWishlist(data)
+                  ((Object.keys(userData).length > 0 && data?.wishlist?.id) || wishlist?.includes(data.id)) ? this.deleteWishlist(data) : (data.variation_available ? this.productDetail(data) : this.addToWishlist(data))
                 }}
               />
             </span>
