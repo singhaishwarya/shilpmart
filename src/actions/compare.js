@@ -8,10 +8,10 @@ export const addToCompare = (compare) => {
 };
 
 
-export const deleteCompare = (id) => {
+export const deleteCompare = (compare) => {
   return {
     type: DELETE_COMPARE,
-    id: id
+    compare: compare
   }
 }
 

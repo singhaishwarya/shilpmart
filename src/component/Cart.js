@@ -40,6 +40,7 @@ class Cart extends Component {
       this.setState({ cartProduct: result1.data })
       result1.data.map((item) => (
         this.props.addToCart(item.id)
+        //this.props.addToCart({ product: item.id, variationIndex: this.state.variationIndex})
       ))
     })
 

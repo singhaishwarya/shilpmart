@@ -3,17 +3,23 @@ import * as actionTypes from '../actions/types';
 export default function wishlistReducer(state = [], action) {
   switch (action.type) {
     case actionTypes.ADD_TO_WISHLIST:
-      let actionProductArray = [action.wishlist],
-        ids = new Set(state.map(d => d)),
-        final = [...state, ...actionProductArray.filter(d => (
-          !ids.has(d)
-        ))]
-      return final;
+      let finalAddedWishlist;
+      const result = state.find(({ product, variationIndex }) => (product === action.wishlist.product && variationIndex === action.wishlist.variationIndex));
+      if (result === undefined) {
+        finalAddedWishlist = [...state, ...[action.wishlist]];
+      }
+      else {
+        finalAddedWishlist = state;
+      }
+      return finalAddedWishlist;
 
     case actionTypes.DELETE_WISHLIST:
-      return state.filter((data, i) =>
-        data !== action.id
-      );
+      let finArr = [];
+      state.map((data) => {
+        if ((data.product === action.wishlist.product) && (data.variationIndex === action.wishlist.variationIndex)) return
+        else finArr.push(data)
+      })
+      return finArr;
 
     case actionTypes.EMPTY_WISHLIST:
       return action.wishlist = [];

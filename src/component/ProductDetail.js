@@ -166,8 +166,7 @@ class ProductDetail extends React.Component {
   handleSellerProfile = (brand) => {
     (brand !== null) &&
       this.props.history.push({
-        pathname: '/seller-profile',
-        search: '?brand-name=' + brand,
+        pathname: '/entrepreneur/' + brand
       })
 
   }
@@ -315,7 +314,6 @@ class ProductDetail extends React.Component {
                     onClick={() => {
                       ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || wishlist?.includes(productDetailData?.id)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
                     }} /></div>
-
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-12">

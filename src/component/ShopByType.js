@@ -97,7 +97,6 @@ class ShopByType extends Component {
   }
 
   errorAlert = (product, type) => {
-    console.log("product", product)
     return ToastService.error(product?.content?.title + " is " +
       (type === "cart" ? "already in cart" : "removed from wishlist"));
   }

@@ -53,7 +53,7 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/registration' component={Registration} exact />
           <Route isAuthenticated={userData} path='/product-list' component={ProductList} />
           <Route isAuthenticated={userData} path='/product-detail' component={ProductDetail} />
-          <Route isAuthenticated={userData} path='/seller-profile' component={SellerProfile} exact />
+          <Route isAuthenticated={userData} path='/entrepreneur' component={SellerProfile} />
           <Route isAuthenticated={userData} path='/wishlist' component={Wishlist} exact />
           <Route isAuthenticated={userData} path='/compare' component={Compare} exact />
           <Route isAuthenticated={userData} path='/cart' component={Cart} exact />

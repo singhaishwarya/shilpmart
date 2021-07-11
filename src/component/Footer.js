@@ -80,21 +80,21 @@ export default class Footer extends React.Component {
                 </div>
               </div>
 
-              <div className="py-5 logos">         
-                  <AliceCarousel
-                    animationType='slide'
-                    autoPlayInterval={3000}
-                    autoPlay={true}
-                    disableDotsControls
-                    //disableAutoPlayOnAction={true}
-                    items={footerItems}
-                    responsive={responsive}
-                    mouseTracking
-                    infinite
-                    disableButtonsControls //can be enabled if arrows are needed
-                  //touchTracking
-                  />
-            
+              <div className="py-5 logos">
+                <AliceCarousel
+                  animationType='slide'
+                  autoPlayInterval={3000}
+                  autoPlay={true}
+                  disableDotsControls
+                  //disableAutoPlayOnAction={true}
+                  items={footerItems}
+                  responsive={responsive}
+                  mouseTracking
+                  infinite
+                  disableButtonsControls //can be enabled if arrows are needed
+                //touchTracking
+                />
+
               </div>
             </div>
           </div>

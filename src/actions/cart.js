@@ -7,10 +7,10 @@ export const addToCart = (cart) => {
   }
 };
 
-export const deleteCart = (id) => {
+export const deleteCart = (cart) => {
   return {
     type: DELETE_CART,
-    id: id
+    cart: cart
   }
 }
 

@@ -164,7 +164,7 @@ class ProductGrid extends Component {
         <Loader loaded={isLoaded} message='Loading...' options={loaderOptions} className="spinner" >
           {(pathname !== "/wishlist" && productListData?.data?.length > 0) &&
             <section className='topsection d-flex justify-content-between'>
-              {(pathname !== "/seller-profile") && <nav aria-label='breadcrumb'>
+              {(pathname !== "/entrepreneur") && <nav aria-label='breadcrumb'>
                 <ol className='breadcrumb bg-transparent'>
                   <li className='breadcrumb-item'> <Link to='/'>Home</Link></li>
                   <li className='breadcrumb-item'

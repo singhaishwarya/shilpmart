@@ -160,11 +160,13 @@ class Header extends Component {
   };
 
   addToCart = (product) => {
-    if (this.props.cart?.includes(product.id)) {
+    if (this.props.cart.find(({ product, variationIndex }) => (product === product.id && variationIndex === 0)) !== undefined) {
       this.errorAlert(product, 'cart');
     }
     else {
-      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product?.id)
+      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) :
+        //  this.props.addToCart(product?.id) 
+        this.props.addToCart({ product: product?.id, variationIndex: 0 })
     }
   }
   errorAlert = (product, type) => {
@@ -187,7 +189,7 @@ class Header extends Component {
               cartProductids?.push(item.product_id)
             ));
             ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart(item.id));
+              result1.data.map((item) => this.props.addToCart({ product: item.id, variationIndex: 0 }));
             })
           }
           else {
@@ -239,7 +241,7 @@ class Header extends Component {
               <span className="result-cat"><small>{item.category?.parent_category[0].title}, {item.category?.cate_title}</small></span>
               <span className="result-addtocart" onClick={
                 () => (
-                  cart?.includes(item.id) ? '' : (item.variation_available ? this.productDetail(item) : this.addToCart(item))
+                  this.props.cart.find(({ product, variationIndex }) => (product === item.id && variationIndex === 0)) !== undefined ? '' : (item.variation_available ? this.productDetail(item) : this.addToCart(item))
                 )
               }> Add to Cart</span>
             </span>

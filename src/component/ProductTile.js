@@ -29,12 +29,12 @@ class ProductTile extends React.Component {
   }
 
   deleteWishlist = (item) => {
-    (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id);
+    (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist({ product: item.id, variationIndex: 0 });
     this.props.errorAlert(item, 'wishlist');
   }
 
   deleteWishlistApi(item) {
-    this.props.deleteWishlist(item.id)
+    this.props.deleteWishlist({ product: item.id, variationIndex: 0 })
     WishlistService.addDelete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
       if (result?.success) {
         this.getWishlist();
@@ -45,14 +45,14 @@ class ProductTile extends React.Component {
   addToWishlist = (product) => {
 
     if (Object.keys(this.props.userData).length > 0) { this.addToWishlistApi(product) } else {
-      this.props.addToWishlist(product.id);
+      this.props.addToWishlist({ product: product.id, variationIndex: 0 });
       this.props.successAlert(product, 'wishlist');
     }
 
   }
 
   addToWishlistApi = (product) => {
-    this.props.addToWishlist(product.id)
+    this.props.addToWishlist({ product: product.id, variationIndex: 0 })
     WishlistService.addDelete({ product_id: [product.id] }).then((result) => {
       if (result?.success) {
         this.props.successAlert(product, 'wishlist');
@@ -67,7 +67,7 @@ class ProductTile extends React.Component {
       this.addToCartApi(product)
     }
     else {
-      this.props.addToCart(product.id);
+      this.props.addToCart({ product: product.id, variationIndex: 0 });
       this.props.successAlert(product, 'cart');
     }
   }
@@ -89,7 +89,7 @@ class ProductTile extends React.Component {
               cartProductids?.push(item.product_id)
             ));
             ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart(item.id));
+              result1.data.map((item) => this.props.addToCart({ product: item.id, variationIndex: 0 }));
             })
             this.props.successAlert(product, 'cart');
           }
@@ -137,20 +137,22 @@ class ProductTile extends React.Component {
           <div className="shopBtn">
             <div className="shop-btn"><span>
               <FontAwesomeIcon
-                icon={cart?.includes(data.id) ? faCheck : faCartPlus}
+                icon={(cart.find(({ product, variationIndex }) => (product === data.id && variationIndex === 0)) !== undefined) ? faCheck : faCartPlus}
                 onClick={
-                  () => cart?.includes(data.id) ? this.props.errorAlert(data, 'cart') : (data.variation_available ? this.productDetail(data) : this.addToCart(data))
+                  () => (cart.find(({ product, variationIndex }) => (product === data.id && variationIndex === 0)) !== undefined) ? this.props.errorAlert(data, 'cart') : (data.variation_available ? this.productDetail(data) : this.addToCart(data))
                 }
               /></span></div>
             <div className="shop-btn"><span>
-              <FontAwesomeIcon icon={faRandom} onClick={() => (this.props.compare.length <= 5 ? (this.props.addToCompare(data), this.props.successAlert(data, 'compare')) : this.props.limitAlert())}
+              <FontAwesomeIcon icon={faRandom} onClick={() => (this.props.compare.length <= 5 ? (this.props.addToCompare({ product: data, variationIndex: 0 }), this.props.successAlert(data, 'compare')) : this.props.limitAlert())}
               />
             </span></div>
             {currentLocation !== '/wishlist' && <div className="shop-btn"><span>
               <FontAwesomeIcon
-                icon={(wishlist?.includes(data.id) || (Object.keys(userData).length > 0 && data?.wishlist?.id)) ? faHeart : farHeart}
+                icon={((wishlist.find(({ product, variationIndex }) => (product === data.id && variationIndex === 0)) !== undefined) || (Object.keys(userData).length > 0 && data?.wishlist?.id)) ? faHeart : farHeart}
                 onClick={() => {
-                  ((Object.keys(userData).length > 0 && data?.wishlist?.id) || wishlist?.includes(data.id)) ? this.deleteWishlist(data) : (data.variation_available ? this.productDetail(data) : this.addToWishlist(data))
+                  ((Object.keys(userData).length > 0 && data?.wishlist?.id) ||
+                    wishlist.find(({ product, variationIndex }) => (product === data.id && variationIndex === 0))
+                  ) ? this.deleteWishlist(data) : (data.variation_available ? this.productDetail(data) : this.addToWishlist(data))
                 }}
               />
             </span>
@@ -181,7 +183,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToWishlist: wishlist => dispatch(wishlistAction.addToWishlist(wishlist)),
-    deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index)),
+    deleteWishlist: wishlist => dispatch(wishlistAction.deleteWishlist(wishlist)),
     addToCompare: compare => dispatch(compareAction.addToCompare(compare)),
     addToCart: cart => dispatch(cartAction.addToCart(cart))
   }

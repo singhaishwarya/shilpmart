@@ -13,6 +13,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   >
     {props.isMarkerShown && <Marker position={{ lat: 26.8467, lng: 80.9462 }} />}
   </GoogleMap>))
+
 export default class SellerProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -46,22 +47,23 @@ export default class SellerProfile extends React.Component {
           ]
         }
       ],
-      brandName: query.get('brand-name')
+      brandName: window.location.pathname.split('/')[2], vendorData: {}
     }
 
   }
   componentDidMount = () => {
+
     this.getVendorDetails(this.state.brandName)
 
   }
 
   getVendorDetails = (brandName) => {
     ProductService.fetchVendor({ brand_name: brandName }).then((result) => {
-      console.log(result);
+      this.setState({ vendorData: result })
     });
   }
   render() {
-    const { isActiveTab, categories, config } = this.state;
+    const { isActiveTab, categories, config, vendorData } = this.state;
     return (
       <div className="container-fluid">
         <div className="row">
@@ -72,17 +74,15 @@ export default class SellerProfile extends React.Component {
                 <div className="seller-info">
                   <div className="seller-brand">
                     <div className="s-logo">
-                      <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="logo" /></div>
-                    {/* <div className="ratings d-flex"><span>
-                      <ReactStars count={5} size={15} /></span></div>*/}
+                      <img src={vendorData?.logo} className="img-fluid" alt="logo" /></div>
                   </div>
                   <div className="seller-details">
-                    <h1>Seller Title</h1>
-                    <p> <FontAwesomeIcon icon={faMapMarker} />  Seller address</p>
+                    <h1>{vendorData?.brand}</h1>
+                    {/* <p> <FontAwesomeIcon icon={faMapMarker} />  {vendorData?}</p> */}
                     <div className="seller-contact-info">
                       <p>
-                        <FontAwesomeIcon icon={faPhone} />  Mobile No.</p><p>
-                        <FontAwesomeIcon icon={faMailBulk} />  Email</p>
+                        <FontAwesomeIcon icon={faPhone} />  {vendorData?.mobile}</p><p>
+                        <FontAwesomeIcon icon={faMailBulk} />  {vendorData?.email}</p>
                     </div>
                   </div>
                 </div>
