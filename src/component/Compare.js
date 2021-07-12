@@ -2,10 +2,37 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as compareAction from '../actions/compare';
+import ProductService from '../services/ProductService';
+
 class Compare extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      compareProducts: []
+    }
+  }
+  componentDidMount() {
+    this.fetchCopareProducts(this.props.compare)
+  }
+
+  fetchCopareProducts = (productIds) => {
+    productIds.map((item, index) => {
+      ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
+        this.setState(prevState => ({
+          compareProducts: [...prevState.compareProducts, { product: result1.data[0], variationIndex: item.variationIndex }]
+        }))
+      })
+    })
+  }
+  deleteCompare = (product, index) => {
+    this.props.deleteCompare(product)
+    this.state.compareProducts.splice(index, 1)
+  }
 
   render() {
     const { compare } = this.props
+    const { compareProducts } = this.state;
     return (
       <section id="main-content">
         <div className="container-fluid">
@@ -22,25 +49,24 @@ class Compare extends Component {
                     You will find a lot of interesting products on our "Shop" page.</span>
                   <Link to='/product-list'>Return to shop</Link>
                 </div>}
-                {compare?.map((item, index) => {
+                {compareProducts?.map((item, index) => {
                   return (
                     <div className="compare-col" key={index}>
                       <div className="compare-col-row">
                         <span className="remove-item" onClick={() => {
-                          this.props.deleteCompare(item.id)
+                          this.deleteCompare({ product: item.product.id, variationIndex: item.variationIndex }, index)
                         }}>Remove</span>
                         <span className="item-img mb-2">
-                          <img src={item?.images[0]?.image_url || require('../public/No_Image_Available.jpeg')} alt="product img" className="img-fluid"
+                          <img src={item?.product.images[item.variationIndex]?.image_url || require('../public/No_Image_Available.jpeg')} alt="product img" className="img-fluid"
                             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                           />
                         </span>
-                        <span className="product-name mb-2">{item?.content?.title}</span>
-                        <div className="proPrice mb-2">{item?.price || 0}</div>
+                        <span className="product-name mb-2">{item?.product.content?.title}</span>
+                        <div className="proPrice mb-2">{item?.product?.prices[item.variationIndex]?.price || 0}</div>
                         <span className="add-cart">Add to Cart</span>
                       </div>
-                      <div className="compare-col-row"><p>{item.content?.product_description}</p></div>
-                      <div className="compare-col-row"><p>{item.variation_available ? 'Yes' : 'No'}</p></div>
-                      {/* <div className="compare-col-row"><p className="in-stock">{item.availability === 'yes' ? 'In Stock' : 'Out Of Stock'}</p></div> */}
+                      <div className="compare-col-row"><p>{item.product.content?.product_description}</p></div>
+                      <div className="compare-col-row"><p>{item.product.variation_available ? 'Yes' : 'No'}</p></div>
                     </div>
                   )
                 })}

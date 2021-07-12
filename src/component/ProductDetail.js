@@ -15,13 +15,14 @@ import ToastService from '../services/ToastService';
 import CartService from '../services/CartService';
 import * as cartAction from '../actions/cart';
 import * as wishlistAction from '../actions/wishlist';
+import * as compareAction from '../actions/compare';
 import { connect } from 'react-redux';
 import WishlistService from '../services/WishlistService'
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      combination: [], finCombination: [], variationIndex: 0,
+      combination: [], finCombination: [], currentVariationIndex: 0,
       isActiveTab: 0,
       filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
@@ -60,13 +61,13 @@ class ProductDetail extends React.Component {
   }
 
   deleteWishlist = (item) => {
-    (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist(item.id);
+    (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist({ product: item.id, variationIndex: this.state.currentVariationIndex });
     this.errorAlert(item, 'wishlist');
   }
 
   deleteWishlistApi(item) {
-    this.props.deleteWishlist(item.id)
-    WishlistService.addDelete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
+    this.props.deleteWishlist({ product: item?.id, variationIndex: this.state.currentVariationIndex })
+    WishlistService.addDelete({ wishlist_id: item.wishlist?.id, product_id: [item.id], variation_index: [this.state.currentVariationIndex] }).then((result) => {
       if (result?.success) {
         // this.getWishlist();
       }
@@ -82,15 +83,15 @@ class ProductDetail extends React.Component {
   addToWishlist = (product) => {
 
     if (Object.keys(this.props.userData).length > 0) { this.addToWishlistApi(product) } else {
-      this.props.addToWishlist(product.id);
+      this.props.addToWishlist({ product: product?.id, variationIndex: this.state.currentVariationIndex });
       this.successAlert(product, 'wishlist');
     }
 
   }
 
   addToWishlistApi = (product) => {
-    this.props.addToWishlist(product.id)
-    WishlistService.addDelete({ product_id: [product.id] }).then((result) => {
+    this.props.addToWishlist({ product: product?.id, variationIndex: this.state.currentVariationIndex })
+    WishlistService.addDelete({ product_id: [product.id], variation_index: [this.state.currentVariationIndex] }).then((result) => {
       if (result?.success) {
         this.successAlert(product, 'wishlist');
         // this.getWishlist();
@@ -128,7 +129,7 @@ class ProductDetail extends React.Component {
               'thumbnail': item.image_url
             }))
         });
-        // this.state.productDetailData.images.map((item, index) => {
+        // this.state.productDetailData?.images.map((item, index) => {
         //   if (item.variation_index === null) {
         //     this.setState({
         //       productDetailDataImages: [{
@@ -176,11 +177,11 @@ class ProductDetail extends React.Component {
   }
 
   addToCart = (product) => {
-    if (this.props.cart?.includes(product.id)) {
+    if (this.props.cart.find(({ product, variationIndex }) => (product === product.id && variationIndex === this.state.currentVariationIndex)) !== undefined) {
       this.errorAlert(product, 'cart');
     }
     else {
-      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart(product.id)
+      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart({ product: product?.id, variationIndex: this.state.currentVariationIndex })
 
     }
   }
@@ -197,7 +198,7 @@ class ProductDetail extends React.Component {
     let cartToSync = [{
       "product_id": product.id,
       "quantity": 1,
-      "variation_index": 0
+      "variation_index": this.state.currentVariationIndex
     }], cartProductids = [];
     try {
       CartService.add({ products: cartToSync }).then((result) => {
@@ -208,7 +209,7 @@ class ProductDetail extends React.Component {
               cartProductids?.push(item.product_id)
             ));
             ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart(item.id));
+              result1.data.map((item) => this.props.addToCart({ product: item?.id, variationIndex: this.state.currentVariationIndex }));
             })
           }
           else {
@@ -236,7 +237,7 @@ class ProductDetail extends React.Component {
 
   addToCheckout = (product) => {
     product.quantity = this.state.productQuantity;
-    product.variation_index = this.state.variationIndex;
+    product.variation_index = this.state.currentVariationIndex;
     this.props.history.push({
       pathname: '/checkout',
       state: { checkout: [product], totalCartCost: product?.price * this.state.productQuantity }
@@ -285,15 +286,19 @@ class ProductDetail extends React.Component {
     this.state.productDetailData.variations.map((item, index) => {
       if (JSON.stringify(item.variation_index) === JSON.stringify(combi)) {
         this.setState({
-          variationIndex: index,
-          productDetailDataPrice: this.state.productDetailData.prices[index].price
+          currentVariationIndex: index,
+          productDetailDataPrice: this.state.productDetailData?.prices[index].price
         });
 
       }
     })
   }
+
+  limitAlert = () => {
+    return ToastService.error("Compare Cart is full(limit :5)")
+  }
   render() {
-    const { productDetailData, productQuantity, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice, variationIndex, currentvalue2, currentvalue1 } = this.state;
+    const { productDetailData, productQuantity, wishlistStatus, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice, currentVariationIndex, currentvalue2, currentvalue1 } = this.state;
     const { wishlist, userData } = this.props;
 
     return (
@@ -307,12 +312,12 @@ class ProductDetail extends React.Component {
                     items={productDetailData?.images?.length > 0 ? productDetailDataImages : notFountImage}
                     thumbnailPosition='left'
                     showThumbnails={productDetailData?.images?.length > 0 ? true : false}
-                    startIndex={variationIndex}
+                    startIndex={currentVariationIndex}
                     onErrorImageURL={require('../public/No_Image_Available.jpeg')}
                   />
-                  <div className="addtowish"><FontAwesomeIcon icon={(wishlist?.includes(productDetailData?.id) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
+                  <div className="addtowish"><FontAwesomeIcon icon={((wishlist.find(({ product, variationIndex }) => (product === productDetailData?.id && variationIndex === currentVariationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
                     onClick={() => {
-                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || wishlist?.includes(productDetailData?.id)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
+                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || (wishlist.find(({ product, variationIndex }) => (product === productDetailData?.id && variationIndex === currentVariationIndex)) !== undefined)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
                     }} /></div>
                 </div>
               </div>
@@ -363,11 +368,13 @@ class ProductDetail extends React.Component {
                   ))}
 
                   <div className="action-links">
-                    <span>
+                    <span onClick={() => (this.props.compare.length < 5 ? (this.props.addToCompare({ product: productDetailData?.id, variationIndex: currentVariationIndex }), this.successAlert(productDetailData, 'compare')) : this.limitAlert())}>
                       <FontAwesomeIcon icon={faRandom} /> Compare</span>
-                    <span>
-                      <FontAwesomeIcon icon={wishlistStatus ? faCheck : farHeart}
-                        onClick={() => this.wishlistToggle(wishlistStatus)} /> {wishlistStatus ? "Browse Wishlist" : "Add to Wishlist"}
+                    <span onClick={() => {
+                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || (wishlist.find(({ product, variationIndex }) => (product === productDetailData?.id && variationIndex === currentVariationIndex)) !== undefined)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
+                    }}>
+                      <FontAwesomeIcon icon={((wishlist.find(({ product, variationIndex }) => (product === productDetailData?.id && variationIndex === currentVariationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faCheck : farHeart}
+                      /> {((wishlist.find(({ product, variationIndex }) => (product === productDetailData?.id && variationIndex === currentVariationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? "Added to Wishlist" : "Add to Wishlist"}
                     </span>
                   </div>
 
@@ -441,25 +448,25 @@ class ProductDetail extends React.Component {
                     <div className="seller-head"><strong>Sold by :</strong> </div>
                     <div className="seller-contact">
 
-                      {/* productDetailData.vendor.id */}
-                      <div className="seller-logo" onClick={() => this.handleSellerProfile(productDetailData.vendor.brand)}>
+                      {/* productDetailData?.vendor.id */}
+                      <div className="seller-logo" onClick={() => this.handleSellerProfile(productDetailData?.vendor.brand)}>
                         {productDetailData ? (
-                          productDetailData.vendor ? (
-                            productDetailData.vendor.logo ?
-                              <img src={productDetailData.vendor.logo} className="img-fluid" alt={productDetailData ? (productDetailData.vendor ? productDetailData.vendor.brand + " logo" : '') : ''} />
+                          productDetailData?.vendor ? (
+                            productDetailData?.vendor.logo ?
+                              <img src={productDetailData?.vendor.logo} className="img-fluid" alt={productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.brand + " logo" : '') : ''} />
                               : <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" />
                           ) : ''
                         ) : ''}
                         {/* <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /> */}
                       </div>
-                      <div className="s-title"><span> {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.brand : '') : ''}</span>
+                      <div className="s-title"><span> {productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.brand : '') : ''}</span>
                         {/* <span><ReactStars count={5} edit={false} size={15} color2={'#e87f13'} /></span> */}
                       </div>
                       <div className="s-ratings"><span>
                         <ReactStars count={5} edit={false} size={15} color2={'#ffd700'} /></span></div>
                       {/* <div className="contactinfo">
-                        <small><FontAwesomeIcon icon={faPhoneAlt} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.mobile : '') : ''}</small>
-                        <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; {productDetailData ? (productDetailData.vendor ? productDetailData.vendor.email : '') : ''}</small>
+                        <small><FontAwesomeIcon icon={faPhoneAlt} /> &nbsp; {productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.mobile : '') : ''}</small>
+                        <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; {productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.email : '') : ''}</small>
                       </div> */}
 
 
@@ -567,7 +574,8 @@ const mapStateToProps = state => {
   return {
     cart: state.cart,
     userData: state.userData,
-    wishlist: state.wishlist
+    wishlist: state.wishlist,
+    compare: state.compare
   }
 };
 
@@ -576,6 +584,7 @@ const mapDispatchToProps = (dispatch) => {
     addToCart: cart => dispatch(cartAction.addToCart(cart)),
     addToWishlist: wishlist => dispatch(wishlistAction.addToWishlist(wishlist)),
     deleteWishlist: index => dispatch(wishlistAction.deleteWishlist(index)),
+    addToCompare: compare => dispatch(compareAction.addToCompare(compare)),
 
   }
 };

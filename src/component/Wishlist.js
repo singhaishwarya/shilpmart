@@ -21,14 +21,17 @@ class Wishlist extends Component {
     this.props.userData?.token ? this.getWishlistApi() : this.getWishlist();
   }
   getWishlist = () => {
-
-    this.props.wishlist.length > 0 && ProductService.fetchAllProducts({ product_ids: this.props.wishlist }).then((result1) => {
-      this.setState({ wishlist: result1.data })
-      result1.data.map((item) => (
-        this.props.addToWishlist(item.id)
-      ))
-    })
-
+    let prodList = [];
+    this.props.wishlist.map((item, index) => {
+      ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
+        // prodList.push(result1.data[0]);
+        // prodList[index]?.variationIndex = item.variationIndex;
+        this.setState(prevState => ({
+          wishlist: [...prevState.wishlist, { product: result1.data[0], variationIndex: item.variationIndex }]
+        }))
+      })
+    });
+    console.log("Demo===", prodList)
   }
 
   deleteWishlist = (product) => {
@@ -77,10 +80,10 @@ class Wishlist extends Component {
         <div className="container">
           {(wishlist?.length > 0) ? (<>
             <div className='row py-5'>
-              
+
 
               {wishlist?.length > 0 && wishlist?.map((item, index) => {
-                finItem = item.product_details || item;
+                finItem = item.product_details || item.product;
                 return (
                   finItem && <div key={index} className='col-lg-3 col-sm-6 col-6' >
                     <span className="remove-item" onClick={() => {

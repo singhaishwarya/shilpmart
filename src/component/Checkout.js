@@ -488,7 +488,7 @@ class CheckoutComp extends React.Component {
                                 <img src={(checkOutData[0]?.images?.length > 0 && checkOutData[0]?.images[0]?.image_url) || checkOutData[0]?.product_details.images[0]?.image_url || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
 
                               </div>
-                              <span> {checkOutData.length > 1 && <span>+{checkOutData.length - 1} {(checkOutData.length - 1) > 1 ? "Items" : "Item"}</span>}</span>
+                              {checkOutData.length > 1 && <span>+{checkOutData.length - 1} {(checkOutData.length - 1) > 1 ? "Items" : "Item"}</span>}
                             </div>
                             <div className="checkoutInfo_title">{checkOutData[0]?.product_details?.content.title || checkOutData[0]?.content.title}</div>
 

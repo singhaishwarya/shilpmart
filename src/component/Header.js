@@ -89,12 +89,11 @@ class Header extends Component {
   syncWishlist = () => {
     const { wishlist } = this.props;
     if (wishlist?.length > 0) {
-
-      let wishlistToSync = [];
+      let prods = [], variation = [];
       wishlist.map((item) => {
-        return wishlistToSync.push(item)
+        return prods.push(item.product) && variation.push(item.variationIndex)
       })
-      this.addToWishlist(wishlistToSync);
+      this.addToWishlist({ product_id: prods, variation_index: variation });
     }
     else {
       WishlistService.list().then((result) => {
@@ -109,7 +108,7 @@ class Header extends Component {
   addToWishlist = (wishlistToSync) => {
     let wishlistProductids = [];
     try {
-      WishlistService.addDelete({ product_id: wishlistToSync }).then((result) => {
+      WishlistService.addDelete(wishlistToSync).then((result) => {
         if (result?.success) {
           result.data.map((item) => (
             wishlistProductids?.push(item.product_id)

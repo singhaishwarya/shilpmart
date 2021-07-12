@@ -35,7 +35,7 @@ class ProductTile extends React.Component {
 
   deleteWishlistApi(item) {
     this.props.deleteWishlist({ product: item.id, variationIndex: 0 })
-    WishlistService.addDelete({ wishlist_id: item.wishlist?.id, product_id: [item.id] }).then((result) => {
+    WishlistService.addDelete({ wishlist_id: item.wishlist?.id, product_id: [item.id], variation_index: [0] }).then((result) => {
       if (result?.success) {
         this.getWishlist();
       }
@@ -53,7 +53,7 @@ class ProductTile extends React.Component {
 
   addToWishlistApi = (product) => {
     this.props.addToWishlist({ product: product.id, variationIndex: 0 })
-    WishlistService.addDelete({ product_id: [product.id] }).then((result) => {
+    WishlistService.addDelete({ product_id: [product.id], variation_index: [0] }).then((result) => {
       if (result?.success) {
         this.props.successAlert(product, 'wishlist');
         this.getWishlist();
@@ -111,6 +111,10 @@ class ProductTile extends React.Component {
       search: (value?.category ? "?cid=" + value?.category?.category_id : '') + "&pid=" + value?.content?.product_id
     });
   }
+  addToCompare = (data) => {
+    this.props.addToCompare({ product: data.id, variationIndex: 0 });
+    this.props.successAlert(data, 'compare');
+  }
 
   render() {
 
@@ -119,7 +123,6 @@ class ProductTile extends React.Component {
     const cellSize = {};
     if (gridLayout === '2X2') { cellSize.height = '200px' }
     else { cellSize.height = (gridLayout === '3X3' ? '297px' : '212px') }
-
     return (
 
       <div className="product-wrapper" key={data.id} >
@@ -143,7 +146,8 @@ class ProductTile extends React.Component {
                 }
               /></span></div>
             <div className="shop-btn"><span>
-              <FontAwesomeIcon icon={faRandom} onClick={() => (this.props.compare.length <= 5 ? (this.props.addToCompare({ product: data, variationIndex: 0 }), this.props.successAlert(data, 'compare')) : this.props.limitAlert())}
+              <FontAwesomeIcon icon={faRandom} onClick={() => (data.variation_available ?
+                this.productDetail(data) : (this.props.compare.length < 5 ? this.addToCompare(data) : this.props.limitAlert()))}
               />
             </span></div>
             {currentLocation !== '/wishlist' && <div className="shop-btn"><span>
