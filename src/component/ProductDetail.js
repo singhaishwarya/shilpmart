@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faQuestion, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faQuestion, faHeart, faEnvelope, faPhoneAlt } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
 import {
@@ -181,7 +181,7 @@ class ProductDetail extends React.Component {
       this.errorAlert(product, 'cart');
     }
     else {
-      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart({ product: product?.id, variationIndex: this.state.currentVariationIndex })
+      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart({ product: product?.id, variationIndex: this.state.currentVariationIndex, quantity: this.state.productQuantity })
 
     }
   }
@@ -443,45 +443,34 @@ class ProductDetail extends React.Component {
 
                 <div className="product-meta py-2">
 
-                  <div className="seller-details-box my-3">
+                  <div className="seller-details-box my-3" onClick={() => this.handleSellerProfile(productDetailData?.vendor.brand)}>
                     {/* <div className="title-meta">Know your weaver</div> */}
                     <div className="seller-head"><strong>Sold by :</strong> </div>
                     <div className="seller-contact">
+                      <div className="seller-logo" >
 
-                      {/* productDetailData?.vendor.id */}
-                      <div className="seller-logo" onClick={() => this.handleSellerProfile(productDetailData?.vendor.brand)}>
-                        {productDetailData ? (
-                          productDetailData?.vendor ? (
-                            productDetailData?.vendor.logo ?
-                              <img src={productDetailData?.vendor.logo} className="img-fluid" alt={productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.brand + " logo" : '') : ''} />
-                              : <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" />
-                          ) : ''
-                        ) : ''}
-                        {/* <img src={require("../public/eShilpmart_logo_220.svg")} className="img-fluid" alt="eshilpmart logo" /> */}
+                        {productDetailData?.vendor ? (
+                          <img src={productDetailData?.vendor.logo || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/eShilpmart_logo_220.svg') }} />) : ''}
                       </div>
                       <div className="s-title"><span> {productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.brand : '') : ''}</span>
                         {/* <span><ReactStars count={5} edit={false} size={15} color2={'#e87f13'} /></span> */}
                       </div>
                       <div className="s-ratings"><span>
-                        <ReactStars count={5} edit={false} size={15} color2={'#ffd700'} /></span></div>
-                      {/* <div className="contactinfo">
-                        <small><FontAwesomeIcon icon={faPhoneAlt} /> &nbsp; {productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.mobile : '') : ''}</small>
-                        <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; {productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.email : '') : ''}</small>
-                      </div> */}
-
+                        <ReactStars count={5} edit={false} size={15} color2={'#ffd700'} /></span>
+                        <div className="contactinfo">
+                          <small><FontAwesomeIcon icon={faPhoneAlt} /> &nbsp; {productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.mobile : '') : ''}</small>
+                          <small><FontAwesomeIcon icon={faEnvelope} /> &nbsp; {productDetailData ? (productDetailData?.vendor ? productDetailData?.vendor.email : '') : ''}</small>
+                        </div>
+                      </div>
 
                     </div>
                   </div>
 
                   <div className="clearfix"></div>
-                  {/* <span className="sku">SKU: <span>-</span></span>
-                  <span className="sku">Categories: <span>-</span></span>
-                  <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span> */}
-
-
+                  {/* <span className="sku">SKU: <span>-</span></span> */}
+                  <span className="sku">Categories: <span>{productDetailData?.category?.cate_title}</span></span>
+                  {/* <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span> */}
                 </div>
-
-
                 <div className="product-description-wrapper pb-5">
                   <div className="product-description">
                     <header>Description</header>

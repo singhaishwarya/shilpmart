@@ -21,24 +21,20 @@ class Wishlist extends Component {
     this.props.userData?.token ? this.getWishlistApi() : this.getWishlist();
   }
   getWishlist = () => {
-    let prodList = [];
     this.props.wishlist.map((item, index) => {
       ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
-        // prodList.push(result1.data[0]);
-        // prodList[index]?.variationIndex = item.variationIndex;
         this.setState(prevState => ({
           wishlist: [...prevState.wishlist, { product: result1.data[0], variationIndex: item.variationIndex }]
         }))
       })
     });
-    console.log("Demo===", prodList)
   }
 
   deleteWishlist = (product) => {
     if (this.props.userData?.token) { (this.deleteWishlistApi(product)) }
     else {
-      this.props.deleteWishlist(product.id);
-      let wishlist = this.state.wishlist.filter(item => item.id !== product.id);
+      this.props.deleteWishlist({ product: (product.product_id || product?.product.id), variationIndex: product.variationIndex });
+      let wishlist = this.state.wishlist.filter(item => item.product.id !== product.product.id);
       this.setState({ wishlist: wishlist });
     }
   }
@@ -80,8 +76,6 @@ class Wishlist extends Component {
         <div className="container">
           {(wishlist?.length > 0) ? (<>
             <div className='row py-5'>
-
-
               {wishlist?.length > 0 && wishlist?.map((item, index) => {
                 finItem = item.product_details || item.product;
                 return (

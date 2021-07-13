@@ -165,7 +165,7 @@ class Header extends Component {
     else {
       Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) :
         //  this.props.addToCart(product?.id) 
-        this.props.addToCart({ product: product?.id, variationIndex: 0 })
+        this.props.addToCart({ product: product?.id, variationIndex: 0, quantity: 1 })
     }
   }
   errorAlert = (product, type) => {
@@ -188,7 +188,7 @@ class Header extends Component {
               cartProductids?.push(item.product_id)
             ));
             ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart({ product: item.id, variationIndex: 0 }));
+              result1.data.map((item) => this.props.addToCart({ product: item.id, variationIndex: 0, quantity: 1 }));
             })
           }
           else {

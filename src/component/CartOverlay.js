@@ -33,23 +33,24 @@ class CartOverlay extends Component {
   }
   getCart = () => {
     let totalCost1 = 0;
-    this.props.cart.length > 0 && ProductService.fetchAllProducts({ product_ids: this.props.cart }).then((result1) => {
-      result1.data.map((item) => (
-        totalCost1 += ((item?.price * 1) || 0.00),
-        this.props.addToCart(item.id)
-      ))
-      this.setState({ cartData: result1.data, totalCost: totalCost1 })
-    })
+    this.props.cart.map((item, index) => {
+      ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
+        totalCost1 += ((result1.data[0].prices[item.variationIndex]?.price * item.quantity) || 0.00);
+        this.setState(prevState => ({
+          cartData: [...prevState.cartData, { product: result1.data[0], variationIndex: item.variationIndex, quantity: item.quantity }],
+          totalCost: totalCost1
+        }))
+      })
+    });
 
   }
   deleteCart = (product) => {
     if (this.props.userData?.token) { (this.deleteCartApi(product.product_id)) }
     else {
-      this.props.deleteCart(product.id);
-      let cartData = this.state.cartData.filter(item => item.id !== product.id);
+      this.props.deleteCart({ product: product?.product.id, variationIndex: product.variationIndex });
+      let cartData = this.state.cartData.filter(item => item.product.id !== product.product.id);
       this.setState({ cartData: cartData });
     }
-
   }
 
   deleteCartApi = (productid) => {
@@ -77,7 +78,7 @@ class CartOverlay extends Component {
               <div className="cartshop-items">
                 <ul>
                   {cartData?.map((item, index) => (
-                    finItem = item?.product_details || item,
+                    finItem = item?.product_details || item.product,
 
                     <li key={index}>
                       <Link to={{
@@ -86,10 +87,10 @@ class CartOverlay extends Component {
                       }}
                         onClick={(e) => (this.props.dismissModal('cart'))
                         } >
-                        <img src={(finItem.images?.length > 0 && finItem.images[0]?.image_url) || "false"}
+                        <img src={(finItem.images?.length > 0 && finItem.images[item.variationIndex]?.image_url) || "false"}
                           className="img-fluid"
                           // onClick={() => this.productDetail(item.product_details.id)}
-                          alt={(finItem.images?.length > 0 && finItem.images[0]?.caption) || ""}
+                          alt={(finItem.images?.length > 0 && finItem.images[item.variationIndex]?.caption) || ""}
                           onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                         />
                       </Link>
@@ -97,7 +98,7 @@ class CartOverlay extends Component {
                         <span className="product-title">{finItem.content?.title}</span>
                         <div className="pro-store"><span>Store: <span>{finItem.store_name}</span></span></div>
                         <span className="qty">{item?.quantity || 1} x <span>
-                          {finItem?.prices[0]?.price || 0}</span></span>
+                          {finItem?.prices[item.variationIndex]?.price || 0}</span></span>
                       </div>
                       <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
                     </li>

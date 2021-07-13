@@ -36,41 +36,41 @@ class Cart extends Component {
 
   getCart = () => {
 
-    this.props.cart.length > 0 && ProductService.fetchAllProducts({ product_ids: this.props.cart }).then((result1) => {
-      this.setState({ cartProduct: result1.data })
-      result1.data.map((item) => (
-        this.props.addToCart(item.id)
-        //this.props.addToCart({ product: item.id, variationIndex: this.state.variationIndex})
-      ))
-    })
+    let totalCost1 = 0;
+    this.props.cart.map((item, index) => {
+      ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
+        totalCost1 += (result1.data[0]?.prices[item.variationIndex]?.price * 1 || 0) * (item.quantity * 1)
+
+        this.setState(prevState => ({
+          cartProduct: [...prevState.cartProduct, { product: result1.data[0], variationIndex: item.variationIndex, quantity: item.quantity }], totalCost: totalCost1
+        }))
+      })
+    });
 
   }
-  deleteCart = (product) => {
-
+  deleteCart = (product, index) => {
+    let totalCost1;
     if (this.props.userData?.token) { (this.deleteCartApi(product.product_id)) }
     else {
-      this.props.deleteCart(product.id);
-      let cartProduct = this.state.cartProduct.filter(item => item.id !== product.id);
-      this.setState({ cartProduct: cartProduct });
+      this.props.deleteCart({ product: product?.product.id, variationIndex: product.variationIndex });
+      this.setState((prevState) => ({
+        cartProduct: prevState.cartProduct.filter((_, i) => i !== index)
+      }));
+      totalCost1 = this.state.totalCost - (product.quantity * product.product.prices[product.variationIndex]?.price)
+
+      this.setState({ totalCost: totalCost1 });
     }
 
   }
 
-  deleteCartApi = (productid) => {
-    CartService.delete({ product_id: productid.product_id || productid }).then((result) => {
+  deleteCartApi = (product) => {
+    CartService.delete({ product_id: product.product_id || product?.product.id }).then((result) => {
       if (result.success) {
-        this.props.deleteCart(productid.product_id || productid);
+        this.props.deleteCart({ product: (product.product_id || product?.product.id), variationIndex: product.variationIndex });
         this.props.userData ? this.getCartApi() : this.getCart()
       }
     })
   }
-
-  // productCountManual = (event, product) => {
-
-  //   this.setState({ productCount: event.target.value });
-  //   this.changeQuantity(product, event.target.value)
-
-  // }
 
   changeQuantity = (product, quantity) => {
     this.setState({ productCount: quantity });
@@ -90,6 +90,7 @@ class Cart extends Component {
     const { cartProduct, totalCost } = this.state;
     const { cart } = this.props;
     let finItem;
+
     return (
       <div className="container-fluid">
 
@@ -111,20 +112,20 @@ class Cart extends Component {
                   </thead>
                   <tbody>
                     {cartProduct?.map((item, index) => (
-                      finItem = item.product_details || item,
+                      finItem = item.product_details || item.product,
                       <tr key={index}>
-                        <td className="product-remove"><span onClick={() => this.deleteCart(item)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
+                        <td className="product-remove"><span onClick={() => this.deleteCart(item, index)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
                         <td className="product-thumbnail">
-                          <img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"}
+                          <img src={(finItem?.images?.length > 0 && finItem?.images[item.variationIndex]?.image_url) || "false"}
                             className="img-fluid"
                             onClick={() => this.productDetail(finItem)}
-                            alt={(finItem?.images?.length > 0 && finItem?.images[0]?.caption) || ""}
+                            alt={(finItem?.images?.length > 0 && finItem?.images[item.variationIndex]?.caption) || ""}
                             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                           />
                         </td>
                         <td className="product-name">{finItem?.content?.title}
                           <p>Store : <span><span>{finItem?.store_name}</span></span></p></td>
-                        <td className="product-subtotal"><span> <span>₹</span> {finItem?.prices[0]?.price || 0}
+                        <td className="product-subtotal"><span> <span>₹</span> {finItem?.prices[item.variationIndex]?.price || 0}
                         </span></td>
                         <td className="product-quantity" data-title="Quantity"><div className="product-qty">
                           <div className="input-group">
@@ -135,7 +136,7 @@ class Cart extends Component {
                           </div>
                         </div>
                         </td>
-                        <td className="product-price"><span><span>₹</span> {(finItem?.prices[0]?.price * item.quantity) || 0}</span></td>
+                        <td className="product-price"><span><span>₹</span> {(finItem?.prices[item.variationIndex]?.price * item.quantity) || 0}</span></td>
                       </tr>
                     ))}
                   </tbody>

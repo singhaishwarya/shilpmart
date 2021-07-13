@@ -266,6 +266,7 @@ class CheckoutComp extends React.Component {
   render() {
     const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, paymentType, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType, addeditAddress, sectionToggle } = this.state;
     let finItem;
+
     return (
       <section>
         <CheckoutProvider config={paytmConfig} env='STAGE'>
@@ -444,16 +445,16 @@ class CheckoutComp extends React.Component {
                           <div className="col">
 
                             {checkOutData.map((item, index) => (
-                              finItem = item.product_details || item,
+                              finItem = item.product_details || item.product,
 
                               <div className="orderSummaryWrapper" key={index}>
                                 <div className="row">
                                   <div className="col-sm-9 col-12"><div className="orderSummary">
-                                    <div className="orderImg"><img src={(finItem?.images?.length > 0 && finItem?.images[0]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
+                                    <div className="orderImg"><img src={(finItem?.images?.length > 0 && finItem?.images[item.variationIndex]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
                                     <div className="orderInfo">
                                       <p className="producthead">{finItem?.content?.title}</p>
                                       {/* <p className="seller">Seller: <span>Seller Name</span></p> */}
-                                      <span className="productprice"><span>₹</span> {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
+                                      <span className="productprice"><span>₹</span> {finItem?.prices[item.variationIndex]?.price} X {item?.quantity ? item?.quantity : 1}</span>
                                     </div>
                                   </div></div>
                                   <div className="col-sm-3 col-12"><div className="orderaction">
@@ -485,12 +486,12 @@ class CheckoutComp extends React.Component {
                               finItem = item.product_details || item, */}
                             <div className="checkoutInfo_img">
                               <div className="orderImgs">
-                                <img src={(checkOutData[0]?.images?.length > 0 && checkOutData[0]?.images[0]?.image_url) || checkOutData[0]?.product_details.images[0]?.image_url || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
+                                <img src={(checkOutData[0].product.images?.length > 0 && checkOutData[0].product.images[checkOutData[0].variationIndex].image_url) || checkOutData[0]?.product_details.images[checkOutData[0].variationIndex].image_url || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
 
                               </div>
                               {checkOutData.length > 1 && <span>+{checkOutData.length - 1} {(checkOutData.length - 1) > 1 ? "Items" : "Item"}</span>}
                             </div>
-                            <div className="checkoutInfo_title">{checkOutData[0]?.product_details?.content.title || checkOutData[0]?.content.title}</div>
+                            <div className="checkoutInfo_title">{checkOutData[0]?.product_details?.content.title || checkOutData[0]?.product.content.title}</div>
 
 
                           </div>
@@ -574,13 +575,13 @@ class CheckoutComp extends React.Component {
                   <div className="card-body">
                     <ul className="list-group">
                       {checkOutData.map((item, index) => (
-                        finItem = item.product_details || item,
+                        finItem = item.product_details || item.product,
                         <li key={index} className="d-flex justify-content-between border-bottom py-3">
 
                           <h6 className="my-0">{finItem?.content?.title}</h6>
                           {/* <span>Store: <small className="text-muted">{finItem?.store_name}</small></span> */}
 
-                          <span className="text-muted"><span>₹</span> {finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
+                          <span className="text-muted"><span>₹</span> {finItem?.prices[item.variationIndex]?.price} X {item?.quantity ? item?.quantity : 1}</span>
 
                         </li>
                       ))}

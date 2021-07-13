@@ -5,7 +5,7 @@ export default class CheckoutCallback extends React.Component {
   constructor(props) {
     super(props);
     var request = new XMLHttpRequest();
-    console.log("demo====", request.getAllResponseHeaders());
+
     this.props.location?.state?.paymentType === 'airpay' && this.orderValidate(localStorage.getItem('paymentType'))
   }
 

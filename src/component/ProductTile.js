@@ -67,7 +67,7 @@ class ProductTile extends React.Component {
       this.addToCartApi(product)
     }
     else {
-      this.props.addToCart({ product: product.id, variationIndex: 0 });
+      this.props.addToCart({ product: product.id, variationIndex: 0, quantity: 1 });
       this.props.successAlert(product, 'cart');
     }
   }
@@ -89,7 +89,7 @@ class ProductTile extends React.Component {
               cartProductids?.push(item.product_id)
             ));
             ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart({ product: item.id, variationIndex: 0 }));
+              result1.data.map((item) => this.props.addToCart({ product: item.id, variationIndex: 0, quantity: 1 }));
             })
             this.props.successAlert(product, 'cart');
           }
