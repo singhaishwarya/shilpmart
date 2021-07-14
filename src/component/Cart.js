@@ -103,8 +103,8 @@ class Cart extends Component {
                   <thead>
                     <tr>
                       <th scope="col"></th>
-                      <th scope="col"></th>
                       <th scope="col">PRODUCT</th>
+                      <th scope="col"></th>
                       <th scope="col">PRICE</th>
                       <th scope="col">QUANTITY</th>
                       <th scope="col">SUBTOTAL</th>

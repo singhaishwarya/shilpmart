@@ -227,7 +227,8 @@ class ProductGrid extends Component {
                 )
 
               })} {productListData.next_page_url && <span className="loadMore" onClick={() => this.fetchMoreData()}><span>Load More</span></span>}</>)
-              : <span>No products were found matching your selection.</span>}
+              : <div class="empty-wishlist empty-product"><h2>No Product found for this category.</h2>
+              <Link href="/product-list">Return to shop</Link></div>}
 
           </div>
 

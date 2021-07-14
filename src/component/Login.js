@@ -7,7 +7,7 @@ import Button from "react-validation/build/button";
 import AuthService from '../services/AuthService';
 import * as authAction from '../actions/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faKey, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const required = (value, name) => {
   if (!name.value) {
@@ -74,17 +74,17 @@ class Login extends Component {
     return (
       <div className="login-card">
         <span><FontAwesomeIcon className="text-right" icon={faTimes} onClick={() => this.props?.dismissModal('login')} /></span>
-        <h4 className="modal-title">Sign in Or Register</h4>
+        <h4 className="modal-title">Sign in or Register</h4>
         <Form onSubmit={this.handleLogin} ref={(c) => { this.form = c; }}>
           <div className="form-group">
-            <label htmlFor="username">Email/Mobile</label>
+            <label htmlFor="username"><FontAwesomeIcon icon={faEnvelope}/> Email/Mobile</label>
             <Input type="text" className="form-control" name="username" value={this.state.username}
               onChange={this.onChangeUsername}
               validations={[required]}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password"><FontAwesomeIcon icon={faKey}/> Password</label>
             <Input
               type="password"
               className="form-control"
@@ -95,14 +95,18 @@ class Login extends Component {
             />
           </div>
           {errorMsg && <div className="isaerror">{errorMsg}</div>}
-          <div className="form-group">
+          <div className="d-flex flex-wrap justify-content-between">
+                    <div className="form-check">
+                      <input className="form-check-input" type="checkbox" checked="" id="remember_me"/>
+                      <label className="form-check-label" for="remember_me">Remember me</label>
+                    </div><Link className="nav-link-inline fs-sm" href="#">Forgot password?</Link>
+                  </div>
+          <div className="form-group d-flex justify-content-between">
 
-            <Button
-              className="btn login-btn mb-0 float-left"
-            >
+            <Button className="btn login-btn mb-0 float-left">
               <span>Login</span>
             </Button>
-            {/* <span className="float-right py-2">Forget Password?</span> */}
+            {/* <span className="py-2">Forget Password?</span> */}
           </div>
 
         </Form>

@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faQuestion, faHeart, faEnvelope, faPhoneAlt } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faQuestion, faHeart, faEnvelope, faPhoneAlt, faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import ImageGallery from 'react-image-gallery';
 import {
@@ -528,6 +528,62 @@ class ProductDetail extends React.Component {
                           <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid" alt="Saree" /></span>
                           <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid" alt="Saree" /></span>
                         </div>
+
+                        <div className="product-review pb-4 my-4 border-bottom">
+        <div className="d-flex mb-3">
+          <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
+            <div className="pl-3">
+              <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
+              <small className="fs-ms text-muted">July 14, 2021</small>
+            </div>
+          </div>
+          <div>
+            <div className="star-rating">
+              <FontAwesomeIcon icon={faStar}/>
+              <FontAwesomeIcon icon={faStar}/>
+              <FontAwesomeIcon icon={faStar}/>
+              <FontAwesomeIcon icon={faStar}/>
+              <FontAwesomeIcon icon={faStarHalfAlt}/>
+            </div>
+            <small className="fs-ms text-muted">83% of users found this review helpful</small>
+          </div>
+        </div>
+        <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
+      
+        <div className="text-nowrap">
+          <button className="btn-like" type="button">15</button>
+          <button className="btn-dislike" type="button">3</button>
+        </div>
+      </div>
+
+      <div className="product-review my-4">
+        <div className="d-flex mb-3">
+          <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
+            <div className="pl-3">
+              <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
+              <small className="fs-ms text-muted">July 12, 2021</small>
+            </div>
+          </div>
+          <div>
+            <div className="star-rating">              
+              <FontAwesomeIcon icon={faStar}/>
+              <FontAwesomeIcon icon={faStar}/>
+              <FontAwesomeIcon icon={faStarHalfAlt}/>
+              
+            </div>
+            <small className="fs-ms text-muted">83% of users found this review helpful</small>
+          </div>
+        </div>
+        <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
+      
+        <div className="text-nowrap">
+          <button className="btn-like" type="button">15</button>
+          <button className="btn-dislike" type="button">3</button>
+        </div>
+      </div>
+
+
+
                       </div>
 
                     </div>

@@ -205,20 +205,25 @@ export default class ProductList extends React.Component {
                       </div>
                       <div className='price-range'>
                         <div className="rangewraper">
-                          <span>Price: ₹</span>
-                          <span><input type='number' min={0} max={priceRange[0] || 50000} value={priceRange[0] || 0} className='price-range-field'
-                            onChange={(e) => this.onManualPriceChange(0, e)}
-                          /></span>
-                          <span className="px-2"> — </span>
-                          <span>₹</span>
-                          <span><input type='number' min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
-                            onChange={(e) => this.onManualPriceChange(1, e)}
-                            className='price-range-field' /></span>
+                          <div className="w-50 pr-2 mr-2">
+                          <div className="input-group input-group-sm">
+                            <span className="input-group-text bg-light">₹</span>
+                          <input min={0} max={priceRange[0] || 50000} value={priceRange[0] || 0} className="form-control range-slider-value-min" onChange={(e) => this.onManualPriceChange(0, e)} type="text"/>
                         </div>
-                        <span>
+                          </div>
+                          <div className="w-50">
+                          <div className="input-group input-group-sm">
+                            <span className="input-group-text bg-light">₹</span>
+                          <input min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
+                            onChange={(e) => this.onManualPriceChange(1, e)} className="form-control range-slider-value-min" type="text"/>
+                        </div>
+                          </div>
+                         
+                        </div>
+                        {/* <span>
                           <button onClick={() => { this.filterByPriceRange() }} className='price-range-search'
                             id='price-range-submit'>Filter</button>
-                        </span>
+                        </span> */}
                       </div>
                       <div id='searchResults' className='search-results-block'></div>
                     </div>
