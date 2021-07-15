@@ -30,12 +30,13 @@ class Wishlist extends Component {
     });
   }
 
-  deleteWishlist = (product) => {
+  deleteWishlist = (product, index) => {
     if (this.props.userData?.token) { (this.deleteWishlistApi(product)) }
     else {
       this.props.deleteWishlist({ product: (product.product_id || product?.product.id), variation_index: product.variation_index });
-      let wishlist = this.state.wishlist.filter(item => item.product.id !== product.product.id);
-      this.setState({ wishlist: wishlist });
+      this.setState((prevState) => ({
+        wishlist: prevState.wishlist.filter((_, i) => i !== index)
+      }));
     }
   }
 
@@ -81,7 +82,7 @@ class Wishlist extends Component {
                 return (
                   finItem && <div key={index} className='col-lg-3 col-sm-6 col-6' >
                     <span className="remove-item" onClick={() => {
-                      this.deleteWishlist(item)
+                      this.deleteWishlist(item, index)
                     }}>Remove</span>
                     <ProductTile data={finItem} variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} />
                   </div>

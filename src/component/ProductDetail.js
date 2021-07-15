@@ -121,6 +121,7 @@ class ProductDetail extends React.Component {
     try {
       let variation = [];
       ProductService.fetchAllProducts(queryParams).then((result) => {
+        if (result.data.length === 0) this.props.history.push({ pathname: '/product-list' })
         this.setState({
           productDetailData: result?.data[0], productDetailDataPrice: result?.data[0]?.price,
           productDetailDataImages: result?.data[0]?.images?.map((item, index) => (
@@ -129,16 +130,6 @@ class ProductDetail extends React.Component {
               'thumbnail': item.image_url
             }))
         });
-        // this.state.productDetailData?.images.map((item, index) => {
-        //   if (item.variation_index === null) {
-        //     this.setState({
-        //       productDetailDataImages: [{
-        //         'original': item.image_url,
-        //         'thumbnail': item.image_url
-        //       }]
-        //     });
-        //   }
-        // });
         result?.data[0]?.variation_available && result.data[0].properties.map((item) => (
           item.veriation_value.indexOf(",") !== - 1 && variation.push({ key: item.variation_key, value: item.veriation_value.split(',') })
         ));
@@ -245,22 +236,19 @@ class ProductDetail extends React.Component {
 
   }
   makeCombo = (key, value) => {
-    console.log("demo==incoming", key, value)
-    let tempConbo = this.state.combination;
     if (this.state.combination.length > 0) {
-      console.log("demo=====combination0", this.state.combination)
-
-      tempConbo.map((item, index) => {
+      this.state.combination.map((item, index) => {
         if (item.variation_id === key && item.variation_value !== value) {
           item.variation_value = value;
-          console.log("demo=====combination1", tempConbo)
         }
         else {
-          this.setState(prevState => ({
-            combination: [...prevState.combination, { variation_id: key, variation_value: value }]
-          }))
 
-          console.log("demo=====combination2", tempConbo)
+          this.setState({
+            combination: this.state.combination.concat(
+              { variation_id: key, variation_value: value }
+            )
+          });
+
         }
       });
 
@@ -272,22 +260,15 @@ class ProductDetail extends React.Component {
           return acc;
         }
       }, []);
-      // this.setState({ finCombination: filteredArr });
-      console.log("demo=====combination3", filteredArr)
+      this.setState({ finCombination: filteredArr });
       this.getVariationIndex(filteredArr);
     } else {
-      // this.setState(prevState => ({
-      //   combination: [...prevState.combination, { variation_id: key, variation_value: value }]
-      // }))
-      // this.setState({
-      //   combination: this.state.combination.concat(
-      //     { variation_id: key, variation_value: value }
-      //   )
-      // });
-      let temp = { 'variation_id': key, 'variation_value': value };
-      this.setState({ combination: [temp] })
-      console.log("demo=====combination4", this.state.combination, key, value, temp)
 
+      this.setState({
+        combination: this.state.combination.concat(
+          { variation_id: key, variation_value: value }
+        )
+      });
     }
 
   }
