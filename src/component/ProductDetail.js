@@ -592,7 +592,36 @@ class ProductDetail extends React.Component {
 
                   <div className="product-description">
                     <header>Inquiries</header>
-                    <p>{productDetailData?.content?.product_description}</p>
+                    <div className="question_ans_wrapper mb-3">
+                      <div className="d-flex mb-2">
+                        <div className="question_ans_title">Question :</div>
+                        <div className="question_ans_text">When will blue saree will be restocked?</div>
+
+                      </div>
+
+                      <div className="d-flex">
+                        <div className="question_ans_title">Answer :</div>
+                        <div className="question_ans_text">It has been restocked. Please refresh the product page. By vardha SELLER  on 24 October, 2020</div>
+
+                      </div>
+                    </div>
+
+
+                    <div className="question_ans_wrapper mb-3">
+                      <div className="d-flex mb-2">
+                        <div className="question_ans_title">Question :</div>
+                        <div className="question_ans_text">When will blue saree will be restocked?</div>
+
+                      </div>
+
+                      <div className="d-flex">
+                        <div className="question_ans_title">Answer :</div>
+                        <div className="question_ans_text">It has been restocked. Please refresh the product page. By vardha SELLER  on 24 October, 2020</div>
+
+                      </div>
+                    </div>
+
+                    {/* <p>{productDetailData?.content?.product_description}</p> */}
                   </div>
 
                 </div>

@@ -60,19 +60,24 @@ class ShopByType extends Component {
     CategoryService.fetchAllCategory({ parent_id: 0 }).then((result) => {
       this.setState({
         shopByCategoryItems: result?.map((item, index) =>
-        (<div key={index} >
+        (<div className="flip-container" key={index} >
           <div className="categorie-img" onClick={() => this.productList(item.id)}>
-            <span className="cate-img">
-              <img src={catImages[index] || require('../public/No_Image_Available.jpeg')} className="img-fluid"
-                alt={item.title}
-                onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
-              />
-            </span>
+            {/* <div className="cat-overlay"></div> */}
+            <div className="categorie-img-front" style={{backgroundImage: `url("https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp")`}} >
+
+              <div className="more-products"><Link to="/product-list">225<br/>More Products</Link></div>
+
+            </div>
+            <div className="categorie-img-Back" style={{backgroundImage: `url("https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp")`}}>
+            <div className="categorie-img-title">
+              <div className="cat_icon"><img src={require("../public/icons/eshilp-travel-ass.svg")} className="img-fluid" alt="pay" /></div>  
+              <h3>{item.title}</h3>
+            </div>
+              
+            </div>        
+            
           </div>
-          <div className="categorie-img-title">
-            <h3>{item.title}</h3>
-            <div className="more-products"><Link to="/product-list">More Products</Link></div>
-          </div>
+         
         </div>)
         )
       })
@@ -112,7 +117,7 @@ class ShopByType extends Component {
           autoPlayInterval={3000}
           autoPlay={true}
           autoPlayStrategy="all"
-          disableDotsControls
+          //disableDotsControls
           items={type === 'product' ? shopByProductItems : shopByCategoryItems}
           responsive={responsive}
           mouseTracking
