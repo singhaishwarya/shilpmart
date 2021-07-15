@@ -23,7 +23,7 @@ class CartOverlay extends Component {
     CartService.list().then((result) => {
       this.setState({ cartData: result });
       result && result.forEach((item) => {
-        totalCost1 += ((item?.product_details?.prices[0]?.price * 1) || 0) * (item.quantity * 1);
+        totalCost1 += ((item?.product_details?.prices[item.variation_index]?.price * 1) || 0) * (item.quantity * 1);
       });
 
       this.setState({
@@ -35,9 +35,9 @@ class CartOverlay extends Component {
     let totalCost1 = 0;
     this.props.cart.map((item, index) => {
       ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
-        totalCost1 += ((result1.data[0].prices[item.variationIndex]?.price * item.quantity) || 0.00);
+        totalCost1 += ((result1.data[0].prices[item.variation_index]?.price * item.quantity) || 0.00);
         this.setState(prevState => ({
-          cartData: [...prevState.cartData, { product: result1.data[0], variationIndex: item.variationIndex, quantity: item.quantity }],
+          cartData: [...prevState.cartData, { product: result1.data[0], variation_index: item.variation_index, quantity: item.quantity }],
           totalCost: totalCost1
         }))
       })
@@ -45,16 +45,16 @@ class CartOverlay extends Component {
 
   }
   deleteCart = (product) => {
-    if (this.props.userData?.token) { (this.deleteCartApi(product.product_id)) }
+    if (this.props.userData?.token) { this.deleteCartApi(product.product_id, product.variation_index) }
     else {
-      this.props.deleteCart({ product: product?.product.id, variationIndex: product.variationIndex });
+      this.props.deleteCart({ product: product?.product.id, variation_index: product.variation_index });
       let cartData = this.state.cartData.filter(item => item.product.id !== product.product.id);
       this.setState({ cartData: cartData });
     }
   }
 
-  deleteCartApi = (productid) => {
-    CartService.delete({ product_id: productid.product_id || productid }).then((result) => {
+  deleteCartApi = (productid, variation_index) => {
+    CartService.delete({ product_id: productid.product_id || productid, variation_index }).then((result) => {
       if (result.success) {
         this.props.deleteCart(productid.product_id || productid);
         this.props.userData ? this.getCartApi() : this.getCart()
@@ -79,7 +79,6 @@ class CartOverlay extends Component {
                 <ul>
                   {cartData?.map((item, index) => (
                     finItem = item?.product_details || item.product,
-
                     <li key={index}>
                       <Link to={{
                         pathname: `/product-detail`,
@@ -87,18 +86,18 @@ class CartOverlay extends Component {
                       }}
                         onClick={(e) => (this.props.dismissModal('cart'))
                         } >
-                        <img src={(finItem.images?.length > 0 && finItem.images[item.variationIndex]?.image_url) || "false"}
+                        <img src={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.image_url) || "false"}
                           className="img-fluid"
                           // onClick={() => this.productDetail(item.product_details.id)}
-                          alt={(finItem.images?.length > 0 && finItem.images[item.variationIndex]?.caption) || ""}
+                          alt={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.caption) || ""}
                           onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                         />
                       </Link>
                       <div className="cart-info">
-                        <span className="product-title">{finItem.content?.title}</span>
-                        <div className="pro-store"><span>Store: <span>{finItem.store_name}</span></span></div>
+                        <span className="product-title">{finItem?.content?.title}</span>
+                        {/* <div className="pro-store"><span>Store: <span>{finItem?.store_name}</span></span></div> */}
                         <span className="qty">{item?.quantity || 1} x <span>
-                          {finItem?.prices[item.variationIndex]?.price || 0}</span></span>
+                          {finItem?.prices[item.variation_index]?.price || 0}</span></span>
                       </div>
                       <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
                     </li>

@@ -5,7 +5,7 @@ export default function cartReducer(state = [], action) {
 
     case actionTypes.ADD_TO_CART:
       let final;
-      const result = state.find(({ product, variationIndex }) => (product === action.cart.product && variationIndex === action.cart.variationIndex));
+      const result = state.find(({ product, variation_index }) => (product === action.cart.product && variation_index === action.cart.variation_index));
       if (result === undefined) {
         final = [...state, ...[action.cart]];
       }
@@ -27,7 +27,7 @@ export default function cartReducer(state = [], action) {
       // );
       let finArr = [];
       state.map((data) => {
-        if ((data.product === action.cart.product) && (data.variationIndex === action.cart.variationIndex)) return
+        if ((data.product === action.cart.product) && (data.variation_index === action.cart.variation_index)) return
         else finArr.push(data)
       })
       return finArr;

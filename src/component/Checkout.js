@@ -450,11 +450,11 @@ class CheckoutComp extends React.Component {
                               <div className="orderSummaryWrapper" key={index}>
                                 <div className="row">
                                   <div className="col-sm-9 col-12"><div className="orderSummary">
-                                    <div className="orderImg"><img src={(finItem?.images?.length > 0 && finItem?.images[item.variationIndex]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
+                                    <div className="orderImg"><img src={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
                                     <div className="orderInfo">
                                       <p className="producthead">{finItem?.content?.title}</p>
                                       {/* <p className="seller">Seller: <span>Seller Name</span></p> */}
-                                      <span className="productprice"><span>₹</span> {finItem?.prices[item.variationIndex]?.price} X {item?.quantity ? item?.quantity : 1}</span>
+                                      <span className="productprice"><span>₹</span> {finItem?.prices[item.variation_index]?.price} X {item?.quantity ? item?.quantity : 1}</span>
                                     </div>
                                   </div></div>
                                   <div className="col-sm-3 col-12"><div className="orderaction">
@@ -486,7 +486,7 @@ class CheckoutComp extends React.Component {
                               finItem = item.product_details || item, */}
                             <div className="checkoutInfo_img">
                               <div className="orderImgs">
-                                <img src={(checkOutData[0].product.images?.length > 0 && checkOutData[0].product.images[checkOutData[0].variationIndex].image_url) || checkOutData[0]?.product_details.images[checkOutData[0].variationIndex].image_url || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
+                                <img src={(checkOutData[0].product.images?.length > 0 && checkOutData[0].product.images[checkOutData[0].variation_index].image_url) || checkOutData[0]?.product_details.images[checkOutData[0].variation_index].image_url || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} />
 
                               </div>
                               {checkOutData.length > 1 && <span>+{checkOutData.length - 1} {(checkOutData.length - 1) > 1 ? "Items" : "Item"}</span>}
@@ -581,7 +581,7 @@ class CheckoutComp extends React.Component {
                           <h6 className="my-0">{finItem?.content?.title}</h6>
                           {/* <span>Store: <small className="text-muted">{finItem?.store_name}</small></span> */}
 
-                          <span className="text-muted"><span>₹</span> {finItem?.prices[item.variationIndex]?.price} X {item?.quantity ? item?.quantity : 1}</span>
+                          <span className="text-muted"><span>₹</span> {finItem?.prices[item.variation_index]?.price} X {item?.quantity ? item?.quantity : 1}</span>
 
                         </li>
                       ))}

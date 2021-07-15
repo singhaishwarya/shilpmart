@@ -5,7 +5,7 @@ export default function compareReducer(state = [], action) {
 
     case actionTypes.ADD_TO_COMPARE:
       let final;
-      const result = state.find(({ product, variationIndex }) => (product === action.compare.product && variationIndex === action.compare.variationIndex));
+      const result = state.find(({ product, variation_index }) => (product === action.compare.product && variation_index === action.compare.variation_index));
       if (result === undefined) {
         final = [...state, ...[action.compare]];
       }
@@ -20,7 +20,7 @@ export default function compareReducer(state = [], action) {
     case actionTypes.DELETE_COMPARE:
       let finArr = [];
       state.map((data) => {
-        if ((data.product === action.compare.product) && (data.variationIndex === action.compare.variationIndex)) return
+        if ((data.product === action.compare.product) && (data.variation_index === action.compare.variation_index)) return
         else finArr.push(data)
       })
       return finArr;
