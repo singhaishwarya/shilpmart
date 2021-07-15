@@ -17,14 +17,14 @@ class Wishlist extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.userData?.token ? this.getWishlistApi() : this.getWishlist();
   }
   getWishlist = () => {
     this.props.wishlist.map((item, index) => {
       ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
         this.setState(prevState => ({
-          wishlist: [...prevState.wishlist, { product: result1.data[0], variationIndex: item.variationIndex }]
+          wishlist: [...prevState.wishlist, { product: result1.data[0], variation_index: item.variation_index }]
         }))
       })
     });
@@ -33,7 +33,7 @@ class Wishlist extends Component {
   deleteWishlist = (product) => {
     if (this.props.userData?.token) { (this.deleteWishlistApi(product)) }
     else {
-      this.props.deleteWishlist({ product: (product.product_id || product?.product.id), variationIndex: product.variationIndex });
+      this.props.deleteWishlist({ product: (product.product_id || product?.product.id), variation_index: product.variation_index });
       let wishlist = this.state.wishlist.filter(item => item.product.id !== product.product.id);
       this.setState({ wishlist: wishlist });
     }
@@ -49,7 +49,7 @@ class Wishlist extends Component {
   getWishlistApi = () => {
 
     WishlistService.list().then((result) => {
-      result && result.map((item) => this.props.addToWishlist(item.product_id)
+      result && result.map((item) => this.props.addToWishlist({ product: item.product_id, variation_index: item.variation_index })
       )
 
       this.setState({ wishlist: result });
@@ -83,7 +83,7 @@ class Wishlist extends Component {
                     <span className="remove-item" onClick={() => {
                       this.deleteWishlist(item)
                     }}>Remove</span>
-                    <ProductTile data={finItem} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} />
+                    <ProductTile data={finItem} variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} />
                   </div>
                 )
               })}

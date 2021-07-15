@@ -22,19 +22,19 @@ class ProductTile extends React.Component {
 
     WishlistService.list().then((result) => {
       result && result.map((item) => (
-        this.props.addToWishlist(item.product_id)
+        this.props.addToWishlist({ product: item.product_id, variation_index: item.variation_index })
       ))
     })
 
   }
 
   deleteWishlist = (item) => {
-    (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist({ product: item.id, variationIndex: 0 });
+    (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist({ product: item.id, variation_index: 0 });
     this.props.errorAlert(item, 'wishlist');
   }
 
   deleteWishlistApi(item) {
-    this.props.deleteWishlist({ product: item.id, variationIndex: 0 })
+    this.props.deleteWishlist({ product: item.id, variation_index: 0 })
     WishlistService.addDelete({ wishlist_id: item.wishlist?.id, product_id: [item.id], variation_index: [0] }).then((result) => {
       if (result?.success) {
         this.getWishlist();
@@ -45,14 +45,14 @@ class ProductTile extends React.Component {
   addToWishlist = (product) => {
 
     if (Object.keys(this.props.userData).length > 0) { this.addToWishlistApi(product) } else {
-      this.props.addToWishlist({ product: product.id, variationIndex: 0 });
+      this.props.addToWishlist({ product: product.id, variation_index: 0 });
       this.props.successAlert(product, 'wishlist');
     }
 
   }
 
   addToWishlistApi = (product) => {
-    this.props.addToWishlist({ product: product.id, variationIndex: 0 })
+    this.props.addToWishlist({ product: product.id, variation_index: 0 })
     WishlistService.addDelete({ product_id: [product.id], variation_index: [0] }).then((result) => {
       if (result?.success) {
         this.props.successAlert(product, 'wishlist');
@@ -67,7 +67,7 @@ class ProductTile extends React.Component {
       this.addToCartApi(product)
     }
     else {
-      this.props.addToCart({ product: product.id, variationIndex: 0, quantity: 1 });
+      this.props.addToCart({ product: product.id, variation_index: 0, quantity: 1 });
       this.props.successAlert(product, 'cart');
     }
   }
@@ -89,7 +89,7 @@ class ProductTile extends React.Component {
               cartProductids?.push(item.product_id)
             ));
             ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart({ product: item.id, variationIndex: 0, quantity: 1 }));
+              result1.data.map((item) => this.props.addToCart({ product: item.id, variation_index: 0, quantity: 1 }));
             })
             this.props.successAlert(product, 'cart');
           }
@@ -112,13 +112,13 @@ class ProductTile extends React.Component {
     });
   }
   addToCompare = (data) => {
-    this.props.addToCompare({ product: data.id, variationIndex: 0 });
+    this.props.addToCompare({ product: data.id, variation_index: 0 });
     this.props.successAlert(data, 'compare');
   }
 
   render() {
 
-    const { data, userData, wishlist, cart, gridLayout } = this.props
+    const { data, userData, wishlist, cart, gridLayout, variation_index } = this.props
     const { currentLocation } = this.state
     const cellSize = {};
     if (gridLayout === '2X2') { cellSize.height = '200px' }
@@ -128,10 +128,9 @@ class ProductTile extends React.Component {
       <div className="product-wrapper" key={data.id} >
 
         <div className="prodcut-img" onClick={() => this.productDetail(data)} style={cellSize}>
-          <img src={data.images?.length > 0 ? data?.images[0]?.image_url : ""}
+          <img src={variation_index !== undefined ? data?.images[variation_index + 1]?.image_url : data?.images[0].image_url}
             className="img-fluid"
             onClick={() => this.productDetail(data)}
-            alt={data.images?.length > 0 ? data.images[0]?.caption : ""}
             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
           />
 
@@ -140,9 +139,9 @@ class ProductTile extends React.Component {
           <div className="shopBtn">
             <div className="shop-btn"><span>
               <FontAwesomeIcon
-                icon={(cart.find(({ product, variationIndex }) => (product === data.id && variationIndex === 0)) !== undefined) ? faCheck : faCartPlus}
+                icon={(cart.find(({ product, variation_index }) => (product === data.id && variation_index === 0)) !== undefined) ? faCheck : faCartPlus}
                 onClick={
-                  () => (cart.find(({ product, variationIndex }) => (product === data.id && variationIndex === 0)) !== undefined) ? this.props.errorAlert(data, 'cart') : (data.variation_available ? this.productDetail(data) : this.addToCart(data))
+                  () => (cart.find(({ product, variation_index }) => (product === data.id && variation_index === 0)) !== undefined) ? this.props.errorAlert(data, 'cart') : (data.variation_available ? this.productDetail(data) : this.addToCart(data))
                 }
               /></span></div>
             <div className="shop-btn"><span>
@@ -152,10 +151,10 @@ class ProductTile extends React.Component {
             </span></div>
             {currentLocation !== '/wishlist' && <div className="shop-btn"><span>
               <FontAwesomeIcon
-                icon={((wishlist.find(({ product, variationIndex }) => (product === data.id && variationIndex === 0)) !== undefined) || (Object.keys(userData).length > 0 && data?.wishlist?.id)) ? faHeart : farHeart}
+                icon={((wishlist.find(({ product, variation_index }) => (product === data.id && variation_index === 0)) !== undefined) || (Object.keys(userData).length > 0 && data?.wishlist?.id)) ? faHeart : farHeart}
                 onClick={() => {
                   ((Object.keys(userData).length > 0 && data?.wishlist?.id) ||
-                    wishlist.find(({ product, variationIndex }) => (product === data.id && variationIndex === 0))
+                    wishlist.find(({ product, variation_index }) => (product === data.id && variation_index === 0))
                   ) ? this.deleteWishlist(data) : (data.variation_available ? this.productDetail(data) : this.addToWishlist(data))
                 }}
               />
@@ -168,7 +167,7 @@ class ProductTile extends React.Component {
           {data.content ? data.content.title : '__'}
         </h5>
         <span className="product-price">
-          <strike><span>₹</span> 1000</strike> <span>₹</span> {data?.price?.length > 0 ? data?.price : 0}
+          <strike><span>₹</span> 1000</strike> <span>₹</span> {variation_index !== undefined ? data?.prices[variation_index].price : data?.price}
         </span>
       </div >);
   }

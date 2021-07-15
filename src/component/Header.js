@@ -69,17 +69,12 @@ class Header extends Component {
   syncCart = () => {
     const { cart } = this.props;
     if (cart?.length > 0) {
-
-      let cartToSync = [];
-      cart.map((item) => (
-        cartToSync.push(item)
-      ))
-      this.addToCart(cartToSync);
+      this.addToCart(cart);
     }
     else {
       CartService.list().then((result) => {
         result && result.map((item) => (
-          this.props.addToCart(item.product_id)
+          this.props.addToCart({ product: item?.product_id, variation_index: item.variation_index, quantity: item.quantity })
         ))
       })
     }
@@ -91,14 +86,14 @@ class Header extends Component {
     if (wishlist?.length > 0) {
       let prods = [], variation = [];
       wishlist.map((item) => {
-        return prods.push(item.product) && variation.push(item.variationIndex)
+        return prods.push(item.product) && variation.push(item.variation_index)
       })
       this.addToWishlist({ product_id: prods, variation_index: variation });
     }
     else {
       WishlistService.list().then((result) => {
         result && result.map((item) => (
-          this.props.addToWishlist(item.product_id)
+          this.props.addToWishlist({ product: item.product_id, variation_index: item.variation_index })
         ))
       })
     }
@@ -114,7 +109,7 @@ class Header extends Component {
             wishlistProductids?.push(item.product_id)
           ))
           ProductService.fetchAllProducts({ product_ids: wishlistProductids }).then((result1) => (
-            result1?.data.map((item) => this.props.addToWishlist(item.id))
+            result1?.data.map((item) => this.props.addToWishlist({ product: item.id, variation_index: 0 }))
           ))
         } else { return }
       });
@@ -159,13 +154,12 @@ class Header extends Component {
   };
 
   addToCart = (product) => {
-    if (this.props.cart.find(({ product, variationIndex }) => (product === product.id && variationIndex === 0)) !== undefined) {
+    if (this.props.cart.find(({ product, variation_index }) => (product === product.id && variation_index === 0)) !== undefined) {
       this.errorAlert(product, 'cart');
     }
     else {
       Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) :
-        //  this.props.addToCart(product?.id) 
-        this.props.addToCart({ product: product?.id, variationIndex: 0, quantity: 1 })
+        this.props.addToCart({ product: product?.id, variation_index: 0, quantity: 1 })
     }
   }
   errorAlert = (product, type) => {
@@ -174,11 +168,14 @@ class Header extends Component {
 
   }
   addToCartApi = (product) => {
-    let cartToSync = [{
-      "product_id": product.id || product[0],
-      "quantity": 1,
-      "variation_index": 0
-    }], cartProductids = [];
+    let cartToSync = [], cartProductids = [];
+    product.map((item) => {
+      return cartToSync.push({
+        "product_id": item.product,
+        "quantity": item.quantity,
+        "variation_index": item.variation_index
+      })
+    });
     try {
       CartService.add({ products: cartToSync }).then((result) => {
 
@@ -188,7 +185,7 @@ class Header extends Component {
               cartProductids?.push(item.product_id)
             ));
             ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart({ product: item.id, variationIndex: 0, quantity: 1 }));
+              result1.data.map((item) => this.props.addToCart({ product: item.id, variation_index: 0, quantity: 1 }));
             })
           }
           else {
@@ -240,7 +237,7 @@ class Header extends Component {
               <span className="result-cat"><small>{item.category?.parent_category[0].title}, {item.category?.cate_title}</small></span>
               <span className="result-addtocart" onClick={
                 () => (
-                  this.props.cart.find(({ product, variationIndex }) => (product === item.id && variationIndex === 0)) !== undefined ? '' : (item.variation_available ? this.productDetail(item) : this.addToCart(item))
+                  this.props.cart.find(({ product, variation_index }) => (product === item.id && variation_index === 0)) !== undefined ? '' : (item.variation_available ? this.productDetail(item) : this.addToCart(item))
                 )
               }> Add to Cart</span>
             </span>

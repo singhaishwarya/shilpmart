@@ -4,7 +4,7 @@ export default function wishlistReducer(state = [], action) {
   switch (action.type) {
     case actionTypes.ADD_TO_WISHLIST:
       let finalAddedWishlist;
-      const result = state.find(({ product, variationIndex }) => (product === action.wishlist.product && variationIndex === action.wishlist.variationIndex));
+      const result = state.find(({ product, variation_index }) => (product === action.wishlist.product && variation_index === action.wishlist.variation_index));
       if (result === undefined) {
         finalAddedWishlist = [...state, ...[action.wishlist]];
       }
@@ -16,7 +16,7 @@ export default function wishlistReducer(state = [], action) {
     case actionTypes.DELETE_WISHLIST:
       let finArr = [];
       state.map((data) => {
-        if ((data.product === action.wishlist.product) && (data.variationIndex === action.wishlist.variationIndex)) return
+        if ((data.product === action.wishlist.product) && (data.variation_index === action.wishlist.variation_index)) return
         else finArr.push(data)
       })
       return finArr;
