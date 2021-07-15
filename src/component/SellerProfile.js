@@ -60,7 +60,16 @@ export default class SellerProfile extends React.Component {
   getVendorDetails = (brandName) => {
     ProductService.fetchVendor({ brand_name: brandName }).then((result) => {
       this.setState({ vendorData: result })
+      let category = [];
+      result.categories.map((item, index) => {
+        category.push({
+          label: item.cate_title,
+          key: item.category_id
+        })
+      });
+      this.setState({ categories: category })
     });
+
   }
   render() {
     const { isActiveTab, categories, config, vendorData } = this.state;
@@ -74,15 +83,15 @@ export default class SellerProfile extends React.Component {
                 <div className="seller-info">
                   <div className="seller-brand">
                     <div className="s-logo">
-                      <img src={vendorData?.logo} className="img-fluid" alt="logo" /></div>
+                      <img src={vendorData?.vendor?.logo} className="img-fluid" alt="logo" /></div>
                   </div>
                   <div className="seller-details">
-                    <h1>{vendorData?.brand}</h1>
-                    {/* <p> <FontAwesomeIcon icon={faMapMarker} />  {vendorData?}</p> */}
+                    <h1>{vendorData?.vendor?.brand}</h1>
+                    {/* <p> <FontAwesomeIcon icon={faMapMarker} />  {vendorData?}vendor?.</p> */}
                     <div className="seller-contact-info">
                       <p>
-                        <FontAwesomeIcon icon={faPhone} />  {vendorData?.mobile}</p><p>
-                        <FontAwesomeIcon icon={faMailBulk} />  {vendorData?.email}</p>
+                        <FontAwesomeIcon icon={faPhone} />  {vendorData?.vendor?.mobile}</p><p>
+                        <FontAwesomeIcon icon={faMailBulk} />  {vendorData?.vendor?.email}</p>
                     </div>
                   </div>
                 </div>
@@ -143,8 +152,8 @@ export default class SellerProfile extends React.Component {
 
             <div className="tab-content" >
               <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
-                role="tabpanel" aria-labelledby="home-tab"><ProductGrid {...this.props}
-                  setPriceRangeProps={() => console.log("demo")} /> </div>
+                role="tabpanel" aria-labelledby="home-tab">{vendorData?.data?.length > 0 ? <ProductGrid {...this.props} sellerProducts={vendorData}
+                  setPriceRangeProps={() => console.log("demo")} /> : <div className="empty-wishlist empty-product"><h2>No Product found for this seller.</h2> </div>} </div>
               <div className={`tab-pane fade ${((isActiveTab === 1) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="profile-tab">
                 There are about. </div>
               <div className={`tab-pane fade ${((isActiveTab === 3) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab">

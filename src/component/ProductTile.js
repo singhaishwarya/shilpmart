@@ -167,7 +167,7 @@ class ProductTile extends React.Component {
           {data.content ? data.content.title : '__'}
         </h5>
         <span className="product-price">
-          <strike><span>₹</span> 1000</strike> <span>₹</span> {variation_index !== undefined ? data?.prices[variation_index].price : data?.price}
+          <strike><span>₹</span> 1000</strike> <span>₹</span> {variation_index !== undefined ? data?.prices[variation_index]?.price : data?.price}
         </span>
       </div >);
   }

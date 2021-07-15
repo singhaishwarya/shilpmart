@@ -48,14 +48,35 @@ class ShopByType extends Component {
   }
 
   getCateroryList = () => {
-    let catImages = [
-      "https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/mens_wear-300x300.webp",
-      "https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp",
-      "https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/home_texttiles-300x300.webp",
-      "https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/decor-300x300.webp",
-      require('../public/floorcovering.jpeg'),
-      require('../public/clothing accessories.jpeg'),
-      require('../public/office supplies.jpeg'),
+    let catImages = [{
+      icon: require('../public/icons/eshilp-mens-wear.svg'),
+      backgroundImage: `url( https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/mens_wear-300x300.webp)`
+    },
+    {
+      icon: require('../public/icons/eshilp-women-wears.svg'),
+      backgroundImage: `url( "https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp")`
+    },
+    {
+      icon: require('../public/icons/eshilp-home-decore.svg'),
+      backgroundImage: `url( "https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/decor-300x300.webp")`
+    },
+    {
+      icon: require('../public/icons/eshilp-furniture.svg'),
+      backgroundImage: `url( 'https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp')`
+    },
+    {
+      icon: require('../public/icons/eshilp-floor-covering.svg'),
+      backgroundImage: '../public/floorcovering.jpeg'
+    },
+    {
+      icon: require('../public/icons/eshilp-travel-ass.svg'),
+      backgroundImage: `url( require('../public/clothing accessories.jpeg'))`
+    },
+    {
+      icon: require('../public/icons/eshilp-office-supplies.svg'),
+      backgroundImage: `url( require('../public/office supplies.jpeg'))`
+    }
+
     ];
     CategoryService.fetchAllCategory({ parent_id: 0 }).then((result) => {
       this.setState({
@@ -63,21 +84,21 @@ class ShopByType extends Component {
         (<div className="flip-container" key={index} >
           <div className="categorie-img" onClick={() => this.productList(item.id)}>
             {/* <div className="cat-overlay"></div> */}
-            <div className="categorie-img-front" style={{backgroundImage: `url("https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp")`}} >
+            <div className="categorie-img-front" style={{ backgroundImage: catImages[index]?.backgroundImage }} >
 
-              <div className="more-products"><Link to="/product-list">225<br/>More Products</Link></div>
+              <div className="more-products"><Link to="/product-list">225<br />More Products</Link></div>
 
             </div>
-            <div className="categorie-img-Back" style={{backgroundImage: `url("https://app.digitalindiacorporation.in/v1/digi/wp-content/uploads/2020/11/womens_wear-300x300.webp")`}}>
-            <div className="categorie-img-title">
-              <div className="cat_icon"><img src={require("../public/icons/eshilp-travel-ass.svg")} className="img-fluid" alt="pay" /></div>  
-              <h3>{item.title}</h3>
+            <div className="categorie-img-Back" style={{ backgroundImage: catImages[index]?.backgroundImage }}>
+              <div className="categorie-img-title">
+                <div className="cat_icon"><img src={catImages[index]?.icon} className="img-fluid" alt="pay" /></div>
+                <h3>{item.title}</h3>
+              </div>
+
             </div>
-              
-            </div>        
-            
+
           </div>
-         
+
         </div>)
         )
       })

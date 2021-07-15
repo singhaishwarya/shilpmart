@@ -27,7 +27,7 @@ class ProductGrid extends Component {
 
   }
   componentDidMount() {
-    this.getProductList(this.getSetQueryParams());
+    this.props.sellerProducts?.data?.length > 0 ? this.setState({ productListData: this.props.sellerProducts, isLoaded: true }) : this.getProductList(this.getSetQueryParams());
     this.handleScrollPosition();
   }
   componentDidUpdate(prevprops) {
@@ -227,8 +227,8 @@ class ProductGrid extends Component {
                 )
 
               })} {productListData.next_page_url && <span className="loadMore" onClick={() => this.fetchMoreData()}><span>Load More</span></span>}</>)
-              : <div class="empty-wishlist empty-product"><h2>No Product found for this category.</h2>
-              <Link href="/product-list">Return to shop</Link></div>}
+              : <div className="empty-wishlist empty-product"><h2>No Product found for this category.</h2>
+                <Link to="/product-list">Return to shop</Link></div>}
 
           </div>
 

@@ -41,8 +41,7 @@ class Wishlist extends Component {
   }
 
   deleteWishlistApi = (item) => {
-
-    WishlistService.addDelete({ wishlist_id: item.product_details.wishlist.id, product_id: [item.product_id] }).then((result) => {
+    WishlistService.addDelete({ wishlist_id: item.product_details.wishlist.id, product_id: [item.product_id], variation_index: [item.variation_index] }).then((result) => {
       if (result.success) { this.props.deleteWishlist(item.id); this.getWishlistApi() }
     });
   }

@@ -473,7 +473,7 @@ class CheckoutComp extends React.Component {
 
                               </div>))}
                             {/* </div> */}
-                            <div class="d-flex address_btn my-2 float-right"><button>Procced</button></div>
+                            <div className="d-flex address_btn my-2 float-right"><button>Procced</button></div>
                           </div>
                         </div>
                       </div>
