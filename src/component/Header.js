@@ -329,7 +329,7 @@ class Header extends Component {
               </li>
             </ul></div>
           </div> :
-          <> <div className="header-top py-1  ">
+          <> <div className="header-top py-1">
             <div className="container-fluid">
               <div className="row">
                 <div className="col-md-6 col-6">
@@ -440,7 +440,7 @@ class Header extends Component {
                 </li>
               </ul>
             </div >
-            <Navbar /> </>}</>
+            <Navbar/> </>}</>
     );
   }
 }

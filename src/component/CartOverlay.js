@@ -80,26 +80,32 @@ class CartOverlay extends Component {
                   {cartData?.map((item, index) => (
                     finItem = item?.product_details || item.product,
                     <li key={index}>
-                      <Link to={{
-                        pathname: `/product-detail`,
-                        search: "?pid=" + finItem?.content?.product_id
-                      }}
-                        onClick={(e) => (this.props.dismissModal('cart'))
-                        } >
-                        <img src={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.image_url) || "false"}
-                          className="img-fluid"
-                          // onClick={() => this.productDetail(item.product_details.id)}
-                          alt={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.caption) || ""}
-                          onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
-                        />
-                      </Link>
-                      <div className="cart-info">
-                        <span className="product-title">{finItem?.content?.title}</span>
-                        {/* <div className="pro-store"><span>Store: <span>{finItem?.store_name}</span></span></div> */}
-                        <span className="qty">{item?.quantity || 1} x <span>
-                          {finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price}</span></span>
-                      </div>
                       <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
+                      <div className="cart_wrap">
+
+                        <Link to={{
+                          pathname: `/product-detail`,
+                          search: "?pid=" + finItem?.content?.product_id
+                        }}
+                          onClick={(e) => (this.props.dismissModal('cart'))
+                          } >
+                          <img src={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.image_url) || "false"}
+                            className="img-fluid"
+                            // onClick={() => this.productDetail(item.product_details.id)}
+                            alt={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.caption) || ""}
+                            onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
+                          />
+                        </Link>
+                        <div className="cart-info">
+                          <span className="product-title">{finItem?.content?.title}</span>
+                          {/* <div className="pro-store"><span>Store: <span>{finItem?.store_name}</span></span></div> */}
+                          <span className="qty">{item?.quantity || 1} x
+                            <span>₹ {finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price}</span>
+                          </span>
+                        </div>
+                      </div>
+
+
                     </li>
                   ))}
                 </ul>
@@ -110,7 +116,7 @@ class CartOverlay extends Component {
               <div className="cart-shop-footer">
                 <div className="cart-footer-head">
                   <h3>Subtotal:</h3>
-                  <p><span> <span>₹</span>{totalCost}</span></p>
+                  <p><span> <span>₹</span> {totalCost}</span></p>
                 </div> <div className="cart-action">
                   <Link to='/cart' onClick={() => this.props.dismissModal()}>
                     View Cart</Link>
