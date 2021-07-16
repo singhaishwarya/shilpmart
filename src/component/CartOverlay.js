@@ -80,6 +80,9 @@ class CartOverlay extends Component {
                   {cartData?.map((item, index) => (
                     finItem = item?.product_details || item.product,
                     <li key={index}>
+                      <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
+                      <div className="cart_wrap">
+                      
                       <Link to={{
                         pathname: `/product-detail`,
                         search: "?cid=" + ((finItem?.category?.length > 0 && finItem?.category?.category_id) || 0) + "&pid=" + finItem?.content?.product_id
@@ -96,10 +99,13 @@ class CartOverlay extends Component {
                       <div className="cart-info">
                         <span className="product-title">{finItem?.content?.title}</span>
                         {/* <div className="pro-store"><span>Store: <span>{finItem?.store_name}</span></span></div> */}
-                        <span className="qty">{item?.quantity || 1} x <span>
-                          {finItem?.prices[item.variation_index]?.price || 0}</span></span>
+                        <span className="qty">{item?.quantity || 1} x 
+                          <span>₹ {finItem?.prices[item.variation_index]?.price || 0}</span>
+                        </span>
                       </div>
-                      <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
+                      </div>
+
+                      
                     </li>
                   ))}
                 </ul>
@@ -110,7 +116,7 @@ class CartOverlay extends Component {
               <div className="cart-shop-footer">
                 <div className="cart-footer-head">
                   <h3>Subtotal:</h3>
-                  <p><span> <span>₹</span>{totalCost}</span></p>
+                  <p><span> <span>₹</span> {totalCost}</span></p>
                 </div> <div className="cart-action">
                   <Link to='/cart' onClick={() => this.props.dismissModal()}>
                     View Cart</Link>

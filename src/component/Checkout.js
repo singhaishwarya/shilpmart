@@ -578,7 +578,7 @@ class CheckoutComp extends React.Component {
                         finItem = item.product_details || item.product,
                         <li key={index} className="d-flex justify-content-between border-bottom py-3">
 
-                          <h6 className="my-0">{finItem?.content?.title}</h6>
+                          <span className="my-0">{finItem?.content?.title}</span>
                           {/* <span>Store: <small className="text-muted">{finItem?.store_name}</small></span> */}
 
                           <span className="text-muted"><span>₹</span> {finItem?.prices[item.variation_index]?.price} X {item?.quantity ? item?.quantity : 1}</span>

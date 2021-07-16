@@ -5,6 +5,7 @@ import CategoryService from '../services/CategoryService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import TopBarMenu from './TopBarMenu';
+
 import { isMobile } from 'react-device-detect';
 export default class Navbar extends React.Component {
   constructor(props) {
