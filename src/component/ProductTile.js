@@ -119,6 +119,8 @@ class ProductTile extends React.Component {
   render() {
 
     const { data, userData, wishlist, cart, gridLayout, variation_index } = this.props
+    // console.log("demo===", variation_index, data);
+    // (variation_index !== undefined && variation_index != 0) ? console.log("demo variation") : console.log("no variation")
     const { currentLocation } = this.state
     const cellSize = {};
     if (gridLayout === '2X2') { cellSize.height = '200px' }
@@ -128,7 +130,7 @@ class ProductTile extends React.Component {
       <div className="product-wrapper" key={data.id} >
 
         <div className="prodcut-img" onClick={() => this.productDetail(data)} style={cellSize}>
-          <img src={variation_index !== undefined ? data?.images[variation_index + 1]?.image_url : data?.images[0].image_url}
+          <img src={(variation_index !== undefined && variation_index !== 0) ? data?.images[variation_index + 1]?.image_url : data?.images[0]?.image_url}
             className="img-fluid"
             onClick={() => this.productDetail(data)}
             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
@@ -139,9 +141,9 @@ class ProductTile extends React.Component {
           <div className="shopBtn">
             <div className="shop-btn"><span>
               <FontAwesomeIcon
-                icon={(cart.find(({ product, variation_index }) => (product === data.id && variation_index === 0)) !== undefined) ? faCheck : faCartPlus}
+                icon={(cart.find(({ product, variation_index }) => (product === data.id && variation_index === variation_index)) !== undefined) ? faCheck : faCartPlus}
                 onClick={
-                  () => (cart.find(({ product, variation_index }) => (product === data.id && variation_index === 0)) !== undefined) ? this.props.errorAlert(data, 'cart') : (data.variation_available ? this.productDetail(data) : this.addToCart(data))
+                  () => (cart.find(({ product, variation_index }) => (product === data.id && variation_index === variation_index)) !== undefined) ? this.props.errorAlert(data, 'cart') : (data.variation_available ? this.productDetail(data) : this.addToCart(data))
                 }
               /></span></div>
             <div className="shop-btn"><span>
