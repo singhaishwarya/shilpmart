@@ -88,10 +88,10 @@ export default class OrderDetail extends React.Component {
   }
   productDetail = (value) => {
     console.log("dfdfdfdf", value)
-    // this.props.history.push({
-    //   pathname: '/product-detail',
-    //   search: "?cid=" + ((value?.category?.length > 0 && value?.category?.category_id) || 0) + "&pid=" + value.product_id
-    // });
+    this.props.history.push({
+      pathname: '/product-detail',
+      search: "?pid=" + value.product_id
+    });
   }
 
   render() {

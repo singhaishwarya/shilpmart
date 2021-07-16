@@ -23,7 +23,7 @@ class CartOverlay extends Component {
     CartService.list().then((result) => {
       this.setState({ cartData: result });
       result && result.forEach((item) => {
-        totalCost1 += ((item?.product_details?.prices[item.variation_index]?.price * 1) || 0) * (item.quantity * 1);
+        totalCost1 += (((item?.product_details?.prices[item.variation_index]?.price || item?.product_details?.prices[0]?.price) * 1) || 0) * (item.quantity * 1);
       });
 
       this.setState({
@@ -82,7 +82,7 @@ class CartOverlay extends Component {
                     <li key={index}>
                       <Link to={{
                         pathname: `/product-detail`,
-                        search: "?cid=" + ((finItem?.category?.length > 0 && finItem?.category?.category_id) || 0) + "&pid=" + finItem?.content?.product_id
+                        search: "?pid=" + finItem?.content?.product_id
                       }}
                         onClick={(e) => (this.props.dismissModal('cart'))
                         } >
@@ -97,7 +97,7 @@ class CartOverlay extends Component {
                         <span className="product-title">{finItem?.content?.title}</span>
                         {/* <div className="pro-store"><span>Store: <span>{finItem?.store_name}</span></span></div> */}
                         <span className="qty">{item?.quantity || 1} x <span>
-                          {finItem?.prices[item.variation_index]?.price || 0}</span></span>
+                          {finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price}</span></span>
                       </div>
                       <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
                     </li>

@@ -38,11 +38,11 @@ class ShopByType extends Component {
   }
   getSetQueryParams() {
     let queryParams = {};
-    if (this.currentUrlParams.get('cid')) {
-      queryParams = { cat_ids: [this.currentUrlParams.get('cid')] }
-    }
     if (this.props.tabType) {
       queryParams = this.props.tabType === 2 ? { 'order_by': 'desc', 'sort_by': 'created_at' } : {}
+    }
+    if (this.props.catId) {
+      queryParams = { cat_ids: [this.props.catId] }
     }
     return queryParams;
   }

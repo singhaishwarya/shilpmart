@@ -23,7 +23,7 @@ class ProductDetail extends React.Component {
     super(props);
     this.state = {
       combination: [], finCombination: [], currentVariationIndex: 0,
-      isActiveTab: 0,
+      isActiveTab: 0, productCatId: 0,
       filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
       shareUrl: 'https://app.digitalindiacorporation.in/v1/digi/',
@@ -124,6 +124,7 @@ class ProductDetail extends React.Component {
         if (result.data.length === 0) this.props.history.push({ pathname: '/product-list' })
         this.setState({
           productDetailData: result?.data[0], productDetailDataPrice: result?.data[0]?.price,
+          productCatId: result?.data[0].category.category_id,
           productDetailDataImages: result?.data[0]?.images?.map((item, index) => (
             {
               'original': item.image_url,
@@ -288,9 +289,8 @@ class ProductDetail extends React.Component {
     return ToastService.error("Compare Cart is full(limit :5)")
   }
   render() {
-    const { productDetailData, productQuantity, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice, currentVariationIndex, currentvalue2, currentvalue1 } = this.state;
+    const { productDetailData, productQuantity, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice, currentVariationIndex, currentvalue2, currentvalue1, productCatId } = this.state;
     const { wishlist, userData } = this.props;
-    console.log("demo=", this.state.currentVariationIndex)
     return (
       <>
         <section id="maincontent">
@@ -520,57 +520,57 @@ class ProductDetail extends React.Component {
                         </div>
 
                         <div className="product-review pb-4 my-4 border-bottom">
-        <div className="d-flex mb-3">
-          <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
-            <div className="pl-3">
-              <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
-              <small className="fs-ms text-muted">July 14, 2021</small>
-            </div>
-          </div>
-          <div>
-            <div className="star-rating">
-              <FontAwesomeIcon icon={faStar}/>
-              <FontAwesomeIcon icon={faStar}/>
-              <FontAwesomeIcon icon={faStar}/>
-              <FontAwesomeIcon icon={faStar}/>
-              <FontAwesomeIcon icon={faStarHalfAlt}/>
-            </div>
-            <small className="fs-ms text-muted">83% of users found this review helpful</small>
-          </div>
-        </div>
-        <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
-      
-        <div className="text-nowrap">
-          <button className="btn-like" type="button">15</button>
-          <button className="btn-dislike" type="button">3</button>
-        </div>
-      </div>
+                          <div className="d-flex mb-3">
+                            <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
+                              <div className="pl-3">
+                                <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
+                                <small className="fs-ms text-muted">July 14, 2021</small>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="star-rating">
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStarHalfAlt} />
+                              </div>
+                              <small className="fs-ms text-muted">83% of users found this review helpful</small>
+                            </div>
+                          </div>
+                          <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
 
-      <div className="product-review my-4">
-        <div className="d-flex mb-3">
-          <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
-            <div className="pl-3">
-              <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
-              <small className="fs-ms text-muted">July 12, 2021</small>
-            </div>
-          </div>
-          <div>
-            <div className="star-rating">              
-              <FontAwesomeIcon icon={faStar}/>
-              <FontAwesomeIcon icon={faStar}/>
-              <FontAwesomeIcon icon={faStarHalfAlt}/>
-              
-            </div>
-            <small className="fs-ms text-muted">83% of users found this review helpful</small>
-          </div>
-        </div>
-        <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
-      
-        <div className="text-nowrap">
-          <button className="btn-like" type="button">15</button>
-          <button className="btn-dislike" type="button">3</button>
-        </div>
-      </div>
+                          <div className="text-nowrap">
+                            <button className="btn-like" type="button">15</button>
+                            <button className="btn-dislike" type="button">3</button>
+                          </div>
+                        </div>
+
+                        <div className="product-review my-4">
+                          <div className="d-flex mb-3">
+                            <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
+                              <div className="pl-3">
+                                <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
+                                <small className="fs-ms text-muted">July 12, 2021</small>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="star-rating">
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStarHalfAlt} />
+
+                              </div>
+                              <small className="fs-ms text-muted">83% of users found this review helpful</small>
+                            </div>
+                          </div>
+                          <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
+
+                          <div className="text-nowrap">
+                            <button className="btn-like" type="button">15</button>
+                            <button className="btn-dislike" type="button">3</button>
+                          </div>
+                        </div>
 
 
 
@@ -622,7 +622,7 @@ class ProductDetail extends React.Component {
                 <div className="related-title">
                   <h3>Related Products</h3>
                 </div>
-                <ShopByType type='product'  {...this.props} />
+                {productCatId && <ShopByType type='product'  {...this.props} catId={productCatId} />}
               </div>
             </div>
           </div>

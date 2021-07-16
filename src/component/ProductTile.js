@@ -108,7 +108,7 @@ class ProductTile extends React.Component {
     sessionStorage.setItem("scrollPosition", window.pageYOffset);
     this.props.history.push({
       pathname: '/product-detail',
-      search: (value?.category ? "?cid=" + value?.category?.category_id : '') + "&pid=" + value?.content?.product_id
+      search: "?pid=" + value?.content?.product_id
     });
   }
   addToCompare = (data) => {

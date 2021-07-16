@@ -4,19 +4,18 @@ export default class CheckoutCallback extends React.Component {
 
   constructor(props) {
     super(props);
-    var request = new XMLHttpRequest();
-
-    this.props.location?.state?.paymentType === 'airpay' && this.orderValidate(localStorage.getItem('paymentType'))
+    this.props.location?.state?.paymentType === 'airpay' &&
+      this.orderValidate(localStorage.getItem('paymentType'), localStorage.getItem('orderId'))
   }
 
-  orderValidate = (online_type) => {
+  orderValidate = (paymentType, orderId) => {
 
     OrderService.orderValidate({
-      online_type: online_type,
+      online_type: paymentType, order_id: orderId
     }).then(async (result) => {
       this.setState({ isLoaded: true })
       if (!result) return
-
+      console.log("demo===", result)
       localStorage.removeItem("checkOutData");
       localStorage.removeItem("totalCartCost");
       localStorage.removeItem("paymentType");

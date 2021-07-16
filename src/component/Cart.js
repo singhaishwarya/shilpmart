@@ -26,7 +26,7 @@ class Cart extends Component {
     CartService.list().then((result) => {
       this.setState({ cartProduct: result });
       result.map((item) => (
-        totalCost1 += (item?.product_details?.prices[0]?.price * 1 || 0) * (item.quantity * 1)
+        totalCost1 += ((item?.product_details?.prices[item.variation_index]?.price || item?.product_details?.prices[0]?.price) * 1 || 0) * (item.quantity * 1)
       ))
       this.setState({
         totalCost: totalCost1
@@ -39,7 +39,7 @@ class Cart extends Component {
     let totalCost1 = 0;
     this.props.cart.map((item, index) => {
       ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
-        totalCost1 += (result1.data[0]?.prices[item.variation_index]?.price * 1 || 0) * (item.quantity * 1)
+        totalCost1 += ((result1.data[0]?.prices[item.variation_index]?.price || result1.data[0]?.prices[0]?.price) * 1 || 0) * (item.quantity * 1)
 
         this.setState(prevState => ({
           cartProduct: [...prevState.cartProduct, { product: result1.data[0], variation_index: item.variation_index, quantity: item.quantity }], totalCost: totalCost1
@@ -72,9 +72,9 @@ class Cart extends Component {
     })
   }
 
-  changeQuantity = (product, quantity) => {
+  changeQuantity = (product, quantity, variation) => {
     this.setState({ productCount: quantity });
-    CartService.changeQuantity({ quantity: quantity, product_id: product.id }).then((result) => {
+    CartService.changeQuantity({ quantity: quantity, product_id: product.id, variation_index: variation }).then((result) => {
       if (result?.success) { this.props.userData?.token ? this.getCartApi() : this.getCart() }
     })
   }
@@ -82,7 +82,7 @@ class Cart extends Component {
   productDetail = (value) => {
     this.props.history.push({
       pathname: '/product-detail',
-      search: "?cid=" + ((value?.category?.length > 0 && value?.category?.category_id) || 0) + "&pid=" + value?.content?.product_id
+      search: "?pid=" + value?.content?.product_id
     });
   }
 
@@ -125,18 +125,18 @@ class Cart extends Component {
                         </td>
                         <td className="product-name">{finItem?.content?.title}
                           <p>Store : <span><span>{finItem?.store_name}</span></span></p></td>
-                        <td className="product-subtotal"><span> <span>₹</span> {finItem?.prices[item.variation_index]?.price || 0}
+                        <td className="product-subtotal"><span> <span>₹</span> {(finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price)}
                         </span></td>
                         <td className="product-quantity" data-title="Quantity"><div className="product-qty">
                           <div className="input-group">
-                            <input type="button" value="-" className="quantity-left-minus" onClick={() => this.changeQuantity(item.product_details, item.quantity - 1)} disabled={this.props.userData.token ? false : true} />
-                            <input type="number" value={item.quantity || 1} onChange={(e) => this.changeQuantity(item.product_details, e.target.value)} disabled={this.props.userData.token ? false : true} />
-                            <input type="button" value="+" onClick={() => this.changeQuantity(item.product_details, item.quantity + 1)
+                            <input type="button" value="-" className="quantity-left-minus" onClick={() => this.changeQuantity(item.product_details, item.quantity - 1, item.variation_index)} disabled={this.props.userData.token ? false : true} />
+                            <input type="number" value={item.quantity || 1} onChange={(e) => this.changeQuantity(item.product_details, e.target.value, item.variation_index)} disabled={this.props.userData.token ? false : true} />
+                            <input type="button" value="+" onClick={() => this.changeQuantity(item.product_details, item.quantity + 1, item.variation_index)
                             } className="quantity-right-plus" disabled={this.props.userData.token ? false : true} />
                           </div>
                         </div>
                         </td>
-                        <td className="product-price"><span><span>₹</span> {(finItem?.prices[item.variation_index]?.price * item.quantity) || 0}</span></td>
+                        <td className="product-price"><span><span>₹</span> {((finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price) * item.quantity)}</span></td>
                       </tr>
                     ))}
                   </tbody>
