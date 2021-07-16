@@ -21,21 +21,31 @@ class ProductGrid extends Component {
       filterParams: {},
       categoryBreadcrumbs: props.categoryBreadcrumbs,
       sortBy: "",
-      layoutValue: '4X4'
+      layoutValue: '4X4', brand_name: window.location.href.indexOf("entrepreneur") != -1 ? window.location.pathname.split('/')[2] : ''
     };
 
 
   }
   componentDidMount() {
-    this.props.sellerProducts?.data?.length > 0 ? this.setState({ productListData: this.props.sellerProducts, isLoaded: true }) : this.getProductList(this.getSetQueryParams());
+
+    this.props.sellerProducts?.data?.length > 0 ?
+      this.getVendorProducts(this.props.sellerProducts.vendor.brand)
+      : this.getProductList(this.getSetQueryParams());
     this.handleScrollPosition();
   }
   componentDidUpdate(prevprops) {
     if (prevprops.history.location.search !== prevprops.location.search) {
-      this.getProductList(this.getSetQueryParams())
+      this.props.sellerProducts?.data?.length > 0 ? this.getVendorProducts(this.props.sellerProducts.vendor.brand) : this.getProductList(this.getSetQueryParams())
     }
   }
+  getVendorProducts = (brandName) => {
+    ProductService.fetchVendor({ brand_name: brandName }).then((result) => {
 
+      this.setState({ productListData: result, isLoaded: true })
+
+    });
+
+  }
   fetchMoreData = () => {
     this.setState({ currentPage: this.state.currentPage + 1, isLoaded: false });
     this.currentUrlParams.set('page', this.state.currentPage + 1)

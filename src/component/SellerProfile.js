@@ -30,24 +30,7 @@ export default class SellerProfile extends React.Component {
         highlightOnSelect: true,
         useDividers: false,
       },
-      categories: [
-        {
-          label: 'Travel Accessories',
-          items: [
-            {
-              label: 'Bag'
-            },
-            {
-              label: 'Luggage'
-            }, {
-              label: 'Cover'
-            },
-            {
-              label: 'Mask'
-            }
-          ]
-        }
-      ],
+      categories: [],
       brandName: window.location.pathname.split('/')[2], vendorData: {}
     }
 
@@ -116,6 +99,18 @@ export default class SellerProfile extends React.Component {
           <div className="container page-title-overlap mb-5 bg-light shadow">
 
             <div className="row">
+              <div className="mb-3">
+                <div className="filter-content collapse show" id="collapse_aside1" >
+                  <div className="categories-list">
+                    <MultilevelMenu
+                      list={categories}
+                      configuration={config}
+                      selectedListItem={this.selectedItem}
+                      selectedLabel={this.selectedItem}
+                    />
+                  </div>
+                </div>
+              </div>
               {/* <div className="col-lg-3 col-md-3 col-12">
             <div className="sidebar">
               <h4>Search</h4>
@@ -167,12 +162,110 @@ export default class SellerProfile extends React.Component {
 
                 <div className="tab-content" >
                   <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
-                    role="tabpanel" aria-labelledby="home-tab">{vendorData?.data?.length > 0 ? <ProductGrid {...this.props} sellerProducts={vendorData}
-                      setPriceRangeProps={() => console.log("demo")} /> : <div className="empty-wishlist empty-product"><h2>No Product found for this seller.</h2> </div>} </div>
+                    role="tabpanel" aria-labelledby="home-tab">{vendorData?.data?.length > 0 ?
+                      <ProductGrid {...this.props} sellerProducts={vendorData}
+                        setPriceRangeProps={() => console.log("demo")} /> : <div className="empty-wishlist empty-product"><h2>No Product found for this seller.</h2> </div>} </div>
                   <div className={`tab-pane fade ${((isActiveTab === 1) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="profile-tab">
                     There are about. </div>
                   <div className={`tab-pane fade ${((isActiveTab === 2) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab">
-                    There are no reviews yet. </div>
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <div className="avgratings">
+                          <div className="avgrate">4.7<span>★</span></div>
+                          <div className="avgstate">324 Ratings & 66 Reviews</div>
+                        </div>
+                      </div>
+                      <div className="col-sm-9">
+                        <div className="barWrapper">
+                          <ul className="rate">
+                            <li className="rateNumbers"><span>5</span><span>★</span></li>
+                            <li className="rateNumbers"><span>4</span><span>★</span></li>
+                            <li className="rateNumbers"><span>3</span><span>★</span></li>
+                            <li className="rateNumbers"><span>2</span><span>★</span></li>
+                            <li className="rateNumbers"><span>1</span><span>★</span></li>
+                          </ul>
+                          <ul className="bars">
+                            <li><div className="bar"><span className="bargreen"></span></div></li>
+                            <li><div className="bar"><span className="bargreen pro4"></span></div></li>
+                            <li><div className="bar"><span className="bargreen pro3"></span></div></li>
+                            <li><div className="bar"><span className="barorange"></span></div></li>
+                            <li><div className="bar"><span className="barred"></span></div></li>
+                          </ul>
+                          <ul className="result">
+                            <li><span>225</span></li>
+                            <li><span>125</span></li>
+                            <li><span>15</span></li>
+                            <li><span>05</span></li>
+                            <li><span>10</span></li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div className="col my-2">
+                        <p>Images uploaded by Customer</p>
+                        <div className="imgCustomer">
+                          <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid" alt="Saree" /></span>
+                          <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid" alt="Saree" /></span>
+                        </div>
+
+                        <div className="product-review pb-4 my-4 border-bottom">
+                          <div className="d-flex mb-3">
+                            <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
+                              <div className="pl-3">
+                                <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
+                                <small className="fs-ms text-muted">July 14, 2021</small>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="star-rating">
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStarHalfAlt} />
+                              </div>
+                              <small className="fs-ms text-muted">83% of users found this review helpful</small>
+                            </div>
+                          </div>
+                          <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
+
+                          <div className="text-nowrap">
+                            <button className="btn-like" type="button">15</button>
+                            <button className="btn-dislike" type="button">3</button>
+                          </div>
+                        </div>
+
+                        <div className="product-review my-4">
+                          <div className="d-flex mb-3">
+                            <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
+                              <div className="pl-3">
+                                <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
+                                <small className="fs-ms text-muted">July 12, 2021</small>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="star-rating">
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStarHalfAlt} />
+
+                              </div>
+                              <small className="fs-ms text-muted">83% of users found this review helpful</small>
+                            </div>
+                          </div>
+                          <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
+
+                          <div className="text-nowrap">
+                            <button className="btn-like" type="button">15</button>
+                            <button className="btn-dislike" type="button">3</button>
+                          </div>
+                        </div>
+
+
+
+                      </div>
+
+                    </div></div>
                   <div className={`tab-pane fade ${((isActiveTab === 3) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="map-tab">
                     <MyMapComponent
                       isMarkerShown

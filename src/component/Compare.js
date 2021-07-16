@@ -64,7 +64,7 @@ class Compare extends Component {
               cartProductids?.push(item.product_id)
             ));
             ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart({ product: item?.id, variation_index: product.variation_index }));
+              result1.data.map((item) => this.props.addToCart({ product: item?.id, variation_index: product.variation_index, quantity: 1 }));
             })
             this.deleteCompare(product, index)
           }
