@@ -28,8 +28,8 @@ class Login extends Component {
 
     this.state = {
       username: "",
-      password: "",
-      errorMsg: ''
+      password: "", otp: "",
+      errorMsg: '', loginType: ''
     };
   }
 
@@ -46,22 +46,49 @@ class Login extends Component {
       errorMsg: ''
     });
   }
-
+  onChangeOtp = (e) => {
+    this.setState({
+      otp: e.target.value
+    });
+  }
 
   handleLogin = (e) => {
     e.preventDefault();
     this.form.validateAll();
-    const { username, password } = this.state;
-    AuthService.login({ username: username, password: password })
+
+    const { username, password, otp, loginType } = this.state;
+    let loginParams = {};
+    if (loginType === 'otp') {
+      loginParams = { username: username, otp: otp, password: otp }
+    }
+    else {
+      loginParams = { username: username, password: password }
+    }
+    AuthService.login(loginParams)
       .then((result) => {
         if (!result) {
-          this.setState({ errorMsg: "The password you entered for the username " + username + " is incorrect" });
+          this.setState({ errorMsg: loginType === 'otp' ? "Either User Name or OTP Not Valid" : "The password you entered for the username " + username + " is incorrect" });
           return;
         }
-        result && this.props.userDetail(result.data);
 
-        this.props.showModal ? this.props.dismissModal('login') : window.location.reload();
+        result?.success && this.props.userDetail(result.data);
+
         window.location.reload();
+
+
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+  handleLoginWithOtp = (e) => {
+    e.preventDefault();
+    this.form.validateAll();
+    AuthService.loginWithOtp({ username: this.state.username })
+      .then((result) => {
+        if (!result) return
+        this.setState({ loginType: 'otp' })
+
 
       })
       .catch((err) => {
@@ -70,45 +97,59 @@ class Login extends Component {
   }
 
   render() {
-    const { errorMsg } = this.state
+    const { errorMsg, loginType, username, otp, password } = this.state
     return (
       <div className="login-card">
         <span><FontAwesomeIcon className="text-right" icon={faTimes} onClick={() => this.props?.dismissModal('login')} /></span>
         <h4 className="modal-title">Sign in or Register</h4>
-        <Form onSubmit={this.handleLogin} ref={(c) => { this.form = c; }}>
-          <div className="form-group">
-            <label htmlFor="username"><FontAwesomeIcon icon={faEnvelope}/> Email/Mobile</label>
-            <Input type="text" className="form-control" name="username" value={this.state.username}
+        <Form ref={(c) => { this.form = c; }}>
+          {(loginType === 'otp' && username) ? <div className="form-group">
+            <label htmlFor="otp"><FontAwesomeIcon icon={faEnvelope} /> OTP</label>
+            <Input type="text" className="form-control" name="otp" value={otp}
+              onChange={this.onChangeOtp}
+              validations={[required]}
+            />
+            {errorMsg && <div className="isaerror">{errorMsg}</div>}
+            <button className="btn login-btn mb-0 float-left" onClick={(e) => this.handleLogin(e)}>
+              <span>Login</span>
+            </button>
+          </div> : <><div className="form-group">
+            <label htmlFor="username"><FontAwesomeIcon icon={faEnvelope} /> Email/Mobile</label>
+            <Input type="text" className="form-control" name="username" value={username}
               onChange={this.onChangeUsername}
               validations={[required]}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="password"><FontAwesomeIcon icon={faKey}/> Password</label>
-            <Input
-              type="password"
-              className="form-control"
-              name="password"
-              value={this.state.password}
-              onChange={this.onChangePassword}
-              validations={[required]}
-            />
-          </div>
-          {errorMsg && <div className="isaerror">{errorMsg}</div>}
-          <div className="d-flex flex-wrap justify-content-between">
-                    <div className="form-check">
-                      <input className="form-check-input" type="checkbox" checked="" id="remember_me"/>
-                      <label className="form-check-label" for="remember_me">Remember me</label>
-                    </div><Link className="nav-link-inline fs-sm" href="#">Forgot password?</Link>
-                  </div>
-          <div className="form-group d-flex justify-content-between">
+            <div className="form-group">
+              <label htmlFor="password"><FontAwesomeIcon icon={faKey} /> Password</label>
+              <Input
+                type="password"
+                className="form-control"
+                name="password"
+                value={password}
+                onChange={this.onChangePassword}
+                validations={loginType === 'otp' ? [required] : []}
+              />
+            </div>
+            {errorMsg && <div className="isaerror">{errorMsg}</div>}
+            <div className="d-flex flex-wrap justify-content-between">
+              <div className="form-check">
+                {/* <input className="form-check-input" type="checkbox" checked="" id="remember_me" />
+                <label className="form-check-label" >Remember me</label> */}
+              </div><span>Forgot password?</span>
+            </div>
+            <div className="form-group d-flex justify-content-between">
 
-            <Button className="btn login-btn mb-0 float-left">
-              <span>Login</span>
-            </Button>
-            {/* <span className="py-2">Forget Password?</span> */}
-          </div>
-
+              <button className="btn login-btn mb-0 float-left" onClick={(e) => this.handleLogin(e)}>
+                <span>Login</span>
+              </button>
+              <br />
+              <button className="btn login-btn mb-0 float-left" onClick={(e) => this.handleLoginWithOtp(e)}>
+                <span>Request OTP</span>
+              </button>
+              {/* <span className="py-2">Forget Password?</span> */}
+            </div>
+          </>}
         </Form>
         {/* <Link to='/forgot-password' onClick={() => this.props?.dismissModal('login')}>Forgot password?</Link> */}
         <div className="clearfix"></div>

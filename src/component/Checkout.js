@@ -318,7 +318,7 @@ class CheckoutComp extends React.Component {
           </Modal>
         </div>
 
-        <Loader loaded={isLoaded} message='Loading...' options={loaderOptions} className="spinner" >
+        {this.props.userData?.token && <Loader loaded={isLoaded} message='Loading...' options={loaderOptions} className="spinner" >
           <div className="container-fluid">
             <div className="row py-5">
 
@@ -602,7 +602,7 @@ class CheckoutComp extends React.Component {
               </div>}
             </div>
           </div >
-        </Loader >
+        </Loader >}
       </section >
     );
   }

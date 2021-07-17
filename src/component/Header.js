@@ -440,7 +440,7 @@ class Header extends Component {
                 </li>
               </ul>
             </div >
-            <Navbar/> </>}</>
+            <Navbar /> </>}</>
     );
   }
 }

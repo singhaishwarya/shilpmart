@@ -35,7 +35,7 @@ class CartOverlay extends Component {
     let totalCost1 = 0;
     this.props.cart.map((item, index) => {
       ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
-        totalCost1 += ((result1.data[0].prices[item.variation_index]?.price * item.quantity) || 0.00);
+        totalCost1 += ((result1.data[0]?.prices[item.variation_index]?.price * item.quantity) || 0.00);
         this.setState(prevState => ({
           cartData: [...prevState.cartData, { product: result1.data[0], variation_index: item.variation_index, quantity: item.quantity }],
           totalCost: totalCost1

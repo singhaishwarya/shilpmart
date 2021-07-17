@@ -4,8 +4,10 @@ import * as cartAction from '../actions/cart';
 import CartService from '../services/CartService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { Link } from "react-router-dom";
 import ProductService from '../services/ProductService';
+import Login from "./Login";
+import Modal from 'react-modal';
+import { customLoginStyles } from "../lib/utils";
 class Cart extends Component {
 
   constructor() {
@@ -13,7 +15,8 @@ class Cart extends Component {
     this.state = {
       productCount: 1,
       cartProduct: [],
-      totalCost: 0
+      totalCost: 0,
+      showModal: false,
     };
   }
 
@@ -86,14 +89,41 @@ class Cart extends Component {
     });
   }
 
+  handleCheckout = (cartProduct, totalCost) => {
+    this.props.userData?.token ? this.props.history.push({
+      pathname: '/checkout',
+      state: { checkout: cartProduct, totalCartCost: totalCost }
+
+    }) : this.setState({
+      showModal: !this.state.showModal
+    });
+  }
+
+  dismissModal = () => {
+
+    this.setState({
+      showModal: !this.state.showModal
+    });
+
+
+  };
   render() {
-    const { cartProduct, totalCost } = this.state;
+    const { cartProduct, totalCost, showModal } = this.state;
     const { cart } = this.props;
     let finItem;
 
     return (
       <div className="container-fluid">
-
+        <Modal
+          isOpen={showModal}
+          style={customLoginStyles}
+          shouldCloseOnOverlayClick={false}
+          ariaHideApp={false}
+        >  <Login
+            dismissModal={() => this.setState({
+              showModal: !this.state.showModal
+            })} {...this.state} />
+        </Modal>
         {cart?.length > 0 ? <div className="row py-5">
           <form className="col-lg-8 col-sm-6 col-12">
 
@@ -142,15 +172,6 @@ class Cart extends Component {
                   </tbody>
                 </table>
               </div>
-              {/* <div className="row">
-                <div className="col">
-                  <div className="cart-coupon-wrapper mb-3">
-                    <label className="d-none">Coupon</label>
-                    <input type="text" name="" value="" placeholder="Coupon Code..." />
-                    <button>Apply Coupon</button>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </form>
           <div className="col-lg-4 col-sm-6 col-12">
@@ -168,18 +189,14 @@ class Cart extends Component {
                 <h5>Total</h5>
                 <p><span>₹{totalCost}</span></p>
               </div>
-              <div className="cart-action cart-action2"> <Link to={
-                {
-                  pathname: '/checkout',
-                  state: { checkout: cartProduct, totalCartCost: totalCost }
-                }
-              }> Proceed to checkout</Link> </div>
+              <div className="cart-action cart-action2" onClick={() => this.handleCheckout(cartProduct, totalCost)}> <button className="btn login-btn" >Proceed to checkout </button></div>
             </div>
           </div>
 
         </div> : <div className="cart-shop-body">
           <div className="cart-empty p-5"><p>No products in the cart.</p><a href="/product-list">Return to shop</a></div>
-        </div>}
+        </div>
+        }
       </div>
 
     );
