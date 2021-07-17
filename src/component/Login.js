@@ -136,7 +136,7 @@ class Login extends Component {
               <div className="form-check">
                 {/* <input className="form-check-input" type="checkbox" checked="" id="remember_me" />
                 <label className="form-check-label" >Remember me</label> */}
-              </div><span>Forgot password?</span>
+              </div>
             </div>
             <div className="form-group d-flex justify-content-between">
 
@@ -151,7 +151,7 @@ class Login extends Component {
             </div>
           </>}
         </Form>
-        {/* <Link to='/forgot-password' onClick={() => this.props?.dismissModal('login')}>Forgot password?</Link> */}
+        <Link to='/forgot-password' onClick={() => this.props?.dismissModal('login')}>Forgot password?</Link>
         <div className="clearfix"></div>
         <p className="login-card-footer-text pt-4 mb-0">Don't have an account? <Link to='/registration' onClick={() => this.props?.dismissModal('login')} >Register here</Link></p>
       </div >

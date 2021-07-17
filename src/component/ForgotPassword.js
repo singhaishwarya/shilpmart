@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Button from "react-validation/build/button";
 import AuthService from '../services/AuthService';
+import ToastService from '../services/ToastService';
 
 const required = (value) => {
   if (!value) {
@@ -41,13 +42,13 @@ export default class ForgotPassword extends Component {
 
     const { username } = this.state;
     AuthService.forgotPassword({ username: username })
-      .then((result) => {
-
-        result && alert('A temporary password(OTP) is sent to Email/Mobile')
-        this.props.history.push({
-          pathname: '/'
-        });
-      })
+      .then((result) => (
+        result.data.success ? (
+          ToastService.success('A temporary password(OTP) is sent to Email/Mobile'),
+          this.props.history.push({
+            pathname: '/'
+          })) : this.setState({ errorMsg: result.data.data.error })
+      ))
       .catch((err) => {
         console.error(err);
       });

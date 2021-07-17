@@ -59,6 +59,7 @@ export default class AuthService extends Component {
       const { response } = error;
       if (!response) return;
       console.log(`FETCH GET ERROR`, response);
+      return response
     }
   }
 
