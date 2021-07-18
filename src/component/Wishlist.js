@@ -58,8 +58,12 @@ class Wishlist extends Component {
   errorAlert = (product) => {
     return ToastService.error(product?.content?.title + " is already in cart")
   }
+
   successAlert = (product, type) => {
-    return ToastService.error(product?.content?.title + " is already in " + type)
+    return ToastService.success(product?.content?.title + " is successfully added to " + type)
+  }
+  limitAlert = () => {
+    return ToastService.error("Compare Cart is full(limit :5)")
   }
   render() {
     const { wishlist, layoutValue } = this.state;
@@ -83,7 +87,7 @@ class Wishlist extends Component {
                     <span className="remove-item" onClick={() => {
                       this.deleteWishlist(item, index)
                     }}>Remove</span>
-                    <ProductTile data={finItem} variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} />
+                    <ProductTile data={finItem} variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} limitAlert={this.limitAlert} />
                   </div>
                 )
               })}

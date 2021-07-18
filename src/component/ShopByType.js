@@ -109,7 +109,7 @@ class ShopByType extends Component {
     ProductService.fetchAllProducts(filterparams).then((result) => {
       this.setState({
         shopByProductItems: result?.data?.map((item) =>
-          (<ProductTile data={item} {...this.props} errorAlert={this.errorAlert} successAlert={this.successAlert} />))
+          (<ProductTile data={item} {...this.props} errorAlert={this.errorAlert} successAlert={this.successAlert} limitAlert={this.limitAlert} />))
       })
     })
   }
@@ -129,7 +129,9 @@ class ShopByType extends Component {
   successAlert = (product, type) => {
     return ToastService.success(product?.content?.title + " is successfully added to " + type)
   }
-
+  limitAlert = () => {
+    return ToastService.error("Compare Cart is full(limit :5)")
+  }
   render() {
     const { type, shopByCategoryItems, shopByProductItems, responsive } = this.state;
     return (

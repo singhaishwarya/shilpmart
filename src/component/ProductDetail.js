@@ -31,19 +31,11 @@ class ProductDetail extends React.Component {
       productDetailData: [],
       productQuantity: 1, currentvalue2: '', currentvalue1: '',
       visible: true,
-      showModal: false, productDetailDataImages: [], productDetailData: null,
+      showModal: false, productDetailDataImages: [],
       notFountImage: [{
         original: require('../public/No_Image_Available.jpeg'),
         thumbnail: require('../public/No_Image_Available.jpeg'),
-      }],
-      testData: [
-
-        { label: '5', value: 82, showValue: true, suffix: '%' },
-        { label: '4', value: 82, showValue: true, suffix: '%' },
-        { label: '3', value: 80, showValue: true, suffix: '%' },
-        { label: '2', value: 75, showValue: true, suffix: '%' },
-        { label: '1', value: 25, showValue: true, suffix: '%' }
-      ]
+      }]
     }
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
@@ -75,7 +67,6 @@ class ProductDetail extends React.Component {
   }
 
   errorAlert = (product, type) => {
-    // return ToastService.error(product?.content?.title + " is already in cart")
     return ToastService.error(product?.content?.title + " is removed from wishlist");
 
   }
@@ -169,7 +160,7 @@ class ProductDetail extends React.Component {
   }
 
   addToCart = (product) => {
-    if (this.props.cart.find(({ product, variation_index }) => (product === product.id && variation_index === this.state.currentVariationIndex)) !== undefined) {
+    if (this.props.cart.find(({ cartProduct, variation_index }) => (cartProduct === product.id && variation_index === this.state.currentVariationIndex)) !== undefined) {
       this.errorAlert(product, 'cart');
     }
     else {
@@ -179,7 +170,6 @@ class ProductDetail extends React.Component {
   }
 
   errorAlert = (product, type) => {
-    // return ToastService.error(product?.content?.title + " is already in cart")
     return ToastService.error(product?.content?.title + " is " +
       (type === "cart" ? "already in cart" : "removed from wishlist"));
 
@@ -243,16 +233,12 @@ class ProductDetail extends React.Component {
           item.variation_value = value;
         }
         else {
-
-          this.setState({
-            combination: this.state.combination.concat(
-              { variation_id: key, variation_value: value }
-            )
-          });
+          this.setState(prevState => ({
+            combination: [...prevState.combination, { "variation_id": key, "variation_value": value }]
+          }));
 
         }
       });
-
       const filteredArr = this.state.combination?.reduce((acc, current) => {
         const x = acc.find(item => item.variation_value === current.variation_value);
         if (!x) {
@@ -264,12 +250,7 @@ class ProductDetail extends React.Component {
       this.setState({ finCombination: filteredArr });
       this.getVariationIndex(filteredArr);
     } else {
-
-      this.setState({
-        combination: this.state.combination.concat(
-          { variation_id: key, variation_value: value }
-        )
-      });
+      this.setState({ combination: [{ "variation_id": key, "variation_value": value }] })
     }
 
   }
@@ -346,12 +327,22 @@ class ProductDetail extends React.Component {
                     <div className="productVariation" key={index} >
                       <span>{itemKey.key} :</span>
                       <div className="productVariationList sizes">
-                        {itemKey.value.map((itemValue, index) => (itemKey.key === "Color" ?
-                          <div className={`colors ${currentvalue1 === itemValue ? 'color-active' : ''}`} key={index} style={{ backgroundColor: itemValue }}
-                            onClick={() => { this.makeCombo(itemKey.key, itemValue); this.setState({ currentvalue1: itemValue }) }}
+                        {itemKey.value.map((itemValue, indexValue) => (itemKey.key === "Color" ?
+                          <div className={`colors ${currentvalue1 === itemValue ? 'color-active' : ''}`} key={indexValue} style={{ backgroundColor: itemValue }}
+                            onClick={() => {
+                              setTimeout(
+                                () => { this.makeCombo(itemKey.key, itemValue); this.setState({ currentvalue1: itemValue }) },
+                                100
+                              );
+                            }}
                           /> :
-                          <button key={index} className={currentvalue2 === itemValue ? "sizeSelected" : ''}
-                            onClick={() => { this.makeCombo(itemKey.key, itemValue); this.setState({ currentvalue2: itemValue }) }}
+                          <button key={indexValue} className={currentvalue2 === itemValue ? "sizeSelected" : ''}
+                            onClick={() => {
+                              setTimeout(
+                                () => { this.makeCombo(itemKey.key, itemValue); this.setState({ currentvalue2: itemValue }) },
+                                100
+                              );
+                            }}
                           >{itemValue}</button>))}
                       </div>
                     </div>

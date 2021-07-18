@@ -86,10 +86,8 @@ class Login extends Component {
     this.form.validateAll();
     AuthService.loginWithOtp({ username: this.state.username })
       .then((result) => {
-        if (!result) return
-        this.setState({ loginType: 'otp' })
-
-
+        if (result.success) this.setState({ loginType: 'otp' })
+        else this.setState({ errorMsg: result?.data?.data?.error })
       })
       .catch((err) => {
         console.error(err);
