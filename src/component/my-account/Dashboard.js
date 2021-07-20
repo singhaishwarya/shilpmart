@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-export default class Dashboard extends React.Component {
+import { connect } from 'react-redux';
+class Dashboard extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-    };
+  constructor(props) {
+    super(props);
+
   }
 
   render() {
     return (
-      <div className="container"><p> Hello Aishwarya Singh (not Aishwarya Singh? Log out)</p>
+      <div className="container"><p> Hello {this.props.userData.name} (not {this.props.userData.name}? Log out)</p>
 
         <p>From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.</p>
         <div className="my-account-links">
@@ -28,3 +28,11 @@ export default class Dashboard extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userData: state.userData
+  }
+};
+
+export default connect(mapStateToProps, null)(Dashboard);

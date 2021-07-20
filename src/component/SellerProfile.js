@@ -18,9 +18,8 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 export default class SellerProfile extends React.Component {
   constructor(props) {
     super(props);
-    const query = new URLSearchParams(props.location.search);
     this.state = {
-      isActiveTab: 0,
+      isActiveTab: 0, searchQuery: '',
       config: {
         paddingAtStart: true,
         listBackgroundColor: ``,
@@ -55,8 +54,17 @@ export default class SellerProfile extends React.Component {
     });
 
   }
+  onTextChange = (e) => {
+    this.setState({ searchQuery: e.target.value })
+    this.currentUrlParams = new URLSearchParams(window.location.search);
+    this.currentUrlParams.set('q', e.target.value)
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
+  };
   render() {
-    const { isActiveTab, categories, config, vendorData } = this.state;
+    const { isActiveTab, categories, config, vendorData, searchQuery } = this.state;
     return (
       <>
         <div className="seller-cover-wrapper">
@@ -111,37 +119,14 @@ export default class SellerProfile extends React.Component {
                   </div>
                 </div>
               </div>
-              {/* <div className="col-lg-3 col-md-3 col-12">
-            <div className="sidebar">
-              <h4>Search</h4>
-              <div className="mb-3">
-                <input type="search" className="search-field" placeholder="Search products…" name="s" />
-              </div>
-              <h4>Categories</h4>
-              <div className="mb-3">
-                <div className="filter-content collapse show" id="collapse_aside1" >
-                  <div className="categories-list">
-                    <MultilevelMenu
-                      list={categories}
-                      configuration={config}                      
-                      selectedListItem={this.selectedItem}
-                      selectedLabel={this.selectedItem}
-                    />
+              <div className="col-lg-3 col-md-3 col-12">
+                <div className="sidebar">
+                  <h4>Search</h4>
+                  <div className="mb-3">
+                    <input type="search" className="search-field" onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search products…" name="s" />
                   </div>
                 </div>
               </div>
-              <h4>Store Location</h4>
-              <div className="mt-3">
-                <MyMapComponent
-                  isMarkerShown
-                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-                  loadingElement={<div style={{ height: `100%` }} />}
-                  containerElement={<div style={{ height: `400px` }} />}
-                  mapElement={<div style={{ height: `100%` }} />}
-                />
-              </div>
-            </div>
-          </div> */}
               <div className="col p-lg-5 p-2">
                 <ul className="nav nav-tabs mb-4" role="tablist">
                   <li className="nav-item">

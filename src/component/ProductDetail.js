@@ -18,6 +18,7 @@ import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import { connect } from 'react-redux';
 import WishlistService from '../services/WishlistService'
+import ReactImageZoom from 'react-image-zoom';
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -42,10 +43,8 @@ class ProductDetail extends React.Component {
   }
 
   componentDidMount() {
-
     this.getProductDetails(this.getQueryParams());
   }
-
   componentDidUpdate(prevprops) {
     if (prevprops.history.location.search !== prevprops.location.search) {
       this.getProductDetails(this.getQueryParams());
@@ -124,11 +123,12 @@ class ProductDetail extends React.Component {
         if (result.data.length === 0) this.props.history.push({ pathname: '/product-list' })
         this.setState({
           productDetailData: result?.data[0], productDetailDataPrice: result?.data[0]?.price,
-          productCatId: result?.data[0].category.category_id,
+          productCatId: result?.data[0]?.category?.category_id,
           productDetailDataImages: result?.data[0]?.images?.map((item, index) => (
             {
               'original': item.image_url,
-              'thumbnail': item.image_url
+              'thumbnail': item.image_url,
+              'renderItem': this.renderItemGallery.bind(this)
             }))
         });
         result?.data[0]?.variation_available && result.data[0].properties.map((item) => (
@@ -278,6 +278,11 @@ class ProductDetail extends React.Component {
   limitAlert = () => {
     return ToastService.error("Compare Cart is full(limit :5)")
   }
+  renderItemGallery = (item) => {
+    const imgProps = { width: 400, height: 250, zoomWidth: 500, img: item.original };
+    return <ReactImageZoom {...imgProps}
+    />
+  }
   render() {
     const { productDetailData, productQuantity, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice, currentVariationIndex, currentvalue2, currentvalue1, productCatId } = this.state;
     const { wishlist, userData } = this.props;
@@ -289,11 +294,13 @@ class ProductDetail extends React.Component {
               <div className="col-lg-6 col-md-6 col-12 mb-2">
                 <div className="product-img-wrapper">
                   <ImageGallery
+                    ref={this._child}
                     items={productDetailData?.images?.length > 0 ? productDetailDataImages : notFountImage}
                     thumbnailPosition='left'
                     showThumbnails={productDetailData?.images?.length > 0 ? true : false}
                     startIndex={currentVariationIndex}
                     onErrorImageURL={require('../public/No_Image_Available.jpeg')}
+                    showFullscreenButton={false}
                   />
                   <div className="addtowish"><FontAwesomeIcon icon={((wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
                     onClick={() => {
@@ -319,7 +326,7 @@ class ProductDetail extends React.Component {
                   <p className="available">Availability: &nbsp;<span className="text-success">In Stock</span>
                     {/* <span className="text-danger">Out of Stock</span> */}
                   </p>
-                  <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div>
+                  {/* <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div> */}
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
                       <div className="input-group">
@@ -433,7 +440,7 @@ class ProductDetail extends React.Component {
 
                 <div className="product-meta py-2">
 
-                  <div className="seller-details-box my-3" onClick={() => this.handleSellerProfile(productDetailData?.vendor.brand)}>
+                  <div className="seller-details-box my-3" onClick={() => this.handleSellerProfile(productDetailData?.vendor?.brand)}>
                     {/* <div className="title-meta">Know your weaver</div> */}
                     <div className="seller-head"><strong>Sold by :</strong> </div>
                     <div className="seller-contact">
