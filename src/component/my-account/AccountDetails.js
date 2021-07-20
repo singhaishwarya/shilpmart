@@ -4,6 +4,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import ToastService from '../../services/ToastService';
 import Button from "react-validation/build/button";
+import { connect } from 'react-redux';
 
 const required = (value, name) => {
   if (!name.value) {
@@ -23,14 +24,15 @@ const isValidpassword = (value) => {
 
   }
 }
-export default class AccountDetails extends React.Component {
+class AccountDetails extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
+      userData: this.props.userData,
       fields: {
         new_password: '',
         confirm_password: ''
@@ -70,84 +72,91 @@ export default class AccountDetails extends React.Component {
   }
   render() {
 
-    const { fields } = this.state
+    const { fields, userData } = this.state
     return (
 
 
       <div className="container">
         <div className="row">
-        <div className="col-7 login-card py-3 px-5 bg-light shadow">
+          <div className="col-7 login-card py-3 px-5 bg-light shadow">
 
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="firstName">First Name</label>
-              <input type="text" className="form-control" id="firstName" placeholder="First name here" />
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="LastName">Last Name</label>
-              <input type="text" className="form-control" id="LastName" placeholder="Last Name here.." />
-
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="displayName">Display Name</label>
-            <input type="text" className="form-control" id="displayName" placeholder="display name here..." />
-            <small>This will be how your name will be displayed in the account section and in reviews</small>
-          </div>
-          <div className="form-group">
-            <label htmlFor="emailad">Email Address</label>
-            <input type="text" className="form-control" id="emailad" placeholder="Email here..." />
-          </div>
-          <div className="form-group">
-            <label htmlFor="mobileNo">Mobile No.</label>
-            <input type="text" className="form-control" id="mobileNo" placeholder="Mobile here..." />
-          </div>
-          <Form
-            onSubmit={this.handleChangePassword}
-            ref={(c) => { this.form = c; }}
-          >
-            <fieldset className="mt-4">
-              <h4>Change Password</h4>
-
-
-              <div className="form-group">
-                <label htmlFor="newPass">New password </label>
-                <Input
-                  type="password"
-                  className="form-control"
-                  name="new_password"
-                  value={fields.new_password}
-                  onChange={this.handleChange.bind(this, "new_password")}
-                  validations={[required, isValidpassword]}
-                />
-                {/* <input type="password" className="form-control" id="newPass" placeholder="Mobile here..." /> */}
+            <div className="form-row">
+              <div className="form-group col-md-6">
+                <label htmlFor="firstName">Name</label>
+                <input type="text" className="form-control" value={userData.name} disabled id="firstName" placeholder="First name here" />
               </div>
+              {/* <div className="form-group col-md-6">
+                <label htmlFor="LastName">Last Name</label>
+                <input type="text" className="form-control" value={} id="LastName" placeholder="Last Name here.." />
 
-              <div className="form-group">
-                <label htmlFor="conPass">Confirm new password</label>
-                <Input
-                  type="password"
-                  className="form-control"
-                  name="confirm_password"
-                  value={fields.confirm_password}
-                  onChange={this.handleChange.bind(this, "confirm_password")}
-                  validations={[required, isValidpassword]}
-                /> </div>
+              </div> */}
+            </div>
+            {/* <div className="form-group">
+              <label htmlFor="displayName">Display Name</label>
+              <input type="text" className="form-control" value={} id="displayName" placeholder="display name here..." />
+              <small>This will be how your name will be displayed in the account section and in reviews</small>
+            </div> */}
+            <div className="form-group">
+              <label htmlFor="emailad">Email Address</label>
+              <input type="text" className="form-control" value={userData.email} disabled id="emailad" placeholder="Email here..." />
+            </div>
+            <div className="form-group">
+              <label htmlFor="mobileNo">Mobile No.</label>
+              <input type="text" className="form-control" value={userData.mobile} disabled id="mobileNo" placeholder="Mobile here..." />
+            </div>
+            <Form
+              onSubmit={this.handleChangePassword}
+              ref={(c) => { this.form = c; }}
+            >
+              <fieldset className="mt-4">
+                <h4>Change Password</h4>
 
-            </fieldset>
-            <Button type="submit" className="btn login-btn">Save Changes</Button>
-          </Form>
+
+                <div className="form-group">
+                  <label htmlFor="newPass">New password </label>
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="new_password"
+                    value={fields.new_password}
+                    onChange={this.handleChange.bind(this, "new_password")}
+                    validations={[required, isValidpassword]}
+                  />
+                  {/* <input type="password" className="form-control" id="newPass" placeholder="Mobile here..." /> */}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="conPass">Confirm new password</label>
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="confirm_password"
+                    value={fields.confirm_password}
+                    onChange={this.handleChange.bind(this, "confirm_password")}
+                    validations={[required, isValidpassword]}
+                  /> </div>
+
+              </fieldset>
+              <Button type="submit" className="btn login-btn">Save Changes</Button>
+            </Form>
+          </div>
+
+          <div className="col-5">
+            <div className="product-img-wrapper">
+              <img src={require("../../public/address.svg")} className="img-fluid" alt="address" />
+            </div>
+          </div>
         </div>
-
-        <div className="col-5">
-          <div className="product-img-wrapper">
-            <img src={require("../../public/address.svg")} className="img-fluid" alt="address" />
-          </div>
-          </div>
-          </div>
       </div>
 
 
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    userData: state.userData
+  }
+};
+
+export default connect(mapStateToProps, null)(AccountDetails);

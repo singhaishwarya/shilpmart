@@ -79,9 +79,11 @@ export default class OrderDetail extends React.Component {
   }
   cancelOrder = (order, product) => {
     OrderService.orderCancel({ order_id: order, product_id: product.product_id, variation_index: product.variation_index }).then((result) => {
-      if (!result) return
-      // this.setState({ orderList: result.data });
-
+      this.setState(prevState => ({
+        orderDetail: {
+          ...prevState.orderDetail, product_details: result.data.product_details
+        }
+      }))
     }).catch((err) => {
       console.log(err);
     });
@@ -228,12 +230,12 @@ export default class OrderDetail extends React.Component {
                       </div>
                       <div className="col-sm-2 col">
                         <div className="orderstatus">
-                          <div className="orderstate"> <span>{getOrderStatus(orderDetail.status)}</span></div>
+                          <div className="orderstate"> <span>{product.is_cancel ? "Cancelled" : getOrderStatus(orderDetail.status)}</span></div>
                           <div className="needhlep" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</div>
                         </div>
                       </div><div className="col-sm-2 col">
                         <div className="orderstatus">
-                          <button className="cancelled" onClick={() => this.cancelOrder(productItem.order_id, product)}>cancel order</button>
+                          {product.is_cancel === 0 && <button className="cancelled" onClick={() => (productItem.awb_number.number === null ? this.cancelOrder(productItem.order_id, product) : this.toggleModal)}>{productItem.awb_number.number === null ? "Cancel Order" : "Request Cancellation"}</button>}
                         </div>
                       </div>
                     </div>

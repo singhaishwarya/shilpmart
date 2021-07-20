@@ -56,7 +56,7 @@ class CartOverlay extends Component {
   deleteCartApi = (productid, variation_index) => {
     CartService.delete({ product_id: productid.product_id || productid, variation_index }).then((result) => {
       if (result.success) {
-        this.props.deleteCart(productid.product_id || productid);
+        this.props.deleteCart({ product: productid.product_id || productid, variation_index: variation_index });
         this.props.userData ? this.getCartApi() : this.getCart()
       }
     })

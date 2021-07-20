@@ -141,8 +141,8 @@ class CheckoutComp extends React.Component {
       this.state.checkOutData.map((item) => {
         prodObj.push({
           "product_id": item.product_details?.id || item.id,
-          "quantity": item.quantity || 1,
-          "variation_index": item.variation_index || 1
+          "quantity": item.quantity,
+          "variation_index": item.variation_index
         })
       });
       checkoutObj.products = prodObj;

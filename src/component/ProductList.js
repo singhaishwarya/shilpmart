@@ -23,7 +23,7 @@ export default class ProductList extends React.Component {
       ],
       selectedOffer: [],
       categories: [],
-      priceRange: [],
+      priceRange: [0, 0],
       category_id: props.history.location.state?.category_id || (this.currentUrlParams.get('cat_ids') || 0),
       category_breadcrumbs: props.history.location.state?.category_breadcrumbs,
       selectedOption: null, queryParams: {},
@@ -79,12 +79,9 @@ export default class ProductList extends React.Component {
   }
 
   onManualPriceChange = (index, e) => {
-
     const { priceRange } = this.state;
-    priceRange.splice(index, 1, e.target.value * 1)
-    this.setState({ priceRange: [...priceRange] }, () => {
-      this.onSliderPriceChange([...priceRange]);
-    });
+    priceRange.splice(index, 1, e.target?.value * 1)
+    this.setState({ priceRange: [...priceRange] })
 
   }
 
@@ -195,7 +192,8 @@ export default class ProductList extends React.Component {
                     <div className='price-range-wrapper'>
                       <div id='slider-range' className='price-filter-range' name='rangeInput'>
                         {priceRange.length > 1 && <Ranger
-                          defaultValue={priceRange}
+                          value={priceRange}
+                          onChange={(value) => this.setState({ priceRange: value })}
                           min={0}
                           max={50000}
                           className='filter-slider'
@@ -206,24 +204,25 @@ export default class ProductList extends React.Component {
                       <div className='price-range'>
                         <div className="rangewraper">
                           <div className="w-50 pr-2 mr-2">
-                          <div className="input-group input-group-sm">
-                            <span className="input-group-text bg-light">₹</span>
-                          <input min={0} max={priceRange[0] || 50000} value={priceRange[0] || 0} className="form-control range-slider-value-min" onChange={(e) => this.onManualPriceChange(0, e)} type="text"/>
-                        </div>
+                            <div className="input-group input-group-sm">
+                              <span className="input-group-text bg-light">₹</span>
+                              <input min={0} max={priceRange[0]} value={priceRange[0]} className="form-control range-slider-value-min" onChange={(e) => this.onManualPriceChange(0, e)} type="text" />
+                            </div>
                           </div>
                           <div className="w-50">
-                          <div className="input-group input-group-sm">
-                            <span className="input-group-text bg-light">₹</span>
-                          <input min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
-                            onChange={(e) => this.onManualPriceChange(1, e)} className="form-control range-slider-value-min" type="text"/>
-                        </div>
+                            <div className="input-group input-group-sm">
+                              <span className="input-group-text bg-light">₹</span>
+                              <input min={priceRange[0] || 0} max='10000' value={priceRange[1] || 0}
+                                onChange={(e) => this.onManualPriceChange(1, e)}
+                                className="form-control range-slider-value-min" type="text" />
+                            </div>
                           </div>
-                         
+
                         </div>
-                        {/* <span>
-                          <button onClick={() => { this.filterByPriceRange() }} className='price-range-search'
+                        <span>
+                          <button onClick={() => this.onSliderPriceChange(priceRange)} className='price-range-search'
                             id='price-range-submit'>Filter</button>
-                        </span> */}
+                        </span>
                       </div>
                       <div id='searchResults' className='search-results-block'></div>
                     </div>
@@ -310,7 +309,7 @@ const treeStyle = {
         base: {
           display: 'inline-block',
           verticalAlign: 'top',
-          color: 'rgb(35,31,32)'          
+          color: 'rgb(35,31,32)'
         },
         connector: {
           width: '2px',

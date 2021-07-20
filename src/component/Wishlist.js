@@ -31,7 +31,7 @@ class Wishlist extends Component {
   }
 
   deleteWishlist = (product, index) => {
-    if (this.props.userData?.token) { (this.deleteWishlistApi(product)) }
+    if (this.props.userData?.token) { (this.deleteWishlistApi(product, index)) }
     else {
       this.props.deleteWishlist({ product: (product.product_id || product?.product.id), variation_index: product.variation_index });
       this.setState((prevState) => ({
@@ -40,9 +40,15 @@ class Wishlist extends Component {
     }
   }
 
-  deleteWishlistApi = (item) => {
-    WishlistService.addDelete({ wishlist_id: item.product_details.wishlist.id, product_id: [item.product_id], variation_index: [item.variation_index] }).then((result) => {
-      if (result.success) { this.props.deleteWishlist(item.id); this.getWishlistApi() }
+  deleteWishlistApi = (item, index) => {
+    console.log("dem===", item, this.state.wishlist)
+    WishlistService.addDelete({ wishlist_id: item.id, product_id: [item.product_id], variation_index: [item.variation_index] }).then((result) => {
+      if (result.success) {
+        this.props.deleteWishlist({ product: item.product_id, variation_index: item.variation_index })
+        this.setState((prevState) => ({
+          wishlist: prevState.wishlist.filter((_, i) => i !== index)
+        }));
+      }
     });
   }
 
@@ -80,7 +86,7 @@ class Wishlist extends Component {
         <div className="container">
           {(wishlist?.length > 0) ? (<>
             <div className='row py-5'>
-              {wishlist?.length > 0 && wishlist?.map((item, index) => {
+              {wishlist?.map((item, index) => {
                 finItem = item.product_details || item.product;
                 return (
                   finItem && <div key={index} className='col-lg-3 col-sm-6 col-6' >

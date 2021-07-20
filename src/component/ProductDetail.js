@@ -61,7 +61,11 @@ class ProductDetail extends React.Component {
     this.props.deleteWishlist({ product: item?.id, variation_index: this.state.currentVariationIndex })
     WishlistService.addDelete({ wishlist_id: item.wishlist?.id, product_id: [item.id], variation_index: [this.state.currentVariationIndex] }).then((result) => {
       if (result?.success) {
-        // this.getWishlist();
+        this.setState(prevState => ({
+          productDetailData: {
+            ...prevState.productDetailData, wishlist: null
+          }
+        }));
       }
     })
   }
@@ -85,7 +89,12 @@ class ProductDetail extends React.Component {
     WishlistService.addDelete({ product_id: [product.id], variation_index: [this.state.currentVariationIndex] }).then((result) => {
       if (result?.success) {
         this.successAlert(product, 'wishlist');
-        // this.getWishlist();
+        let objIndex = result.data.findIndex((obj => obj.product_id === product.id));
+        this.setState(prevState => ({
+          productDetailData: {
+            ...prevState.productDetailData, wishlist: { id: result.data[objIndex].id }
+          }
+        }));
       }
     });
   }

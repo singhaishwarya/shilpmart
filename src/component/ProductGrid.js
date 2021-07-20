@@ -21,25 +21,25 @@ class ProductGrid extends Component {
       filterParams: {},
       categoryBreadcrumbs: props.categoryBreadcrumbs,
       sortBy: "",
-      layoutValue: '4X4', brand_name: window.location.href.indexOf("entrepreneur") != -1 ? window.location.pathname.split('/')[2] : ''
+      layoutValue: '4X4', brand_name: window.location.href.indexOf("entrepreneur") != -1 ? this.props.sellerProducts.vendor.brand : ''
     };
-
+    console.log("demo===", this.state.brand_name)
 
   }
   componentDidMount() {
 
     this.props.sellerProducts?.data?.length > 0 ?
-      this.getVendorProducts(this.props.sellerProducts.vendor.brand)
+      this.getVendorProducts(this.getSetQueryParams())
       : this.getProductList(this.getSetQueryParams());
     this.handleScrollPosition();
   }
   componentDidUpdate(prevprops) {
     if (prevprops.history.location.search !== prevprops.location.search) {
-      this.props.sellerProducts?.data?.length > 0 ? this.getVendorProducts(this.props.sellerProducts.vendor.brand) : this.getProductList(this.getSetQueryParams())
+      this.props.sellerProducts?.data?.length > 0 ? this.getVendorProducts(this.getSetQueryParams()) : this.getProductList(this.getSetQueryParams())
     }
   }
-  getVendorProducts = (brandName) => {
-    ProductService.fetchVendor({ brand_name: brandName }).then((result) => {
+  getVendorProducts = (queryParams) => {
+    ProductService.fetchVendor(queryParams).then((result) => {
 
       this.setState({ productListData: result, isLoaded: true })
 
@@ -99,6 +99,9 @@ class ProductGrid extends Component {
           return;
       }
     }
+    if (this.state.brand_name) {
+      queryParams.brand_name = this.state.brand_name;
+    }
     return queryParams;
   }
 
@@ -108,7 +111,7 @@ class ProductGrid extends Component {
         this.setState({
           productListData: result, isLoaded: true
         });
-        this.props.setPriceRangeProps([result?.filter?.min_price * 1, result?.filter?.max_price * 1])
+        this.props.setPriceRangeProps([(result?.filter?.min_price || 0) * 1, (result?.filter?.f_custom_max_price || result?.filter?.max_price) * 1])
       });
     } catch (err) {
       console.log(err);

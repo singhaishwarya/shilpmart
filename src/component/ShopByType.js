@@ -140,7 +140,7 @@ class ShopByType extends Component {
           autoPlayInterval={3000}
           autoPlay={true}
           autoPlayStrategy="all"
-          //disableDotsControls
+          disableDotsControls
           items={type === 'product' ? shopByProductItems : shopByCategoryItems}
           responsive={responsive}
           mouseTracking
