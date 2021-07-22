@@ -41,7 +41,6 @@ class Wishlist extends Component {
   }
 
   deleteWishlistApi = (item, index) => {
-    console.log("dem===", item, this.state.wishlist)
     WishlistService.addDelete({ wishlist_id: item.id, product_id: [item.product_id], variation_index: [item.variation_index || 0] }).then((result) => {
       if (result.success) {
         this.props.deleteWishlist({ product: item.product_id, variation_index: item.variation_index || 0 })
@@ -93,7 +92,7 @@ class Wishlist extends Component {
                     <span className="remove-item" onClick={() => {
                       this.deleteWishlist(item, index)
                     }}>Remove</span>
-                    <ProductTile data={finItem} variation_index={item.variation_index || 0} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} limitAlert={this.limitAlert} />
+                    <ProductTile data={finItem} variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} limitAlert={this.limitAlert} />
                   </div>
                 )
               })}

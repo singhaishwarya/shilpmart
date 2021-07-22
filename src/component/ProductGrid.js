@@ -23,7 +23,6 @@ class ProductGrid extends Component {
       sortBy: "",
       layoutValue: '4X4', brand_name: window.location.href.indexOf("entrepreneur") != -1 ? this.props.sellerProducts.vendor.brand : ''
     };
-    console.log("demo===", this.state.brand_name)
 
   }
   componentDidMount() {

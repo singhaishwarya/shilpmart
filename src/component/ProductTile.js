@@ -127,11 +127,9 @@ class ProductTile extends React.Component {
     data.images.forEach((item, index) => {
 
       if (item.variation_index === variation_index) {
-        console.log("image", variation_index, "====", item.variation_index, '====', item.variation_index == variation_index);
         _variationIndex = index;
       }
     })
-
     return (
 
       <div className="product-wrapper" key={data.id} >
@@ -174,10 +172,12 @@ class ProductTile extends React.Component {
         {data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
         <h5 className="product-title">
           {data.content ? data.content.title : '__'}
+          {/* <span>{data.variations[variation_index].variation_index[0].variation_id}-{data.variations[variation_index].variation_index[0].variation_value}
+            {data.variations[variation_index]?.variation_index[1].variation_id}-{data.variations[variation_index]?.variation_index[1].variation_value}</span> */}
         </h5>
         <span className="product-price">
           {/* <strike><span>₹</span> 1000</strike> */}
-          <span>₹</span> {data?.prices[_variationIndex]?.price || data?.price}
+          <span>₹</span> {data?.prices[variation_index]?.price || data?.price}
         </span>
       </div >);
   }

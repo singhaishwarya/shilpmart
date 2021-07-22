@@ -6,7 +6,6 @@ import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
 import { faRandom, faCheck, faQuestion, faHeart, faEnvelope, faPhoneAlt, faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
-import ImageGallery from 'react-image-gallery';
 import {
   FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
 } from "react-share";
@@ -23,8 +22,8 @@ class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      combination: [], finCombination: [], currentVariationIndex: 0, variationSelected: false,
-      isActiveTab: 0, productCatId: 0,
+      combination: [], finCombination: [], currentVariationIndex: null, variationSelected: false,
+      isActiveTab: 0, productCatId: 0, _variationIndex: 0,
       filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
       shareUrl: 'https://app.digitalindiacorporation.in/v1/digi/',
@@ -36,7 +35,7 @@ class ProductDetail extends React.Component {
       notFountImage: [{
         original: require('../public/No_Image_Available.jpeg'),
         thumbnail: require('../public/No_Image_Available.jpeg'),
-      }]
+      }], imgProps: {}
     }
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
@@ -79,6 +78,7 @@ class ProductDetail extends React.Component {
     else {
       if (Object.keys(this.props.userData).length > 0) { this.addToWishlistApi(product) } else {
         this.props.addToWishlist({ product: product?.id, variation_index: this.state.currentVariationIndex });
+        console.log("demo====", this.props.wishlist, product?.id, this.state.currentVariationIndex)
         this.successAlert(product, 'wishlist');
       }
 
@@ -128,23 +128,20 @@ class ProductDetail extends React.Component {
     try {
       let variation = [];
       ProductService.fetchAllProducts(queryParams).then((result) => {
-        if (result.data.length === 0) this.props.history.push({ pathname: '/product-list' })
+        if (result.data?.length === 0) this.props.history.push({ pathname: '/product-list' })
         this.setState({
           productDetailData: result?.data[0], productDetailDataPrice: result?.data[0]?.price,
-          productCatId: result?.data[0]?.category?.category_id,
-          //   productDetailDataImages: result?.data[0]?.images?.map((item, index) => (
-          //     {
-          //       'original': item.image_url,
-          //       'thumbnail': item.image_url,
-          //       'renderItem': this.renderItemGallery.bind(this)
-          //     }))
+          productCatId: result?.data[0]?.category?.category_id
         });
+        result?.data[0]?.images?.length > 0 && this.renderItemGallery();
         result?.data[0]?.variation_available && result.data[0].properties.map((item) => (
           item.veriation_value.indexOf(",") !== - 1 && variation.push({ key: item.variation_key, value: item.veriation_value.split(',') })
         ));
         this.setState({ variations: variation })
+
         window.scrollTo(0, 0);
       });
+
     } catch (err) {
       console.log(err);
     }
@@ -280,7 +277,7 @@ class ProductDetail extends React.Component {
           productDetailDataPrice: this.state.productDetailData?.prices[index].price,
           variationSelected: true
         });
-
+        this.renderItemGallery()
       }
     })
   }
@@ -288,19 +285,30 @@ class ProductDetail extends React.Component {
   limitAlert = () => {
     return ToastService.error("Compare Cart is full(limit :5)")
   }
-  renderItemGallery = (item) => {
-    const imgProps = { width: 534, height: 534, zoomWidth: 550, img: require('../public/saree-2-300x300.jpeg') };
-    return <ReactImageZoom {...imgProps}
-    />
+  renderItemGallery = (imgUrl) => {
+    if (imgUrl) {
+      this.setState({ _variationIndex: 0, imgProps: { width: 534, height: 534, zoomWidth: 200, img: imgUrl, zoomPosition: 'right' } });
+    }
+    else {
+      this.state.productDetailData.images.map((item, index) => {
+        if (item.variation_index === this.state.currentVariationIndex) {
+          this.setState({ _variationIndex: index, imgProps: { width: 534, height: 534, zoomWidth: 200, img: item.image_url, zoomPosition: 'right' } });
+        }
+      })
+    }
+
+  }
+  addToCompare = (product) => {
+    if (this.selectValidVariation()) return
+    else {
+      this.props.addToCompare({ product: product?.id, variation_index: this.state.currentVariationIndex });
+      this.successAlert(product, 'compare')
+    }
   }
   render() {
-    const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentVariationIndex, currentvalue2, currentvalue1, productCatId } = this.state;
-    const { wishlist, userData } = this.props;
-    let _variationIndex = 0;
-    productDetailData.images?.length > 0 && productDetailData.images.map((item, index) => {
-      if (item.variation_index === currentVariationIndex) _variationIndex = index;
-    }
-    )
+    const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentvalue2, currentvalue1, productCatId, imgProps, _variationIndex, currentVariationIndex } = this.state;
+    const { wishlist } = this.props;
+
     return (
       <>
         <section id="maincontent">
@@ -311,18 +319,18 @@ class ProductDetail extends React.Component {
                 <div className="product-gallery">
                   <div className="product-gallery-preview order-sm-2">
                     <div className="product-gallery-preview-item active" id="first">
-                      {this.renderItemGallery()}
+                      {imgProps.img ? <ReactImageZoom {...imgProps} /> : ''}
                       <div className="image-zoom-pane" />
                     </div>
                   </div>
                   <div className="product-gallery-thumblist order-sm-1">
                     {productDetailData?.images?.length > 1 ? productDetailData?.images?.map((item, index) =>
-                      (<a key={index} className="product-gallery-thumblist-item"><img src={item.image_url} alt="Product thumb" /></a>))
+                    (<a key={index} className="product-gallery-thumblist-item" ><img src={item.image_url}
+                      onClick={() => this.renderItemGallery(item.image_url)}
+                      alt="Product thumb" /></a>))
                       : <></>}
                   </div>
                 </div>
-
-
               </div>
               <div className="col-lg-6 col-md-6 col-12">
                 <div className="product-summary-wrapper">
@@ -383,16 +391,13 @@ class ProductDetail extends React.Component {
                   ))}
 
                   <div className="action-links">
-                    <span onClick={() => (this.props.compare.length < 5 ? (this.props.addToCompare({ product: productDetailData?.id, variation_index: _variationIndex }), this.successAlert(productDetailData, 'compare')) : this.limitAlert())}>
+                    <span onClick={() => (this.props.compare.length < 5 ? this.addToCompare(productDetailData) : this.limitAlert())}>
                       <FontAwesomeIcon icon={faRandom} /> Compare</span>
                     <span onClick={() => {
-                      // (
-                      // (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) ||
-                      (wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
+                      wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
                     }}>
-                      <FontAwesomeIcon icon={((wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faCheck : farHeart}
-                      /> {(wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined
-                        // || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)
+                      <FontAwesomeIcon icon={wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined ? faCheck : farHeart}
+                      /> {(wishlist.length > 0 && wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined
                       ) ? "Added to Wishlist" : "Add to Wishlist"}
                     </span>
                   </div>
