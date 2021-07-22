@@ -119,12 +119,21 @@ export default class SellerProfile extends React.Component {
                 <h4>categories</h4>
                 <div className="filter-content collapse show" id="collapse_aside1" >
                   <div className="categories-list">
-                    <MultilevelMenu
+                    {/* <MultilevelMenu
                       list={categories}
                       configuration={config}
                       selectedListItem={this.selectedItem}
                       selectedLabel={this.selectedItem}
-                    />
+                    /> */}
+                    <ul>
+                      <li><a href="#">SAREES</a></li>                      
+                      <li><a href="#">WATER BOTTLES, FLASKS & SURAHIS</a></li>
+                      <li><a href="#">CRAFT ACCESSORIES</a></li>
+                      <li><a href="#">DINING SETS</a></li>
+                      <li><a href="#">KURTAS</a></li>
+                      <li><a href="#">JACKETS & COATS</a></li>
+                      <li><a href="#">SHOES</a></li>
+                    </ul>
                   </div>
                 </div>
               </div>
