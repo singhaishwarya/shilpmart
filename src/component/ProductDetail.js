@@ -132,12 +132,12 @@ class ProductDetail extends React.Component {
         this.setState({
           productDetailData: result?.data[0], productDetailDataPrice: result?.data[0]?.price,
           productCatId: result?.data[0]?.category?.category_id,
-          productDetailDataImages: result?.data[0]?.images?.map((item, index) => (
-            {
-              'original': item.image_url,
-              'thumbnail': item.image_url,
-              'renderItem': this.renderItemGallery.bind(this)
-            }))
+          //   productDetailDataImages: result?.data[0]?.images?.map((item, index) => (
+          //     {
+          //       'original': item.image_url,
+          //       'thumbnail': item.image_url,
+          //       'renderItem': this.renderItemGallery.bind(this)
+          //     }))
         });
         result?.data[0]?.variation_available && result.data[0].properties.map((item) => (
           item.veriation_value.indexOf(",") !== - 1 && variation.push({ key: item.variation_key, value: item.veriation_value.split(',') })
@@ -294,13 +294,12 @@ class ProductDetail extends React.Component {
     />
   }
   render() {
-    const { productDetailData, productQuantity, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice, currentVariationIndex, currentvalue2, currentvalue1, productCatId } = this.state;
+    const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentVariationIndex, currentvalue2, currentvalue1, productCatId } = this.state;
     const { wishlist, userData } = this.props;
     let _variationIndex = 0;
     productDetailData.images?.length > 0 && productDetailData.images.map((item, index) => {
       if (item.variation_index === currentVariationIndex) _variationIndex = index;
     }
-
     )
     return (
       <>
@@ -308,20 +307,6 @@ class ProductDetail extends React.Component {
           <div className="container-fluid">
             <div className="row py-lg-5 py-2 ">
               <div className="col-lg-6 col-md-6 col-12 mb-2">
-                {/* <div className="product-img-wrapper">
-                  <ImageGallery
-                    items={productDetailData?.images?.length > 0 ? productDetailDataImages : notFountImage}
-                    thumbnailPosition='left'
-                    showThumbnails={productDetailData?.images?.length > 0 ? true : false}
-                    startIndex={_variationIndex}
-                    onErrorImageURL={require('../public/No_Image_Available.jpeg')}
-                    showFullscreenButton={false}
-                  />
-                  <div className="addtowish"><FontAwesomeIcon icon={((wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
-                    onClick={() => {
-                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || (wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
-                    }} /></div>
-                </div> */}
 
                 <div className="product-gallery">
                   <div className="product-gallery-preview order-sm-2">
@@ -329,21 +314,11 @@ class ProductDetail extends React.Component {
                       {this.renderItemGallery()}
                       <div className="image-zoom-pane" />
                     </div>
-                    {/* <div className="product-gallery-preview-item active" id="second"><img className="image-zoom" src="img/shop/single/gallery/02.jpg" data-zoom="img/shop/single/gallery/02.jpg" alt="Product image" />
-            <div className="image-zoom-pane" />
-          </div>
-          <div className="product-gallery-preview-item" id="third"><img className="image-zoom" src="img/shop/single/gallery/03.jpg" data-zoom="img/shop/single/gallery/03.jpg" alt="Product image" />
-            <div className="image-zoom-pane" />
-          </div>
-          <div className="product-gallery-preview-item" id="fourth"><img className="image-zoom" src="img/shop/single/gallery/04.jpg" data-zoom="img/shop/single/gallery/04.jpg" alt="Product image" />
-            <div className="image-zoom-pane" />
-          </div> */}
                   </div>
                   <div className="product-gallery-thumblist order-sm-1">
-                    <a className="product-gallery-thumblist-item" href="#first"><img src={require('../public/saree-2-300x300.jpeg')} alt="Product thumb" /></a>
-                    <a className="product-gallery-thumblist-item active" href="#second"><img src={require('../public/saree-2-300x300.jpeg')} alt="Product thumb" /></a>
-                    <a className="product-gallery-thumblist-item" href="#third"><img src={require('../public/saree-2-300x300.jpeg')} alt="Product thumb" /></a>
-                    <a className="product-gallery-thumblist-item" href="#fourth"><img src={require('../public/saree-2-300x300.jpeg')} alt="Product thumb" /></a>
+                    {productDetailData?.images?.length > 1 ? productDetailData?.images?.map((item, index) =>
+                      (<a key={index} className="product-gallery-thumblist-item"><img src={item.image_url} alt="Product thumb" /></a>))
+                      : <></>}
                   </div>
                 </div>
 
