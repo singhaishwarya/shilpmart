@@ -17,14 +17,14 @@ class Wishlist extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.userData?.token ? this.getWishlistApi() : this.getWishlist();
   }
   getWishlist = () => {
     this.props.wishlist.map((item, index) => {
       ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
         this.setState(prevState => ({
-          wishlist: [...prevState.wishlist, { product: result1.data[0], variation_index: item.variation_index }]
+          wishlist: [...prevState.wishlist, { product: result1.data[0], variation_index: item.variation_index || 0 }]
         }))
       })
     });
@@ -33,7 +33,7 @@ class Wishlist extends Component {
   deleteWishlist = (product, index) => {
     if (this.props.userData?.token) { (this.deleteWishlistApi(product, index)) }
     else {
-      this.props.deleteWishlist({ product: (product.product_id || product?.product.id), variation_index: product.variation_index });
+      this.props.deleteWishlist({ product: (product.product_id || product?.product.id), variation_index: product.variation_index || 0 });
       this.setState((prevState) => ({
         wishlist: prevState.wishlist.filter((_, i) => i !== index)
       }));
@@ -42,9 +42,9 @@ class Wishlist extends Component {
 
   deleteWishlistApi = (item, index) => {
     console.log("dem===", item, this.state.wishlist)
-    WishlistService.addDelete({ wishlist_id: item.id, product_id: [item.product_id], variation_index: [item.variation_index] }).then((result) => {
+    WishlistService.addDelete({ wishlist_id: item.id, product_id: [item.product_id], variation_index: [item.variation_index || 0] }).then((result) => {
       if (result.success) {
-        this.props.deleteWishlist({ product: item.product_id, variation_index: item.variation_index })
+        this.props.deleteWishlist({ product: item.product_id, variation_index: item.variation_index || 0 })
         this.setState((prevState) => ({
           wishlist: prevState.wishlist.filter((_, i) => i !== index)
         }));
@@ -55,7 +55,7 @@ class Wishlist extends Component {
   getWishlistApi = () => {
 
     WishlistService.list().then((result) => {
-      result && result.map((item) => this.props.addToWishlist({ product: item.product_id, variation_index: item.variation_index })
+      result && result.map((item) => this.props.addToWishlist({ product: item.product_id, variation_index: item.variation_index || 0 })
       )
 
       this.setState({ wishlist: result });
@@ -93,7 +93,7 @@ class Wishlist extends Component {
                     <span className="remove-item" onClick={() => {
                       this.deleteWishlist(item, index)
                     }}>Remove</span>
-                    <ProductTile data={finItem} variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} limitAlert={this.limitAlert} />
+                    <ProductTile data={finItem} variation_index={item.variation_index || 0} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} limitAlert={this.limitAlert} />
                   </div>
                 )
               })}

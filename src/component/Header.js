@@ -119,16 +119,6 @@ class Header extends Component {
     }
   }
 
-  getCategoryTitles = (id) => {
-    // try {
-    //   CategoryService.fetchAllCategory({ parent_id: id }).then((result) => {
-    //     return result;
-    //   })
-    // } catch (err) {
-    //   console.log(err);
-    // }
-  }
-
   setIsMenuShown = (status) => {
     this.setState({ isMenuShown: status })
   }
@@ -257,6 +247,8 @@ class Header extends Component {
         this.props.emptyCart();
         this.props.emptyWishlist();
         this.props.emptyCompare();
+        localStorage.clear();
+
       })
       .catch((err) => {
         console.log("errrr", err)

@@ -3,8 +3,6 @@ export default class AboutUs extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-    };
     window.scrollTo(0, 0);
   }
 

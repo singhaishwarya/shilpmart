@@ -12,6 +12,7 @@ export default class OrderDetail extends React.Component {
 
   constructor(props) {
     super(props);
+    window.scrollTo(0, 0);
     this.error = false;
     this.handleChange = this.handleChange.bind(this);
     this.requiredBinded = this.required.bind(this);

@@ -25,6 +25,7 @@ class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeOtp = this.onChangeOtp.bind(this);
 
     this.state = {
       username: "",
@@ -103,7 +104,7 @@ class Login extends Component {
         <Form ref={(c) => { this.form = c; }}>
           {(loginType === 'otp' && username) ? <div className="form-group">
             <label htmlFor="otp"><FontAwesomeIcon icon={faEnvelope} /> OTP</label>
-            <Input type="text" className="form-control" name="otp" value={otp}
+            <Input type="text" className="form-control" name="username" value={otp}
               onChange={this.onChangeOtp}
               validations={[required]}
             />

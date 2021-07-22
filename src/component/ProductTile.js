@@ -119,18 +119,25 @@ class ProductTile extends React.Component {
   render() {
 
     const { data, userData, wishlist, cart, gridLayout, variation_index } = this.props
-    // console.log("demo===", variation_index, data);
-    // (variation_index !== undefined && variation_index != 0) ? console.log("demo variation") : console.log("no variation")
     const { currentLocation } = this.state
     const cellSize = {};
     if (gridLayout === '2X2') { cellSize.height = '200px' }
     else { cellSize.height = (gridLayout === '3X3' ? '297px' : '212px') }
+    let _variationIndex = 0;
+    data.images.forEach((item, index) => {
+
+      if (item.variation_index === variation_index) {
+        console.log("image", variation_index, "====", item.variation_index, '====', item.variation_index == variation_index);
+        _variationIndex = index;
+      }
+    })
+
     return (
 
       <div className="product-wrapper" key={data.id} >
 
         <div className="prodcut-img" onClick={() => this.productDetail(data)} style={cellSize}>
-          <img src={(variation_index !== undefined && variation_index !== 0) ? data?.images[variation_index + 1]?.image_url : data?.images[0]?.image_url}
+          <img src={data?.images[_variationIndex]?.image_url}
             className="img-fluid"
             onClick={() => this.productDetail(data)}
             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
@@ -169,7 +176,8 @@ class ProductTile extends React.Component {
           {data.content ? data.content.title : '__'}
         </h5>
         <span className="product-price">
-          <strike><span>₹</span> 1000</strike> <span>₹</span> {variation_index !== undefined ? data?.prices[variation_index]?.price : data?.price}
+          {/* <strike><span>₹</span> 1000</strike> */}
+          <span>₹</span> {data?.prices[_variationIndex]?.price || data?.price}
         </span>
       </div >);
   }

@@ -23,7 +23,7 @@ class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      combination: [], finCombination: [], currentVariationIndex: 0,
+      combination: [], finCombination: [], currentVariationIndex: 0, variationSelected: false,
       isActiveTab: 0, productCatId: 0,
       filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
@@ -75,12 +75,20 @@ class ProductDetail extends React.Component {
   }
 
   addToWishlist = (product) => {
+    if (this.selectValidVariation()) return
+    else {
+      if (Object.keys(this.props.userData).length > 0) { this.addToWishlistApi(product) } else {
+        this.props.addToWishlist({ product: product?.id, variation_index: this.state.currentVariationIndex });
+        this.successAlert(product, 'wishlist');
+      }
 
-    if (Object.keys(this.props.userData).length > 0) { this.addToWishlistApi(product) } else {
-      this.props.addToWishlist({ product: product?.id, variation_index: this.state.currentVariationIndex });
-      this.successAlert(product, 'wishlist');
     }
+  }
 
+  selectValidVariation = () => {
+    if (!this.state.variationSelected && this.state.productDetailData.variation_available) {
+      return ToastService.error("Please select variation.");
+    }
   }
 
   addToWishlistApi = (product) => {
@@ -169,6 +177,7 @@ class ProductDetail extends React.Component {
   }
 
   addToCart = (product) => {
+    this.selectValidVariation()
     if (this.props.cart.find(({ cartProduct, variation_index }) => (cartProduct === product.id && variation_index === this.state.currentVariationIndex)) !== undefined) {
       this.errorAlert(product, 'cart');
     }
@@ -268,7 +277,8 @@ class ProductDetail extends React.Component {
       if (JSON.stringify(item.variation_index) === JSON.stringify(combi)) {
         this.setState({
           currentVariationIndex: index,
-          productDetailDataPrice: this.state.productDetailData?.prices[index].price
+          productDetailDataPrice: this.state.productDetailData?.prices[index].price,
+          variationSelected: true
         });
 
       }
@@ -279,13 +289,19 @@ class ProductDetail extends React.Component {
     return ToastService.error("Compare Cart is full(limit :5)")
   }
   renderItemGallery = (item) => {
-    const imgProps = { width: 400, height: 250, zoomWidth: 500, img: item.original };
+    const imgProps = { width: 500, height: 350, zoomWidth: 500, img: item.original };
     return <ReactImageZoom {...imgProps}
     />
   }
   render() {
     const { productDetailData, productQuantity, showModal, notFountImage, shareUrl, title, productDetailDataImages, variations, productDetailDataPrice, currentVariationIndex, currentvalue2, currentvalue1, productCatId } = this.state;
     const { wishlist, userData } = this.props;
+    let _variationIndex = 0;
+    productDetailData.images?.length > 0 && productDetailData.images.map((item, index) => {
+      if (item.variation_index === currentVariationIndex) _variationIndex = index;
+    }
+
+    )
     return (
       <>
         <section id="maincontent">
@@ -294,17 +310,16 @@ class ProductDetail extends React.Component {
               <div className="col-lg-6 col-md-6 col-12 mb-2">
                 <div className="product-img-wrapper">
                   <ImageGallery
-                    ref={this._child}
                     items={productDetailData?.images?.length > 0 ? productDetailDataImages : notFountImage}
                     thumbnailPosition='left'
                     showThumbnails={productDetailData?.images?.length > 0 ? true : false}
-                    startIndex={currentVariationIndex}
+                    startIndex={_variationIndex}
                     onErrorImageURL={require('../public/No_Image_Available.jpeg')}
                     showFullscreenButton={false}
                   />
-                  <div className="addtowish"><FontAwesomeIcon icon={((wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
+                  <div className="addtowish"><FontAwesomeIcon icon={((wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faHeart : farHeart}
                     onClick={() => {
-                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || (wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
+                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || (wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
                     }} /></div>
                 </div>
               </div>
@@ -323,9 +338,9 @@ class ProductDetail extends React.Component {
                   <h1>{productDetailData?.content?.title}</h1>
                   <p className="product-price">
                     <span>₹</span> {productDetailDataPrice || 0}</p>
-                  <p className="available">Availability: &nbsp;<span className="text-success">In Stock</span>
-                    {/* <span className="text-danger">Out of Stock</span> */}
-                  </p>
+                  {/* <p className="available">Availability: &nbsp;<span className="text-success">In Stock</span> */}
+                  {/* <span className="text-danger">Out of Stock</span> */}
+                  {/* </p> */}
                   {/* <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div> */}
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
@@ -336,7 +351,9 @@ class ProductDetail extends React.Component {
                       </div>
                     </div>
 
-                    <button type="submit" className="cart-btn buy-btn" onClick={() => this.addToCheckout(productDetailData)}>Buy Now</button>
+                    <button type="submit" className="cart-btn buy-btn" onClick={() => {
+                      this.selectValidVariation() || this.addToCheckout(productDetailData)
+                    }}>Buy Now</button>
                     <button type="submit" className="cart-btn" onClick={() => this.addToCart(productDetailData)} >Add to cart</button>
                   </div>
                   {variations?.map((itemKey, index) => (
@@ -365,13 +382,17 @@ class ProductDetail extends React.Component {
                   ))}
 
                   <div className="action-links">
-                    <span onClick={() => (this.props.compare.length < 5 ? (this.props.addToCompare({ product: productDetailData?.id, variation_index: currentVariationIndex }), this.successAlert(productDetailData, 'compare')) : this.limitAlert())}>
+                    <span onClick={() => (this.props.compare.length < 5 ? (this.props.addToCompare({ product: productDetailData?.id, variation_index: _variationIndex }), this.successAlert(productDetailData, 'compare')) : this.limitAlert())}>
                       <FontAwesomeIcon icon={faRandom} /> Compare</span>
                     <span onClick={() => {
-                      ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || (wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
+                      // (
+                      // (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) ||
+                      (wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
                     }}>
-                      <FontAwesomeIcon icon={((wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faCheck : farHeart}
-                      /> {((wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? "Added to Wishlist" : "Add to Wishlist"}
+                      <FontAwesomeIcon icon={((wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined) || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)) ? faCheck : farHeart}
+                      /> {(wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === _variationIndex)) !== undefined
+                        // || (Object.keys(userData).length > 0 && productDetailData?.wishlist?.id)
+                      ) ? "Added to Wishlist" : "Add to Wishlist"}
                     </span>
                   </div>
 
@@ -465,7 +486,7 @@ class ProductDetail extends React.Component {
 
                   <div className="clearfix"></div>
                   {/* <span className="sku">SKU: <span>-</span></span> */}
-                  <span className="sku">Categories: <span>{productDetailData?.category?.cate_title}</span></span>
+                  {/* <span className="sku">Categories: <span>{productDetailData?.category?.cate_title}</span></span> */}
                   {/* <span className="sku">Tags: <span>{productDetailData?.content?.product_tags}</span></span> */}
                 </div>
                 <div className="product-description-wrapper pb-5">
