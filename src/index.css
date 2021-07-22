@@ -1102,12 +1102,12 @@ overflow: hidden;
 }
 .categorie-img-title > h3 {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   color: #fff;
   text-transform: uppercase;
 }
 .cat_icon {
-  background-color: rgba(13, 51, 86, 1);
+  background-color: #e87f13;
   color: #fff;
   width: 55px;
   height: 55px;
@@ -1163,7 +1163,7 @@ background-color: #e87f13;
   color: #fff;
   text-decoration: none;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 /* tab-css */
@@ -2432,9 +2432,8 @@ a:focus {
 
 .product-img-wrapper {
   position: sticky;
-  top: 95px;
-  overflow: hidden;
-  z-index: 0;
+  top: 95px;  
+  z-index: 5;
 }
 .product-img-wrapper h6 {
   font-size: 14px;
@@ -2504,6 +2503,10 @@ a:focus {
   height: 100%;
 }
 
+.image-gallery-slides{
+  overflow: unset !important;
+}
+
 .addtowish {
   position: absolute;
   top: 15px;
@@ -2522,6 +2525,62 @@ a:focus {
   background-color: rgba(255, 255, 255, 1);
   cursor: pointer;
 }
+
+/* product-detial-css-version2 */
+.product-gallery {
+  display: flex;
+}
+.product-gallery-preview {
+  position: relative;
+  width: 100%;
+  margin-top: .625rem;
+}
+.product-gallery-thumblist {
+  margin-left: -.5rem;
+}
+.product-gallery-preview-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+  z-index: 1;
+}
+.product-gallery-preview-item.active {
+  position: relative;
+  opacity: 1;
+  z-index: 1;
+}
+.product-gallery-preview-item>img {
+  display: block;
+  width: 100%;
+}
+.product-gallery-thumblist {
+  margin-left: -.5rem;
+}
+.product-gallery-thumblist-item {
+  display: block;
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  margin: .625rem;
+  transition: border-color 0.2s ease-in-out;
+  border: 1px solid #e3e9ef;
+  border-radius: .3125rem;
+  text-decoration: none !important;
+  overflow: hidden;
+}
+.product-gallery-thumblist-item.active {
+  border-color: #fe696a;
+}
+.product-gallery-thumblist-item:hover {
+  border-color: #c9d5e0;
+}
+/* product-detial-css-version2 end */
+
+
 .product-summary-wrapper {
   position: relative;
   border-bottom: 1px solid #ececec;
@@ -2639,7 +2698,7 @@ a:focus {
 
 .color-active {
   border: 2px solid #fff;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
 }
 
 .sizes {

@@ -70,11 +70,11 @@ class ShopByType extends Component {
     },
     {
       icon: require('../public/icons/eshilp-travel-ass.svg'),
-      backgroundImage: `url( require('../public/clothing accessories.jpeg'))`
+      backgroundImage: `url( require('../public/clothing_accessories.jpg'))`
     },
     {
       icon: require('../public/icons/eshilp-office-supplies.svg'),
-      backgroundImage: `url( require('../public/office supplies.jpeg'))`
+      backgroundImage: `url( require('../public/officeSupplies.jpeg'))`
     }
 
     ];

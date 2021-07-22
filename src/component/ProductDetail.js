@@ -279,7 +279,7 @@ class ProductDetail extends React.Component {
     return ToastService.error("Compare Cart is full(limit :5)")
   }
   renderItemGallery = (item) => {
-    const imgProps = { width: 400, height: 250, zoomWidth: 500, img: item.original };
+    const imgProps = { width: 534, height:534, zoomWidth: 550,  img: item.original };
     return <ReactImageZoom {...imgProps}
     />
   }
@@ -292,7 +292,7 @@ class ProductDetail extends React.Component {
           <div className="container-fluid">
             <div className="row py-lg-5 py-2 ">
               <div className="col-lg-6 col-md-6 col-12 mb-2">
-                <div className="product-img-wrapper">
+                {/* <div className="product-img-wrapper">
                   <ImageGallery
                     ref={this._child}
                     items={productDetailData?.images?.length > 0 ? productDetailDataImages : notFountImage}
@@ -306,7 +306,33 @@ class ProductDetail extends React.Component {
                     onClick={() => {
                       ((Object.keys(userData).length > 0 && productDetailData?.wishlist?.id) || (wishlist.find(({ product, variation_index }) => (product === productDetailData?.id && variation_index === currentVariationIndex)) !== undefined)) ? this.deleteWishlist(productDetailData) : this.addToWishlist(productDetailData)
                     }} /></div>
-                </div>
+                </div> */}
+
+<div className="product-gallery">
+        <div className="product-gallery-preview order-sm-2">
+          <div className="product-gallery-preview-item active" id="first">
+          <img src={require('../public/saree-2-300x300.jpeg')} alt="Product thumb" />
+            <div className="image-zoom-pane" />
+          </div>
+          {/* <div className="product-gallery-preview-item active" id="second"><img className="image-zoom" src="img/shop/single/gallery/02.jpg" data-zoom="img/shop/single/gallery/02.jpg" alt="Product image" />
+            <div className="image-zoom-pane" />
+          </div>
+          <div className="product-gallery-preview-item" id="third"><img className="image-zoom" src="img/shop/single/gallery/03.jpg" data-zoom="img/shop/single/gallery/03.jpg" alt="Product image" />
+            <div className="image-zoom-pane" />
+          </div>
+          <div className="product-gallery-preview-item" id="fourth"><img className="image-zoom" src="img/shop/single/gallery/04.jpg" data-zoom="img/shop/single/gallery/04.jpg" alt="Product image" />
+            <div className="image-zoom-pane" />
+          </div> */}
+        </div>
+        <div className="product-gallery-thumblist order-sm-1">
+          <a className="product-gallery-thumblist-item" href="#first"><img src={require('../public/saree-2-300x300.jpeg')} alt="Product thumb" /></a>
+          <a className="product-gallery-thumblist-item active" href="#second"><img src={require('../public/saree-2-300x300.jpeg')} alt="Product thumb" /></a>
+          <a className="product-gallery-thumblist-item" href="#third"><img src={require('../public/saree-2-300x300.jpeg')} alt="Product thumb" /></a>
+          <a className="product-gallery-thumblist-item" href="#fourth"><img src={require('../public/saree-2-300x300.jpeg')} alt="Product thumb" /></a>
+          </div>
+      </div>
+
+
               </div>
               <div className="col-lg-6 col-md-6 col-12">
                 <div className="product-summary-wrapper">
