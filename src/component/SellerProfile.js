@@ -107,7 +107,16 @@ export default class SellerProfile extends React.Component {
           <div className="container page-title-overlap mb-5 bg-light shadow">
 
             <div className="row">
-              <div className="mb-3">
+             
+              <div className="col-lg-3 col-md-3 col-12">
+                <div className="sidebar">
+                  <h4>Search</h4>
+                  <div className="mb-3">
+                    <input type="search" className="search-field" onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search products…" name="s" />
+                  </div>
+
+                  <div className="mb-3">
+                <h4>categories</h4>
                 <div className="filter-content collapse show" id="collapse_aside1" >
                   <div className="categories-list">
                     <MultilevelMenu
@@ -119,13 +128,8 @@ export default class SellerProfile extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-3 col-md-3 col-12">
-                <div className="sidebar">
-                  <h4>Search</h4>
-                  <div className="mb-3">
-                    <input type="search" className="search-field" onChange={this.onTextChange} value={searchQuery} onClick={this.onTextChange} placeholder="Search products…" name="s" />
-                  </div>
                 </div>
+               
               </div>
               <div className="col p-lg-5 p-2">
                 <ul className="nav nav-tabs mb-4" role="tablist">
