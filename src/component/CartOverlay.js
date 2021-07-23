@@ -65,6 +65,7 @@ class CartOverlay extends Component {
   render() {
     const { cartData, totalCost } = this.state;
     let finItem;
+    let _variationIndex = 0;
     return (
       <div className="cart-side">
         <div className="cart-side-head">
@@ -79,6 +80,11 @@ class CartOverlay extends Component {
                 <ul>
                   {cartData?.map((item, index) => (
                     finItem = item?.product_details || item.product,
+                    finItem.images.forEach((imageItem, imageIndex) => {
+                      if (imageItem.variation_index === item.variation_index) {
+                        _variationIndex = imageIndex;
+                      }
+                    }),
                     <li key={index}>
                       <span><FontAwesomeIcon icon={faTimes} onClick={() => this.deleteCart(item)} /></span>
                       <div className="cart_wrap">
@@ -89,16 +95,14 @@ class CartOverlay extends Component {
                         }}
                           onClick={(e) => (this.props.dismissModal('cart'))
                           } >
-                          <img src={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.image_url) || "false"}
+                          <img src={(finItem?.images[_variationIndex]?.image_url) || "false"}
                             className="img-fluid"
-                            // onClick={() => this.productDetail(item.product_details.id)}
-                            alt={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.caption) || ""}
+                            alt={(finItem?.images[_variationIndex]?.caption) || ""}
                             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                           />
                         </Link>
                         <div className="cart-info">
                           <span className="product-title">{finItem?.content?.title}</span>
-                          {/* <div className="pro-store"><span>Store: <span>{finItem?.store_name}</span></span></div> */}
                           <span className="qty">{item?.quantity || 1} x
                             <span>₹ {finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price}</span>
                           </span>
