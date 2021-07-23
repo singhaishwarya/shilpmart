@@ -55,12 +55,17 @@ class CheckoutComp extends React.Component {
 
   getAddress = () => {
     AddressService.list().then((result) => {
-      if (!result) return
-      this.setState({
-        selectedShippingAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0],
-        selectedBillingAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0], addressList: result.data, isLoaded: true
-      });
-
+      if (result.data.length > 0) {
+        this.setState({
+          selectedShippingAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0],
+          selectedBillingAddress: result.data.find(({ is_default }) => is_default === 1) || result.data[0], addressList: result.data, isLoaded: true
+        });
+      }
+      else {
+        this.props.history.push({
+          pathname: '/my-account/add-address'
+        });
+      }
     }).catch((err) => {
       this.setState({ isLoaded: true });
       console.log(err);
