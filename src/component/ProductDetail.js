@@ -287,12 +287,14 @@ class ProductDetail extends React.Component {
   }
   renderItemGallery = (imgUrl) => {
     if (imgUrl) {
-      this.setState({ _variationIndex: 0, imgProps: { width: 534, height: 534, zoomWidth: 200, img: imgUrl, zoomPosition: 'right' } });
+      this.setState({ _variationIndex: 0, imgProps: { width: 534, zoomWidth:
+        300, img: imgUrl, zoomPosition: 'right' } });
     }
     else {
       this.state.productDetailData.images.map((item, index) => {
         if (item.variation_index === this.state.currentVariationIndex) {
-          this.setState({ _variationIndex: index, imgProps: { width: 534, height: 534, zoomWidth: 200, img: item.image_url, zoomPosition: 'right' } });
+          this.setState({ _variationIndex: index, imgProps: { width: 534, zoomWidth:
+            200, img: item.image_url, zoomPosition: 'right' } });
         }
       })
     }
@@ -325,7 +327,7 @@ class ProductDetail extends React.Component {
                   </div>
                   <div className="product-gallery-thumblist order-sm-1">
                     {productDetailData?.images?.length > 1 ? productDetailData?.images?.map((item, index) =>
-                    (<a key={index} className="product-gallery-thumblist-item" ><img src={item.image_url}
+                    (<a key={index} className="product-gallery-thumblist-item" ><img className="img-fluid" src={item.image_url}
                       onClick={() => this.renderItemGallery(item.image_url)}
                       alt="Product thumb" /></a>))
                       : <></>}

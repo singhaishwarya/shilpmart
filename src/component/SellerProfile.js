@@ -66,8 +66,7 @@ export default class SellerProfile extends React.Component {
     return (
       <>
         <div className="seller-cover-wrapper">
-          <div className="">
-            <img src={vendorData?.vendor?.banner} className="img-fluid" alt="logo" />
+          <div className="cover-area" style={{ backgroundImage: vendorData?.vendor?.banner }}>
             <div className="container d-flex justify-content-between position-relative">
               <div className="seller-info">
                 <div className="seller-brand">
