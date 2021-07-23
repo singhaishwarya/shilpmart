@@ -581,7 +581,7 @@ span.result-addtocart {
   color: #e87f13;
 }
 .ReactModal__Overlay--after-open {
-  z-index: 2;
+  z-index: 5;
   background-color: rgba(0, 0, 0, 0.75) !important;
 }
 /* .ReactModal__Content--after-open{
@@ -1201,7 +1201,7 @@ background-color: #e87f13;
 }
 
 .product-wrapper .prodcut-img {
-  height: 212px;
+  height: auto;
   overflow: hidden;
   background-color: #eee;
 }
@@ -2572,6 +2572,7 @@ a:focus {
   text-decoration: none !important;
   overflow: hidden;
 }
+
 .product-gallery-thumblist-item.active {
   border-color: #fe696a;
 }
@@ -2824,8 +2825,16 @@ a:focus {
 }
 .seller-logo {
   width: 45px;
-  margin: 5px;
-  float: left;
+margin: 5px;
+float: left;
+overflow: hidden;
+height: 45px;
+border-radius: 50%;
+box-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+}
+
+.seller-logo img{
+  width: 100%;
 }
 .seller-contact {
   width: 90%;
@@ -3195,8 +3204,8 @@ a:focus {
 
 .cover-area {
   position: relative;
-  background: url("https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/wc-multivendor-marketplace/assets/images/default_banner.jpg")
-    no-repeat bottom center;
+  /* background: url("https://app.digitalindiacorporation.in/v1/digi/wp-content/plugins/wc-multivendor-marketplace/assets/images/default_banner.jpg")
+    no-repeat bottom center; */
   background-color: #0b4981;
   min-height: 250px;
   overflow: hidden;
@@ -3238,7 +3247,10 @@ a:focus {
   border-radius: 50%;
   display: flex;
   padding: 6px;
+  overflow: hidden;
 }
+
+.s-logo img{width: 100%;}
 .seller-ratings p {
   color: rgba(255, 255, 255, 0.7);
   font-size: 12px;

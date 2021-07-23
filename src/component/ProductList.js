@@ -219,7 +219,7 @@ export default class ProductList extends React.Component {
                           </div>
 
                         </div>
-                        <span>
+                        <span className="ml-2 border-radius">
                           <button onClick={() => this.onSliderPriceChange(priceRange)} className='price-range-search'
                             id='price-range-submit'>Filter</button>
                         </span>

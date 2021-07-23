@@ -68,7 +68,7 @@ export default class SellerProfile extends React.Component {
     return (
       <>
         <div className="seller-cover-wrapper">
-          <div className="cover-area">
+          <div className="cover-area" style={{backgroundImage:'url( require("../public/officeSupplies.jpeg"))'}}>
             <div className="container d-flex justify-content-between position-relative">
               <div className="seller-info">
                 <div className="seller-brand">
