@@ -110,8 +110,7 @@ class Cart extends Component {
   render() {
     const { cartProduct, totalCost, showModal } = this.state;
     const { cart } = this.props;
-    let finItem;
-
+    let finItem, _variationIndex = 0;
     return (
       <div className="container-fluid">
         <Modal
@@ -143,13 +142,18 @@ class Cart extends Component {
                   <tbody>
                     {cartProduct?.map((item, index) => (
                       finItem = item.product_details || item.product,
+                      finItem.images.forEach((imageItem, imageIndex) => {
+                        if (imageItem.variation_index === item.variation_index) {
+                          _variationIndex = imageIndex;
+                        }
+                      }),
                       <tr key={index}>
                         <td className="product-remove"><span onClick={() => this.deleteCart(item, index)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
                         <td className="product-thumbnail">
-                          <img src={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.image_url) || "false"}
+                          <img src={(finItem?.images[_variationIndex]?.image_url) || "false"}
                             className="img-fluid"
                             onClick={() => this.productDetail(finItem)}
-                            alt={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.caption) || ""}
+                            alt={(finItem?.images[_variationIndex]?.caption) || ""}
                             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                           />
                         </td>

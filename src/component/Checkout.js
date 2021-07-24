@@ -272,7 +272,7 @@ class CheckoutComp extends React.Component {
 
   render() {
     const { checkOutData, totalCartCost, selectedShippingAddress, selectedBillingAddress, showModal, addressList, paymentType, overlayType, paytmConfig, isCheckoutClick, isLoaded, isBillingAddressSame, addressType, addeditAddress, sectionToggle } = this.state;
-    let finItem;
+    let finItem, _variationIndex = 0;
 
     return (
       <section>
@@ -453,11 +453,16 @@ class CheckoutComp extends React.Component {
 
                             {checkOutData.map((item, index) => (
                               finItem = item?.product_details || item?.product || item,
-
+                              finItem.images.forEach((imageItem, imageIndex) => {
+                                if (imageItem.variation_index === item.variation_index) {
+                                  _variationIndex = imageIndex;
+                                }
+                              }),
                               <div className="orderSummaryWrapper" key={index}>
                                 <div className="row">
                                   <div className="col-sm-9 col-12"><div className="orderSummary">
-                                    <div className="orderImg"><img src={(finItem?.images?.length > 0 && finItem?.images[item.variation_index]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
+                                    <div className="orderImg">
+                                      <img src={(finItem?.images[_variationIndex]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
                                     <div className="orderInfo">
                                       <p className="producthead">{finItem?.content?.title}</p>
                                       <span className="productprice"><span>₹</span> {finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
@@ -467,7 +472,7 @@ class CheckoutComp extends React.Component {
                                     <div className="product-qty">
                                       <div className="input-group">
                                         <input type="button" className="quantity-left-minus" value="-" onClick={() => this.changeQuantity(item, item?.quantity - 1, 'dec')} />
-                                        <input type="number" value={item?.quantity || 1} />
+                                        <input type="number" value={item.quantity} onChange={(e) => this.changeQuantity(item, e.target.value)} />
                                         <input type="button" className="quantity-right-plus" value="+" onClick={() => this.changeQuantity(item, item?.quantity + 1, 'inc')} />
                                       </div>
                                     </div>
@@ -506,18 +511,6 @@ class CheckoutComp extends React.Component {
 
                       </div>
                     </div>}
-                {/* <div className="card mb-3">
-                  <div className="card-body">
-                    <div className="checkoutSteps">
-                      <div className="checkoutSrno">3</div>
-                      <div className="checkoutinfo">
-                        <span>Payment Options <FontAwesomeIcon icon={faCheck} /></span>
-                      </div>
-                      <button>Change</button>
-                    </div>
-                  </div>
-                </div> */}
-
                 {checkOutData.length > 0 && <div className="card mb-3">
                   <div className="changeHead">
                     <h3>
