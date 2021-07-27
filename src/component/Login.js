@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import Button from "react-validation/build/button";
 import AuthService from '../services/AuthService';
 import * as authAction from '../actions/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

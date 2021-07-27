@@ -150,15 +150,16 @@ class Cart extends Component {
                       <tr key={index}>
                         <td className="product-remove"><span onClick={() => this.deleteCart(item, index)}><FontAwesomeIcon icon={faTrashAlt} /></span></td>
                         <td className="product-thumbnail">
-                          <img src={(finItem?.images[_variationIndex]?.image_url) || "false"}
+                          <img src={(finItem?.images[_variationIndex || 0]?.image_url) || "false"}
                             className="img-fluid"
                             onClick={() => this.productDetail(finItem)}
-                            alt={(finItem?.images[_variationIndex]?.caption) || ""}
+                            alt={(finItem?.images[_variationIndex || 0]?.caption) || ""}
                             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                           />
                         </td>
                         <td className="product-name">{finItem?.content?.title}
-                          <p>Store : <span><span>{finItem?.store_name}</span></span></p></td>
+                          {/* <p>Store : <span><span>{finItem?.store_name}</span></span></p> */}
+                        </td>
                         <td className="product-subtotal"><span> <span>₹</span> {(finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price)}
                         </span></td>
                         <td className="product-quantity" data-title="Quantity"><div className="product-qty">
@@ -170,7 +171,7 @@ class Cart extends Component {
                           </div>
                         </div>
                         </td>
-                        <td className="product-price"><span><span>₹</span> {((finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price) * item.quantity)}</span></td>
+                        <td className="product-price"><span><span>₹</span> {((finItem?.prices[item.variation_index || 0]?.price || finItem?.prices[0]?.price) * item.quantity)}</span></td>
                       </tr>
                     ))}
                   </tbody>

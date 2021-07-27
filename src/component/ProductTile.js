@@ -4,7 +4,6 @@ import { faCartPlus, faRandom, faHeart, faCheck } from '@fortawesome/free-solid-
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import WishlistService from '../services/WishlistService';
 import CartService from '../services/CartService';
-import ProductService from '../services/ProductService';
 import { connect } from 'react-redux';
 import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';

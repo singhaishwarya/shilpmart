@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faQuestion, faHeart, faEnvelope, faPhoneAlt, faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faQuestion, faEnvelope, faPhoneAlt, faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import {
   FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
@@ -178,7 +178,7 @@ class ProductDetail extends React.Component {
       this.errorAlert(product, 'cart');
     }
     else {
-      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart({ product: product?.id, variation_index: this.state.currentVariationIndex, quantity: this.state.productQuantity })
+      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) : this.props.addToCart({ product: product?.id, variation_index: this.state.currentVariationIndex || 0, quantity: this.state.productQuantity })
 
     }
   }
@@ -194,7 +194,7 @@ class ProductDetail extends React.Component {
     let cartToSync = [{
       "product_id": product.id,
       "quantity": this.state.productQuantity,
-      "variation_index": this.state.currentVariationIndex
+      "variation_index": this.state.currentVariationIndex || 0
     }];
     try {
       CartService.add({ products: cartToSync }).then((result) => {
@@ -313,7 +313,7 @@ class ProductDetail extends React.Component {
     }
   }
   render() {
-    const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentvalue2, currentvalue1, productCatId, imgProps, _variationIndex, currentVariationIndex } = this.state;
+    const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentvalue2, currentvalue1, productCatId, imgProps, currentVariationIndex } = this.state;
     const { wishlist } = this.props;
     return (
       <>

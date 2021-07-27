@@ -95,7 +95,7 @@ class CartOverlay extends Component {
                         }}
                           onClick={(e) => (this.props.dismissModal('cart'))
                           } >
-                          <img src={(finItem?.images[_variationIndex]?.image_url) || "false"}
+                          <img src={(finItem?.images[_variationIndex || 0]?.image_url) || "false"}
                             className="img-fluid"
                             alt={(finItem?.images[_variationIndex]?.caption) || ""}
                             onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
@@ -104,7 +104,7 @@ class CartOverlay extends Component {
                         <div className="cart-info">
                           <span className="product-title">{finItem?.content?.title}</span>
                           <span className="qty">{item?.quantity || 1} x
-                            <span>₹ {finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price}</span>
+                            <span>₹ {finItem?.prices[item.variation_index || 0]?.price || finItem?.prices[0]?.price}</span>
                           </span>
                         </div>
                       </div>

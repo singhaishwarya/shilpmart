@@ -462,7 +462,7 @@ class CheckoutComp extends React.Component {
                                 <div className="row">
                                   <div className="col-sm-9 col-12"><div className="orderSummary">
                                     <div className="orderImg">
-                                      <img src={(finItem?.images[_variationIndex]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
+                                      <img src={(finItem?.images[_variationIndex || 0]?.image_url) || "false"} className="img-fluid" onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }} /></div>
                                     <div className="orderInfo">
                                       <p className="producthead">{finItem?.content?.title}</p>
                                       <span className="productprice"><span>₹</span> {finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
@@ -580,7 +580,7 @@ class CheckoutComp extends React.Component {
                           <span className="my-0">{finItem?.content?.title}</span>
                           {/* <span>Store: <small className="text-muted">{finItem?.store_name}</small></span> */}
 
-                          <span className="text-muted"><span>₹</span> {finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
+                          <span className="text-muted"><span>₹</span> {finItem?.prices[item.variation_index || 0]?.price || finItem?.prices[0]?.price} X {item?.quantity ? item?.quantity : 1}</span>
 
                         </li>
                       ))}
