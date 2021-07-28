@@ -1,11 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMailBulk, faPhone, faMapMarker, faStar, faStarOfDavid, faStarOfLife, faStarHalf, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
-import { MultilevelMenu } from 'react-multilevel-menu';
+import { faMailBulk, faPhone, faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 import ProductGrid from './ProductGrid';
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps"
 import ProductService from '../services/ProductService';
-import { faFontAwesome } from "@fortawesome/free-brands-svg-icons";
 
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
@@ -64,11 +62,11 @@ export default class SellerProfile extends React.Component {
     });
   };
   render() {
-    const { isActiveTab, categories, config, vendorData, searchQuery } = this.state;
+    const { isActiveTab, vendorData, searchQuery } = this.state;
     return (
       <>
         <div className="seller-cover-wrapper">
-          <div className="cover-area" style={{backgroundImage:'url(require("../public/officeSupplies.jpeg"))'}}>
+          <div className="cover-area" style={{ backgroundImage: vendorData?.vendor?.banner }}>
             <div className="container d-flex justify-content-between position-relative">
               <div className="seller-info">
                 <div className="seller-brand">
@@ -107,7 +105,7 @@ export default class SellerProfile extends React.Component {
           <div className="container page-title-overlap mb-5 bg-light shadow">
 
             <div className="row">
-             
+
               <div className="col-lg-3 col-md-3 col-12">
                 <div className="sidebar">
                   <h4>Search</h4>
@@ -116,29 +114,23 @@ export default class SellerProfile extends React.Component {
                   </div>
 
                   <div className="mb-3">
-                <h4>categories</h4>
-                <div className="filter-content collapse show" id="collapse_aside1" >
-                  <div className="categories-list">
-                    {/* <MultilevelMenu
-                      list={categories}
-                      configuration={config}
-                      selectedListItem={this.selectedItem}
-                      selectedLabel={this.selectedItem}
-                    /> */}
-                    <ul>
-                      <li><a href="#">SAREES</a></li>                      
-                      <li><a href="#">WATER BOTTLES, FLASKS & SURAHIS</a></li>
-                      <li><a href="#">CRAFT ACCESSORIES</a></li>
-                      <li><a href="#">DINING SETS</a></li>
-                      <li><a href="#">KURTAS</a></li>
-                      <li><a href="#">JACKETS & COATS</a></li>
-                      <li><a href="#">SHOES</a></li>
-                    </ul>
+                    <h4>categories</h4>
+                    <div className="filter-content collapse show" id="collapse_aside1" >
+                      <div className="categories-list">
+                        <ul>
+                          <li><a href="#">SAREES</a></li>
+                          <li><a href="#">WATER BOTTLES, FLASKS & SURAHIS</a></li>
+                          <li><a href="#">CRAFT ACCESSORIES</a></li>
+                          <li><a href="#">DINING SETS</a></li>
+                          <li><a href="#">KURTAS</a></li>
+                          <li><a href="#">JACKETS & COATS</a></li>
+                          <li><a href="#">SHOES</a></li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-                </div>
-               
+
               </div>
               <div className="col p-lg-5 p-2">
                 <ul className="nav nav-tabs mb-4" role="tablist">

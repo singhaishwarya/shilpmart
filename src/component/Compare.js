@@ -54,18 +54,16 @@ class Compare extends Component {
       "product_id": product.product.id,
       "quantity": 1,
       "variation_index": product.variation_index
-    }], cartProductids = [];
+    }];
     try {
       CartService.add({ products: cartToSync }).then((result) => {
 
         if (result?.success) {
           if (typeof result.data !== 'string') {
             result.data.length && result.data.map((item) => (
-              cartProductids?.push(item.product_id)
+              this.props.addToCart({ product: item.product_id, variation_index: item.variation_index, quantity: item.quantity })
+
             ));
-            ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart({ product: item?.id, variation_index: product.variation_index, quantity: 1 }));
-            })
             this.deleteCompare(product, index)
           }
           else {

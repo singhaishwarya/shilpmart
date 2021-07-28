@@ -78,7 +78,6 @@ class ProductDetail extends React.Component {
     else {
       if (Object.keys(this.props.userData).length > 0) { this.addToWishlistApi(product) } else {
         this.props.addToWishlist({ product: product?.id, variation_index: this.state.currentVariationIndex });
-        console.log("demo====", this.props.wishlist, product?.id, this.state.currentVariationIndex)
         this.successAlert(product, 'wishlist');
       }
 
@@ -196,18 +195,16 @@ class ProductDetail extends React.Component {
       "product_id": product.id,
       "quantity": this.state.productQuantity,
       "variation_index": this.state.currentVariationIndex
-    }], cartProductids = [];
+    }];
     try {
       CartService.add({ products: cartToSync }).then((result) => {
 
         if (result?.success) {
           if (typeof result.data !== 'string') {
             result.data.length && result.data.map((item) => (
-              cartProductids?.push(item.product_id)
+              this.props.addToCart({ product: item.product_id, variation_index: item.variation_index, quantity: item.quantity })
             ));
-            ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart({ product: item?.id, variation_index: this.state.currentVariationIndex }));
-            })
+            this.successAlert(product, 'cart')
           }
           else {
             this.errorAlert(product, 'cart');
@@ -287,14 +284,22 @@ class ProductDetail extends React.Component {
   }
   renderItemGallery = (imgUrl) => {
     if (imgUrl) {
-      this.setState({ _variationIndex: 0, imgProps: { width: 534, zoomWidth:
-        300, img: imgUrl, zoomPosition: 'right' } });
+      this.setState({
+        _variationIndex: 0, imgProps: {
+          width: 534, zoomWidth:
+            300, img: imgUrl, zoomPosition: 'right'
+        }
+      });
     }
     else {
       this.state.productDetailData.images.map((item, index) => {
         if (item.variation_index === this.state.currentVariationIndex) {
-          this.setState({ _variationIndex: index, imgProps: { width: 534, zoomWidth:
-            200, img: item.image_url, zoomPosition: 'right' } });
+          this.setState({
+            _variationIndex: index, imgProps: {
+              width: 534, zoomWidth:
+                200, img: item.image_url, zoomPosition: 'right'
+            }
+          });
         }
       })
     }
@@ -310,7 +315,6 @@ class ProductDetail extends React.Component {
   render() {
     const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentvalue2, currentvalue1, productCatId, imgProps, _variationIndex, currentVariationIndex } = this.state;
     const { wishlist } = this.props;
-
     return (
       <>
         <section id="maincontent">

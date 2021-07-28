@@ -155,8 +155,8 @@ class Header extends Component {
   errorAlert = (product, type) => {
     return ToastService.error(product?.content?.title + " is " +
       (type === "cart" ? "already in cart" : "removed from wishlist"));
-
   }
+
   addToCartApi = (product) => {
     let cartToSync = [], cartProductids = [];
     product.map((item) => {

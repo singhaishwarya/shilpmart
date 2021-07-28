@@ -78,7 +78,7 @@ class ProductTile extends React.Component {
       "product_id": product.id,
       "quantity": 1,
       "variation_index": 0
-    }], cartProductids = [];
+    }];
 
     try {
       CartService.add({ products: cartToSync }).then((result) => {
@@ -86,11 +86,8 @@ class ProductTile extends React.Component {
         if (result?.success) {
           if (typeof result.data !== 'string') {
             result.data.length && result.data.map((item) => (
-              cartProductids?.push(item.product_id)
+              this.props.addToCart({ product: item.product_id, variation_index: item.variation_index, quantity: item.quantity })
             ));
-            ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart({ product: item.id, variation_index: 0, quantity: 1 }));
-            })
             this.props.successAlert(product, 'cart');
           }
           else {
@@ -118,7 +115,7 @@ class ProductTile extends React.Component {
 
   render() {
 
-    const { data, userData, wishlist, cart, gridLayout, variation_index } = this.props
+    const { data, userData, wishlist, cart, gridLayout, product_variation_index } = this.props
     const { currentLocation } = this.state
     const cellSize = {};
     if (gridLayout === '2X2') { cellSize.height = '200px' }
@@ -126,10 +123,10 @@ class ProductTile extends React.Component {
     let _variationIndex = 0;
     data.images.forEach((item, index) => {
 
-      if (item.variation_index === variation_index) {
+      if (item.variation_index === product_variation_index) {
         _variationIndex = index;
       }
-    })
+    });
     return (
 
       <div className="product-wrapper" key={data.id} >
@@ -146,9 +143,9 @@ class ProductTile extends React.Component {
           <div className="shopBtn">
             <div className="shop-btn"><span>
               <FontAwesomeIcon
-                icon={(cart.find(({ product, variation_index }) => (product === data.id && variation_index === variation_index)) !== undefined) ? faCheck : faCartPlus}
+                icon={(cart.find(({ product, variation_index }) => (product === data.id && variation_index === product_variation_index)) !== undefined) ? faCheck : faCartPlus}
                 onClick={
-                  () => (cart.find(({ product, variation_index }) => (product === data.id && variation_index === variation_index)) !== undefined) ? this.props.errorAlert(data, 'cart') : (data.variation_available ? this.productDetail(data) : this.addToCart(data))
+                  () => (cart.find(({ product, variation_index }) => (product === data.id && variation_index === product_variation_index)) !== undefined) ? this.props.errorAlert(data, 'cart') : (data.variation_available ? this.productDetail(data) : this.addToCart(data))
                 }
               /></span></div>
             <div className="shop-btn"><span>
@@ -177,7 +174,7 @@ class ProductTile extends React.Component {
         </h5>
         <span className="product-price">
           {/* <strike><span>₹</span> 1000</strike> */}
-          <span>₹</span> {data?.prices[variation_index]?.price || data?.price}
+          <span>₹</span> {data?.prices[product_variation_index]?.price || data?.price}
         </span>
       </div >);
   }

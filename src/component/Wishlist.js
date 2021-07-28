@@ -92,7 +92,7 @@ class Wishlist extends Component {
                     <span className="remove-item" onClick={() => {
                       this.deleteWishlist(item, index)
                     }}>Remove</span>
-                    <ProductTile data={finItem} variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} limitAlert={this.limitAlert} />
+                    <ProductTile data={finItem} product_variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} limitAlert={this.limitAlert} />
                   </div>
                 )
               })}
