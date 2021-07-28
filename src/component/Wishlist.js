@@ -24,7 +24,7 @@ class Wishlist extends Component {
     this.props.wishlist.map((item, index) => {
       ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
         this.setState(prevState => ({
-          wishlist: [...prevState.wishlist, { product: result1.data[0], variation_index: item.variation_index || 0 }]
+          wishlist: [...prevState.wishlist, { product: result1.data[0], variation_index: item.variation_index || 0, variations: item.variations }]
         }))
       })
     });
@@ -92,7 +92,7 @@ class Wishlist extends Component {
                     <span className="remove-item" onClick={() => {
                       this.deleteWishlist(item, index)
                     }}>Remove</span>
-                    <ProductTile data={finItem} product_variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} limitAlert={this.limitAlert} />
+                    <ProductTile data={finItem} product_variation_index={item.variation_index} {...this.props} successAlert={this.successAlert} errorAlert={this.errorAlert} gridLayout={layoutValue} variations={item.variations} limitAlert={this.limitAlert} />
                   </div>
                 )
               })}

@@ -26,7 +26,7 @@ class ProductDetail extends React.Component {
       isActiveTab: 0, productCatId: 0, _variationIndex: 0,
       filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
-      shareUrl: 'https://app.digitalindiacorporation.in/v1/digi/',
+      shareUrl: window.location.href,
       title: 'eShilpmart',
       productDetailData: [],
       productQuantity: 1, currentvalue2: '', currentvalue1: '',

@@ -103,6 +103,7 @@ class CartOverlay extends Component {
                         </Link>
                         <div className="cart-info">
                           <span className="product-title">{finItem?.content?.title}</span>
+                          {item?.variations?.length > 1 ? <span>( {item?.variations[0]?.variation_id}:{item?.variations[0]?.variation_value} , {item?.variations[1]?.variation_id}:{item?.variations[1]?.variation_value})</span> : ''}
                           <span className="qty">{item?.quantity || 1} x
                             <span>₹ {finItem?.prices[item.variation_index || 0]?.price || finItem?.prices[0]?.price}</span>
                           </span>

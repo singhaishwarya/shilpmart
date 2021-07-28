@@ -114,7 +114,7 @@ class ProductTile extends React.Component {
 
   render() {
 
-    const { data, userData, wishlist, cart, gridLayout, product_variation_index } = this.props
+    const { data, userData, wishlist, cart, gridLayout, product_variation_index, variations } = this.props
     const { currentLocation } = this.state
     const cellSize = {};
     if (gridLayout === '2X2') { cellSize.height = '200px' }
@@ -168,11 +168,9 @@ class ProductTile extends React.Component {
         {data.discount && <div className="prdocut-dis-lable"><span>{data.discount}%</span></div>}
         <h5 className="product-title">
           {data.content ? data.content.title : '__'}
-          {/* <span>{data.variations[variation_index].variation_index[0].variation_id}-{data.variations[variation_index].variation_index[0].variation_value}
-            {data.variations[variation_index]?.variation_index[1].variation_id}-{data.variations[variation_index]?.variation_index[1].variation_value}</span> */}
         </h5>
+        <h5 className="product-title">  {variations?.length > 1 ? <span>{variations[0]?.variation_id}-{variations[0]?.variation_value} {variations[1]?.variation_id}-{variations[1]?.variation_value}</span> : ''}</h5>
         <span className="product-price">
-          {/* <strike><span>₹</span> 1000</strike> */}
           <span>₹</span> {data?.prices[product_variation_index]?.price || data?.price}
         </span>
       </div >);

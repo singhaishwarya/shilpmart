@@ -18,6 +18,7 @@ export default class AddEditAddress extends React.Component {
     this.patternBinded = this.pattern.bind(this);
 
     const savedAddress = props?.history?.location.state?.address || props?.address;
+
     this.state = {
       fields: {
         address_id: savedAddress?.id || '',
@@ -29,9 +30,9 @@ export default class AddEditAddress extends React.Component {
         address1: savedAddress?.address1 || '',
         address2: savedAddress?.address2 || '',
         country: 1,
-        state: savedAddress?.state || '',
-        district: savedAddress?.district || '',
-        sub_district: savedAddress?.sub_district || '',
+        state: savedAddress?.state?.state_id || '',
+        district: savedAddress?.district?.district_id || '',
+        sub_district: savedAddress?.sub_district?.sub_district_id || '',
         type: savedAddress?.type || ''
       },
       statesOptions: [],

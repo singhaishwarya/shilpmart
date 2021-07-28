@@ -174,7 +174,6 @@ class CheckoutComp extends React.Component {
                 },
                 transactionStatus: function (data) {
                   window.Paytm.CheckoutJS.close();
-                  console.log("demo request header", document, window)
                   _this.orderValidate(data, paymentType);
                 }
               },
@@ -297,28 +296,24 @@ class CheckoutComp extends React.Component {
                 {addressList?.map((item, index) => (
                   <div key={index} className="col-sm-3 col-12">
                     <div className="card shadow mb-3">
-                      <div className="card-body" onClick={() => {
-                        addressType === 'shipping' ? this.setState({ selectedShippingAddress: item, showModal: false }) :
-                          this.setState({ selectedBillingAddress: item, showModal: false, isBillingAddressSame: false })
-                      }} >
+                      <div className="card-body"
+                        onClick={() => {
+                          addressType === 'shipping' ? this.setState({ selectedShippingAddress: item }) :
+                            this.setState({ selectedBillingAddress: item, isBillingAddressSame: false })
+                        }}
+                      >
                         <address className="selectAdd"><strong>{item.name}</strong>
-                          <br />{item.address1} <br />{item.address2} <br /> {item.sub_district}
-                          <br /> {item.district},  {item.state} - {item.pincode}<br />
+                          <br />{item.address1} <br />{item.address2} <br /> {item.sub_district.sub_district_name}
+                          <br /> {item.district?.district_name},  {item.state.state_name} - {item.pincode}<br />
                           <strong>Mobile No.</strong>: {item.mobile}<br />
                           <strong>Email</strong> : {item?.email}
                         </address>
                         <div className="form-check radioPos">
-                          {/* onClick={() => {
-                            addressType === 'shipping' ? this.setState({ selectedShippingAddress: item, showModal: false }) :
-                              this.setState({ selectedBillingAddress: item, showModal: false, isBillingAddressSame: false })
-                          }} */}
-                          <input className="form-check-input" type="radio" name="selectAdd" value={item.id} checked={item.id === selectedShippingAddress.id} defaultValue={selectedShippingAddress.id} defaultChecked />
+                          <input className="form-check-input" type="radio" name="selectAdd" checked={item.id === selectedShippingAddress?.id} defaultValue={selectedShippingAddress?.id} onChange={() => this.setState({ showModal: false })} />
                         </div>
                       </div>
                     </div>
                   </div>
-
-
                 ))} </div> <Link to='/my-account/add-address' className="btn btn-dark btn-theme" > Add New Address</Link></div>}
           </Modal>
         </div>
@@ -344,13 +339,13 @@ class CheckoutComp extends React.Component {
                           <div className="col">
                             <div className="addresswraper">
                               <p className="d-flex addressTop">
-                                <span><strong><FontAwesomeIcon icon={faCheck} /> {selectedShippingAddress.name}</strong></span>
-                                <span className="type">{selectedShippingAddress.type === 1 ? "Home" : "Work"}</span>
-                                < span > <strong>Mobile No.</strong>: <strong>{selectedShippingAddress.mobile}</strong></span>
+                                <span><strong><FontAwesomeIcon icon={faCheck} /> {selectedShippingAddress?.name}</strong></span>
+                                <span className="type">{selectedShippingAddress?.type === 1 ? "Home" : "Work"}</span>
+                                < span > <strong>Mobile No.</strong>: <strong>{selectedShippingAddress?.mobile}</strong></span>
                               </p>
-                              <p>{selectedShippingAddress.address1}<br />
-                                {selectedShippingAddress.address2}<br />
-                                <strong>Pincode</strong>: {selectedShippingAddress.pincode}</p>
+                              <p>{selectedShippingAddress?.address1}<br />
+                                {selectedShippingAddress?.address2}<br />
+                                <strong>Pincode</strong>: {selectedShippingAddress?.pincode}</p>
                               <div className="d-flex address_btn"><button onClick={() => this.setState({ sectionToggle: { shipping: false } })}>Procced</button>
                                 <button onClick={() => { this.changeAddress('shipping') }}>Select Address</button></div>
                             </div>
@@ -371,10 +366,10 @@ class CheckoutComp extends React.Component {
                         {/* <div className="checkoutSrno">1</div> */}
                         <div className="checkoutinfo">
                           {/* <span>Shipping Addressinside <FontAwesomeIcon icon={faCheck} /></span> */}
-                          <span className="bottominfo">{selectedShippingAddress.name},{selectedShippingAddress.address1},{selectedShippingAddress.address2}</span>
-                          <span className="bottominfo">{selectedShippingAddress.mobile}</span>
-                          <span className="bottominfo">{selectedShippingAddress.state}</span>
-                          <span className="bottominfo"> <strong>Pincode</strong>: {selectedShippingAddress.pincode}</span>
+                          <span className="bottominfo">{selectedShippingAddress?.name},{selectedShippingAddress?.address1},{selectedShippingAddress?.address2}</span>
+                          <span className="bottominfo">{selectedShippingAddress?.mobile}</span>
+                          <span className="bottominfo">{selectedShippingAddress?.state?.state_name}</span>
+                          <span className="bottominfo"> <strong>Pincode</strong>: {selectedShippingAddress?.pincode}</span>
                         </div>
                         <button onClick={() => this.setState({ sectionToggle: { shipping: true } })}>Change</button>
                       </div>
@@ -396,11 +391,11 @@ class CheckoutComp extends React.Component {
                           <div className="col">
                             <div className="addresswraper">
                               <p className="d-flex addressTop">
-                                <span><strong><FontAwesomeIcon icon={faCheck} /> {selectedBillingAddress.name}</strong></span>
-                                <span className="type">{selectedBillingAddress.type === 1 ? "Home" : "Work"}</span>
-                                < span > <strong>Mobile No.</strong>: <strong>{selectedBillingAddress.mobile}</strong></span>
+                                <span><strong><FontAwesomeIcon icon={faCheck} /> {selectedBillingAddress?.name}</strong></span>
+                                <span className="type">{selectedBillingAddress?.type === 1 ? "Home" : "Work"}</span>
+                                < span > <strong>Mobile No.</strong>: <strong>{selectedBillingAddress?.mobile}</strong></span>
                               </p>
-                              <p>{selectedBillingAddress.address1}<br />{selectedBillingAddress.address2}<br />               <strong>Pincode</strong>: {selectedBillingAddress.pincode}</p>
+                              <p>{selectedBillingAddress?.address1}<br />{selectedBillingAddress?.address2}<br />               <strong>Pincode</strong>: {selectedBillingAddress?.pincode}</p>
                               <div className="d-flex address_btn">
                                 <button onClick={() => this.setState({ sectionToggle: { billing: false } })}>Procced</button>
                                 <button onClick={() => { this.changeAddress('billing') }}>Select Address</button>
@@ -418,10 +413,10 @@ class CheckoutComp extends React.Component {
                         {/* <div className="checkoutSrno">2</div> */}
                         <div className="checkoutinfo">
                           {/* <span>Billing Address <FontAwesomeIcon icon={faCheck} /></span> */}
-                          <span className="bottominfo">{selectedBillingAddress.name},{selectedBillingAddress.address1},{selectedBillingAddress.address2}</span>
-                          <span className="bottominfo">{selectedBillingAddress.mobile}</span>
-                          <span className="bottominfo">{selectedBillingAddress.state}</span>
-                          <span className="bottominfo"> <strong>Pincode</strong>: {selectedBillingAddress.pincode}</span>
+                          <span className="bottominfo">{selectedBillingAddress?.name},{selectedBillingAddress?.address1},{selectedBillingAddress?.address2}</span>
+                          <span className="bottominfo">{selectedBillingAddress?.mobile}</span>
+                          <span className="bottominfo">{selectedBillingAddress?.state?.state_name}</span>
+                          <span className="bottominfo"> <strong>Pincode</strong>: {selectedBillingAddress?.pincode}</span>
                         </div>
                         <button onClick={() => this.setState({ sectionToggle: { billing: true } })}>Change</button>
                       </div>

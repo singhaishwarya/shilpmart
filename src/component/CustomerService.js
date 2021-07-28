@@ -64,12 +64,10 @@ export default class CustomerService extends React.Component {
       if (!this.error) {
         GetInTouch.getinTouch(this.state.fields)
           .then((result) => {
-            if (!result) return ToastService.error("Please fill form details")
             if (result.success) {
-              console.log("Demo===", result)
-              this.setState({ contactUsSubmitted: result.message })
-              // window.history.back()
-            }
+              this.setState({ contactUsSubmitted: result.message });
+            } else return ToastService.error("Please fill form details")
+
           }).catch((err) => {
             console.log(err);
           });
@@ -131,7 +129,7 @@ export default class CustomerService extends React.Component {
               <div className="col-sm-5">
                 <div className="card shadow">
                   <div className="card-body">
-                    <Form className="p-3" ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleGetInTouch(e)} >
+                    {contactUsSubmitted ? <span>{contactUsSubmitted}</span> : <Form className="p-3" ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleGetInTouch(e)} >
 
                       <div className="form-row">
                         <div className="form-group col-md-6">
@@ -153,11 +151,9 @@ export default class CustomerService extends React.Component {
                         <label htmlFor="inputAddress2">Comment or Message </label>
                         <Textarea className="form-control" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")} />
                       </div>
-
-
-
                       <button value="Submit" className="btn btn-theme">Submit Query</button>
                     </Form>
+                    }
                   </div>
                 </div>
 

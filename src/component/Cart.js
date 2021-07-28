@@ -158,7 +158,7 @@ class Cart extends Component {
                           />
                         </td>
                         <td className="product-name">{finItem?.content?.title}
-                          {/* <p>Store : <span><span>{finItem?.store_name}</span></span></p> */}
+                          {item?.variations?.length > 1 ? <span>( {item?.variations[0]?.variation_id}:{item?.variations[0]?.variation_value} , {item?.variations[1]?.variation_id}:{item?.variations[1]?.variation_value})</span> : ''}
                         </td>
                         <td className="product-subtotal"><span> <span>₹</span> {(finItem?.prices[item.variation_index]?.price || finItem?.prices[0]?.price)}
                         </span></td>
