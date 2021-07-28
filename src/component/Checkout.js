@@ -12,7 +12,7 @@ import * as cartAction from '../actions/cart';
 import { loaderOptions, customLoginStyles, paymentConfig } from "../lib/utils";
 import AddAddress from "./my-account/Address/AddAddress";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell, faCheck, faStar, faTimes, faTrash, faTrashAlt, faTruck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 class CheckoutComp extends React.Component {
   constructor(props) {
     super(props);
@@ -203,6 +203,15 @@ class CheckoutComp extends React.Component {
           this.post(information)
           localStorage.setItem('paymentType', 'airpay');
           localStorage.setItem('orderId', result.data.order_details.id);
+        }
+        if (paymentType === 'cod') {
+          this.props.history.push({
+            pathname: '/thankyou/for-payment/',
+            state: { paymentType: this.state.paymentType }
+          });
+          localStorage.removeItem("checkOutData");
+          localStorage.removeItem("totalCartCost");
+          this.props.emptyCart();
         }
         this.setState({ isLoaded: true });
       }).catch((err) => {
