@@ -5,6 +5,10 @@ import Input from "react-validation/build/input";
 import ToastService from '../../services/ToastService';
 import Button from "react-validation/build/button";
 import { connect } from 'react-redux';
+import * as authAction from '../../actions/auth';
+import * as wishlistAction from '../../actions/wishlist';
+import * as compareAction from '../../actions/compare';
+import * as cartAction from '../../actions/cart';
 
 const required = (value, name) => {
   if (!name.value) {
@@ -58,11 +62,27 @@ class AccountDetails extends React.Component {
         .then((result) => {
 
           if (result.success) {
-            return ToastService.success(result.message)
+            ToastService.success(result.message + ", Kindly login again")
+            setTimeout(() => {
+              AuthService.logout()
+                .then((logOutResult) => {
+                  if (logOutResult.success) {
+                    this.props.logout();
+                    this.props.emptyCart();
+                    this.props.emptyWishlist();
+                    this.props.emptyCompare();
+                    localStorage.clear();
+
+                    this.props.history.push({
+                      pathname: '/my-account/dashboard'
+                    })
+                  }
+                })
+            }, 3000);
+
           }
           else {
             return ToastService.error(result.message)
-
           }
         })
         .catch((err) => {
@@ -159,4 +179,16 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps, null)(AccountDetails);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: user => dispatch(authAction.logout(user)),
+    emptyWishlist: index => dispatch(wishlistAction.emptyWishlist(index)),
+    addToWishlist: index => dispatch(wishlistAction.addToWishlist(index)),
+    addToCart: index => dispatch(cartAction.addToCart(index)),
+    emptyCart: index => dispatch(cartAction.emptyCart(index)),
+    emptyCompare: index => dispatch(compareAction.emptyCompare(index))
+  }
+};
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountDetails);

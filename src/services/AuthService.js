@@ -44,7 +44,7 @@ export default class AuthService extends Component {
       config.method = 'post';
 
       const response = await axios(config);
-      return response.data ? response.data.data : [];
+      return response.data ? response.data : [];
     } catch (error) {
       const { response } = error;
       if (!response) return;
