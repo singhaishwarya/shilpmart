@@ -15,7 +15,6 @@ import {
   LinkedinShareButton
 } from "react-share";
 import ProductService from '../services/ProductService';
-//import CategoryService from '../services/CategoryService';
 import { connect } from 'react-redux';
 import CartService from '../services/CartService';
 import AuthService from '../services/AuthService';
@@ -24,7 +23,6 @@ import * as wishlistAction from '../actions/wishlist';
 import * as compareAction from '../actions/compare';
 import * as cartAction from '../actions/cart';
 import WishlistService from '../services/WishlistService';
-// import { isMobile } from 'react-device-detect';
 import { ToastContainer } from 'react-toastify';
 import ToastService from '../services/ToastService';
 import TopBarMenu from './TopBarMenu';
@@ -72,15 +70,17 @@ class Header extends Component {
       this.addToCart(cart);
     }
     else {
-      CartService.list().then((result) => {
-        result && result.map((item) => (
-          this.props.addToCart({ product: item?.product_id, variation_index: item.variation_index, quantity: item.quantity })
-        ))
-      })
+      this.getCartApi();
     }
-
   }
 
+  getCartApi = () => {
+    CartService.list().then((result) => {
+      result && result.map((item) => (
+        this.props.addToCart({ product: item?.product_id, variation_index: item.variation_index, quantity: item.quantity })
+      ))
+    })
+  }
   syncWishlist = () => {
     const { wishlist } = this.props;
     if (wishlist?.length > 0) {
@@ -101,16 +101,12 @@ class Header extends Component {
   }
 
   addToWishlist = (wishlistToSync) => {
-    let wishlistProductids = [];
     try {
       WishlistService.addDelete(wishlistToSync).then((result) => {
         if (result?.success) {
           result.data.map((item) => (
-            wishlistProductids?.push(item.product_id)
-          ))
-          ProductService.fetchAllProducts({ product_ids: wishlistProductids }).then((result1) => (
-            result1?.data.map((item) => this.props.addToWishlist({ product: item.id, variation_index: 0 }))
-          ))
+            this.props.addToWishlist({ product: item.product_id || item.id, variation_index: item.variation_index })
+          ));
         } else { return }
       });
     }
@@ -134,7 +130,7 @@ class Header extends Component {
     const searchString = e.target.value.toLowerCase();
     if (searchString?.length >= 3) {
       ProductService.fetchAllProducts({ q: searchString }).then((result) => {
-        this.setState({ seachResults: result.data });
+        this.setState({ seachResults: result.data.length > 0 ? result.data : ['1'] });
       });
     }
     else {
@@ -143,13 +139,13 @@ class Header extends Component {
     }
   };
 
-  addToCart = (product) => {
-    if (this.props.cart.find(({ product, variation_index }) => (product === product.id && variation_index === 0)) !== undefined) {
-      this.errorAlert(product, 'cart');
+  addToCart = (cartProduct) => {
+    if (this.props.cart.find(({ product, variation_index }) => (product === cartProduct.id && variation_index === 0)) !== undefined) {
+      this.errorAlert(cartProduct, 'cart');
     }
     else {
-      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(product) :
-        this.props.addToCart({ product: product?.id, variation_index: 0, quantity: 1 })
+      Object.keys(this.props.userData).length > 0 ? this.addToCartApi(cartProduct) :
+        this.props.addToCart({ product: cartProduct?.id, variation_index: 0, quantity: 1 })
     }
   }
   errorAlert = (product, type) => {
@@ -158,31 +154,22 @@ class Header extends Component {
   }
 
   addToCartApi = (product) => {
-    let cartToSync = [], cartProductids = [];
+    let cartToSync = [];
     product.map((item) => {
       return cartToSync.push({
-        "product_id": item.product,
-        "quantity": item.quantity,
-        "variation_index": item.variation_index
+        "product_id": item.product || item.id,
+        "quantity": item.quantity || 1,
+        "variation_index": item.variation_index || 0
       })
     });
+    console.log("demo==", cartToSync)
     try {
       CartService.add({ products: cartToSync }).then((result) => {
-
         if (result?.success) {
-          if (typeof result.data !== 'string') {
-            result.data.length && result.data.map((item) => (
-              cartProductids?.push(item.product_id)
-            ));
-            ProductService.fetchAllProducts({ product_ids: cartProductids }).then((result1) => {
-              result1.data.map((item) => this.props.addToCart({ product: item.id, variation_index: 0, quantity: 1 }));
-            })
-          }
-          else {
-            // this.props.errorAlert(product);
-          }
-        }
-        else { return }
+          result.data.map((item) => (
+            this.props.addToCart({ product: item.product_id, variation_index: item.variation_index, quantity: item.quantity })
+          ));
+        } else { return }
       });
     } catch (err) {
       console.log(err);
@@ -196,13 +183,17 @@ class Header extends Component {
     }
 
   }
-
+  productDetail = (value) => {
+    this.props.history.push({
+      pathname: '/product-detail',
+      search: "?pid=" + value?.content?.product_id
+    });
+  }
   renderSearchOptions = () => {
     let { seachResults } = this.state;
-    const { cart } = this.props;
     return (
       seachResults?.map((item, index) => (
-        <div className="result-product-wrapper" key={index}>
+        item?.content ? <div className="result-product-wrapper" key={index}>
           <Link to={{
             pathname: `/product-detail`,
             search: "?pid=" + item.content.product_id
@@ -221,20 +212,27 @@ class Header extends Component {
           <span>
             <span className="top-head">
               <span className="pro-tile">{item?.content?.title}</span>
-              <span className="pro-price"><del>1999</del> &nbsp; <span>{item?.price} </span></span>
+              <span className="pro-price">&nbsp; <span>{item?.price} </span></span>
             </span>
             <span className="footer-head">
               <span className="result-cat"><small>{item.category?.parent_category[0].title}, {item.category?.cate_title}</small></span>
-              <span className="result-addtocart" onClick={
-                () => (
-                  this.props.cart.find(({ product, variation_index }) => (product === item.id && variation_index === 0)) !== undefined ? '' : (item.variation_available ? this.productDetail(item) : this.addToCart(item))
-                )
-              }> Add to Cart</span>
+              {item.variation_available ? <Link to={{
+                pathname: `/product-detail`,
+                search: "?pid=" + item.content.product_id
+              }} onClick={() => this.setState({ searchQuery: '', seachResults: [] })}
+              > <span className="result-addtocart"> Add to Cart</span></Link> :
+
+                <span className="result-addtocart" onClick={
+                  () => (
+                    this.props.cart.find(({ product, variation_index }) => (product === item.id && variation_index === 0)) !== undefined ? '' : this.addToCart([item])
+                  )
+                }> Add to Cart</span>
+              }
             </span>
           </span>
-          <span className="sale-sticker">sale!</span>
+          {/* <span className="sale-sticker">sale!</span> */}
+        </div > : <div><span>no products</span></div>
 
-        </div>
       )
       ));
   };
