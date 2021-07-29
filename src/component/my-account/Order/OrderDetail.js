@@ -123,6 +123,7 @@ export default class OrderDetail extends React.Component {
                     <Modal
                       isOpen={showModal}
                       onRequestClose={this.toggleModal}
+                      className="Modal"
                       shouldCloseOnOverlayClick={true}
                       ariaHideApp={false}>
                       <FontAwesomeIcon className="text-left" icon={faTimes} onClick={this.toggleModal} />

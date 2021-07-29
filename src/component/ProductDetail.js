@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
-import ReactStars from 'react-stars'
+import {Link} from "react-router-dom";
+import ReactStars from 'react-stars';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
@@ -517,7 +518,10 @@ class ProductDetail extends React.Component {
 
 
                   <div className="product-description">
-                    <header>Review</header>
+                    <header className="d-flex justify-content-between feedback">
+                     <span>Reviews</span> 
+                     <span><Link to="/Review">Feedback</Link></span>
+                    </header>
                     {/* <Bars data={this.state.testData} makeUppercase={true} /> */}
                     <div className="row">
                       <div className="col-sm-3">

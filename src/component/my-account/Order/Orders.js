@@ -103,6 +103,13 @@ export default class Orders extends React.Component {
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="ondaway" value="black" />
                     <label className="form-check-label " htmlFor="ondaway">On the way</label>
                   </div>
+                  <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="Initiated" value="black" />
+                    <label className="form-check-label " htmlFor="Initiated">Initiated</label>
+                  </div>
+                  <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="Confirmed" value="black" />
+                    <label className="form-check-label " htmlFor="Confirmed">Confirmed</label>
+                  </div>
+
                   <div className="form-check shm-filter-checkbox"><input type="checkbox" className="form-check-input" id="deliver" value="black" />
                     <label className="form-check-label " htmlFor="deliver">Delivered</label>
                   </div>
@@ -175,6 +182,7 @@ export default class Orders extends React.Component {
                             <div className="col-9">
                               <div className="orderproductInfo">
                                 <span className="title">{item.product_details[0]?.awb_number.product[0]?.title?.title}</span>
+                                
                               </div>
                             </div>
                           </div>
