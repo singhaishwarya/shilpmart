@@ -18,9 +18,15 @@ import * as compareAction from '../actions/compare';
 import { connect } from 'react-redux';
 import WishlistService from '../services/WishlistService'
 import ReactImageZoom from 'react-image-zoom';
+import OrderService from '../services/OrderService';
+import Form from "react-validation/build/form";
+import Textarea from "react-validation/build/textarea";
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.requiredBinded = this.required.bind(this);
+    this.error = false;
     this.state = {
       combination: [], finCombination: [], currentVariationIndex: null, variationSelected: false,
       isActiveTab: 0, productCatId: 0, _variationIndex: 0,
@@ -35,10 +41,27 @@ class ProductDetail extends React.Component {
       notFountImage: [{
         original: require('../public/No_Image_Available.jpeg'),
         thumbnail: require('../public/No_Image_Available.jpeg'),
-      }], imgProps: {}
+      }], imgProps: {},
+      fields: {
+        product_id: props.match.params.productId,
+        msg: '', type: 3, name: '', email: ''
+      }
     }
     this.currentUrlParams = new URLSearchParams(window.location.search);
 
+  }
+  required = (value, props) => {
+
+    if (props.isUsed) {
+      if (!value) {
+        this.error = true;
+        return (
+          <div className="isaerror" role="alert">
+            Please enter your {props.name}
+          </div>
+        );
+      } else { this.error = false; }
+    }
   }
 
   componentDidMount() {
@@ -49,7 +72,12 @@ class ProductDetail extends React.Component {
       this.getProductDetails(this.getQueryParams());
     }
   }
+  handleChange(field, e) {
+    let fields = this.state.fields;
+    fields[field] = e.target.value;
+    this.setState({ fields });
 
+  }
   deleteWishlist = (item) => {
     (Object.keys(this.props.userData).length > 0) ? this.deleteWishlistApi(item) : this.props.deleteWishlist({ product: item.id, variation_index: this.state.currentVariationIndex });
     this.errorAlert(item, 'wishlist');
@@ -113,6 +141,12 @@ class ProductDetail extends React.Component {
     let entries = urlParams.entries(), queryParams = {};
     for (const entry of entries) {
       queryParams.product_ids = entry[0] === 'pid' ? [entry[1]] : '';
+      this.setState(prevState => ({
+        fields: {
+          ...prevState.fields,
+          product_id: entry[1]
+        }
+      }))
     }
     return queryParams;
   }
@@ -152,9 +186,23 @@ class ProductDetail extends React.Component {
     });
   };
   handleSubmit = (event) => {
-    console.log('A name was submitted: ' + event);
     event.preventDefault();
-    this.toggleModal();
+    if (this.form.getChildContext()._errors.length > 0) {
+
+      if (this.error) {
+        return
+      }
+      else {
+        return ToastService.error("Please fill form details")
+      }
+    } else {
+      if (!this.error) {
+        OrderService.raiseATicket(this.state.fields).then((result) => {
+          if (result.success) this.setState({ showModal: !this.state.showModal })
+          else return ToastService.error("Please fill form details")
+        });
+      }
+    }
   }
   wishlistToggle = () => {
     this.setState({ wishlistStatus: !this.state.wishlistStatus });
@@ -313,7 +361,7 @@ class ProductDetail extends React.Component {
     }
   }
   render() {
-    const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentvalue2, currentvalue1, productCatId, imgProps, currentVariationIndex } = this.state;
+    const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentvalue2, currentvalue1, productCatId, imgProps, currentVariationIndex, fields } = this.state;
     const { wishlist } = this.props;
     return (
       <>
@@ -440,34 +488,36 @@ class ProductDetail extends React.Component {
                     //style={askForm}
                     shouldCloseOnOverlayClick={true}
                     ariaHideApp={false}
-                  >
-                    {/* <Modal show={this.state.showModal} closeModal={this.toggleModal}> */}
-                    <form onSubmit={this.handleSubmit}>
+                  > <Form ref={c => { this.form = c }}  >
+
+                      {/* <form onSubmit={this.handleSubmit}> */}
                       <h4 className="mb-4">Ask a Question</h4>
-                      <div className="form-group row">
+                      {Object.keys(this.props.userData).length > 0 ? '' : <><div className="form-group row">
                         <label htmlFor="name" className="col-sm-3 col-12 col-form-label">Name<span>*</span></label>
                         <div className="col-sm-9 col-12">
-                          <input type="text" readonly className="form-control" id="name" value="" />
+                          <input type="text" readonly className="form-control" id="name" value={fields.name} onChange={this.handleChange.bind(this, "msg")} />
                         </div>
                       </div>
 
-                      <div className="form-group row">
-                        <label htmlFor="Email" className="col-sm-3 col-12 col-form-label">Email<span>*</span></label>
-                        <div className="col-sm-9 col-12">
-                          <input type="text" readonly className="form-control" id="Email" value="" />
-                          <small>Your email address will not be published.</small>
-                        </div>
-                      </div>
+                        <div className="form-group row">
+                          <label htmlFor="Email" className="col-sm-3 col-12 col-form-label">Email<span>*</span></label>
+                          <div className="col-sm-9 col-12">
+                            <input type="text" readonly className="form-control" id="Email" value={fields.email} onChange={this.handleChange.bind(this, "msg")} />
+                            <small>Your email address will not be published.</small>
+                          </div>
+                        </div></>}
 
                       <div className="form-group row">
                         <label htmlFor="inquiry" className="col-sm-3 col-12 col-form-label">Your inquiry<span>*</span></label>
                         <div className="col-sm-9 col-12">
-                          <textarea className="form-control" placeholder="Type your Question..." />
+                          <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" placeholder="Type your Question..." value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
+                          </Textarea>
+
                         </div>
                       </div>
-
-                      <input className="btn btn-theme float-right" type="submit" value="Submit" />
-                    </form>
+                      <button className="btn login-btn" value="Submit" disabled={false} onClick={this.handleSubmit} />
+                      {/* // <button value="Submit" className="btn btn-theme float-right" type="submit" /> */}
+                    </Form>
                   </Modal>
                 </div>
 
