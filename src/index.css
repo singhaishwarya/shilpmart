@@ -591,7 +591,8 @@ span.result-addtocart {
 .custom-modal-width {
   width: 650px;
   margin: auto !important;
-  height: 355px;
+  min-height: 355px;
+  max-height: 450px;
   background: #fff;
   position: absolute;
   padding: 15px;
@@ -2433,7 +2434,7 @@ a:focus {
 .product-img-wrapper {
   position: sticky;
   top: 95px;  
-  z-index: 5;
+  z-index: 1;
 }
 .product-img-wrapper h6 {
   font-size: 14px;

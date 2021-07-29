@@ -66,7 +66,7 @@ class ShopByType extends Component {
     },
     {
       icon: require('../public/icons/eshilp-floor-covering.svg'),
-      backgroundImage: '../public/floorcovering.jpeg'
+      backgroundImage: '../public/floorcovering.jpg'
     },
     {
       icon: require('../public/icons/eshilp-travel-ass.svg'),

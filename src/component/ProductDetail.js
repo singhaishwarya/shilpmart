@@ -516,7 +516,10 @@ class ProductDetail extends React.Component {
 
                         </div>
                       </div>
-                      <button className="btn login-btn" value="Submit" disabled={false} onClick={this.handleSubmit} />
+                      
+                      <button className="btn btn-theme" value="Submit" disabled={false} onClick={this.handleSubmit}> Submit
+                      </button>
+                       
                       {/* // <button value="Submit" className="btn btn-theme float-right" type="submit" /> */}
                     </Form>
                   </Modal>
