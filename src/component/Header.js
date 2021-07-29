@@ -37,7 +37,7 @@ class Header extends Component {
       seachResults: [],
       searchQuery: '',
       showModal: false,
-      shareUrl: ['https://app.digitalindiacorporation.in/v1/digi/'],
+      shareUrl: ['https://main.digitalindiacorporation.in/'],
       title: 'eShilpmart',
       isLoggedIn: this.props.userData.token,
       isMenuShown: false, scrolled: false

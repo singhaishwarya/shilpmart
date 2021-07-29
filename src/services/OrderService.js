@@ -86,8 +86,8 @@ export default class Order extends Component {
       return response.data ? response.data : [];
     } catch (error) {
       const { response } = error;
-      if (!response) return;
-      console.log(`FETCH GET ERROR`, response);
+      if (!response) { console.log(`FETCH GET ERROR`, response); return; }
+      return response.data ? response.data : [];
     }
   }
 
