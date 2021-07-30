@@ -336,7 +336,7 @@ class ProductDetail extends React.Component {
       this.setState({
         _variationIndex: 0, imgProps: {
           width: 534, zoomWidth:
-            300, img: imgUrl, zoomPosition: 'right'
+            500, img: imgUrl, zoomPosition: 'right'
         }
       });
     }
@@ -372,6 +372,7 @@ class ProductDetail extends React.Component {
               <div className="col-lg-6 col-md-6 col-12 mb-2">
 
                 <div className="product-gallery">
+                
                   <div className="product-gallery-preview order-sm-2">
                     <div className="product-gallery-preview-item active" id="first">
                       {imgProps.img ? <ReactImageZoom {...imgProps} /> : ''}
@@ -516,7 +517,10 @@ class ProductDetail extends React.Component {
 
                         </div>
                       </div>
-                      <button className="btn login-btn" value="Submit" disabled={false} onClick={this.handleSubmit} />
+                      
+                      <button className="btn btn-theme" value="Submit" disabled={false} onClick={this.handleSubmit}> Submit
+                      </button>
+                       
                       {/* // <button value="Submit" className="btn btn-theme float-right" type="submit" /> */}
                     </Form>
                   </Modal>

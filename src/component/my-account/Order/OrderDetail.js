@@ -6,8 +6,8 @@ import { format } from 'date-fns';
 import OrderService from '../../../services/OrderService';
 import Modal from "react-modal";
 import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
-
 export default class OrderDetail extends React.Component {
 
   constructor(props) {
@@ -21,7 +21,8 @@ export default class OrderDetail extends React.Component {
       orderDetail: props?.location?.state?.orderDetail, base64Doc: '', showModal: false,
       fields: {
         order_id: props?.location?.state?.orderDetail.id,
-        msg: '', type: 2
+        first_name: '', last_name: '', email: '', msg: '',
+        type: 2
       }
     };
   }
@@ -89,6 +90,7 @@ export default class OrderDetail extends React.Component {
     });
   }
   productDetail = (value) => {
+
     this.props.history.push({
       pathname: '/product-detail',
       search: "?pid=" + value.product_id
@@ -118,36 +120,37 @@ export default class OrderDetail extends React.Component {
                       <p>{orderDetail?.address[1]?.address1}<br /> {orderDetail?.address[1]?.address2} ,{orderDetail?.address[1]?.city}-{orderDetail?.address[1]?.pincode}
                       </p>
                     </div>
-                    <Modal
+                    <Modal className='custom-modal-width'
                       isOpen={showModal}
-                      onRequestClose={this.toggleModal}
-                      className="Modal"
+                      onRequestClose={this.toggleModal}                      
                       shouldCloseOnOverlayClick={true}
                       ariaHideApp={false}>
-                      <FontAwesomeIcon className="text-left" icon={faTimes} onClick={this.toggleModal} />
+                      <span className="modalClose">
+                        <FontAwesomeIcon className="text-left" icon={faTimes} onClick={this.toggleModal} />
+                      </span>
                       {base64Doc ?
                         <object aria-labelledby="label1" width="100%" height="100%" type="application/pdf" data={report} />
                         :
                         <Form ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleNeedHelp(e)} >
                           <h1> Support Ticket</h1>
-                          <div className="form-row">
-                            {/* <div className="form-group col-md-6">
+                          {/* <div className="form-row">
+                            <div className="form-group col-md-6">
                               <label htmlFor="fname">First Name*</label>
                               <Input type="text" className="form-control" id="fname" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} placeholder="" />
-                            </div> 
-                             <div className="form-group col-md-6">
+                            </div>
+                            <div className="form-group col-md-6">
                               <label htmlFor="lName">Last Name*</label>
                               <Input type="text" className="form-control" id="lName" name="last name" value={fields.last_name} validations={[this.required]} onChange={this.handleChange.bind(this, "last_name")} placeholder="" />
-                            </div> */}
+                            </div>
                           </div>
 
-                          {/* <div className="form-group">
+                          <div className="form-group">
                             <label htmlFor="email">Email*</label>
                             <Input type="email" className="form-control" id="email" placeholder="Email" name="email" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
                           </div> */}
                           <div className="form-group">
                             <label htmlFor="InputAddress2">Issues you are having * </label>
-                            <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
+                            <Textarea className="form-control" name="" rows="14" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
                             </Textarea>
                           </div>
 
