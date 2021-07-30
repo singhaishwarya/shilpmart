@@ -125,13 +125,15 @@ export default class OrderDetail extends React.Component {
                       onRequestClose={this.toggleModal}                      
                       shouldCloseOnOverlayClick={true}
                       ariaHideApp={false}>
-                      <FontAwesomeIcon className="text-left" icon={faTimes} onClick={this.toggleModal} />
+                      <span className="modalClose">
+                        <FontAwesomeIcon className="text-left" icon={faTimes} onClick={this.toggleModal} />
+                      </span>
                       {base64Doc ?
                         <object aria-labelledby="label1" width="100%" height="100%" type="application/pdf" data={report} />
                         :
                         <Form ref={(c) => { this.form = c; }} onSubmit={(e) => this.handleNeedHelp(e)} >
                           <h1> Support Ticket</h1>
-                          <div className="form-row">
+                          {/* <div className="form-row">
                             <div className="form-group col-md-6">
                               <label htmlFor="fname">First Name*</label>
                               <Input type="text" className="form-control" id="fname" name="first name" value={fields.first_name} validations={[this.required]} onChange={this.handleChange.bind(this, "first_name")} placeholder="" />
@@ -145,10 +147,10 @@ export default class OrderDetail extends React.Component {
                           <div className="form-group">
                             <label htmlFor="email">Email*</label>
                             <Input type="email" className="form-control" id="email" placeholder="Email" name="email" value={fields.email} validations={[this.required]} onChange={this.handleChange.bind(this, "email")} />
-                          </div>
+                          </div> */}
                           <div className="form-group">
                             <label htmlFor="InputAddress2">Issues you are having * </label>
-                            <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
+                            <Textarea className="form-control" name="" rows="14" cols="50" name="Comment" value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
                             </Textarea>
                           </div>
 
