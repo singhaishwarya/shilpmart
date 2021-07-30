@@ -74,7 +74,7 @@ class AccountDetails extends React.Component {
                     localStorage.clear();
 
                     this.props.history.push({
-                      pathname: '/my-account/dashboard'
+                      pathname: '/'
                     })
                   }
                 })

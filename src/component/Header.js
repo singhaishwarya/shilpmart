@@ -162,7 +162,6 @@ class Header extends Component {
         "variation_index": item.variation_index || 0
       })
     });
-    console.log("demo==", cartToSync)
     try {
       CartService.add({ products: cartToSync }).then((result) => {
         if (result?.success) {
@@ -288,7 +287,7 @@ class Header extends Component {
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faShoppingBasket} /> Orders</Link>
                       <Link to='/my-account/address'><FontAwesomeIcon icon={faList} /> Addresses</Link>
                       <Link to='/my-account/details'><FontAwesomeIcon icon={faUser} /> Account details</Link>
-                      <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo} /> Feedback</Link>
+                      {/* <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo} /> Feedback</Link> */}
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faTicketAlt} /> Raise Ticket</Link>
                       <Link to='/my-account/wishlist'><FontAwesomeIcon icon={faHeart} /> Wishlist</Link>
                       <Link to="" onClick={() => this.logout()}><FontAwesomeIcon icon={faSignOutAlt} /> Logout</Link>
@@ -405,7 +404,7 @@ class Header extends Component {
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faShoppingBasket} /> Orders</Link>
                       <Link to='/my-account/address'><FontAwesomeIcon icon={faList} /> Addresses</Link>
                       <Link to='/my-account/details'><FontAwesomeIcon icon={faUser} /> Account details</Link>
-                      <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo} /> Feedback</Link>
+                      {/* <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo} /> Feedback</Link> */}
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faTicketAlt} /> Raise Ticket</Link>
                       <Link to='/my-account/wishlist'><FontAwesomeIcon icon={faHeart} /> Wishlist</Link>
                       <Link to="" onClick={() => this.logout()}><FontAwesomeIcon icon={faSignOutAlt} /> Logout</Link>
