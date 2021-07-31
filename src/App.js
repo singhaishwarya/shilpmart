@@ -21,6 +21,7 @@ import AddAddress from './component/my-account/Address/AddAddress';
 import EditAddress from './component/my-account/Address/AddAddress';
 import AccountDetails from './component/my-account/AccountDetails';
 import Feedback from './component/my-account/Feedback';
+import MyReviews from './component/my-account/MyReviews';
 import Inquiry from './component/my-account/Inquiry';
 import MyDashboard from './component/my-account/Dashboard';
 import Checkout from './component/Checkout';
@@ -53,7 +54,7 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/' component={Dashboard} exact />
           <Route isAuthenticated={userData} path='/registration' component={Registration} exact />
           <Route isAuthenticated={userData} path='/product-list' component={ProductList} />
-          <Route isAuthenticated={userData} path='/product-detail' component={ProductDetail} />
+          <Route isAuthenticated={userData} path='/product-detail' component={ProductDetail} exact />
           <Route isAuthenticated={userData} path='/entrepreneur' component={SellerProfile} />
           <Route isAuthenticated={userData} path='/wishlist' component={Wishlist} exact />
           <Route isAuthenticated={userData} path='/compare' component={Compare} exact />
@@ -62,7 +63,6 @@ class App extends Component {
           <Route isAuthenticated={userData} path='/checkout' component={Checkout} exact />
           <Route isAuthenticated={userData} path='/thankyou/for-payment' component={CheckoutCallback} exact />
           <Route path='/about-us' component={AboutUs} exact />
-          <Route path='/review' component={Review} exact />
           <Route path='/customer-service' component={CustomerService} exact />
           <Route path='/contact-us' component={ContactUs} exact />
           <Route path='/seller-policy' component={SellerPolicy} exact />
@@ -75,6 +75,7 @@ class App extends Component {
           <MyAccount>
             <Route component={({ match }) =>
               <>
+                <PrivateRoute isAuthenticated={userData} path='/order-detail/:id/reviews' component={Review} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/dashboard' component={MyDashboard} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/order' component={Orders} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/order-detail' component={OrderDetail} />
@@ -84,6 +85,7 @@ class App extends Component {
                 <PrivateRoute isAuthenticated={userData} path='/my-account/edit-address' component={EditAddress} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/details' component={AccountDetails} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/feedback' component={Feedback} />
+                <PrivateRoute isAuthenticated={userData} path='/my-account/reviews' component={MyReviews} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/inquiry' component={Inquiry} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/wishlist' component={MyWishlist} />
               </>

@@ -8,6 +8,7 @@ import Modal from "react-modal";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
+import { Link } from "react-router-dom";
 export default class OrderDetail extends React.Component {
 
   constructor(props) {
@@ -122,7 +123,7 @@ export default class OrderDetail extends React.Component {
                     </div>
                     <Modal className='custom-modal-width'
                       isOpen={showModal}
-                      onRequestClose={this.toggleModal}                      
+                      onRequestClose={this.toggleModal}
                       shouldCloseOnOverlayClick={true}
                       ariaHideApp={false}>
                       <span className="modalClose">
@@ -241,6 +242,10 @@ export default class OrderDetail extends React.Component {
                           {product.is_cancel === 0 && <button className="cancelled" onClick={() => (productItem.awb_number.number === null ? this.cancelOrder(productItem.order_id, product) : this.toggleModal)}>{productItem.awb_number.number === null ? "Cancel Order" : "Request Cancellation"}</button>}
                         </div>
                       </div>
+                      <div className="col-sm-2 col">
+                        <Link to={`/order-detail/${product.product_id}/reviews`}>Feedback</Link>
+                      </div>
+
                     </div>
                   </div>
                 </div>))}

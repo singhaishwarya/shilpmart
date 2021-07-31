@@ -287,6 +287,7 @@ class Header extends Component {
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faShoppingBasket} /> Orders</Link>
                       <Link to='/my-account/address'><FontAwesomeIcon icon={faList} /> Addresses</Link>
                       <Link to='/my-account/details'><FontAwesomeIcon icon={faUser} /> Account details</Link>
+                      <Link to='/my-account/reviews'><FontAwesomeIcon icon={faUndo} /> Reviews</Link>
                       {/* <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo} /> Feedback</Link> */}
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faTicketAlt} /> Raise Ticket</Link>
                       <Link to='/my-account/wishlist'><FontAwesomeIcon icon={faHeart} /> Wishlist</Link>
@@ -404,6 +405,7 @@ class Header extends Component {
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faShoppingBasket} /> Orders</Link>
                       <Link to='/my-account/address'><FontAwesomeIcon icon={faList} /> Addresses</Link>
                       <Link to='/my-account/details'><FontAwesomeIcon icon={faUser} /> Account details</Link>
+                      <Link to='/my-account/reviews'><FontAwesomeIcon icon={faUndo} /> Reviews</Link>
                       {/* <Link to='/my-account/feedback'><FontAwesomeIcon icon={faUndo} /> Feedback</Link> */}
                       <Link to='/my-account/order'><FontAwesomeIcon icon={faTicketAlt} /> Raise Ticket</Link>
                       <Link to='/my-account/wishlist'><FontAwesomeIcon icon={faHeart} /> Wishlist</Link>

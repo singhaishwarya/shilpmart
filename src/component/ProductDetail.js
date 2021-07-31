@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "react-modal";
-import {Link} from "react-router-dom";
 import ReactStars from 'react-stars';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
@@ -73,6 +72,8 @@ class ProductDetail extends React.Component {
       this.getProductDetails(this.getQueryParams());
     }
   }
+
+
   handleChange(field, e) {
     let fields = this.state.fields;
     fields[field] = e.target.value;
@@ -372,7 +373,7 @@ class ProductDetail extends React.Component {
               <div className="col-lg-6 col-md-6 col-12 mb-2">
 
                 <div className="product-gallery">
-                
+
                   <div className="product-gallery-preview order-sm-2">
                     <div className="product-gallery-preview-item active" id="first">
                       {imgProps.img ? <ReactImageZoom {...imgProps} /> : ''}
@@ -517,10 +518,10 @@ class ProductDetail extends React.Component {
 
                         </div>
                       </div>
-                      
+
                       <button className="btn btn-theme" value="Submit" disabled={false} onClick={this.handleSubmit}> Submit
                       </button>
-                       
+
                       {/* // <button value="Submit" className="btn btn-theme float-right" type="submit" /> */}
                     </Form>
                   </Modal>
@@ -573,8 +574,7 @@ class ProductDetail extends React.Component {
 
                   <div className="product-description">
                     <header className="d-flex justify-content-between feedback">
-                     <span>Reviews</span> 
-                     <span><Link to="/Review">Feedback</Link></span>
+                      <span>Reviews</span>
                     </header>
                     {/* <Bars data={this.state.testData} makeUppercase={true} /> */}
                     <div className="row">
