@@ -43,11 +43,11 @@ export default class ForgotPassword extends Component {
     const { username } = this.state;
     AuthService.forgotPassword({ username: username })
       .then((result) => (
-        result.data.success ? (
-          ToastService.success('A temporary password(OTP) is sent to Email/Mobile'),
+        result.success ? (
+          ToastService.success(result.data),
           this.props.history.push({
             pathname: '/'
-          })) : this.setState({ errorMsg: result.data.data.error })
+          })) : this.setState({ errorMsg: result.data.error })
       ))
       .catch((err) => {
         console.error(err);
