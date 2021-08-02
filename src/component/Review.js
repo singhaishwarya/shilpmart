@@ -1,8 +1,9 @@
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import Rating from 'react-rating';
 import ReviewService from '../services/ReviewService';
+import ToastService from '../services/ToastService';
 export default class Review extends React.Component {
 
   constructor(props) {
@@ -55,22 +56,37 @@ export default class Review extends React.Component {
 
   handleSubmitReview(e) {
     e.preventDefault();
-    const data = new FormData();
-    data.append('product_rating', this.state.fields.product_rating);
-    data.append('product_id', this.state.fields.product_id);
-    data.append('product_review_title', this.state.fields.product_review_title);
-    data.append('product_review_description', this.state.fields.product_review_description);
-    data.append('images', this.state.fields.images);
+    if (this.state.fields.product_rating) {
+      const data = new FormData();
+      data.append('product_rating', this.state.fields.product_rating);
+      data.append('product_id', this.state.fields.product_id);
+      data.append('product_review_title', this.state.fields.product_review_title);
+      data.append('product_review_description', this.state.fields.product_review_description);
+      data.append('images', this.state.fields.images);
 
 
-    ReviewService.addEdit(data)
-      .then((result) => {
+      ReviewService.addEdit(data)
+        .then((result) => {
+          if (result.success) {
+            ToastService.success(result.message);
+            window.history.back();
+          }
 
-        console.log("demo===", result)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      ToastService.error("Please rate the product");
+    }
+  }
+
+  removeImage = (item, index) => {
+    let selectedImg = this.state.fields.images;
+    selectedImg = selectedImg.filter((_, i) => i !== index)
+    this.setState({
+      fields: { images: selectedImg }
+    });
   }
 
   render() {
@@ -146,13 +162,22 @@ export default class Review extends React.Component {
                     <div className="photoUpload">
                       <div className="uploaded">
                     {fields.images.map((item, index) =>
-                      <span><img key={index} src={item.uri} alt={item.uri} /></span>
+                      <span>
+                        <img key={index} src={item.uri} alt={item.uri} />
+                        <span onClick={() => this.removeImage(item, index)}>
+                          <FontAwesomeIcon icon={faTimes}/></span>                      
+                      </span>
                     )}</div>
                       <input ref="file" type="file" id="uploadpic" onChange={(e) => this.onFileChange(e)} className="form-control" multiple />
 
                       <label htmlFor="uploadpic" className="photoBg"><FontAwesomeIcon icon={faCamera} /></label>
                     </div>
-                  
+                    {/* {fields.images.map((item, index) =>
+                      <div key={index}>
+                        <img src={item.uri} />
+                        <span onClick={() => this.removeImage(item, index)}>X</span>
+                      </div>
+                    )} */}
                   </div>
                   <button type="submit" onClick={(e) => this.handleSubmitReview(e)} className="btn btn-theme" >Submit Review</button>
 
