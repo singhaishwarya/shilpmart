@@ -275,7 +275,7 @@ export default class OrderDetail extends React.Component {
                   </div>
                 </div>
               </div> */}
-              <span>Return Policy <Link to="/exchange-policy">Know More</Link></span>
+              <span className="return_policy">Return Policy <Link to="/exchange-policy">Know More</Link></span>
               </div>
             </div>
 

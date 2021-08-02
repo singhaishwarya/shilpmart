@@ -1,4 +1,4 @@
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import Rating from 'react-rating';
@@ -162,22 +162,16 @@ export default class Review extends React.Component {
                     <div className="photoUpload">
                       <div className="uploaded">
                     {fields.images.map((item, index) =>
-                      <span><img key={index} src={item.uri} alt={item.uri} /></span>
+                      <span>
+                        <img key={index} src={item.uri} alt={item.uri} />
+                        <span onClick={() => this.removeImage(item, index)}>
+                          <FontAwesomeIcon icon={faTimes}/></span>                      
+                      </span>
                     )}</div>
                       <input ref="file" type="file" id="uploadpic" onChange={(e) => this.onFileChange(e)} className="form-control" multiple />
 
                       <label htmlFor="uploadpic" className="photoBg"><FontAwesomeIcon icon={faCamera} /></label>
                     </div>
-<<<<<<< HEAD
-                  
-=======
-                    {fields.images.map((item, index) =>
-                      <div key={index}>
-                        <img src={item.uri} />
-                        <span onClick={() => this.removeImage(item, index)}>X</span>
-                      </div>
-                    )}
->>>>>>> f655cd2652db74bc334ca70e409dc1ec0e70a443
                   </div>
                   <button type="submit" onClick={(e) => this.handleSubmitReview(e)} className="btn btn-theme" >Submit Review</button>
 

@@ -76,12 +76,12 @@ class Wishlist extends Component {
 
     return (
       <section id="maincontent">
-        <div className="subpages-heading">
+        {/* <div className="subpages-heading">
           <div className="container">
             <h1 className="text-center p-5">Wishlist</h1>
 
           </div>
-        </div>
+        </div> */}
         <div className="container">
           {(wishlist?.length > 0) ? (<>
             <div className='row py-5'>
