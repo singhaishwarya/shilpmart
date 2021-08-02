@@ -2623,7 +2623,20 @@ position: absolute;
 left: 7px;
 top: 5px;
 }
+.uploaded{display: flex;
+  justify-content: flex-start;      
+  margin-right: 7px;
+  float: left;
+}
 
+  .uploaded span{
+    width: 55px; height: 55px;
+    margin-right: 7px;
+    overflow: hidden;
+  }
+  .uploaded span img{
+    width: 100%;
+  }
 /* product-detial-css-version2 end */
 
 
@@ -3708,8 +3721,9 @@ padding: 1px 3px;
 
 .orderimg {
   width: 60px;
-  height: 75px;
+  height: 60px;
   overflow: hidden;
+  border-radius: 4px;
 }
 
 .orderProductImg span {
@@ -3740,17 +3754,7 @@ padding: 1px 3px;
   display: flex;
   flex-direction: column;
 }
-.orderstatus button.cancelled {
-  color: #ff0000;
-  background-color: transparent;
-  border: none;
-  font-weight: 600;
-  font-size: 10px;
-  text-transform: capitalize;
-  padding: 0;
-  display: block;
-  cursor: pointer;
-}
+
 .orderproductInfo {
   display: flex;
   flex-direction: column;
@@ -3886,10 +3890,37 @@ padding: 1px 3px;
 .needhlep a {
   color: #e87f13;
   padding: 5px 0;
+  font-size: 14px;
 }
 .needhlep a:hover {
-  color: #ed731d;
+  color: #0b4981;
 }
+
+.needhlep span{
+  color: #e87f13;
+font-size: 14px;
+margin: 7px auto;
+display: block;
+}
+
+.needhlep span:hover{
+  color: #0b4981;
+  cursor: pointer;
+}
+.orderstatus button.cancelled {
+  color: #e87f13;
+  background-color: transparent;
+  border: none;  
+  font-size: 14px;
+  text-transform: capitalize;
+  padding: 0;
+  display: block;
+  cursor: pointer;
+}
+.orderstatus button.cancelled:hover{
+  color: #0b4981;
+}
+
 
 .orderRangewrap {
   padding: 30px 30px 45px 30px;

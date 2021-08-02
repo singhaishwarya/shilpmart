@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faStar, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { getOrderStatus } from "../../../lib/utils";
 import { format } from 'date-fns';
 import OrderService from '../../../services/OrderService';
@@ -217,7 +217,7 @@ export default class OrderDetail extends React.Component {
                 </div>
 
                 {productItem.awb_number?.product?.map((product, productIndex) => (<div key={productIndex} className="row">
-                  <div className="col-md-6 offset-md-3">
+                  <div className="col-md-6 offset-md-4">
                     <div className="row mb-2">
                       <div className="col-sm-2 col-4">
                         <div className="orderProductImg">
@@ -232,19 +232,28 @@ export default class OrderDetail extends React.Component {
                           <span>₹ {product.price}</span>
                         </div>
                       </div>
-                      <div className="col-sm-2 col">
+                      <div className="col-sm-4 col">
                         <div className="orderstatus">
                           <div className="orderstate"> <span>{product.is_cancel ? "Cancelled" : getOrderStatus(orderDetail.status)}</span></div>
-                          <div className="needhlep" onClick={this.toggleModal}><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</div>
+                          <div className="needhlep" onClick={this.toggleModal}>
+                            <Link to={`/order-detail/${product.product_id}/reviews`}>
+                            <FontAwesomeIcon icon={faStar}/> Rate & Review Product</Link><br/>
+                            <span><FontAwesomeIcon icon={faQuestionCircle} /> Need Help</span>
+                            {product.is_cancel === 0 && <button className="cancelled" onClick={() => (productItem.awb_number.number === null ? this.cancelOrder(productItem.order_id, product) : this.toggleModal)}><FontAwesomeIcon icon={faTimesCircle}/> {productItem.awb_number.number === null ? "Cancel Order" : "Request Cancellation"}</button>}
+                            </div>
+                            
                         </div>
-                      </div><div className="col-sm-2 col">
+                      </div>
+                      
+                      {/* <div className="col-sm-2 col">
                         <div className="orderstatus">
                           {product.is_cancel === 0 && <button className="cancelled" onClick={() => (productItem.awb_number.number === null ? this.cancelOrder(productItem.order_id, product) : this.toggleModal)}>{productItem.awb_number.number === null ? "Cancel Order" : "Request Cancellation"}</button>}
                         </div>
-                      </div>
-                      <div className="col-sm-2 col">
+                      </div> */}
+
+                      {/* <div className="col-sm-2 col">
                         <Link to={`/order-detail/${product.product_id}/reviews`}>Feedback</Link>
-                      </div>
+                      </div> */}
 
                     </div>
                   </div>
@@ -266,6 +275,7 @@ export default class OrderDetail extends React.Component {
                   </div>
                 </div>
               </div> */}
+              <span>Return Policy <Link to="/exchange-policy">Know More</Link></span>
               </div>
             </div>
 

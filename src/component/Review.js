@@ -127,6 +127,7 @@ export default class Review extends React.Component {
                 <div className="card-header" style={{ backgroundColor: '#fff' }}><h6>Rate This Product</h6>
                   <Rating className="reviewStar" emptySymbol="fa fa-star-o" initialRating={fields.product_rating} fullSymbol="fa fa-star" onChange={(e) => this.handleRatingChange(e)} />
                   <span className="ml-1 text-success">{ratingExpession[fields.product_rating]}</span>
+                  {/* classes to use for bad-text-danger, satisfy and good - text-warning and for remain text-success */}
                 </div>
                 <div className="card-body">
                   <h5>Review This Product</h5>
@@ -143,13 +144,15 @@ export default class Review extends React.Component {
 
                   <div className="form-group">
                     <div className="photoUpload">
-                      <input ref="file" type="file" multiple id="uploadpic" onChange={(e) => this.onFileChange(e)} className="form-control" />
+                      <div className="uploaded">
+                    {fields.images.map((item, index) =>
+                      <span><img key={index} src={item.uri} alt={item.uri} /></span>
+                    )}</div>
+                      <input ref="file" type="file" id="uploadpic" onChange={(e) => this.onFileChange(e)} className="form-control" multiple />
 
                       <label htmlFor="uploadpic" className="photoBg"><FontAwesomeIcon icon={faCamera} /></label>
                     </div>
-                    {fields.images.map((item, index) =>
-                      <img key={index} src={item.uri} />
-                    )}
+                  
                   </div>
                   <button type="submit" onClick={(e) => this.handleSubmitReview(e)} className="btn btn-theme" >Submit Review</button>
 
