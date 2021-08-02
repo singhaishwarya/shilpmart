@@ -337,7 +337,7 @@ class ProductDetail extends React.Component {
       this.setState({
         _variationIndex: 0, imgProps: {
           width: 534, zoomWidth:
-            500, img: imgUrl, zoomPosition: 'right'
+            200, img: imgUrl, zoomPosition: 'right'
         }
       });
     }

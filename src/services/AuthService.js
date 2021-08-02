@@ -55,12 +55,11 @@ export default class AuthService extends Component {
   static forgotPassword = async (data) => {
     try {
       const response = await axios.post(baseUrl + `mobile-forget-password`, data, config);
-      return response.data ? response.data.data : [];
+      return response.data ? response.data : [];
     } catch (error) {
       const { response } = error;
-      if (!response) return;
-      console.log(`FETCH GET ERROR`, response);
-      return response
+      if (!response) { console.log(`FETCH GET ERROR`, response); return; }
+      return response.data ? response.data : [];
     }
   }
 

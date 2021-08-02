@@ -111,9 +111,13 @@ export default class AddEditAddress extends React.Component {
       if (!this.error) {
         AddressService.addEdit(this.state.fields)
           .then((result) => {
+
             if (!result) return ToastService.error("Please fill form details")
-            if (result.success) {
+            if (result.data.success) {
               window.location.pathname === '/checkout' ? this.props.selectedAddress(this.state.fields) : window.history.back()
+            }
+            else {
+              return ToastService.error(Object.values(result.data.data)[0][0])
             }
           }).catch((err) => {
             console.log(err);
