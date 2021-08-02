@@ -26,6 +26,9 @@ export default class Review extends React.Component {
         ...prevState.fields, product_rating: value
       }
     }));
+    if ([1, 2].includes(value)) { this.setState({ ratingClass: 'ml-1 bad-text-danger' }) }
+    else if ([3, 4].includes(value)) { this.setState({ ratingClass: 'ml-1 text-warning' }) }
+    else { this.setState({ ratingClass: 'ml-1 text-success' }) }
   }
   onFileChange = e => {
     e.preventDefault();
@@ -90,7 +93,7 @@ export default class Review extends React.Component {
   }
 
   render() {
-    const { fields, ratingExpession } = this.state
+    const { fields, ratingExpession, ratingClass } = this.state
     return (
       <section id="maincontent">
 
@@ -142,8 +145,9 @@ export default class Review extends React.Component {
               <div className="card shadow">
                 <div className="card-header" style={{ backgroundColor: '#fff' }}><h6>Rate This Product</h6>
                   <Rating className="reviewStar" emptySymbol="fa fa-star-o" initialRating={fields.product_rating} fullSymbol="fa fa-star" onChange={(e) => this.handleRatingChange(e)} />
-                  <span className="ml-1 text-success">{ratingExpession[fields.product_rating]}</span>
                   {/* classes to use for bad-text-danger, satisfy and good - text-warning and for remain text-success */}
+                  <span className={ratingClass}>{ratingExpession[fields.product_rating]}</span>
+
                 </div>
                 <div className="card-body">
                   <h5>Review This Product</h5>
@@ -161,13 +165,13 @@ export default class Review extends React.Component {
                   <div className="form-group">
                     <div className="photoUpload">
                       <div className="uploaded">
-                    {fields.images.map((item, index) =>
-                      <span>
-                        <img key={index} src={item.uri} alt={item.uri} />
-                        <span onClick={() => this.removeImage(item, index)}>
-                          <FontAwesomeIcon icon={faTimes}/></span>                      
-                      </span>
-                    )}</div>
+                        {fields.images.map((item, index) =>
+                          <span>
+                            <img key={index} src={item.uri} alt={item.uri} />
+                            <span onClick={() => this.removeImage(item, index)}>
+                              <FontAwesomeIcon icon={faTimes} /></span>
+                          </span>
+                        )}</div>
                       <input ref="file" type="file" id="uploadpic" onChange={(e) => this.onFileChange(e)} className="form-control" multiple />
 
                       <label htmlFor="uploadpic" className="photoBg"><FontAwesomeIcon icon={faCamera} /></label>

@@ -61,8 +61,18 @@ export default class SellerProfile extends React.Component {
       search: "&" + this.currentUrlParams.toString()
     });
   };
+
+  selectedItem = (catId) => {
+    this.setState({ isActiveTab: 0 })
+    this.currentUrlParams = new URLSearchParams(window.location.search);
+    this.currentUrlParams.set('cat_ids', catId)
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
+  };
   render() {
-    const { isActiveTab, vendorData, searchQuery } = this.state;
+    const { isActiveTab, vendorData, searchQuery, categories } = this.state;
     return (
       <>
         <div className="seller-cover-wrapper">
@@ -117,14 +127,9 @@ export default class SellerProfile extends React.Component {
                     <h4>categories</h4>
                     <div className="filter-content collapse show" id="collapse_aside1" >
                       <div className="categories-list">
-                        <ul>
-                          <li><a href="#">SAREES</a></li>
-                          <li><a href="#">WATER BOTTLES, FLASKS & SURAHIS</a></li>
-                          <li><a href="#">CRAFT ACCESSORIES</a></li>
-                          <li><a href="#">DINING SETS</a></li>
-                          <li><a href="#">KURTAS</a></li>
-                          <li><a href="#">JACKETS & COATS</a></li>
-                          <li><a href="#">SHOES</a></li>
+                        <ul>{categories?.map((item, index) => (
+                          <li key={index} onClick={() => this.selectedItem(item.key)}>{item.label}</li>
+                        ))}
                         </ul>
                       </div>
                     </div>
