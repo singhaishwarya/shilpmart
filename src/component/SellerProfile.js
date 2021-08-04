@@ -156,12 +156,15 @@ export default class SellerProfile extends React.Component {
                 </ul>
 
                 <div className="tab-content" >
+                  
                   <div className={`tab-pane fade ${((isActiveTab === 0) ? 'show active' : '')}`}
                     role="tabpanel" aria-labelledby="home-tab">{vendorData?.data?.length > 0 ?
                       <ProductGrid {...this.props} sellerProducts={vendorData}
                         setPriceRangeProps={() => console.log("demo")} /> : <div className="empty-wishlist empty-product"><h2>No Product found for this seller.</h2> </div>} </div>
+
                   <div className={`tab-pane fade ${((isActiveTab === 1) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="profile-tab">
                     There are about. </div>
+
                   <div className={`tab-pane fade ${((isActiveTab === 2) ? 'show active' : '')}`} role="tabpanel" aria-labelledby="contact-tab">
                     <div className="row">
                       <div className="col-sm-3">

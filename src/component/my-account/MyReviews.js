@@ -56,7 +56,7 @@ export default class MyReviews extends React.Component {
                     <span><FontAwesomeIcon icon={faThumbsDown}/> 0</span>
                     </div>  
                     </div>                    
-                    <Link className="mt-3 d-block" to="/">Edit</Link>
+                    <Link className="mt-3 d-block" to="/reviews">Edit</Link>
                   
                 </div>
               </div>

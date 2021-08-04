@@ -180,7 +180,8 @@ class Cart extends Component {
             </div>
           </form>
           <div className="col-lg-4 col-sm-6 col-12">
-            <div className="cart-shop-footer product-img-wrapper border p-4">
+            <div className="product-img-wrapper">
+              <div className="border p-4">
               <h4>CART TOTALS</h4>
               <div className="cart-footer-head py-3">
                 <h6>Subtotal :</h6>
@@ -194,8 +195,13 @@ class Cart extends Component {
                 <h5>Total</h5>
                 <p><span>₹{totalCost}</span></p>
               </div>
-              <div className="cart-action cart-action2" onClick={() => this.handleCheckout(cartProduct, totalCost)}> <button className="btn login-btn" >Proceed to checkout </button></div>
-            </div>
+           
+
+              </div>
+              <div className="cart-action cart-action2" onClick={() => this.handleCheckout(cartProduct, totalCost)}><button className="btn btn-theme login-btn mt-3" >Proceed to checkout </button> </div>
+              
+            </div>            
+            
           </div>
 
         </div> : <div className="cart-shop-body">
