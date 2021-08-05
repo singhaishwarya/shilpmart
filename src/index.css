@@ -4157,6 +4157,7 @@ display: block;
 }
 .coloumn-2:last-child {
   margin-right: 0;
+  flex: 1;
 }
 
 .coloumn-2 small {

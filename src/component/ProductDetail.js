@@ -337,7 +337,7 @@ class ProductDetail extends React.Component {
       this.setState({
         _variationIndex: 0, imgProps: {
           width: 534, zoomWidth:
-            200, img: imgUrl, zoomPosition: 'right'
+            350, img: imgUrl, zoomPosition: 'right'
         }
       });
     }
@@ -347,7 +347,7 @@ class ProductDetail extends React.Component {
           this.setState({
             _variationIndex: index, imgProps: {
               width: 534, zoomWidth:
-                200, img: item.image_url, zoomPosition: 'right'
+                350, img: item.image_url, zoomPosition: 'right'
             }
           });
         }
@@ -381,7 +381,7 @@ class ProductDetail extends React.Component {
                     </div>
                   </div>
                   <div className="product-gallery-thumblist order-sm-1">
-                    {productDetailData?.images?.length > 1 ? productDetailData?.images?.map((item, index) =>
+                    {productDetailData?.images?.length > 0 ? productDetailData?.images?.map((item, index) =>
                     (<a key={index} className="product-gallery-thumblist-item" ><img className="img-fluid" src={item.image_url}
                       onClick={() => this.renderItemGallery(item.image_url)}
                       alt="Product thumb" /></a>))
