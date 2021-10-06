@@ -410,7 +410,7 @@ span.result-addtocart {
   background-color: #f8f8f8;
   z-index: 9;
   border-radius: 4px;
-  margin-top: 10px;
+  margin-top:0;
   right: 9%;
   box-shadow: 3px 3px 3px rgb(0 0 0 / 20%);
 }
@@ -4157,6 +4157,7 @@ display: block;
 }
 .coloumn-2:last-child {
   margin-right: 0;
+  flex: 1;
 }
 
 .coloumn-2 small {
@@ -4969,6 +4970,48 @@ td.product-price span {
   background-size: cover;
   padding: 5rem 0;
 }
+
+/* Thank you page css */
+.success-screen {
+  background: #ffffff;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
+}
+.success-screen h1{
+  font-size: 3rem;
+}
+.success-screen .thank-you {
+  background: #ed731d;
+  padding: 40px;
+}
+.thank-you svg{
+  font-size: 3rem;
+  color: #fff;
+}
+.ordered-detail {
+  padding: 0 40px 40px 40px;
+}
+.ordered-item {
+  background: #f5f5f5;
+  margin-bottom: 5px;
+  text-align: center;
+  border-bottom: 5px solid #fff;
+}
+.ordered-detail .table td {
+  padding: 15px 0px;
+  vertical-align: top;
+  border-top: none;
+}
+.ordered-detail .table .ordered-item .ordered-image {
+  width: 50px;
+  display: inline-block;
+  border: none;
+}
+.success-screen .button {
+  padding: 10px 20px;
+  background: #e05206;
+  color: #ffffff;
+}
+
 
 /* responsive css */
 

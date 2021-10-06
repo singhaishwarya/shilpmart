@@ -4,7 +4,7 @@ import ReactStars from 'react-stars';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ShopByType from "./ShopByType";
 import { faFacebook, faTwitter, faPinterest, faLinkedin, faTelegram } from '@fortawesome/free-brands-svg-icons'
-import { faRandom, faCheck, faQuestion, faEnvelope, faPhoneAlt, faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faCheck, faTimes, faQuestion, faEnvelope, faPhoneAlt, faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart, } from '@fortawesome/free-regular-svg-icons'
 import {
   FacebookShareButton, TwitterShareButton, PinterestShareButton, TelegramShareButton, LinkedinShareButton
@@ -337,7 +337,7 @@ class ProductDetail extends React.Component {
       this.setState({
         _variationIndex: 0, imgProps: {
           width: 534, zoomWidth:
-            200, img: imgUrl, zoomPosition: 'right'
+            350, img: imgUrl, zoomPosition: 'right'
         }
       });
     }
@@ -347,7 +347,7 @@ class ProductDetail extends React.Component {
           this.setState({
             _variationIndex: index, imgProps: {
               width: 534, zoomWidth:
-                200, img: item.image_url, zoomPosition: 'right'
+                350, img: item.image_url, zoomPosition: 'right'
             }
           });
         }
@@ -381,7 +381,7 @@ class ProductDetail extends React.Component {
                     </div>
                   </div>
                   <div className="product-gallery-thumblist order-sm-1">
-                    {productDetailData?.images?.length > 1 ? productDetailData?.images?.map((item, index) =>
+                    {productDetailData?.images?.length > 0 ? productDetailData?.images?.map((item, index) =>
                     (<a key={index} className="product-gallery-thumblist-item" ><img className="img-fluid" src={item.image_url}
                       onClick={() => this.renderItemGallery(item.image_url)}
                       alt="Product thumb" /></a>))
@@ -487,36 +487,38 @@ class ProductDetail extends React.Component {
                   <Modal className='custom-modal-width'
                     isOpen={showModal}
                     onRequestClose={this.toggleModal}
-                    contentLabel="Ask a Question"
+                    contentLabel="AskQuestion"
                     //style={askForm}
                     shouldCloseOnOverlayClick={true}
                     ariaHideApp={false}
-                  > <Form ref={c => { this.form = c }}  >
+                  > 
+                   <span className="float-right"><FontAwesomeIcon className="text-right" icon={faTimes}/></span>
+                  <Form ref={c => { this.form = c }} >
 
                       {/* <form onSubmit={this.handleSubmit}> */}
                       <h4 className="mb-4">Ask a Question</h4>
-                      {Object.keys(this.props.userData).length > 0 ? '' : <><div className="form-group row">
-                        <label htmlFor="name" className="col-sm-3 col-12 col-form-label">Name<span>*</span></label>
-                        <div className="col-sm-9 col-12">
+                      {Object.keys(this.props.userData).length > 0 ? '' : <><div className="form-group">
+                        <label htmlFor="name" className="col-form-label">Name<span>*</span></label>
+                        
                           <input type="text" readonly className="form-control" id="name" value={fields.name} onChange={this.handleChange.bind(this, "msg")} />
-                        </div>
+                        
                       </div>
 
-                        <div className="form-group row">
-                          <label htmlFor="Email" className="col-sm-3 col-12 col-form-label">Email<span>*</span></label>
-                          <div className="col-sm-9 col-12">
+                        <div className="form-group">
+                          <label htmlFor="Email" className="col-form-label">Email<span>*</span></label>
+                         
                             <input type="text" readonly className="form-control" id="Email" value={fields.email} onChange={this.handleChange.bind(this, "msg")} />
                             <small>Your email address will not be published.</small>
-                          </div>
+                          
                         </div></>}
 
-                      <div className="form-group row">
-                        <label htmlFor="inquiry" className="col-sm-3 col-12 col-form-label">Your inquiry<span>*</span></label>
-                        <div className="col-sm-9 col-12">
+                      <div className="form-group">
+                        <label htmlFor="inquiry" className="col-form-label">Your inquiry<span>*</span></label>
+                        
                           <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" placeholder="Type your Question..." value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
                           </Textarea>
 
-                        </div>
+                        
                       </div>
 
                       <button className="btn btn-theme" value="Submit" disabled={false} onClick={this.handleSubmit}> Submit

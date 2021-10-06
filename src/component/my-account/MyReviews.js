@@ -45,7 +45,7 @@ export default class MyReviews extends React.Component {
                     <div class="allreview mb-2"><span>{item.product_rating}★</span></div>
                     <p className="review_message">{item.product_review_description}</p>
                     <div className="review_auth d-flex">
-                      <p>Akhil Kumar</p>
+                      {/* <p>{item.user_id.first_name} {item.user_id.last_name}</p> */}
                       <p>{format(new Date(item.created_at), 'dd-MM-yyyy')}</p>
                       {/* <div className="like-dislike">
                         <span><FontAwesomeIcon icon={faThumbsUp} /> 0 </span>
