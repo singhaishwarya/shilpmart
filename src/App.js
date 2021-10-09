@@ -41,15 +41,17 @@ import Faq from './component/Faq.js';
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 
+import history from './history'
 class App extends Component {
-
+  constructor(props) {
+    super(props)
+  }
 
   render() {
-
     const { userData } = this.props;
     return (
       <BrowserRouter>
-        <header><Header /></header>
+        <header><Header history={history} /></header>
         <Switch>
           <Route isAuthenticated={userData} path='/' component={Dashboard} exact />
           <Route isAuthenticated={userData} path='/registration' component={Registration} exact />
