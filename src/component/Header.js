@@ -126,9 +126,20 @@ class Header extends Component {
   };
 
   onTextChange = (e) => {
-    console.log("demo...", e)
     this.setState({ searchQuery: e.target.value })
     const searchString = e.target.value.toLowerCase();
+    if (e.key === 'Enter') {
+      window.location = window.location.origin + "/product-list?q=" + searchString;
+      console.log("demo===", window.location)
+      // return <Redirect to="/product-list" />
+      // this.props.history.push({
+      //   pathname: '/product-list',
+      //   search: "?q=" + searchString,
+      //   state: {
+      //     rere: searchString
+      //   }
+      // });
+    }
     if (searchString?.length >= 3) {
       ProductService.fetchAllProducts({ q: searchString }).then((result) => {
         this.setState({ seachResults: result.data.length > 0 ? result.data : ['1'] });
@@ -138,7 +149,8 @@ class Header extends Component {
       this.setState({ seachResults: [] });
 
     }
-  };
+
+  }
 
   addToCart = (cartProduct) => {
     if (this.props.cart.find(({ product, variation_index }) => (product === cartProduct.id && variation_index === 0)) !== undefined) {
@@ -182,12 +194,6 @@ class Header extends Component {
       this.setState({ seachResults: [] });
     }
 
-  }
-  productDetail = (value) => {
-    this.props.history.push({
-      pathname: '/product-detail',
-      search: "?pid=" + value?.content?.product_id
-    });
   }
   renderSearchOptions = () => {
     let { seachResults } = this.state;
