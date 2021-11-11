@@ -21,6 +21,8 @@ import ReactImageZoom from 'react-image-zoom';
 import OrderService from '../services/OrderService';
 import Form from "react-validation/build/form";
 import Textarea from "react-validation/build/textarea";
+import { format } from 'date-fns';
+
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +30,7 @@ class ProductDetail extends React.Component {
     this.requiredBinded = this.required.bind(this);
     this.error = false;
     this.state = {
-      combination: [], finCombination: [], currentVariationIndex: null, variationSelected: false,
+      combination: [], currentVariationIndex: 0, variationSelected: false,
       isActiveTab: 0, productCatId: 0, _variationIndex: 0,
       filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
@@ -41,7 +43,7 @@ class ProductDetail extends React.Component {
       notFountImage: [{
         original: require('../public/No_Image_Available.jpeg'),
         thumbnail: require('../public/No_Image_Available.jpeg'),
-      }], imgProps: {},
+      }], imgProps: {}, productReviews: {}, inquiriesData: [],
       fields: {
         product_id: props.match.params.productId,
         msg: '', type: 3, name: '', email: ''
@@ -66,13 +68,26 @@ class ProductDetail extends React.Component {
 
   componentDidMount() {
     this.getProductDetails(this.getQueryParams());
+
   }
   componentDidUpdate(prevprops) {
     if (prevprops.history.location.search !== prevprops.location.search) {
       this.getProductDetails(this.getQueryParams());
     }
   }
+  getReviews = (queryParams) => {
+    try {
 
+      ProductService.fetchReviews({ product_id: queryParams['product_ids'] }).then((result) => {
+        if (!result.data) return
+
+        this.setState({ productReviews: result.data, inquiriesData: result.data.inquiries })
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   handleChange(field, e) {
     let fields = this.state.fields;
@@ -161,9 +176,11 @@ class ProductDetail extends React.Component {
   }
   getProductDetails = (queryParams) => {
     try {
+      this.getReviews(queryParams);
       let variation = [];
       ProductService.fetchAllProducts(queryParams).then((result) => {
         if (result.data?.length === 0) this.props.history.push({ pathname: '/product-list' })
+
         this.setState({
           productDetailData: result?.data[0], productDetailDataPrice: result?.data[0]?.price,
           productCatId: result?.data[0]?.category?.category_id
@@ -172,11 +189,11 @@ class ProductDetail extends React.Component {
         result?.data[0]?.variation_available && result.data[0].properties.map((item) => (
           item.veriation_value.indexOf(",") !== - 1 && variation.push({ key: item.variation_key, value: item.veriation_value.split(',') })
         ));
+
         this.setState({ variations: variation })
 
         window.scrollTo(0, 0);
       });
-
     } catch (err) {
       console.log(err);
     }
@@ -289,28 +306,21 @@ class ProductDetail extends React.Component {
 
   }
   makeCombo = (key, value) => {
-    if (this.state.combination.length > 0) {
-      this.state.combination.map((item, index) => {
-        if (item.variation_id === key && item.variation_value !== value) {
-          item.variation_value = value;
-        }
-        else {
-          this.setState(prevState => ({
-            combination: [...prevState.combination, { "variation_id": key, "variation_value": value }]
-          }));
 
-        }
-      });
-      const filteredArr = this.state.combination?.reduce((acc, current) => {
-        const x = acc.find(item => item.variation_value === current.variation_value);
-        if (!x) {
-          return acc.concat([current]);
-        } else {
-          return acc;
-        }
-      }, []);
-      this.setState({ finCombination: filteredArr });
-      this.getVariationIndex(filteredArr);
+    let combi = this.state.combination, objIndex;
+    if (combi.length > 0) {
+      objIndex = combi.findIndex((obj => obj.variation_id === key));
+
+      if (objIndex !== -1) {
+        combi.splice(objIndex, 1, { "variation_id": key, "variation_value": value });
+        this.setState({ combination: combi });
+      }
+      else {
+        this.setState(prevState => ({
+          combination: [...prevState.combination, { "variation_id": key, "variation_value": value }]
+        }));
+      }
+      this.getVariationIndex(this.state.combination);
     } else {
       this.setState({ combination: [{ "variation_id": key, "variation_value": value }] })
     }
@@ -330,7 +340,7 @@ class ProductDetail extends React.Component {
   }
 
   limitAlert = () => {
-    return ToastService.error("Compare Cart is full(limit :5)")
+    return ToastService.error("Compare Cart is full(limit:5)")
   }
   renderItemGallery = (imgUrl) => {
     if (imgUrl) {
@@ -362,9 +372,25 @@ class ProductDetail extends React.Component {
       this.successAlert(product, 'compare')
     }
   }
+
+  isLike = (type, reviewId) => {
+    try {
+      ProductService.isLikeReview({ is_like: type, review_id: reviewId }).then((result) => {
+        if (!result.data) return
+        this.getProductDetails(this.getQueryParams());
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   render() {
-    const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentvalue2, currentvalue1, productCatId, imgProps, currentVariationIndex, fields } = this.state;
+    const { productDetailData, productQuantity, showModal, shareUrl, title, variations, productDetailDataPrice, currentvalue2, currentvalue1, productCatId, imgProps, currentVariationIndex, fields, productReviews, inquiriesData } = this.state;
+    let rate1 = 0, rate2 = 0, rate3 = 0, rate4 = 0, rate5 = 0;
     const { wishlist } = this.props;
+
+
     return (
       <>
         <section id="maincontent">
@@ -404,10 +430,9 @@ class ProductDetail extends React.Component {
                   <h1>{productDetailData?.content?.title}</h1>
                   <p className="product-price">
                     <span>₹</span> {productDetailDataPrice || 0}</p>
-                  {/* <p className="available">Availability: &nbsp;<span className="text-success">In Stock</span> */}
-                  {/* <span className="text-danger">Out of Stock</span> */}
-                  {/* </p> */}
-                  {/* <div className="short-decription"><p>{productDetailData?.content?.product_description}</p></div> */}
+                  <p className="available">Availability: &nbsp;
+                    {productDetailData?.inventory?.length > 0 && <span className="text-success">{productDetailData?.inventory[currentVariationIndex]?.stock_value == 0 ? "Out of Stock" : "In stock"}</span>}
+                  </p>
                   <div className="addtocart d-flex justify-content-start">
                     <div className="product-qty">
                       <div className="input-group">
@@ -491,34 +516,34 @@ class ProductDetail extends React.Component {
                     //style={askForm}
                     shouldCloseOnOverlayClick={true}
                     ariaHideApp={false}
-                  > 
-                   <span className="float-right"><FontAwesomeIcon className="text-right" icon={faTimes}/></span>
-                  <Form ref={c => { this.form = c }} >
+                  >
+                    <span className="float-right"><FontAwesomeIcon className="text-right" icon={faTimes} /></span>
+                    <Form ref={c => { this.form = c }} >
 
                       {/* <form onSubmit={this.handleSubmit}> */}
                       <h4 className="mb-4">Ask a Question</h4>
                       {Object.keys(this.props.userData).length > 0 ? '' : <><div className="form-group">
                         <label htmlFor="name" className="col-form-label">Name<span>*</span></label>
-                        
-                          <input type="text" readonly className="form-control" id="name" value={fields.name} onChange={this.handleChange.bind(this, "msg")} />
-                        
+
+                        <input type="text" readonly className="form-control" id="name" value={fields.name} onChange={this.handleChange.bind(this, "msg")} />
+
                       </div>
 
                         <div className="form-group">
                           <label htmlFor="Email" className="col-form-label">Email<span>*</span></label>
-                         
-                            <input type="text" readonly className="form-control" id="Email" value={fields.email} onChange={this.handleChange.bind(this, "msg")} />
-                            <small>Your email address will not be published.</small>
-                          
+
+                          <input type="text" readonly className="form-control" id="Email" value={fields.email} onChange={this.handleChange.bind(this, "msg")} />
+                          <small>Your email address will not be published.</small>
+
                         </div></>}
 
                       <div className="form-group">
                         <label htmlFor="inquiry" className="col-form-label">Your inquiry<span>*</span></label>
-                        
-                          <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" placeholder="Type your Question..." value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
-                          </Textarea>
 
-                        
+                        <Textarea className="form-control" name="" rows="4" cols="50" name="Comment" placeholder="Type your Question..." value={fields.msg} validations={[this.required]} onChange={this.handleChange.bind(this, "msg")}>
+                        </Textarea>
+
+
                       </div>
 
                       <button className="btn btn-theme" value="Submit" disabled={false} onClick={this.handleSubmit}> Submit
@@ -531,7 +556,9 @@ class ProductDetail extends React.Component {
 
                 <div className="product-meta py-2">
 
-                  <div className="seller-details-box my-3" onClick={() => this.handleSellerProfile(productDetailData?.vendor?.brand)}>
+                  <div className="seller-details-box my-3"
+                    onClick={() => this.handleSellerProfile(productDetailData?.vendor?.brand)}
+                  >
                     {/* <div className="title-meta">Know your weaver</div> */}
                     <div className="seller-head"><strong>Sold by :</strong> </div>
                     <div className="seller-contact">
@@ -574,7 +601,7 @@ class ProductDetail extends React.Component {
 
 
 
-                  <div className="product-description">
+                  {productReviews?.reviews && productReviews?.reviews?.data?.length > 0 && <div className="product-description">
                     <header className="d-flex justify-content-between feedback">
                       <span>Reviews</span>
                     </header>
@@ -582,107 +609,102 @@ class ProductDetail extends React.Component {
                     <div className="row">
                       <div className="col-sm-3">
                         <div className="avgratings">
-                          <div className="avgrate">4.7<span>★</span></div>
-                          <div className="avgstate">324 Ratings & 66 Reviews</div>
+                          <div className="avgrate">{productReviews?.avg}<span>★</span></div>
+                          <div className="avgstate">{productReviews?.total_rating} Ratings & {productReviews?.total_review} Reviews</div>
                         </div>
                       </div>
                       <div className="col-sm-9">
                         <div className="barWrapper">
                           <ul className="rate">
-                            <li className="rateNumbers"><span>5</span><span>★</span></li>
-                            <li className="rateNumbers"><span>4</span><span>★</span></li>
-                            <li className="rateNumbers"><span>3</span><span>★</span></li>
-                            <li className="rateNumbers"><span>2</span><span>★</span></li>
-                            <li className="rateNumbers"><span>1</span><span>★</span></li>
+                            {
+                              productReviews?.reviews?.data?.map((item, index) => {
+                                switch (item.product_rating) {
+                                  case 1: rate1++
+                                    break
+                                  case 2: rate2++
+                                    break
+                                  case 3: rate3++
+                                    break
+                                  case 4: rate4++
+                                    break
+                                  case 5: rate5++
+                                    break
+                                }
+                              }
+
+                              )}
+                            <>
+                              {rate5 > 0 && <li className="rateNumbers"><span>5</span><span>★</span></li>}
+                              {rate4 > 0 && <li className="rateNumbers"><span>4</span><span>★</span></li>}
+                              {rate3 > 0 && <li className="rateNumbers"><span>3</span><span>★</span></li>}
+                              {rate2 > 0 && <li className="rateNumbers"><span>2</span><span>★</span></li>}
+                              {rate1 > 0 && <li className="rateNumbers"><span>1</span><span>★</span></li>}
+                            </>
                           </ul>
                           <ul className="bars">
-                            <li><div className="bar"><span className="bargreen"></span></div></li>
-                            <li><div className="bar"><span className="bargreen pro4"></span></div></li>
-                            <li><div className="bar"><span className="bargreen pro3"></span></div></li>
-                            <li><div className="bar"><span className="barorange"></span></div></li>
-                            <li><div className="bar"><span className="barred"></span></div></li>
+                            {rate5 > 0 && <li><div className="bar"><span className="bargreen"></span></div></li>}
+                            {rate4 > 0 && <li><div className="bar"><span className="bargreen pro4"></span></div></li>}
+                            {rate3 > 0 && <li><div className="bar"><span className="bargreen pro3"></span></div></li>}
+                            {rate2 > 0 && <li><div className="bar"><span className="barorange"></span></div></li>}
+                            {rate1 > 0 && <li><div className="bar"><span className="barred"></span></div></li>}
                           </ul>
                           <ul className="result">
-                            <li><span>225</span></li>
-                            <li><span>125</span></li>
-                            <li><span>15</span></li>
-                            <li><span>05</span></li>
-                            <li><span>10</span></li>
+                            {rate5 > 0 && <li><span>{rate5}</span></li>}
+                            {rate4 > 0 && <li><span>{rate4}</span></li>}
+                            {rate3 > 0 && <li><span>{rate3}</span></li>}
+                            {rate2 > 0 && <li><span>{rate2}</span></li>}
+                            {rate1 > 0 && <li><span>{rate1}</span></li>}
                           </ul>
                         </div>
                       </div>
 
                       <div className="col my-2">
-                        <p>Images uploaded by Customer</p>
+                        {/* <p>Images uploaded by Customer</p>
                         <div className="imgCustomer">
                           <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid" alt="Saree" /></span>
                           <span><img src={require('../public/saree-2-300x300.jpeg')} className="img-fluid" alt="Saree" /></span>
-                        </div>
+                        </div> */}
 
-                        <div className="product-review pb-4 my-4 border-bottom">
-                          <div className="d-flex mb-3">
-                            <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
-                              <div className="pl-3">
-                                <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
-                                <small className="fs-ms text-muted">July 14, 2021</small>
+                        {productReviews?.reviews?.data.map((item, index) =>
+
+                          item.product_review_description ? <div key={index} className="product-review pb-4 my-4 border-bottom">
+                            <div className="d-flex mb-3">
+                              <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={item.user_id.profile_photo_url} width={50} alt="Sunil Aggrawal" />
+                                <div className="pl-3">
+                                  <h6 className="fs-sm mb-0">{item.user_id.first_name} {item.user_id.last_name}</h6>
+                                  <small className="fs-ms text-muted">{format(new Date(item.created_at), 'dd-MM-yyyy')}</small>
+                                </div>
+                              </div>
+                              <div>
+                                <div className="star-rating">
+                                  <FontAwesomeIcon icon={faStar} />
+                                  <FontAwesomeIcon icon={faStar} />
+                                  <FontAwesomeIcon icon={faStar} />
+                                  <FontAwesomeIcon icon={faStar} />
+                                  <FontAwesomeIcon icon={faStarHalfAlt} />
+                                </div>
+                                {/* <small className="fs-ms text-muted">83% of users found this review helpful</small> */}
                               </div>
                             </div>
-                            <div>
-                              <div className="star-rating">
-                                <FontAwesomeIcon icon={faStar} />
-                                <FontAwesomeIcon icon={faStar} />
-                                <FontAwesomeIcon icon={faStar} />
-                                <FontAwesomeIcon icon={faStar} />
-                                <FontAwesomeIcon icon={faStarHalfAlt} />
-                              </div>
-                              <small className="fs-ms text-muted">83% of users found this review helpful</small>
+                            <p className="fs-md mb-2">{item.product_review_description}</p>
+
+                            <div className="text-nowrap">
+                              <button className="btn-like" type="button" onClick={() => this.isLike(1, item.id)}>{item.likes.like_count}</button>
+                              <button className="btn-dislike" type="button" onClick={() => this.isLike(0, item.id)}>{item.likes.dislike_count}</button>
                             </div>
-                          </div>
-                          <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
+                          </div> : ''
 
-                          <div className="text-nowrap">
-                            <button className="btn-like" type="button">15</button>
-                            <button className="btn-dislike" type="button">3</button>
-                          </div>
-                        </div>
-
-                        <div className="product-review my-4">
-                          <div className="d-flex mb-3">
-                            <div className="d-flex align-items-center mr-4 pr-2"><img className="rounded-circle" src={require('../public/saree-2-300x300.jpeg')} width={50} alt="Sunil Aggrawal" />
-                              <div className="pl-3">
-                                <h6 className="fs-sm mb-0">Sunil Aggrawal</h6>
-                                <small className="fs-ms text-muted">July 12, 2021</small>
-                              </div>
-                            </div>
-                            <div>
-                              <div className="star-rating">
-                                <FontAwesomeIcon icon={faStar} />
-                                <FontAwesomeIcon icon={faStar} />
-                                <FontAwesomeIcon icon={faStarHalfAlt} />
-
-                              </div>
-                              <small className="fs-ms text-muted">83% of users found this review helpful</small>
-                            </div>
-                          </div>
-                          <p className="fs-md mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
-
-                          <div className="text-nowrap">
-                            <button className="btn-like" type="button">15</button>
-                            <button className="btn-dislike" type="button">3</button>
-                          </div>
-                        </div>
-
-
+                        )}
 
                       </div>
 
                     </div>
 
-                  </div>
+                  </div>}
 
-                  <div className="product-description">
+                  {inquiriesData?.data?.length > 0 ? <div className="product-description">
                     <header>Inquiries</header>
-                    <div className="question_ans_wrapper mb-3">
+                    {inquiriesData?.data?.map((item, index) => <div className="question_ans_wrapper mb-3">
                       <div className="d-flex mb-2">
                         <div className="question_ans_title">Question :</div>
                         <div className="question_ans_text">When will blue saree will be restocked?</div>
@@ -694,25 +716,8 @@ class ProductDetail extends React.Component {
                         <div className="question_ans_text">It has been restocked. Please refresh the product page. By vardha SELLER  on 24 October, 2020</div>
 
                       </div>
-                    </div>
-
-
-                    <div className="question_ans_wrapper mb-3">
-                      <div className="d-flex mb-2">
-                        <div className="question_ans_title">Question :</div>
-                        <div className="question_ans_text">When will blue saree will be restocked?</div>
-
-                      </div>
-
-                      <div className="d-flex">
-                        <div className="question_ans_title">Answer :</div>
-                        <div className="question_ans_text">It has been restocked. Please refresh the product page. By vardha SELLER  on 24 October, 2020</div>
-
-                      </div>
-                    </div>
-
-                    {/* <p>{productDetailData?.content?.product_description}</p> */}
-                  </div>
+                    </div>)}
+                  </div> : ''}
 
                 </div>
               </div>
@@ -753,4 +758,3 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
-

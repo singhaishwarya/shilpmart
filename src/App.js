@@ -30,7 +30,7 @@ import ForgotPassword from './component/ForgotPassword';
 import CustomerService from './component/CustomerService';
 import ContactUs from './component/CustomerService';
 import AboutUs from './component/AboutUs';
-import Review from './component/Review';
+import AddEditReview from './component/AddEditReview';
 import SellerPolicy from './component/SellerPolicy';
 import BuyerPolicy from './component/BuyerPolicy';
 import ExchangePolicy from './component/ExchangePolicy';
@@ -42,11 +42,10 @@ import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-  }
+
 
   render() {
+
     const { userData } = this.props;
     return (
       <BrowserRouter>
@@ -76,7 +75,8 @@ class App extends Component {
           <MyAccount>
             <Route component={({ match }) =>
               <>
-                <PrivateRoute isAuthenticated={userData} path='/order-detail/:id/reviews' component={Review} />
+                <PrivateRoute isAuthenticated={userData} path='/order-detail/:id/add-reviews' component={AddEditReview} />
+                <PrivateRoute isAuthenticated={userData} path='/:id/edit-reviews/:rid' component={AddEditReview} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/dashboard' component={MyDashboard} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/order' component={Orders} />
                 <PrivateRoute isAuthenticated={userData} path='/my-account/order-detail' component={OrderDetail} />
@@ -106,4 +106,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, null)(App);
-

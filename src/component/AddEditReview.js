@@ -4,17 +4,19 @@ import React from 'react';
 import Rating from 'react-rating';
 import ReviewService from '../services/ReviewService';
 import ToastService from '../services/ToastService';
-export default class Review extends React.Component {
+export default class AddEditReview extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       ratingExpession: ["", "Bad", "Satisfied", "Good", "Very Good", "Best"],
       fields: {
         product_id: props.match.params.id,
-        product_rating: 0,
-        product_review_title: '',
-        product_review_description: '',
+        review_id: props.match.params.rid,
+        product_rating: this.props.location?.state?.reviewData.product_rating || 0,
+        product_review_title: this.props.location?.state?.reviewData.product_review_title || '',
+        product_review_description: this.props.location?.state?.reviewData.product_review_description || '',
         images: []
       }
     }
@@ -66,8 +68,6 @@ export default class Review extends React.Component {
       data.append('product_review_title', this.state.fields.product_review_title);
       data.append('product_review_description', this.state.fields.product_review_description);
       data.append('images', this.state.fields.images);
-
-
       ReviewService.addEdit(data)
         .then((result) => {
           if (result.success) {
