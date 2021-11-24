@@ -422,7 +422,7 @@ class ProductDetail extends React.Component {
                       <ol className="breadcrumb bg-transparent">
                         <li className="breadcrumb-item"><span>Home</span></li>
                         <li className="breadcrumb-item"><span>Shop</span></li>
-                        <li className="breadcrumb-item"><span>{productDetailData?.category?.parent_category[0].title}</span></li>
+                        {productDetailData?.category?.parent_category[0] && <li className="breadcrumb-item"><span>{productDetailData?.category?.parent_category[0]?.title}</span></li>}
                         <li className="breadcrumb-item"><span>{productDetailData?.category?.cate_title}</span></li>
                       </ol>
                     </nav>
