@@ -91,6 +91,9 @@ class ProductGrid extends Component {
         case 'q':
           queryParams.q = urlParams.get('q');
           break
+        case 'color':
+          queryParams.color = urlParams.get('color');
+          break
         case 'page':
           queryParams.per_page = urlParams.get('page') * (queryParams.per_page ? queryParams.per_page : 12);
           break
@@ -111,6 +114,7 @@ class ProductGrid extends Component {
           productListData: result, isLoaded: true
         });
         this.props.setPriceRangeProps([(result?.filter?.min_price || 0) * 1, (result?.filter?.f_custom_max_price || result?.filter?.max_price) * 1])
+        this.props.setFilters(result.filters)
       });
     } catch (err) {
       console.log(err);

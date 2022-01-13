@@ -3,6 +3,7 @@ import { Treebeard } from 'react-treebeard';
 import { Range, createSliderWithTooltip } from 'rc-slider';
 import ProductGrid from './ProductGrid'
 import CategoryService from '../services/CategoryService';
+import Select from 'react-select';
 const Ranger = createSliderWithTooltip(Range);
 
 export default class ProductList extends React.Component {
@@ -27,7 +28,8 @@ export default class ProductList extends React.Component {
       category_id: props.history.location.state?.category_id || (this.currentUrlParams.get('cat_ids') || 0),
       category_breadcrumbs: props.history.location.state?.category_breadcrumbs,
       selectedOption: null, queryParams: {},
-      parentCategory: (localStorage.getItem('parentCategory') && JSON.parse(localStorage.getItem('parentCategory'))) || []
+      parentCategory: (localStorage.getItem('parentCategory') && JSON.parse(localStorage.getItem('parentCategory'))) || [],
+      setFilter: []
     };
 
   }
@@ -59,6 +61,14 @@ export default class ProductList extends React.Component {
         localStorage.removeItem("parentCategory");
       }
     }
+  }
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption: selectedOption.value })
+    this.currentUrlParams.set('color', selectedOption.value)
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: "&" + this.currentUrlParams.toString()
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -174,9 +184,9 @@ export default class ProductList extends React.Component {
       menuOptions,
       priceRange,
       category_breadcrumbs,
-      parentCategory
+      parentCategory, setFilter, selectedOption
     } = this.state;
-
+    console.log("demo===", this.state)
     return (
 
       <section id="maincontent">
@@ -241,15 +251,25 @@ export default class ProductList extends React.Component {
                     onToggle={this.onCategoryFilter}
                   />
                 </article >
+                {setFilter.map((item, index) => <article className='filter-group'>
+                  <header className='card-header'>
+                    <h6 className='title'>Filter by {item.key} </h6>
+                  </header>
+                  {item.key === 'Color' ? <Select
+                    value={selectedOption}
+                    onChange={this.handleChange}
+                    options={item.values.map((item3, index) => { return { value: item3, label: item3 } })}
+                  /> :
+                    item.values.map((item1, index) => <div key={index} className='catHead'> <input type="checkbox"
+                      // checked={item1}
+                      onChange={() => { this.setState({ [item.key]: item1 }) }} id={item1} name="topping" value={item1} azdzsdzde />{item1}</div>)}
 
-
-
+                </article >)}
               </div >
             </div >
             <div className='col-lg-9'>
               <ProductGrid categoryBreadcrumbs={category_breadcrumbs} {...this.props}
-                setPriceRangeProps={(e) => this.setState({ priceRange: e })}
-              />
+                setPriceRangeProps={(e) => this.setState({ priceRange: e })} setFilters={(e) => this.setState({ setFilter: e })} />
             </div>
           </div >
         </div >

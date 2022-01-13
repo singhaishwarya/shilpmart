@@ -44,6 +44,9 @@ class ShopByType extends Component {
     if (this.props.catId) {
       queryParams = { cat_ids: [this.props.catId] }
     }
+    if (JSON.parse(JSON.parse(localStorage.getItem('persist:root')).userData).token) {
+      queryParams = { token: JSON.parse(JSON.parse(localStorage.getItem('persist:root')).userData).token }
+    }
     return queryParams;
   }
 
