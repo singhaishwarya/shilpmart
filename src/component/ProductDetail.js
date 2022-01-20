@@ -31,19 +31,15 @@ class ProductDetail extends React.Component {
     this.error = false;
     this.state = {
       combination: [], currentVariationIndex: 0, variationSelected: false,
-      isActiveTab: 0, productCatId: 0, _variationIndex: 0,
+      productCatId: 0, _variationIndex: 0,
       filterParams: { product_ids: [props.match.params.productId] },
       wishlistStatus: false,
       shareUrl: window.location.href,
       title: 'eShilpmart',
       productDetailData: [],
       productQuantity: 1, currentvalue2: '', currentvalue1: '',
-      visible: true,
-      showModal: false, productDetailDataImages: [],
-      notFountImage: [{
-        original: require('../public/No_Image_Available.jpeg'),
-        thumbnail: require('../public/No_Image_Available.jpeg'),
-      }], imgProps: {}, productReviews: {}, inquiriesData: [],
+      showModal: false, productDetailDataImages: []
+      , imgProps: {}, productReviews: {}, inquiriesData: [],
       fields: {
         product_id: props.match.params.productId,
         msg: '', type: 3, name: '', email: ''
@@ -343,6 +339,7 @@ class ProductDetail extends React.Component {
     return ToastService.error("Compare Cart is full(limit:5)")
   }
   renderItemGallery = (imgUrl) => {
+
     if (imgUrl) {
       this.setState({
         _variationIndex: 0, imgProps: {
@@ -352,16 +349,15 @@ class ProductDetail extends React.Component {
       });
     }
     else {
-      this.state.productDetailData.images.map((item, index) => {
-        if (item.variation_index === this.state.currentVariationIndex) {
-          this.setState({
-            _variationIndex: index, imgProps: {
-              width: 534, zoomWidth:
-                350, img: item.image_url, zoomPosition: 'right'
-            }
-          });
+      const result = this.state.productDetailData.images.find((item, index) => (
+        item.variation_index === this.state.currentVariationIndex
+      ));
+      this.setState({
+        _variationIndex: result.variation_index, imgProps: {
+          width: 534, zoomWidth:
+            350, img: result.image_url, zoomPosition: 'right'
         }
-      })
+      });
     }
 
   }
@@ -390,7 +386,6 @@ class ProductDetail extends React.Component {
     let rate1 = 0, rate2 = 0, rate3 = 0, rate4 = 0, rate5 = 0;
     const { wishlist } = this.props;
 
-
     return (
       <>
         <section id="maincontent">
@@ -402,13 +397,14 @@ class ProductDetail extends React.Component {
 
                   <div className="product-gallery-preview order-sm-2">
                     <div className="product-gallery-preview-item active" id="first">
-                      {imgProps.img ? <ReactImageZoom {...imgProps} /> : ''}
+                      {imgProps.img && <ReactImageZoom {...imgProps} />}
                       <div className="image-zoom-pane" />
                     </div>
                   </div>
                   <div className="product-gallery-thumblist order-sm-1">
                     {productDetailData?.images?.length > 0 ? productDetailData?.images?.map((item, index) =>
                     (<a key={index} className="product-gallery-thumblist-item" ><img className="img-fluid" src={item.image_url}
+                      onError={e => { e.currentTarget.src = require('../public/No_Image_Available.jpeg') }}
                       onClick={() => this.renderItemGallery(item.image_url)}
                       alt="Product thumb" /></a>))
                       : <></>}
