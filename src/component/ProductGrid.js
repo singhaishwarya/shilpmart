@@ -80,7 +80,7 @@ class ProductGrid extends Component {
           break
         case 'per_page':
           queryParams.per_page = urlParams.get('per_page');
-          this.setState({ per_page: queryParams.per_page * 1 })
+          this.setState({ per_page: parseInt(queryParams.per_page) })
           break
         // case 'min_price':
         // queryParams.min_price = urlParams.get('min_price');
@@ -116,7 +116,7 @@ class ProductGrid extends Component {
         this.setState({
           productListData: result, isLoaded: true
         });
-        this.props.setPriceRangeProps([(result?.filter?.min_price || 0) * 1, (result?.filter?.customer_max_price || result?.filter?.max_price) * 1])
+        this.props.setPriceRangeProps([parseInt(result?.filter?.min_price), parseInt(result?.filter?.max_price)], [parseInt(result?.filter?.customer_min_price), parseInt(result?.filter?.customer_max_price)])
         this.props.setFilters(result?.filters)
       });
     } catch (err) {

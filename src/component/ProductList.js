@@ -24,7 +24,7 @@ export default class ProductList extends React.Component {
       ],
       selectedOffer: [],
       categories: [],
-      priceRange: [0, 0],
+      priceRange: [0, 0], defaultPriceRange: [0, 0],
       category_id: props.history.location.state?.category_id || (this.currentUrlParams.get('cat_ids') || 0),
       category_breadcrumbs: props.history.location.state?.category_breadcrumbs,
       selectedOption: null, queryParams: {},
@@ -38,7 +38,7 @@ export default class ProductList extends React.Component {
   componentDidMount() {
 
     if (localStorage.getItem('parentCategory') !== null) {
-      if (JSON.parse(localStorage.getItem('parentCategory')).find(({ id }) => id * 1 === this.currentUrlParams.get('cat_ids') * 1)) {
+      if (JSON.parse(localStorage.getItem('parentCategory')).find(({ id }) => parseInt(id) === parseInt(this.currentUrlParams.get('cat_ids')))) {
         return;
       }
       else {
@@ -53,7 +53,7 @@ export default class ProductList extends React.Component {
 
   componentWillUnmount() {
     if (localStorage.getItem('parentCategory') !== null) {
-      if (JSON.parse(localStorage.getItem('parentCategory')).find(({ id }) => id * 1 === this.currentUrlParams.get('cat_ids') * 1)) {
+      if (JSON.parse(localStorage.getItem('parentCategory')).find(({ id }) => parseInt(id) === parseInt(this.currentUrlParams.get('cat_ids')))) {
         return;
       }
       else {
@@ -204,9 +204,9 @@ export default class ProductList extends React.Component {
       menuOptions,
       priceRange,
       category_breadcrumbs,
-      parentCategory, setFilter, selectedOption
+      parentCategory, setFilter, selectedOption, defaultPriceRange
     } = this.state;
-    console.log("===", this.state)
+    // console.log("===", this.state)
     return (
 
       <section id="maincontent">
@@ -224,8 +224,8 @@ export default class ProductList extends React.Component {
                         {priceRange.length > 1 && <Ranger
                           value={priceRange}
                           onChange={(value) => this.setState({ priceRange: value })}
-                          min={0}
-                          max={50000}
+                          min={defaultPriceRange[0]}
+                          max={defaultPriceRange[1]}
                           className='filter-slider'
                           allowCross={false}
                           onAfterChange={value => { this.onSliderPriceChange(value) }}
@@ -290,7 +290,7 @@ export default class ProductList extends React.Component {
             </div >
             <div className='col-lg-9'>
               <ProductGrid categoryBreadcrumbs={category_breadcrumbs} {...this.props}
-                setPriceRangeProps={(e) => this.setState({ priceRange: e })} setFilters={(e) => this.setState({ setFilter: e })} />
+                setPriceRangeProps={(defaultprice, updatedPrice) => this.setState({ defaultPriceRange: defaultprice, priceRange: updatedPrice })} setFilters={(e) => this.setState({ setFilter: e })} />
             </div>
           </div >
         </div >

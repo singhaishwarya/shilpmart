@@ -52,7 +52,7 @@ export default class Orders extends React.Component {
           break
         case 'per_page':
           queryParams.per_page = urlParams.get('per_page');
-          this.setState({ per_page: queryParams.per_page * 1 })
+          this.setState({ per_page: parseInt(queryParams.per_page) })
           break
         case 'q':
           queryParams.q = urlParams.get('q');

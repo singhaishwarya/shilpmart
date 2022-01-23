@@ -29,7 +29,7 @@ class Cart extends Component {
     CartService.list().then((result) => {
       this.setState({ cartProduct: result });
       result.map((item) => (
-        totalCost1 += ((item?.product_details?.prices[item.variation_index]?.price || item?.product_details?.prices[0]?.price) * 1 || 0) * (item.quantity * 1)
+        totalCost1 += (parseInt(item?.product_details?.prices[item.variation_index]?.price || item?.product_details?.prices[0]?.price) || 0) * (item.quantity * 1)
       ))
       this.setState({
         totalCost: totalCost1
@@ -42,7 +42,7 @@ class Cart extends Component {
     let totalCost1 = 0;
     this.props.cart.map((item, index) => {
       ProductService.fetchAllProducts({ product_ids: [item.product] }).then((result1) => {
-        totalCost1 += ((result1.data[0]?.prices[item.variation_index]?.price || result1.data[0]?.prices[0]?.price) * 1 || 0) * (item.quantity * 1)
+        totalCost1 += (parseInt(result1.data[0]?.prices[item.variation_index]?.price || result1.data[0]?.prices[0]?.price) || 0) * (item.quantity * 1)
 
         this.setState(prevState => ({
           cartProduct: [...prevState.cartProduct, { product: result1.data[0], variation_index: item.variation_index, quantity: item.quantity }], totalCost: totalCost1
@@ -182,26 +182,26 @@ class Cart extends Component {
           <div className="col-lg-4 col-sm-6 col-12">
             <div className="product-img-wrapper">
               <div className="border p-4">
-              <h4>CART TOTALS</h4>
-              <div className="cart-footer-head py-3">
-                <h6>Subtotal :</h6>
-                <p><span>₹{totalCost} </span></p>
-              </div>
-              <div className="cart-footer-head border-top py-3">
-                <h6>Shipping :</h6>
-                <p><span>₹00.00</span></p>
-              </div>
-              <div className="cart-footer-head border-top py-3">
-                <h5>Total</h5>
-                <p><span>₹{totalCost}</span></p>
-              </div>
-           
+                <h4>CART TOTALS</h4>
+                <div className="cart-footer-head py-3">
+                  <h6>Subtotal :</h6>
+                  <p><span>₹{totalCost} </span></p>
+                </div>
+                <div className="cart-footer-head border-top py-3">
+                  <h6>Shipping :</h6>
+                  <p><span>₹00.00</span></p>
+                </div>
+                <div className="cart-footer-head border-top py-3">
+                  <h5>Total</h5>
+                  <p><span>₹{totalCost}</span></p>
+                </div>
+
 
               </div>
               <div className="cart-action cart-action2" onClick={() => this.handleCheckout(cartProduct, totalCost)}><button className="btn btn-theme login-btn mt-3" >Proceed to checkout </button> </div>
-              
-            </div>            
-            
+
+            </div>
+
           </div>
 
         </div> : <div className="cart-shop-body">

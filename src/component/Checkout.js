@@ -30,7 +30,7 @@ class CheckoutComp extends React.Component {
       selectedBillingAddress: {},
       showModal: false,
       checkOutData: JSON.parse(localStorage.getItem('checkOutData')) || [],
-      totalCartCost: localStorage.getItem('totalCartCost') * 1 || 0,
+      totalCartCost: parseInt(localStorage.getItem('totalCartCost')) || 0,
       paymentType: '', paytmConfig: {},
       txnResponse: {},
       isCheckoutClick: false,
