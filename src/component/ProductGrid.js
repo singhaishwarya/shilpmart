@@ -66,14 +66,14 @@ class ProductGrid extends Component {
     let entries = urlParams.entries(),
       queryParams = {};
     for (const entry of entries) {
-
+      // console.log("===", entry)
       switch (entry[0]) {
-        case 'cat_ids':
-          queryParams.cat_ids = [urlParams.get('cat_ids')];
-          break
-        case 'order_by':
-          queryParams.order_by = urlParams.get('order_by');
-          break
+        // case 'cat_ids':
+        //   queryParams.cat_ids = [urlParams.get('cat_ids')];
+        //   break
+        // case 'order_by':
+        //   queryParams.order_by = urlParams.get('order_by');
+        //   break
         case 'sort_by':
           queryParams.sort_by = ['price-asc', 'price-desc'].includes(urlParams.get('sort_by')) ? 'price' : urlParams.get('sort_by')
           this.setState({ sortBy: urlParams.get('sort_by') })
@@ -82,25 +82,28 @@ class ProductGrid extends Component {
           queryParams.per_page = urlParams.get('per_page');
           this.setState({ per_page: queryParams.per_page * 1 })
           break
-        case 'min_price':
-          queryParams.min_price = urlParams.get('min_price');
-          break
-        case 'max_price':
-          queryParams.max_price = urlParams.get('max_price');
-          break
-        case 'q':
-          queryParams.q = urlParams.get('q');
-          break
-        case 'color':
-          queryParams.color = urlParams.get('color');
-          break
+        // case 'min_price':
+        // queryParams.min_price = urlParams.get('min_price');
+        // break
+        // case 'max_price':
+        // queryParams.max_price = urlParams.get('max_price');
+        // break
+        // case 'q':
+        //   queryParams.q = urlParams.get('q');
+        //   break
+        // case 'color':
+        //   queryParams.color = urlParams.get('color');
+        //   break
         case 'page':
           queryParams.per_page = urlParams.get('page') * (queryParams.per_page ? queryParams.per_page : 12);
           break
         default:
-          return;
+          queryParams[entry[0]] = urlParams.get(entry[0])
+
+          break;
       }
     }
+
     if (this.state.brand_name) {
       queryParams.brand_name = this.state.brand_name;
     }
@@ -113,8 +116,8 @@ class ProductGrid extends Component {
         this.setState({
           productListData: result, isLoaded: true
         });
-        this.props.setPriceRangeProps([(result?.filter?.min_price || 0) * 1, (result?.filter?.f_custom_max_price || result?.filter?.max_price) * 1])
-        this.props.setFilters(result.filters)
+        this.props.setPriceRangeProps([(result?.filter?.min_price || 0) * 1, (result?.filter?.customer_max_price || result?.filter?.max_price) * 1])
+        this.props.setFilters(result?.filters)
       });
     } catch (err) {
       console.log(err);

@@ -62,8 +62,8 @@ export default class ProductList extends React.Component {
       }
     }
   }
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption: selectedOption.value })
+  handleColorChange = (selectedOption) => {
+    this.setState({ selectedOption })
     this.currentUrlParams.set('color', selectedOption.value)
     this.props.history.push({
       pathname: this.props.location.pathname,
@@ -177,6 +177,26 @@ export default class ProductList extends React.Component {
     localStorage.setItem('parentCategory', JSON.stringify(JSON.parse(localStorage.getItem('parentCategory')).slice(0, index)));
 
   }
+  handleFilters = (e, key) => {
+
+    if (e.target.checked) {
+      this.setState({ [key]: e.target.value })
+      this.currentUrlParams.set(key, e.target.value)
+      this.props.history.push({
+        pathname: this.props.location.pathname,
+        search: "&" + this.currentUrlParams.toString()
+      });
+    }
+    else {
+      this.setState({ [key]: '' })
+      this.currentUrlParams.delete(key)
+      this.props.history.push({
+        pathname: this.props.location.pathname,
+        search: "&" + this.currentUrlParams.toString()
+      });
+    }
+
+  }
 
   render() {
 
@@ -186,7 +206,7 @@ export default class ProductList extends React.Component {
       category_breadcrumbs,
       parentCategory, setFilter, selectedOption
     } = this.state;
-    console.log("demo===", this.state)
+    console.log("===", this.state)
     return (
 
       <section id="maincontent">
@@ -251,18 +271,19 @@ export default class ProductList extends React.Component {
                     onToggle={this.onCategoryFilter}
                   />
                 </article >
-                {setFilter.map((item, index) => <article className='filter-group'>
+                {setFilter.map((item, index) => <article key={index} className='filter-group'>
                   <header className='card-header'>
                     <h6 className='title'>Filter by {item.key} </h6>
                   </header>
                   {item.key === 'Color' ? <Select
                     value={selectedOption}
-                    onChange={this.handleChange}
+                    onChange={this.handleColorChange}
+                    defaultValue={selectedOption}
                     options={item.values.map((item3, index) => { return { value: item3, label: item3 } })}
                   /> :
                     item.values.map((item1, index) => <div key={index} className='catHead'> <input type="checkbox"
-                      // checked={item1}
-                      onChange={() => { this.setState({ [item.key]: item1 }) }} id={item1} name="topping" value={item1} azdzsdzde />{item1}</div>)}
+                      checked={this.state[item.key.split(" ").join("")] === item1}
+                      onChange={(e) => this.handleFilters(e, item.key.split(" ").join(""))} value={item1} />{item1}</div>)}
 
                 </article >)}
               </div >
